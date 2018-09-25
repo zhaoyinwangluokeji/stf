@@ -2,7 +2,7 @@ var oboe = require('oboe')
 var _ = require('lodash')
 var EventEmitter = require('eventemitter3')
 
-module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceService) {
+module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceService,DeviceRentWebControl) {
   var deviceService = {}
 
   function Tracker($scope, options) {
@@ -10,11 +10,12 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     var devicesBySerial = Object.create(null)
     var scopedSocket = socket.scoped($scope)
     var digestTimer, lastDigest
-
+    console.log("new Tracker() ")
     $scope.$on('$destroy', function() {
+      console.log("Tracker destroy")
       clearTimeout(digestTimer)
     })
-
+    DeviceRentWebControl.set($scope);
     function digest() {
       // Not great. Consider something else
       if (!$scope.$$phase) {
@@ -72,6 +73,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     }
 
     var insert = function insert(data) {
+      console.log("insert ")
       devicesBySerial[data.serial] = devices.push(data) - 1
       sync(data)
       this.emit('add', data)
@@ -85,10 +87,12 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
         }
       })
       sync(data)
+      console.log("emit change ")
       this.emit('change', data)
     }.bind(this)
 
     var remove = function remove(data) {
+      console.log("remove ")
       var index = devicesBySerial[data.serial]
       if (index >= 0) {
         devices.splice(index, 1)
@@ -98,6 +102,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     }.bind(this)
 
     function fetch(data) {
+      console.log("fetch "+data.serial)
       deviceService.load(data.serial)
         .then(function(device) {
           return changeListener({
@@ -109,34 +114,46 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     }
 
     function addListener(event) {
+      console.log("addListener ")
       var device = get(event.data)
       if (device) {
         modify(device, event.data)
         notify(event)
+        DeviceRentWebControl.open(device,modify,fetch)
       }
       else {
         if (options.filter(event.data)) {
           insert(event.data)
           notify(event)
+          device = get(event.data)
+          DeviceRentWebControl.open(device,modify,fetch)
         }
       }
     }
 
     function changeListener(event) {
       var device = get(event.data)
+     
       if (device) {
+        console.log("changeListener1 "+event.data.serial)
         modify(device, event.data)
         if (!options.filter(device)) {
+          console.log("remove device "+event.data.serial)
           remove(device)
         }
         notify(event)
+        DeviceRentWebControl.open(device,modify,fetch)
       }
       else {
         if (options.filter(event.data)) {
+          console.log("changeListener2 "+event.data.serial)  
           insert(event.data)
           // We've only got partial data
           fetch(event.data)
           notify(event)
+          device = get(event.data)
+          DeviceRentWebControl.open(device,modify,fetch)
+
         }
       }
     }

@@ -8,7 +8,15 @@
   background-size: 100% auto;
   -webkit-background-size: 100% auto;
 }
-
+.stf-menu .stf-logo {
+  width: 32px;
+  height: 32px;
+  float: left;
+  text-indent: -9999em;
+  margin: 6px 10px 0 0;
+  background-size: 100% auto;
+  -webkit-background-size: 100% auto;
+}
 .stf-menu .stf-top-bar {
   height: 44px;
   padding: 0 10px 0 20px;

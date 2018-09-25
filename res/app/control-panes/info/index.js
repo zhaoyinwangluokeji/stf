@@ -1,6 +1,5 @@
 require('./info.css')
 
-
 module.exports = angular.module('stf.info', [
   require('stf/angular-packery').name,
   require('stf/common-ui/modals/lightbox-image').name
@@ -11,4 +10,3 @@ module.exports = angular.module('stf.info', [
     )
   }])
   .controller('InfoCtrl', require('./info-controller'))
-  

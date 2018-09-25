@@ -4,12 +4,16 @@ module.exports = function DeviceListDetailsDirective(
   $filter
 , $compile
 , $rootScope
+, socket
 , gettext
 , DeviceColumnService
 , GroupService
 , DeviceService
 , LightboxImageService
 , StandaloneService
+, AppState
+, DeviceRentService
+, $location
 ) {
   return {
     restrict: 'E'
@@ -47,28 +51,55 @@ module.exports = function DeviceListDetailsDirective(
       }
 
       function checkDeviceStatus(e) {
-        if (e.target.classList.contains('device-status')) {
-          var id = e.target.parentNode.parentNode.id
-          var device = mapping[id]
-
-          if (e.altKey && device.state === 'available') {
-            inviteDevice(device)
-            e.preventDefault()
-          }
-
-          if (e.shiftKey && device.state === 'available') {
-            StandaloneService.open(device)
-            e.preventDefault()
-          }
-
-          if ($rootScope.adminMode && device.state === 'busy') {
-            kickDevice(device, true)
-            e.preventDefault()
-          }
-          else if (device.using) {
-            kickDevice(device)
-            e.preventDefault()
-          }
+      
+        if(e.target.classList.contains('device-rent-status') || 
+          e.target.classList.contains('device-status')){
+            var id = e.target.parentNode.parentNode.id
+            var device = mapping[id]
+            user = AppState.user
+            var para = arguments
+            if(device.using){
+              if(device.owner && 
+                device.owner.email && 
+                device.owner.name &&
+                user &&
+                user.name == device.owner.name &&
+                user.email == device.owner.email) {
+                  if(confirm('设备处于使用状态，你确定需要停止租用吗？')){
+                    kickDevice(device)
+                    DeviceRentService.free_rent(device,socket)
+                  }
+                }
+                
+            }
+            else  if(device.state === 'available') {
+              if(device.deivce_rent_conf &&
+                device.deivce_rent_conf.rent) {
+                  if(device.deivce_rent_conf.owner && 
+                    device.deivce_rent_conf.owner.email && 
+                    device.deivce_rent_conf.owner.name &&
+                    user ){
+                      if(user.name == device.deivce_rent_conf.owner.name &&
+                        user.email == device.deivce_rent_conf.owner.email) {
+                        }
+                        else{
+                          alert("设备已经被"+device.deivce_rent_conf.owner.name + " "+device.deivce_rent_conf.owner.email+" 租用")
+                        }
+                    }
+                }else{
+                  return Promise.all([device].map(function(device) {
+                    e.preventDefault()
+                    return DeviceRentService.open(device) 
+                  })).then(function(result){
+                    if(result[0].result==true){   
+                      $location.path('/control/' + result[0].device.serial);
+                    }
+                  })
+                  .catch(function(err) {
+                    console.log('err: ', err)
+                  })
+                }
+            }
         }
       }
 
@@ -526,6 +557,7 @@ module.exports = function DeviceListDetailsDirective(
 
       // Triggers when the tracker notices that a device changed.
       function changeListener(device) {
+        console.log('details-list-changeListener')
         var id = calculateId(device)
         var tr = tbody.children[id]
 

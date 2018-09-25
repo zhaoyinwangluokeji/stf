@@ -4,14 +4,13 @@
     title='{{"Take Screenshot"|translate}}')
       i.fa.fa-camera
       span(translate) Screenshot
-
+  
   nothing-to-show(message='{{"No screenshots taken"|translate}}', icon='fa-camera', ng-show='!screenshot')
-
+  
   .row(ng-show="screenshot")
     .col-md-4
       canvas#uiviewer-canvas(ng-click="clickCanvas($event)")
     .col-md-4
-      div RGB: {{pointR}}, {{pointG}}, {{pointB}}
       #uiviewer-tree.tree(ng-show="nodesArray")
         .tree-node(ng-repeat="node in nodesArray",ng-include="'recursion'")
       div(ng-show="!nodesArray")
@@ -23,7 +22,7 @@
         button.btn.btn-primary-outline(ng-click='searchXpath()', style='border：2；') 查找xpath
       div
         pre(ng-show='showNode') {{showNode.text}}
-
+      
   script#recursion(type='text/ng-template').
     <div class="tree-heading">
     <i class="{{node.isCollapsed ? 'fa fa-angle-double-right' : 'fa fa-angle-double-down'}} {{node.children.length?'':'noChildren'}}" ng-click="node.isCollapsed = !node.isCollapsed"></i>

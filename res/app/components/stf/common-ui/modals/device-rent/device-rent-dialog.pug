@@ -1,0 +1,21 @@
+.stf-device-rent.stf-modal.modal-size-300
+  .modal-header.dialog-header-device-rent
+    button(type='button', ng-click='cancel()').close &times;
+    h4.modal-title.text-info 
+      i.fa.fa-warning
+      .button-spacer
+      span.text-align-center(translate) 设备租用
+  .modal-body
+    .content-align-center
+      .content-radio.left-thumbnail
+        li(ng-repeat='time in rent_times',ng-click='$event.stopPropagation()')
+          label.radio-tip-bg 
+            input(type='radio',name='rent_time_sel',ng-value="time.time", ng-model='$parent.rent_time_selected')
+            | &ensp;&ensp;{{time.title}}
+  .modal-footer
+    button.btn.btn-primary-outline.pull-left(type='button', ng-click='cancel()')
+      i.fa.fa-refresh
+      span(translate) Cancel
+    button.btn.btn-success-outline(ng-click='Rent()')
+      i.fa.fa-sitemap
+      span(translate) Rent

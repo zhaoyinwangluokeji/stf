@@ -12,7 +12,42 @@ module.exports = angular.module('stf.device-status', [])
         busy: gettext('Busy'),
         available: gettext('Use'),
         automation: gettext('Stop Automation')
-      }[text] || gettext('Unknown')
+      }[text] || text  
+    }
+  })
+  .filter('statusNameActionFromDevice', function(gettext) {
+   
+    return function(device) {
+      var text=device.state;
+      
+      if(!device.deivce_rent_conf || 
+        !device.deivce_rent_conf.rent ||
+        device.deivce_rent_conf.rent==false){
+        return ('可租用');
+      }
+      else if(device.deivce_rent_conf && device.deivce_rent_conf.rent){
+        var now = Date.now();
+        if(device.deivce_rent_conf && device.deivce_rent_conf.now){
+          now=device.deivce_rent_conf.now;
+        }
+        var time = device.deivce_rent_conf.start_time + device.deivce_rent_conf.rent_time*1000*60 - now;
+        var hour = Math.floor(time/(1000*3600));
+        var minute = Math.floor((time%(1000*3600))/(1000*60));
+        var second = Math.floor((time%(1000*60))/(1000));
+        if(time>=0){
+          var tip = "剩" +hour+"时"+minute+"分"+second+"秒";
+          if(device.deivce_rent_conf.owner){
+            tip =  device.deivce_rent_conf.owner.name +':'+ tip;
+          }
+          return (tip) 
+        }
+        else{
+          return gettext('租用过期')
+        }
+      }
+      else {
+        return ('Error State')
+      }
     }
   })
   .filter('statusNamePassive', function(gettext) {
@@ -39,7 +74,7 @@ module.exports = angular.module('stf.device-status', [])
         automatic_timeout: gettext('Device was kicked by automatic timeout.	'),
         device_absent: gettext('Device is not present anymore for some reason.'),
         status_change: gettext('Device is present but offline.')
-      }[text] || gettext('Unknown reason.')
+      }[text] ||  text
     }
   })
   .filter('batteryHealth', function(gettext) {

@@ -18,7 +18,18 @@ var filterOps = {
   }
 }
 
-module.exports = function DeviceColumnService($filter, gettext) {
+module.exports = function DeviceColumnService(
+  $filter, 
+  gettext,
+  $location,
+  DeviceRentService,
+  AppState,
+  GroupService,
+  socket
+  
+  )
+   {
+    
   // Definitions for all possible values.
   return {
     state: DeviceStatusCell({
@@ -27,6 +38,13 @@ module.exports = function DeviceColumnService($filter, gettext) {
         return $filter('translate')(device.enhancedStateAction)
       }
     })
+   , rent: DeviceRentCell({
+      title: ('rent')
+    , value: function(device) {
+        return $filter('translate')(device.enhancedRentStateMsg)
+      }
+    
+    },DeviceRentService,$location,AppState,GroupService,socket)
   , model: DeviceModelCell({
       title: gettext('Model')
     , value: function(device) {
@@ -588,6 +606,121 @@ function DeviceNameCell(options) {
     }
   , filter: function(device, filter) {
       return filterIgnoreCase(options.value(device), filter.query)
+    }
+  })
+}
+
+
+function DeviceRentCell(options,DeviceRentService,$location,AppState,GroupService,socket) {
+  var stateClasses = {
+    using: 'state-using btn-primary'
+  , busy: 'state-busy btn-warning'
+  , available: 'state-available btn-primary-outline'
+  , ready: 'state-ready btn-primary-outline'
+  , present: 'state-present btn-primary-outline'
+  , preparing: 'state-preparing btn-primary-outline btn-success-outline'
+  , unauthorized: 'state-unauthorized btn-danger-outline'
+  , offline: 'state-offline btn-warning-outline'
+  , automation: 'state-automation btn-info'
+  }
+
+  return _.defaults(options, {
+    title: options.title
+  , defaultOrder: 'asc'
+  , build: function() {
+      var td = document.createElement('td')
+      var a = document.createElement('a')
+      a.appendChild(document.createTextNode(''))
+      td.appendChild(a)
+      return td
+    }
+  , update: function(td, device) {
+      var a = td.firstChild
+      var t = a.firstChild
+
+      a.className = 'btn btn-xs device-rent-status ' +
+        (stateClasses[device.state] || 'btn-default-outline')
+
+      if (device.usable && (device.state=='available'  )) {
+        a.href = '#!/control/' + device.serial
+       /*
+        a.onclick = function(e) {
+          user = AppState.user
+          var para = arguments
+          if(device.using){
+            if(device.owner && 
+              device.owner.email && 
+              device.owner.name &&
+              user &&
+              user.name == device.owner.name &&
+              user.email == device.owner.email) {
+                if(confirm('设备处于使用状态，你确定需要停止租用吗？')){
+                  GroupService.kick(device,true)
+                  DeviceRentService.free_rent(device,socket)
+                    
+                }
+              }
+              
+          }
+          else  if(device.state === 'available') {
+            if(device.deivce_rent_conf &&
+              device.deivce_rent_conf.rent) {
+                if(device.deivce_rent_conf.owner && 
+                  device.deivce_rent_conf.owner.email && 
+                  device.deivce_rent_conf.owner.name &&
+                  user ){
+                    if(user.name == device.deivce_rent_conf.owner.name &&
+                      user.email == device.deivce_rent_conf.owner.email) {
+                      }
+                      else{
+                        alert("设备已经被"+device.deivce_rent_conf.owner.name + " "+device.deivce_rent_conf.owner.email+" 租用")
+                      }
+                  }
+              }else{
+                return Promise.all([device].map(function(device) {
+                  return DeviceRentService.open(device) 
+                })).then(function(result){
+                  if(result[0].result==true){   
+                    $location.path('/control/' + result[0].device.serial);
+                  }
+                })
+                .catch(function(err) {
+                  console.log('err: ', err)
+                })
+              }
+          }
+          
+          e.preventDefault()  
+        };
+        */
+      }
+      else {
+        a.removeAttribute('href')
+      }
+
+      t.nodeValue = options.value(device)
+
+      return td
+    }
+  , compare: (function() {
+      var order = {
+        using: 10
+      , automation: 15
+      , available: 20
+      , busy: 30
+      , ready: 40
+      , preparing: 50
+      , unauthorized: 60
+      , offline: 70
+      , present: 80
+      , absent: 90
+      }
+      return function(deviceA, deviceB) {
+        return order[deviceA.state] - order[deviceB.state]
+      }
+    })()
+  , filter: function(device, filter) {
+      return device.state === filter.query
     }
   })
 }

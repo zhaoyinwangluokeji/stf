@@ -6,6 +6,7 @@ module.exports = angular.module('stf.device-list.icons', [
   require('stf/common-ui').name,
   require('../column').name,
   require('../empty').name,
-  require('stf/standalone').name
-])
-  .directive('deviceListIcons', require('./device-list-icons-directive'))
+  require('stf/standalone').name,
+  'ngRoute',
+  require('stf/app-state').name
+]).directive('deviceListIcons', require('./device-list-icons-directive'))

@@ -11,7 +11,7 @@ module.exports = function DeviceListStatsDirective(
       var tracker = scope.tracker()
       var mapping = Object.create(null)
       var nodes = Object.create(null)
-
+     // console.log('DeviceListStatsDirective initial ')
       scope.counter = {
         total: 0
       , usable: 0
@@ -22,6 +22,7 @@ module.exports = function DeviceListStatsDirective(
       scope.currentUser = UserService.currentUser
 
       function findTextNodes() {
+       // console.log('findTextNodes ')
         var elements = element[0].getElementsByClassName('counter')
         for (var i = 0, l = elements.length; i < l; ++i) {
           nodes[elements[i].getAttribute('data-type')] = elements[i].firstChild
@@ -44,6 +45,7 @@ module.exports = function DeviceListStatsDirective(
       }
 
       function addListener(device) {
+       // console.log('addListener '+device.serial)
         var stats = updateStats(device)
 
         scope.counter.total += 1
@@ -55,6 +57,8 @@ module.exports = function DeviceListStatsDirective(
       }
 
       function changeListener(device) {
+      
+        console.log('stats-changeListener '+device.serial)
         var oldStats = mapping[device.serial]
         var newStats = updateStats(device)
         var diffs = Object.create(null)
@@ -69,6 +73,9 @@ module.exports = function DeviceListStatsDirective(
       }
 
       function removeListener(device) {
+        console.log('removeListener '+device.serial)
+        
+        
         var oldStats = mapping[device.serial]
         var newStats = updateStats(device)
 
@@ -88,6 +95,7 @@ module.exports = function DeviceListStatsDirective(
       tracker.on('remove', removeListener)
 
       scope.$on('$destroy', function() {
+       
         tracker.removeListener('add', addListener)
         tracker.removeListener('change', changeListener)
         tracker.removeListener('remove', removeListener)
