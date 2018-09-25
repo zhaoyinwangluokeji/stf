@@ -9,6 +9,7 @@ module.exports = function DeviceListCtrl(
 , SettingsService
 , $location
 ) {
+  console.log('DeviceListCtrl  ')
   $scope.tracker = DeviceService.trackAll($scope)
   $scope.control = ControlService.create($scope.tracker.devices, '*ALL')
 
@@ -17,6 +18,10 @@ module.exports = function DeviceListCtrl(
   var defaultColumns = [
     {
       name: 'state'
+    , selected: true
+    }, 
+    {
+      name: 'rent'
     , selected: true
     }
   , {
@@ -167,6 +172,7 @@ module.exports = function DeviceListCtrl(
   })
 
   $scope.toggle = function(device) {
+    console.log('toggle  ')
     if (device.using) {
       $scope.kick(device)
     } else {
@@ -175,12 +181,14 @@ module.exports = function DeviceListCtrl(
   }
 
   $scope.invite = function(device) {
+    console.log('invite  ')
     return GroupService.invite(device).then(function() {
       $scope.$digest()
     })
   }
 
   $scope.applyFilter = function(query) {
+    console.log('applyFilter  ')
     $scope.filter = QueryParser.parse(query)
   }
 
@@ -196,6 +204,7 @@ module.exports = function DeviceListCtrl(
   }
 
   $scope.reset = function() {
+    console.log('reset  ')
     $scope.search.deviceFilter = ''
     $scope.filter = []
     $scope.sort = defaultSort

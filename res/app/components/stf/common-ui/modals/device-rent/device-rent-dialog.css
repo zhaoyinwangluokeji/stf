@@ -1,0 +1,22 @@
+
+.stf-modal .content-radio {
+    width: 200px;
+    height: 100%;
+    align-self: center;
+  }
+.text-align-center
+{
+    text-align:center
+}
+.content-align-center
+{
+    align-items: center;
+    text-align: center;
+}
+
+.radio-tip-bg{
+    background-color: white;
+}
+.radio-tip-bg:hover{
+    background-color: burlywood;
+    }

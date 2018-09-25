@@ -6,6 +6,7 @@ module.exports = angular.module('stf.device-list.details', [
   require('stf/common-ui').name,
   require('stf/admin-mode').name,
   require('../column').name,
-  require('../empty').name
+  require('../empty').name,
+  require('stf/app-state').name
 ])
   .directive('deviceListDetails', require('./device-list-details-directive'))

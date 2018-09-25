@@ -1,7 +1,9 @@
 module.exports =
   function ControlPanesController($scope, $http, gettext, $routeParams,
     $timeout, $location, DeviceService, GroupService, ControlService,
-    StorageService, FatalMessageService, SettingsService) {
+    StorageService, FatalMessageService, SettingsService,AppState) {
+
+
 
     var sharedTabs = [
       {
@@ -70,15 +72,32 @@ module.exports =
           return GroupService.invite(device)
         })
         .then(function(device) {
-          $scope.device = device
-          $scope.control = ControlService.create(device, device.channel)
-
+          
           // TODO: Change title, flickers too much on Chrome
           // $rootScope.pageTitle = device.name
 
           SettingsService.set('lastUsedDevice', serial)
+          if(device.deivce_rent_conf && 
+            device.deivce_rent_conf.rent ){
 
-          return device
+            if( device.deivce_rent_conf.owner && 
+              AppState.user.email == device.deivce_rent_conf.owner.email && 
+              AppState.user.name == device.deivce_rent_conf.owner.name ){
+                $scope.device = device
+                $scope.control = ControlService.create(device, device.channel)
+                return device
+            }else{
+              GroupService.kick(device,true)
+              alert('设备已经被其他人申请使用，请租用其他设备')
+              $location.path('/')
+            }
+            
+        }
+          else{
+            GroupService.kick(device,true)
+            alert('设备没有租用，请进入租用界面进行租用')
+            $location.path('/')
+          }
         })
         .catch(function() {
           $timeout(function() {
