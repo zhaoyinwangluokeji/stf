@@ -3,9 +3,12 @@ module.exports = function UiautomatorviewerCtrl($scope) {
   $scope.screenshot = null;
   $scope.showNode = null;
   $scope.nodesArray = null;
-  
+
   $scope.get_xpath = "";
   $scope.xmlStr = "";
+  $scope.pointR = 0;
+  $scope.pointG = 0;
+  $scope.pointB = 0;
 
   var parser = null;
   var tmpDoc = null;
@@ -15,7 +18,7 @@ module.exports = function UiautomatorviewerCtrl($scope) {
   var img = new Image();
   var scale = 1;
   var lastSelectNode = null;
-  
+
   img.onload = function () {
     canvas.width = canvas.parentNode.offsetWidth;
     scale = canvas.width / this.width;
@@ -27,6 +30,15 @@ module.exports = function UiautomatorviewerCtrl($scope) {
   $scope.clickCanvas = function (event) {
     var x = event.pageX - canvas.getBoundingClientRect().left;
     var y = event.pageY - canvas.getBoundingClientRect().top;
+    var ctxt = canvas.getContext('2d');
+    var data = ctxt.getImageData(0, 0, x, y).data;
+    for(var i = 0,len = data.length; i<len;i+=4){
+      $scope.pointR = data[i]
+      $scope.pointG = data[i+1]
+      $scope.pointB = data[i+2]
+
+    }
+
     if (!$scope.nodesArray) return;
     var node = searchSelectNode($scope.nodesArray, { x: x / scale, y: y / scale }, 9999).node1;
     $scope.selectNode(node);
@@ -38,7 +50,7 @@ module.exports = function UiautomatorviewerCtrl($scope) {
         alert("xpath is empty!");
         return;
     }else{
-      
+
       var node = null;
       try
       {
@@ -47,7 +59,7 @@ module.exports = function UiautomatorviewerCtrl($scope) {
         alert(e.message)
         return;
       }
-      
+
       console.log(node);
       if(node == null){
         alert("cannot find node by xpath!");
@@ -89,15 +101,15 @@ module.exports = function UiautomatorviewerCtrl($scope) {
       var bounds = node.attributes['bounds'].match(/[\d\.]+/g);
       if (point.x > bounds[0] && point.x < bounds[2]
         && point.y > bounds[1] && point.y < bounds[3]) {
-        var newDist = point.x + point.y - bounds[0] - bounds[1]
+        var newDist = point.x + point.y - bounds[0] - bounds[1];
         if (newDist <= dist) {
-          resultNode = node
-          dist = newDist
+          resultNode = node;
+          dist = newDist;
           if (node.children.length) {
-            var child = searchSelectNode(node.children, point, dist)
+            var child = searchSelectNode(node.children, point, dist);
             if (child.node1 != null) {
-              resultNode = child.node1
-              dist = child.dist1
+              resultNode = child.node1;
+              dist = child.dist1;
             }
           }
         }
@@ -113,8 +125,8 @@ module.exports = function UiautomatorviewerCtrl($scope) {
     }catch(e){
       return "";
     }
-    var nodeText = node.getAttribute("text")
-    var nodeDesc = node.getAttribute("content-desc")
+    var nodeText = node.getAttribute("text");
+    var nodeDesc = node.getAttribute("content-desc");
     var nodeIndex = parseInt(node.getAttribute("index"),10) + 1;
     if(nodeId != null && nodeId.trim() != ""){
       return "//*[@resource-id=\'" + nodeId + "\']";
@@ -149,19 +161,19 @@ module.exports = function UiautomatorviewerCtrl($scope) {
       text += `${"xpath"} : ${"//*"}\n`
     } else{
       console.log(bounds,nodeClass,nodeText,nodeDesc,nodeId);
-      var tmpNode = selectSingleNode(tmpDoc, "//*[@resource-id='" + nodeId + 
-      "' and @text='" + nodeText + 
-      "' and @content-desc='" + nodeDesc + 
-      "' and @bounds='" + bounds + 
+      var tmpNode = selectSingleNode(tmpDoc, "//*[@resource-id='" + nodeId +
+      "' and @text='" + nodeText +
+      "' and @content-desc='" + nodeDesc +
+      "' and @bounds='" + bounds +
       "' and @class='" + nodeClass + "']");
       if(tmpNode != null){
         text += `${"xpath"} : ${generate_xpath(tmpNode)}\n`;
       } else {
         text += `${"xpath"} : ${"//*"}\n`
       }
-      
+
     }
-    
+
     $scope.showNode = { text: text }
 
     var bounds = node.attributes['bounds'].match(/[\d\.]+/g);
@@ -180,7 +192,7 @@ module.exports = function UiautomatorviewerCtrl($scope) {
     $scope.nodesArray = null;
     $scope.control.screenshot().then(function (result) {
       $scope.$apply(function () {
-        $scope.screenshot = result
+        $scope.screenshot = result;
       })
       img.src = result.body.href
     })
@@ -193,7 +205,7 @@ module.exports = function UiautomatorviewerCtrl($scope) {
             $scope.xmlStr = result.data.join('');
             parser = new DOMParser();
             tmpDoc = parser.parseFromString($scope.xmlStr,"text/xml");
-            $scope.nodesArray = xml2json(angular.element(result.data.join(''))[1])
+            $scope.nodesArray = xml2json(angular.element(result.data.join(''))[1]);
             $scope.$digest();
           })
       })
@@ -208,11 +220,11 @@ module.exports = function UiautomatorviewerCtrl($scope) {
 
       tmpJson.text = '(' + tmpJson.attributes.index + ')' + tmpJson.attributes.class.split('.').pop();
       if (tmpJson.attributes.text)
-        tmpJson.text += ':' + tmpJson.attributes.text
+        tmpJson.text += ':' + tmpJson.attributes.text;
       if (tmpJson.attributes['content-desc'])
-        tmpJson.text += ' {' + tmpJson.attributes['content-desc'] + '}'
+        tmpJson.text += ' {' + tmpJson.attributes['content-desc'] + '}';
       if (tmpJson.attributes.bounds)
-        tmpJson.text += ' ' + tmpJson.attributes.bounds
+        tmpJson.text += ' ' + tmpJson.attributes.bounds;
 
       if (node.children)
         tmpJson.children = xml2json(node);
@@ -235,4 +247,7 @@ module.exports = function UiautomatorviewerCtrl($scope) {
     }
     return node;
   }
+
+  // 打开时先截图
+  $scope.takeScreenShot();
 }

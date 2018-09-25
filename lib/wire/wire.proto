@@ -78,6 +78,14 @@ enum MessageType {
   FileSystemGetMessage       = 82;
   ConnectStartedMessage      = 92;
   ConnectStoppedMessage      = 93;
+  DeviceRentMessage          = 94;
+}
+
+message DeviceRentMessage {
+  required string serial = 1;
+  required bool rent = 2;
+  optional double rent_time = 3;
+  optional double start_time = 4;
 }
 
 message ConnectStartedMessage {
