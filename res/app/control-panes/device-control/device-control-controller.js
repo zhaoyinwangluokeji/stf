@@ -1,7 +1,7 @@
 var _ = require('lodash')
 
 module.exports = function DeviceControlCtrl($scope, DeviceService, GroupService,
-  $location, $timeout, $window, $rootScope) {
+  $location, $timeout, $window, $rootScope,socket,DeviceRentService) {
 
   $scope.showScreen = true
 
@@ -31,17 +31,20 @@ module.exports = function DeviceControlCtrl($scope, DeviceService, GroupService,
 
           // Then kick the old device
           GroupService.kick(device).then(function() {
+            DeviceRentService.free_rent(device,socket)
             $scope.$digest()
           })
         } else {
           // Kick the device
           GroupService.kick(device).then(function() {
+            DeviceRentService.free_rent(device,socket)
             $scope.$digest()
           })
           $location.path('/devices/')
         }
       } else {
         GroupService.kick(device).then(function() {
+          DeviceRentService.free_rent(device,socket)
           $scope.$digest()
         })
       }

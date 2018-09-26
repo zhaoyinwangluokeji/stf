@@ -65,7 +65,7 @@ gulp.task('eslint-cli', function(done) {
     , '*.js'
   ])
   var formatter = cli.getFormatter()
-  console.log(formatter(report.results))
+ // console.log(formatter(report.results))
 
   if (report.errorCount > 0) {
     done(new gutil.PluginError('eslint-cli', new Error('ESLint error')))
