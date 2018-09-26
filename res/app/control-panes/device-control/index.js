@@ -4,6 +4,7 @@ module.exports = angular.module('device-control', [
   require('stf/device').name,
   require('stf/control').name,
   require('stf/screen').name,
+  require('stf/common-ui').name,
   require('ng-context-menu').name,
   require('stf/device-context-menu').name
 ])
