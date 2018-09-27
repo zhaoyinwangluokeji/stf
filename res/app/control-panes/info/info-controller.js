@@ -416,5 +416,10 @@ module.exports = function InfoCtrl($scope, LightboxImageService) {
     clearInterval($scope.lastTrafficInterval);
   })
 
+  $scope.monkeyArgs = "--throttle 100 -s 9999 -v -v 1000"
+
+  $scope.runMonkey = function (){
+    $scope.control.shell("monkey -p " + $scope.appName + " " + $scope.monkeyArgs)
+  }
 
 }

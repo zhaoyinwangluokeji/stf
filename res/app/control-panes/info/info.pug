@@ -5,6 +5,7 @@
     .widget-content.padded-small
       table.table.table-condensed.table-hover.table-infocard
         button.btn.btn-primary-outline(ng-click='reCollect()', style='border：2；align:center;') 重新收集数据
+        button.btn.btn-primary-outline(ng-click='runMonkey()', style='border：2；align:center;') 执行monkey
         tbody
           tr
             td(translate) app包名
@@ -14,7 +15,11 @@
             td(translate) 收集间隔（毫秒）
             td
               input(ng-model="timeGap")
-
+      div
+        div monkey参数
+        input(type=text, ng-model='monkeyArgs', Xtext-focus-select,
+          autocapitalize='off', spellcheck='false',
+          tabindex='30', accesskey='S', autocomplete='on').form-control.shell-input
 
   .col-md-6.packery-item
     .widget-content(style='height: 230px;')
