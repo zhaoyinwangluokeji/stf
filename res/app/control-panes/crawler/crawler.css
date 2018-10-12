@@ -1,0 +1,28 @@
+
+.stf-info .table.table-infocard thead > tr > th,
+.stf-info .table.table-infocard tbody > tr > th,
+.stf-info .table.table-infocard tfoot > tr > th,
+.stf-info .table.table-infocard thead > tr > td,
+.stf-info .table.table-infocard tbody > tr > td,
+.stf-info .table.table-infocard tfoot > tr > td {
+  border-top: 0;
+  clear:both;
+}
+
+.stf-info .table-infocard tbody > tr > td:first-child {
+  text-align: left;
+  margin-left: 20px;
+  font-weight: bold;
+  white-space: nowrap;
+  clear:both
+}
+
+.widget-content .packery-item {
+  clear:both;
+}
+
+.stf-info .progress {
+  margin-bottom: 0;
+  height: 15px;
+  clear:both;
+}
