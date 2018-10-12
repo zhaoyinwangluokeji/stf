@@ -120,6 +120,7 @@ module.exports = function InfoCtrl($scope, LightboxImageService) {
   $scope.mmDate = null;
   $scope.trafficDate = null;
   $scope.appName = "cmb.pb";
+  $scope.activity = ".launch.PBInitActivity"
   $scope.timeGap = 3000;
   var title = "CPU使用率";
   var lbl = "时间（秒）";
@@ -175,11 +176,11 @@ module.exports = function InfoCtrl($scope, LightboxImageService) {
           if (cpuIdx == 0) {
             if (cpuResult[j].indexOf("CPU") != -1) {
               var tmpList = cpuResult[j].split(/[ ]+/);
-              console.log("line: ", cpuResult[j]);
+              // console.log("line: ", cpuResult[j]);
               for (i = 0, len = tmpList.length; i < len; i++) {
                 if (tmpList[i].indexOf("CPU") != -1) {
                   cpuIdx = i;
-                  console.log("get cpu in colum: ", cpuIdx);
+                  // console.log("get cpu in colum: ", cpuIdx);
                   break;
                 }
               }
@@ -203,11 +204,11 @@ module.exports = function InfoCtrl($scope, LightboxImageService) {
             if($scope.cpuDate == null){
               $scope.cpuDate = new Date();
             }
-            console.log("timeStamps:", tmpDate - $scope.cpuDate);
+            // console.log("timeStamps:", tmpDate - $scope.cpuDate);
 
             addData($scope.chartCPU,parseInt((tmpDate - $scope.cpuDate)/1000),tmpCPU)
 
-            console.log("get cpu: ", tmpCPU);
+            // console.log("get cpu: ", tmpCPU);
             break;
           }
         }
@@ -231,7 +232,7 @@ module.exports = function InfoCtrl($scope, LightboxImageService) {
           if (pidResult[j].indexOf($scope.appName) != -1 && pidResult[j].indexOf($scope.appName + ":") == -1) {
             var tmpList = pidResult[j].split(/[ ]+/);
             $scope.pid = tmpList[1].trim();
-            console.log("found pid: " + $scope.pid);
+            // console.log("found pid: " + $scope.pid);
             break;
           }
         }
@@ -251,19 +252,19 @@ module.exports = function InfoCtrl($scope, LightboxImageService) {
         for (j = 0, l = mmResult.length; j < l; j++) {
           if (mmResult[j].indexOf("TOTAL") != -1) {
             var tmpList = mmResult[j].split(/[ ]+/);
-            console.log("line: ", mmResult[j]);
+            // console.log("line: ", mmResult[j]);
             tmpMM = tmpList[2]
             if (isNaN(tmpMM)) {
-              console.log("cannot get MM, only get: ", tmpMM);
+              // console.log("cannot get MM, only get: ", tmpMM);
               return;
             }
             var tmpDate = new Date();
             if($scope.mmDate == null){
               $scope.mmDate = new Date();
             }
-            console.log("timeStamps:", tmpDate - $scope.mmDate);
+            // console.log("timeStamps:", tmpDate - $scope.mmDate);
             addData($scope.chartMM, parseInt((tmpDate - $scope.mmDate)/1000), tmpMM);
-            console.log("get mm: ", tmpMM);
+            // console.log("get mm: ", tmpMM);
             break;
           }
         }
@@ -284,7 +285,7 @@ module.exports = function InfoCtrl($scope, LightboxImageService) {
           if (pidResult[j].indexOf($scope.appName) != -1 && pidResult[j].indexOf($scope.appName + ":") == -1) {
             var tmpList = pidResult[j].split(/[ ]+/);
             $scope.pid = tmpList[1].trim();
-            console.log("found pid: " + $scope.pid);
+            // console.log("found pid: " + $scope.pid);
             break;
           }
         }
@@ -299,7 +300,7 @@ module.exports = function InfoCtrl($scope, LightboxImageService) {
             if (pidResult[j].indexOf($scope.appName) != -1 && pidResult[j].indexOf($scope.appName + ":") == -1) {
               var tmpList = pidResult[j].split(/[ ]+/);
               $scope.pid = tmpList[1].trim();
-              console.log("found pid: " + $scope.pid);
+              // console.log("found pid: " + $scope.pid);
               break;
             }
           }
@@ -316,7 +317,7 @@ module.exports = function InfoCtrl($scope, LightboxImageService) {
         var tmpReceived = 0;
         var tmpSend = 0;
         var tmpTraffic = 0;
-        console.log("get traffic result ",result.data);
+        // console.log("get traffic result ",result.data);
         var mmResult = result.data.join('').split('\n');
 
         for (j = 0, l = mmResult.length; j < l; j++) {
@@ -329,14 +330,14 @@ module.exports = function InfoCtrl($scope, LightboxImageService) {
           }
           if (mmResult[j].indexOf("rmnet0") != -1) {
             var tmpList = mmResult[j].split(/[ ]+/);
-            console.log("line: ", mmResult[j]);
+            // console.log("line: ", mmResult[j]);
             tmpReceived = tmpList[1];
             tmpSend = tmpList[9];
             tmpTraffic += parseInt(tmpReceived/1024 + tmpSend/1024);
           }
           if (mmResult[j].indexOf("rmnet_data0") != -1) {
             var tmpList = mmResult[j].split(/[ ]+/);
-            console.log("line: ", mmResult[j]);
+            // console.log("line: ", mmResult[j]);
             tmpReceived = tmpList[1];
             tmpSend = tmpList[9];
             tmpTraffic += parseInt(tmpReceived/1024 + tmpSend/1024);
@@ -344,7 +345,7 @@ module.exports = function InfoCtrl($scope, LightboxImageService) {
         }
 
         if (isNaN(tmpTraffic) || tmpTraffic < 0) {
-          console.log("cannot get Traffic, only get: ", tmpTraffic);
+          // console.log("cannot get Traffic, only get: ", tmpTraffic);
           return;
         }
         // console.log("received: ", tmpReceived, "send: ", tmpSend);
@@ -354,7 +355,7 @@ module.exports = function InfoCtrl($scope, LightboxImageService) {
         if(lastTraffic == null){
           lastTraffic = tmpTraffic;
         }
-        console.log("last traffic : ", lastTraffic,"tmpTraffic : ", tmpTraffic);
+        // console.log("last traffic : ", lastTraffic,"tmpTraffic : ", tmpTraffic);
 
         var tmpDate = new Date();
         if($scope.trafficDate == null){
@@ -416,5 +417,29 @@ module.exports = function InfoCtrl($scope, LightboxImageService) {
     clearInterval($scope.lastTrafficInterval);
   })
 
+  $scope.monkeyArgs = "--throttle 100 -s 9999 -v -v 1000"
+
+  $scope.runMonkey = function (){
+    $scope.control.shell("monkey -p " + $scope.appName + " " + $scope.monkeyArgs)
+  }
+
+  $scope.startTime = "";
+
+  $scope.startApp = function(){
+    $scope.control.shell("am force-stop " + $scope.appName).then(function (result) {
+      $scope.control.shell("am start -W " + $scope.appName + "/" + $scope.activity).then(function (result) {
+        console.log("获得启动时间:" + result.data);
+        var tmpResult = result.data.join('').split('\n')
+        for(i=0; i<tmpResult.length;i++){
+          if(tmpResult[i].indexOf('TotalTime') != -1){
+            var tmp = tmpResult[i].split(':');
+            console.log("总启动时间:" + tmpResult[i]);
+            $scope.startTime = tmp[1].trim();
+            $scope.$apply();
+          }
+        }
+      });
+    });
+  }
 
 }

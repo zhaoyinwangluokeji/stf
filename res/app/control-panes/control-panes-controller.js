@@ -13,6 +13,12 @@ module.exports =
         filters: ['native', 'web']
       },
       {
+        title: gettext('Crawler'),
+        icon: 'fa-info color-orange',
+        templateUrl: 'control-panes/crawler/crawler.pug',
+        filters: ['native', 'web']
+      },
+      {
         title: gettext('Ui Viewer'),
         icon: 'fa-camera color-skyblue color-blue',
         templateUrl: 'control-panes/uiautomatorviewer/uiautomatorviewer.pug',

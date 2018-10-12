@@ -5,6 +5,7 @@
     .widget-content.padded-small
       table.table.table-condensed.table-hover.table-infocard
         button.btn.btn-primary-outline(ng-click='reCollect()', style='border：2；align:center;') 重新收集数据
+        button.btn.btn-primary-outline(ng-click='runMonkey()', style='border：2；align:center;') 执行monkey
         tbody
           tr
             td(translate) app包名
@@ -14,6 +15,21 @@
             td(translate) 收集间隔（毫秒）
             td
               input(ng-model="timeGap")
+      div
+        div monkey参数
+        input(type=text, ng-model='monkeyArgs', Xtext-focus-select,
+          autocapitalize='off', spellcheck='false',
+          tabindex='30', accesskey='S', autocomplete='on').form-control.shell-input
+      table.table.table-condensed.table-hover.table-infocard
+        tbody
+          tr
+            td app入口Activity
+            td
+              input(ng-model="appName")
+          tr
+            td
+              button.btn.btn-primary-outline(ng-click='startApp()', style='border：2；align:center;') 收集App启动时间
+            td  {{startTime}} 毫秒
 
 
   .col-md-6.packery-item
