@@ -20,6 +20,17 @@
         input(type=text, ng-model='monkeyArgs', Xtext-focus-select,
           autocapitalize='off', spellcheck='false',
           tabindex='30', accesskey='S', autocomplete='on').form-control.shell-input
+      table.table.table-condensed.table-hover.table-infocard
+        tbody
+          tr
+            td app入口Activity
+            td
+              input(ng-model="appName")
+          tr
+            td
+              button.btn.btn-primary-outline(ng-click='startApp()', style='border：2；align:center;') 收集App启动时间
+            td  {{startTime}} 毫秒
+
 
   .col-md-6.packery-item
     .widget-content(style='height: 230px;')

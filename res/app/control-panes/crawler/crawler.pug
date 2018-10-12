@@ -1,0 +1,78 @@
+.row.stf-info.selectable(ng-controller='CrawlerCtrl',
+  angular-packery='{draggable: true, draggableHandle: ".heading i"}')
+
+  .col-md-6.packery-item
+    .widget-content.padded-small
+      table.table.table-condensed.table-hover.table-infocard
+        button.btn.btn-primary-outline(ng-click='getBaidu()', style='border：2；align:center;') 输入密码
+        tbody
+          tr
+            td(translate) xpath
+            td
+              input(ng-model="xpath")
+          tr
+            td(translate) 最大点击数
+            td 
+              input(ng-model="max_click")
+          tr
+            td(translate) 最大层数
+            td 
+              input(ng-model="max_level")
+          tr
+            td(translate) 操作等待间隔
+            td 
+              input(ng-model="wait_sec")
+          tr
+            td(translate) 安全键盘id
+            td 
+              input(ng-model="secure_keyboard_id")
+          tr
+            td(translate) 密码
+            td 
+              input(ng-model="password")
+          tr
+            td(translate) 主页面包含id
+            td 
+              input(ng-model="main_page_ele")
+          tr
+            td(translate) 短信验证码输入框包含id
+            td 
+              input(ng-model="msg_code_id")
+          tr
+            td(translate) 电话号码
+            td 
+              input(ng-model="phone_num")
+      table.table.table-condensed.table-hover.table-infocard
+        tbody
+          tr
+            td(translate) 输入框默认值
+            td 
+              input(ng-model="filling_edittext_default")
+          tr
+            td(translate) 输入框自定义值
+            td
+              textarea(ng-model="edittext_content_settings_string",rows=10,cols=30)
+          tr
+            td
+              button.btn.btn-primary-outline(ng-click='loadEditTextCotentSettings()', style='border：2；align:center;') 更新输入框自定义值
+      table.table.table-condensed.table-hover.table-infocard
+        tbody
+          tr
+            td(translate) 黑名单
+            td
+              textarea(ng-model="black_list_string",rows=8,cols=30)
+          tr
+            td
+              button.btn.btn-primary-outline(ng-click='loadBlackList()', style='border：2；align:center;') 更新黑名单
+      table.table.table-condensed.table-hover.table-infocard
+        tbody
+          tr
+            td(translate) 白名单
+            td
+              textarea(ng-model="white_list_string",rows=8,cols=30)
+          tr
+            td
+              button.btn.btn-primary-outline(ng-click='loadWhiteList()', style='border：2；align:center;') 更新白名单
+
+
+
