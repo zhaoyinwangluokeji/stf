@@ -66,13 +66,17 @@ module.exports = function TransactionServiceFactory(socket, TransactionError) {
     var channel = createChannel()
 
     function doneListener(someChannel, data) {
+      console.log("got done, channel: "+someChannel)
       if (someChannel === channel) {
+        console.log("got done, data: "+data.data)
         pending.done(data)
       }
     }
 
     function progressListener(someChannel, data) {
+      console.log("got progress, channel: "+someChannel)
       if (someChannel === channel) {
+        console.log("got progress, data: "+data.seq)
         pending.progress(data)
       }
     }
@@ -135,7 +139,7 @@ module.exports = function TransactionServiceFactory(socket, TransactionError) {
             result.lastData = result.error = message.data
             resolver.reject(new TransactionError(result))
           }
-
+          console.log("readQueue complete: "+result.data)
           return
         }
         else {
