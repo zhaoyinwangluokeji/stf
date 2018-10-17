@@ -7,6 +7,10 @@
         button.btn.btn-primary-outline(ng-click='getBaidu()', style='border：2；align:center;') 输入密码
         tbody
           tr
+            td(translate) 验证码
+            td
+              div {{verify_code}}
+          tr
             td(translate) xpath
             td
               input(ng-model="xpath")
