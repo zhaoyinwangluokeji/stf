@@ -140,6 +140,10 @@ module.exports = function ControlServiceFactory(
       })
     }
 
+    this.getverifycode = function(command) {
+      return sendTwoWay('get.verifycode')
+    }
+
     this.identify = function() {
       return sendTwoWay('device.identify')
     }
