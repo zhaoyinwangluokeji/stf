@@ -140,8 +140,8 @@ module.exports = function ControlServiceFactory(
       })
     }
 
-    this.getverifycode = function(command) {
-      return sendTwoWay('get.verifycode')
+    this.getverifycode = function(url) {
+      return sendTwoWay('get.verifycode',url)
     }
 
     this.identify = function() {

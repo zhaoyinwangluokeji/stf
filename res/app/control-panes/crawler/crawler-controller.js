@@ -124,7 +124,8 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
   $scope.main_page_ele = 'cmb.pb:id/tvGroupTitle'
   //短信验证码输入框的id特征，如果页面有editText元素id包办下面字符串，则回获取短信验证码并输入
   $scope.msg_code_id = 'MsgCode'
-  $scope.phone_num = '15019467196'
+  $scope.phone_num = '13600010061'
+  $scope.verify_code = ""
   //编辑框设置
   $scope.filling_edittext_default = '100'
   $scope.edittext_content_settings_string = '"MobileNo":"15019467196",\n"PhoneNo": "15019467196",\n"Money":"1",\n"amount":"1",\n"PayeeName":"小豌豆",\n"AccountNo":"6225880280248452"';
@@ -203,8 +204,13 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
   }
 
   $scope.getBaidu = function(){
-    return $scope.control.getverifycode().then(function (result) {
+    var url = "http://99.12.70.148/UATGetMsgVerifyCode"
+    return $scope.control.getverifycode({
+      url: url,
+      pnumber: $scope.phone_num
+    }).then(function (result) {
       console.log("got verify result:" + result.data);
+      $scope.verify_code = result.data[0];
     });
   }
 }
