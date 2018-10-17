@@ -186,7 +186,7 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
     var clickY = parseFloat(bounds[1]) + (parseFloat(bounds[3])-parseFloat(bounds[1]))*$scope.dicNum[num][1];
     console.log("pwd x,y=" + clickX + ","+clickY);
     return $scope.control.shell('input tap ' + clickX + " " + clickY).then(function (result) {
-      $scope.inputNumPwd(arr,bounds);
+      return $scope.inputNumPwd(arr,bounds);
     });
   }
 
@@ -198,14 +198,13 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
       }
       var bounds = searchBounds.match(/[\d\.]+/g);
       var arr = (pwd+"").split("")
-      $scope.inputNumPwd(arr,bounds)
+      return $scope.inputNumPwd(arr,bounds)
     });
   }
 
   $scope.getBaidu = function(){
-    $http.jsonp("99.12.70.148/UATGetMsgVerifyCode/Default.aspx?callback=JSON_CALLBACK").success(function(data) { 
-      console.log(data);
-  });
-
+    return $scope.control.getverifycode().then(function (result) {
+      console.log("got verify result:" + result.data);
+    });
   }
 }
