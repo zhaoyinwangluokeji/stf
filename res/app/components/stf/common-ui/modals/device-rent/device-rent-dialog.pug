@@ -12,6 +12,8 @@
           label.radio-tip-bg 
             input(type='radio',name='rent_time_sel',ng-value="time.time", ng-model='$parent.rent_time_selected')
             | &ensp;&ensp;{{time.title}}
+      select-projects(name='project-select')
+      
   .modal-footer
     button.btn.btn-primary-outline.pull-left(type='button', ng-click='cancel()')
       i.fa.fa-refresh
