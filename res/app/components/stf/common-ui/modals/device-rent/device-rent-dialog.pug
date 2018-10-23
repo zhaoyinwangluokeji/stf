@@ -1,4 +1,5 @@
 .stf-device-rent.stf-modal.modal-size-300
+  div.BlockDiv(ng-if='search.BlockDivshow')
   .modal-header.dialog-header-device-rent
     button(type='button', ng-click='cancel()').close &times;
     h4.modal-title.text-info 
@@ -12,8 +13,18 @@
           label.radio-tip-bg 
             input(type='radio',name='rent_time_sel',ng-value="time.time", ng-model='$parent.rent_time_selected')
             | &ensp;&ensp;{{time.title}}
-      select-projects(name='project-select')
-      
+    .content-align-center
+      datalist(id='searchitemArray' onclick="EnalbeProject();" ng-model="search.selectproject")
+        select(name='searchitemArray')
+          option(ng-repeat='item in itemArray | orderBy:item.ProjectCode',ng-value='item.ProjectName +":"+item.ProjectCode', 
+          ng-bind='item.ProjectCode | translate')
+      input(type='search', autosave='deviceFilter' placeholder="输入关联项目 ..."
+        name='deviceFilter', ng-model='search.deviceFilter', ng-change='applyFilter(search.deviceFilter)',
+        ng-model-options='{debounce: 150}',ng-keypress="enterSomething($event)",
+        autocorrect='off', autocapitalize='off', spellcheck='false',
+        list='searchitemArray', focus-element='false',
+        accesskey='4').form-control.input-sm.device-search.pull-right
+
   .modal-footer
     button.btn.btn-primary-outline.pull-left(type='button', ng-click='cancel()')
       i.fa.fa-refresh

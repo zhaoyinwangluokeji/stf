@@ -37,6 +37,45 @@
     }
   ],
   "paths": {
+    "/projects/getprojects": {
+      "get": {
+        "summary": "Get Projects",
+        "description": "Get All Projects with conditon",
+        "operationId": "getProjects",
+        "tags": [
+          "projects"
+        ],
+        "parameters": [
+          {
+            "name": "requirement",
+            "in": "query",
+            "description": "Projects requirement",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get Projects information",
+            "schema": {
+              "$ref": "#/definitions/ProjectsResponse"
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "security": [
+          {
+            "accessTokenAuth": []
+          }
+        ]
+      }
+    },
+
     "/user": {
       "get": {
         "summary": "User Profile",

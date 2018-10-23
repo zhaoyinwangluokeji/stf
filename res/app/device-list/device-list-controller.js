@@ -24,6 +24,11 @@ module.exports = function DeviceListCtrl(
       name: 'rent'
     , selected: true
     }
+    , 
+    {
+      name: 'rentProject'
+    , selected: true
+    }
   , {
       name: 'model'
     , selected: true

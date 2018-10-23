@@ -25,6 +25,31 @@ tags:
   - name: devices
     description: Device Operations
 paths:
+  /projects/getprojects:
+    x-swagger-router-controller: projects
+    get:
+      summary: Get Projects
+      description: Get All Projects with conditon
+      operationId: getProjects
+      tags:
+        - projects
+      parameters:
+        - name: requirement
+          in: query
+          description: Projects requirement
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Get Projects information
+          schema:
+            $ref: "#/definitions/ProjectsResponse"
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+        - accessTokenAuth: []
   /user:
     x-swagger-router-controller: user
     get:
@@ -279,6 +304,14 @@ definitions:
     properties:
       tokens:
         type: array
+        items:
+          type: string
+  ProjectsResponse:
+    required:
+      - requirement
+    properties:
+      requirement:
+        type: string
         items:
           type: string
   DeviceListResponse:

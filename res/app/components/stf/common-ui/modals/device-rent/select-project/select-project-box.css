@@ -1,15 +1,25 @@
+.search-box-show {
+  display:block;
+  width:200px
+}
+.select-box{
+  width:200px
+}
+.select-div{
+  width:200px
+}
 .chose-hide {
     position: absolute!important;
     top: -999em !important;
   }
-  .chose-container {
+.chose-container {
     border: none!important;
     float: left;
     margin-right: 40px;
     padding: 0!important;
     position: relative;
   }
-  .chose-container .chose-single {
+.chose-container .chose-single {
     padding: 6px 12px;
     color: #333;
     width: 100%;
@@ -17,7 +27,7 @@
     display: inline-block;
     height: 30px;
   }
-  .chose-container .chose-single::after {
+.chose-container .chose-single::after {
     content: '';
     position: absolute;
     border-width: 6px 3px;
@@ -29,7 +39,7 @@
     right: 8px;
     top: 12px;
   }
-  .chose-container .chose-single i {
+.chose-container .chose-single i {
     width: 12px;
     float: right;
     right: 8px;
@@ -37,14 +47,14 @@
     height: 12px;
     background-color: #eee;
   }
-  .chose-container .chose-drop {
+.chose-container .chose-drop {
     width: 195px;
     position: absolute;
     border: 1px solid #eee;
     z-index: 1000;
     background-color: #fff;
   }
-  .chose-container .chose-search input[type='text'] {
+.chose-container .chose-search input[type='text'] {
     margin: 0;
     padding-left: 12px;
     width: 100%;
@@ -52,15 +62,15 @@
     border: 1px solid #ccc;
     float: none;
   }
-  .chose-container .chose-result {
+.chose-container .chose-result {
     max-height: 370px;
     overflow-y: scroll;
     overflow-x: hidden;
   }
-  .chose-container .chose-result li {
+.chose-container .chose-result li {
     padding: 5px 12px;
     list-style-type: none;
   }
-  .chose-container .chose-result li:hover {
+.chose-container .chose-result li:hover {
     background-color: #e1e2e7;
   }
