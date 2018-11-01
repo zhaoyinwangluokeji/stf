@@ -1,10 +1,53 @@
-.row.stf-info.selectable(ng-controller='CrawlerCtrl',
-  angular-packery='{draggable: true, draggableHandle: ".heading i"}')
+.widget-container.fluid-height(ng-controller='CrawlerCtrl')
+
+  .col-md-6.packery-item
+    .widget-container.fluid-height.stf-screenshots
+      .heading
+        button.btn.btn-sm.btn-primary-outline(ng-click='takeScreenShot()',
+        title='{{"Take Screenshot"|translate}}')
+          i.fa.fa-camera
+          span(translate) Screenshot
+        //button.btn.btn-sm.btn-info-outline(ng-click='takePageShot()',
+          title='{{"Take Pageshot (Needs WebView running)"|translate}}',
+          ng-if='$root.platform == "web" && $root.browser == "webview"')
+          i.fa.fa-camera-retro(translate)
+          span(translate) Pageshot
+
+        .button-spacer
+
+        .pull-right
+          button.btn.btn-primary-outline.btn-sm.transparent-border(
+            ng-click='zoom({min: 80, step: -50})',
+            ng-disabled='!screenshots.length')
+            i.fa.fa-minus
+
+          input(type='range', ng-model='screenShotSize', min='80', max='480', step='20',
+          ng-model-options='{ updateOn: "default blur", debounce: { default: 80, blur: 0} }',
+          ng-disabled='!screenshots.length').zoom-range
+
+          button.btn.btn-primary-outline.btn-sm.transparent-border(
+            ng-click='zoom({max: 480, step: 50})',
+            ng-disabled='!screenshots.length')
+            i.fa.fa-plus
+
+      .widget-content.padded
+        nothing-to-show(message='{{"No screenshots taken"|translate}}', icon='fa-camera', ng-show='!screenshots.length')
+
+        ul.screenshots-icon-view.clear-fix.selectable
+          li.screenshots-icon-item(ng-repeat='shot in screenshots').cursor-select
+            //- h5 {{ device.name }}
+            h6 {{$index+1}}: {{pic_click_path_list[$index]}}
+            a(ng-href='{{ shot.body.href }}', target='_blank')
+              img(ng-src='{{ shot.body.href + shotSizeParameter(480, 1) }}',
+              ng-srcset='{{ shot.body.href + shotSizeParameter(480, 2) }} 2x').screenshot-image
+        .clearfix
 
   .col-md-6.packery-item
     .widget-content.padded-small
       table.table.table-condensed.table-hover.table-infocard
-        button.btn.btn-primary-outline(ng-click='getBaidu()', style='border：2；align:center;') 输入密码
+        button.btn.btn-primary-outline(ng-click='startCraw()', style='border：2；align:center;') 开始深度遍历
+        button.btn.btn-primary-outline(ng-click='stopCraw()', style='border：2；align:center;') 停止深度遍历
+        button.btn.btn-primary-outline(ng-click='clearCraw()', style='border：2；align:center;') 清空深度遍历结果
         tbody
           tr
             td(translate) 验证码
@@ -43,6 +86,10 @@
             td 
               input(ng-model="msg_code_id")
           tr
+            td(translate) 验证码获取网址
+            td 
+              input(ng-model="verify_code_url")
+          tr
             td(translate) 电话号码
             td 
               input(ng-model="phone_num")
@@ -77,6 +124,16 @@
           tr
             td
               button.btn.btn-primary-outline(ng-click='loadWhiteList()', style='border：2；align:center;') 更新白名单
+    .div 遍历控件树：
+    .widget-content.padded-small
+      #uiviewer-tree.tree.tree-node(ng-repeat="node in p_tree",ng-include="'recursion'")
+    .widget-content.padded-small
 
-
-
+    script#recursion(type='text/ng-template').
+      <div class="tree-heading">
+      <i class="{{node.isCollapsed ? 'fa fa-angle-double-right' : 'fa fa-angle-double-down'}} {{node.children.length?'':'noChildren'}}" ng-click="node.isCollapsed = !node.isCollapsed"></i>
+      <span class="{{node.selected?'selected':''}}">{{node.text}}<span>
+      </div>
+      <div class="tree-body" uib-collapse="node.isCollapsed" >
+      <div ng-repeat="node in node.children" ng-include="'recursion'" class="tree-node" style='margin-left:10px;'></div>
+      </div>
