@@ -5,6 +5,7 @@ module.exports = function UiautomatorviewerCtrl($scope) {
   $scope.nodesArray = null;
 
   $scope.get_xpath = "";
+  $scope.gen_full_xpath = "";
   $scope.xmlStr = "";
   $scope.pointR = 0;
   $scope.pointG = 0;
@@ -141,6 +142,34 @@ module.exports = function UiautomatorviewerCtrl($scope) {
     }
   }
 
+  function getNodeIndex(node,parentNode){
+    var index = 1
+    for (var child of parentNode.children){
+      if(node.isEqualNode(child)){
+        return index;
+      } else if (node.getAttribute("class") == child.getAttribute("class")){
+        index++;
+      }
+    }
+    return index;
+  }
+
+  function generate_full_xpath(node){
+    var nodeClass = null
+    try{
+      nodeClass = node.getAttribute("class")
+    }catch(e){
+      return "";
+    }
+    if(node.parentNode == null){
+      return ""
+    }
+    else{
+      var index = getNodeIndex(node, node.parentNode)
+      return generate_full_xpath(node.parentNode) + "/"+nodeClass+"["+index.toString()+"]"
+    }
+  }
+
   $scope.selectNode = function (node) {
     if (lastSelectNode)
       lastSelectNode.selected = false;
@@ -168,9 +197,11 @@ module.exports = function UiautomatorviewerCtrl($scope) {
       "' and @class='" + nodeClass + "']");
       if(tmpNode != null){
         text += `${"xpath"} : ${generate_xpath(tmpNode)}\n`;
+        text += `${"全路径xpath"} : ${generate_full_xpath(tmpNode)}\n`;
       } else {
         text += `${"xpath"} : ${"//*"}\n`
       }
+      
 
     }
 
@@ -203,6 +234,10 @@ module.exports = function UiautomatorviewerCtrl($scope) {
         $scope.control.shell('cat ' + path)
           .then(function (result) {
             $scope.xmlStr = result.data.join('');
+            $scope.xmlStr = $scope.xmlStr.replace("<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>","")
+            $scope.xmlStr = $scope.xmlStr.replace("<hierarchy rotation=\"0\">","")
+            $scope.xmlStr = $scope.xmlStr.replace("<hierarchy rotation=\"1\">","")
+            $scope.xmlStr = $scope.xmlStr.replace("</hierarchy>","")
             parser = new DOMParser();
             tmpDoc = parser.parseFromString($scope.xmlStr,"text/xml");
             $scope.nodesArray = xml2json(angular.element(result.data.join(''))[1]);
