@@ -116,9 +116,6 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
             // console.log("xml data: " + result.data.toString())
             $scope.xmlStr = result.data.join('');
             $scope.xmlStr = $scope.xmlStr.replace("<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>","")
-            $scope.xmlStr = $scope.xmlStr.replace("<hierarchy rotation=\"0\">","")
-            $scope.xmlStr = $scope.xmlStr.replace("<hierarchy rotation=\"1\">","")
-            $scope.xmlStr = $scope.xmlStr.replace("</hierarchy>","")
             parser = new DOMParser();
             $scope.xmlDom = parser.parseFromString($scope.xmlStr, "text/xml");
           })
