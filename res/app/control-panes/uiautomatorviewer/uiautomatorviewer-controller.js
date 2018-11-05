@@ -5,6 +5,7 @@ module.exports = function UiautomatorviewerCtrl($scope) {
   $scope.nodesArray = null;
 
   $scope.get_xpath = "";
+  $scope.gen_xpath = "";
   $scope.gen_full_xpath = "";
   $scope.xmlStr = "";
   $scope.pointR = 0;
@@ -159,13 +160,19 @@ module.exports = function UiautomatorviewerCtrl($scope) {
     try{
       nodeClass = node.getAttribute("class")
     }catch(e){
-      return "";
+      return "/hierarchy";
+    }
+    if(nodeClass == null){
+      return "/hierarchy";
     }
     if(node.parentNode == null){
       return ""
     }
     else{
       var index = getNodeIndex(node, node.parentNode)
+      if(index == 1){
+        return generate_full_xpath(node.parentNode) + "/"+nodeClass
+      }
       return generate_full_xpath(node.parentNode) + "/"+nodeClass+"["+index.toString()+"]"
     }
   }
@@ -178,27 +185,34 @@ module.exports = function UiautomatorviewerCtrl($scope) {
     lastSelectNode = node;
 
     var text = "";
-    for (var key in node.attributes) {
-      text += `${key} : ${node.attributes[key]}\n`
-    }
+    
     var bounds = node.attributes["bounds"];
     var nodeClass = node.attributes["class"];
     var nodeText = node.attributes["text"];
     var nodeDesc = node.attributes["content-desc"];
     var nodeId = node.attributes["resource-id"];
     if(nodeId == null){
+      console.log("id is null")
       text += `${"xpath"} : ${"//*"}\n`
     } else{
       console.log(bounds,nodeClass,nodeText,nodeDesc,nodeId);
-      var tmpNode = selectSingleNode(tmpDoc, "//*[@resource-id='" + nodeId +
+      var tmpXpath = "//*[@resource-id='" + nodeId +
       "' and @text='" + nodeText +
       "' and @content-desc='" + nodeDesc +
       "' and @bounds='" + bounds +
-      "' and @class='" + nodeClass + "']");
+      "' and @class='" + nodeClass + "']"
+      console.log("tmpXpath: " + tmpXpath)
+      var tmpNode = selectSingleNode(tmpDoc, tmpXpath);
+      for (var key in node.attributes) {
+        text += `${key} : ${node.attributes[key]}\n`
+      }
       if(tmpNode != null){
-        text += `${"xpath"} : ${generate_xpath(tmpNode)}\n`;
-        text += `${"全路径xpath"} : ${generate_full_xpath(tmpNode)}\n`;
+        $scope.gen_xpath = generate_xpath(tmpNode)
+        $scope.gen_full_xpath = generate_full_xpath(tmpNode)
+        text += `${"xpath"} : ${$scope.gen_xpath}\n`;
+        text += `${"全路径xpath"} : ${$scope.gen_full_xpath}\n`;
       } else {
+        console.log("tmpNode is null!")
         text += `${"xpath"} : ${"//*"}\n`
       }
       
@@ -235,9 +249,11 @@ module.exports = function UiautomatorviewerCtrl($scope) {
           .then(function (result) {
             $scope.xmlStr = result.data.join('');
             $scope.xmlStr = $scope.xmlStr.replace("<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>","")
-            $scope.xmlStr = $scope.xmlStr.replace("<hierarchy rotation=\"0\">","")
-            $scope.xmlStr = $scope.xmlStr.replace("<hierarchy rotation=\"1\">","")
-            $scope.xmlStr = $scope.xmlStr.replace("</hierarchy>","")
+            var reg=new RegExp('<(node)( index="[^"]*" text="[^"]*" resource-id="[^"]*" class=")([^"]+)(")',"g");
+            $scope.xmlStr = $scope.xmlStr.replace(reg,"<$3$2$3$4")
+            reg=new RegExp('</node>',"g");
+            $scope.xmlStr = $scope.xmlStr.replace(reg,"")
+            console.log($scope.xmlStr)
             parser = new DOMParser();
             tmpDoc = parser.parseFromString($scope.xmlStr,"text/xml");
             $scope.nodesArray = xml2json(angular.element(result.data.join(''))[1]);
@@ -281,6 +297,30 @@ module.exports = function UiautomatorviewerCtrl($scope) {
       node = xmlDom.selectSingleNode(xpath);
     }
     return node;
+  }
+
+  $scope.copyXPath = function(){
+    var input = document.createElement('input');
+    document.body.appendChild(input);
+    input.setAttribute('value', $scope.gen_xpath);
+    input.select();
+    if (document.execCommand('copy')) {
+        document.execCommand('copy');
+        console.log('复制成功');
+    }
+    document.body.removeChild(input);
+  }
+
+  $scope.copyFullXPath = function(){
+    var input = document.createElement('input');
+    document.body.appendChild(input);
+    input.setAttribute('value', $scope.gen_full_xpath);
+    input.select();
+    if (document.execCommand('copy')) {
+        document.execCommand('copy');
+        console.log('复制成功');
+    }
+    document.body.removeChild(input);
   }
 
   // 打开时先截图
