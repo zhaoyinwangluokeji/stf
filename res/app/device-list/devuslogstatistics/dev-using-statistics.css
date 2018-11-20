@@ -1,0 +1,18 @@
+.btnwidth{
+    width: 50px;
+}
+.alignleft{
+    text-align: left;
+}
+.alignright{
+    text-align: right;
+}
+.floatright{
+    float: right;
+}
+.floatleft{
+    float: left;
+}
+.fill-parent-width{
+    width: -webkit-fill-available;
+}

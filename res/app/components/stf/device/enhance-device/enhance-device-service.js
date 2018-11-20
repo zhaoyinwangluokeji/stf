@@ -49,10 +49,10 @@ module.exports = function EnhanceDeviceServiceFactory($filter, AppState) {
     device.enhancedStatePassive = $filter('statusNamePassive')(device.state)
     device.enhancedRentStateMsg = $filter('statusNameActionFromDevice')(device)
     device.enhancedRentProject = (function(){
-      if(device && device.deivce_rent_conf && device.deivce_rent_conf.project) {
-        return device.deivce_rent_conf.project.ProjectName+':'+device.deivce_rent_conf.project.ProjectCode;
+      if(device && device.device_rent_conf && device.device_rent_conf.project) {
+        return device.device_rent_conf.project.ProjectName+':'+device.device_rent_conf.project.ProjectCode;
       }
-      return "";
+      return "-----";
     })()
   }
 

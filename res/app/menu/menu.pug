@@ -2,11 +2,12 @@
   .container-fluid.stf-top-bar
     a.stf-logo(ng-href="/#!/devices") STF STF
     span.stf-user    
-
-    | {{user.email}} "//" {{user.name}}
+    span(align="center")
+      font.nameemail
+        | {{user.email}} / {{user.name}}
     ul.nav.stf-nav(nav-menu='current').unselectable
       li(ng-cloak)
-        a(ng-href='/#!/control/{{lastUsedDevice}}', ng-show='lastUsedDevice')
+        a(ng-href='/#!/control/{{lastUsedDevice}}', ng-show='lastUsedDevice') 
           span.fa.fa-mobile
           span(ng-if='!$root.basicMode', translate) Control
         a(ng-href='/#!/devices', accesskey='1')

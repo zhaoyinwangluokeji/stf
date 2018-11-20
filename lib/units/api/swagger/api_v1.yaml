@@ -25,6 +25,84 @@ tags:
   - name: devices
     description: Device Operations
 paths:
+  /devicelog/getlogs:
+    x-swagger-router-controller: devicelog
+    get:
+      summary: Get getLogs
+      description: Get All getLogs
+      operationId: getLogs
+      tags:
+        - devicelog
+      parameters:
+        - name: startdate
+          in: query
+          description: getLogs startdate
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Get DeviceLogs 
+          schema:
+            $ref: "#/definitions/DeviceLogResponse"
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+        - accessTokenAuth: []
+
+  /devicelog/getStatisticsPerGroup:
+    x-swagger-router-controller: devicelog
+    get:
+      summary: Get getStatisticsPerGroup function
+      description: Get All getStatisticsPerGroup
+      operationId: getStatisticsPerGroup
+      tags:
+        - devicelog
+      parameters:
+        - name: startdate
+          in: query
+          description: getStatisticsPerGroup startdate
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Get getStatisticsPerGroup 
+          schema:
+            $ref: "#/definitions/DeviceLogPerGroup"
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+        - accessTokenAuth: []
+
+
+  /devicelog/getStatisticsPerDate:
+    x-swagger-router-controller: devicelog
+    get:
+      summary: Get getStatisticsPerDate function
+      description: Get All getStatisticsPerDate
+      operationId: getStatisticsPerDate
+      tags:
+        - devicelog
+      parameters:
+        - name: startdate
+          in: query
+          description: getStatisticsPerDate startdate
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Get getStatisticsPerDate 
+          schema:
+            $ref: "#/definitions/DeviceLogPerDate"
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+        - accessTokenAuth: []
   /projects/getprojects:
     x-swagger-router-controller: projects
     get:
@@ -314,6 +392,34 @@ definitions:
         type: string
         items:
           type: string
+
+  DeviceLogResponse:
+    required:
+      - startdate
+    properties:
+      startdate:
+        type: string
+        items:
+          type: string 
+
+  DeviceLogPerGroup:
+    required:
+      - startdate
+    properties:
+      startdate:
+        type: string
+        items:
+          type: string 
+  DeviceLogPerDate:
+    required:
+      - startdate
+    properties:
+      startdate:
+        type: string
+        items:
+          type: string 
+          
+
   DeviceListResponse:
     required:
       - devices

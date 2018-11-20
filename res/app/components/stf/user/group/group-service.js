@@ -35,7 +35,7 @@ module.exports = function GroupServiceFactory(
     if (!force && !device.usable) {
       return Promise.reject(new Error('Device is not usable'))
     }
-
+    console.log('kick')
     var tx = TransactionService.create(device)
     socket.emit('group.kick', device.channel, tx.channel, {
       requirements: {

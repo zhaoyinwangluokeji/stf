@@ -37,6 +37,123 @@
     }
   ],
   "paths": {
+    "/devicelog/getlogs": {
+      "get": {
+        "summary": "Get getlogs",
+        "description": "Get All Projects with conditon",
+        "operationId": "getLogs",
+        "tags": [
+          "devicelog"
+        ],
+        "parameters": [
+          {
+            "name": "startdate",
+            "in": "query",
+            "description": "Projects startdate",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get DeviceLogs",
+            "schema": {
+              "$ref": "#/definitions/DeviceLogResponse"
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "security": [
+          {
+            "accessTokenAuth": []
+          }
+        ]
+      }
+    },
+    "/devicelog/getStatisticsPerGroup": {
+      "get": {
+        "summary": "Get getStatisticsPerGroup",
+        "description": "Get All Projects with conditon",
+        "operationId": "getStatisticsPerGroup",
+        "tags": [
+          "devicelog"
+        ],
+        "parameters": [
+          {
+            "name": "startdate",
+            "in": "query",
+            "description": "Projects getStatisticsPerGroup",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get getStatisticsPerGroup",
+            "schema": {
+              "$ref": "#/definitions/DeviceLogPerGroup"
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "security": [
+          {
+            "accessTokenAuth": []
+          }
+        ]
+      }
+    },
+
+  
+    "/devicelog/getStatisticsPerDate": {
+      "get": {
+        "summary": "Get getStatisticsPerDate",
+        "description": "Get All Projects with conditon",
+        "operationId": "getStatisticsPerDate",
+        "tags": [
+          "devicelog"
+        ],
+        "parameters": [
+          {
+            "name": "startdate",
+            "in": "query",
+            "description": "Projects getStatisticsPerDate",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get getStatisticsPerDate",
+            "schema": {
+              "$ref": "#/definitions/DeviceLogPerDate"
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "security": [
+          {
+            "accessTokenAuth": []
+          }
+        ]
+      }
+    },
+
     "/projects/getprojects": {
       "get": {
         "summary": "Get Projects",
@@ -75,7 +192,6 @@
         ]
       }
     },
-
     "/user": {
       "get": {
         "summary": "User Profile",
