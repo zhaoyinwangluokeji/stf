@@ -204,18 +204,18 @@ module.exports = function DeviceListIconsDirective(
                 }
             }
             else if(device.state === 'available') {
-              if(device.deivce_rent_conf &&
-                device.deivce_rent_conf.rent) {
-                  if(device.deivce_rent_conf.owner && 
-                    device.deivce_rent_conf.owner.email && 
-                    device.deivce_rent_conf.owner.name &&
+              if(device.device_rent_conf &&
+                device.device_rent_conf.rent) {
+                  if(device.device_rent_conf.owner && 
+                    device.device_rent_conf.owner.email && 
+                    device.device_rent_conf.owner.name &&
                     user ){
-                      if(user.name == device.deivce_rent_conf.owner.name &&
-                        user.email == device.deivce_rent_conf.owner.email) {
+                      if(user.name == device.device_rent_conf.owner.name &&
+                        user.email == device.device_rent_conf.owner.email) {
                         }
                         else{
                           e.preventDefault()
-                          alert("设备已经被"+device.deivce_rent_conf.owner.name + " "+device.deivce_rent_conf.owner.email+" 租用")
+                          alert("设备已经被"+device.device_rent_conf.owner.name + " "+device.device_rent_conf.owner.email+" 租用")
                         }
                     }
                     else{

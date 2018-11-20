@@ -20,3 +20,18 @@
 .radio-tip-bg:hover{
     background-color: burlywood;
     }
+
+.BlockDiv{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    background: gray;
+    cursor: wait;
+    display: block;
+    z-index: 1000;
+    filter: alpha(opacity=60)
+    
+}

@@ -1,4 +1,5 @@
 require('./device-list.css')
+require('nine-bootstrap')
 
 module.exports = angular.module('device-list', [
   require('angular-xeditable').name,
@@ -8,12 +9,17 @@ module.exports = angular.module('device-list', [
   require('stf/common-ui').name,
   require('stf/settings').name,
   require('./column').name,
+  require('./columnlog').name,
   require('./details').name,
+  require('./devicerentlog').name,
   require('./empty').name,
   require('./icons').name,
   require('./stats').name,
   require('./customize').name,
-  require('./search').name
+  require('./search').name,
+  require('ui-bootstrap').name,
+  require('./devuslogstatistics').name
+  
 ])
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider

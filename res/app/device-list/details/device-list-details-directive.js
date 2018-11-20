@@ -2,29 +2,29 @@ var patchArray = require('./../util/patch-array')
 
 module.exports = function DeviceListDetailsDirective(
   $filter
-, $compile
-, $rootScope
-, socket
-, gettext
-, DeviceColumnService
-, GroupService
-, DeviceService
-, LightboxImageService
-, StandaloneService
-, AppState
-, DeviceRentService
-, $location
+  , $compile
+  , $rootScope
+  , socket
+  , gettext
+  , DeviceColumnService
+  , GroupService
+  , DeviceService
+  , LightboxImageService
+  , StandaloneService
+  , AppState
+  , DeviceRentService
+  , $location
 ) {
   return {
     restrict: 'E'
-  , template: require('./device-list-details.pug')
-  , scope: {
+    , template: require('./device-list-details.pug')
+    , scope: {
       tracker: '&tracker'
-    , columns: '&columns'
-    , sort: '=sort'
-    , filter: '&filter'
+      , columns: '&columns'
+      , sort: '=sort'
+      , filter: '&filter'
     }
-  , link: function(scope, element) {
+    , link: function (scope, element) {
       var tracker = scope.tracker()
       var activeColumns = []
       var activeSorting = []
@@ -38,68 +38,68 @@ module.exports = function DeviceListDetailsDirective(
 
 
       function kickDevice(device, force) {
-        return GroupService.kick(device, force).catch(function(e) {
+        return GroupService.kick(device, force).catch(function (e) {
           alert($filter('translate')(gettext('Device cannot get kicked from the group')))
           throw new Error(e)
         })
       }
 
       function inviteDevice(device) {
-        return GroupService.invite(device).then(function() {
+        return GroupService.invite(device).then(function () {
           scope.$digest()
         })
       }
 
       function checkDeviceStatus(e) {
-      
-        if(e.target.classList.contains('device-rent-status') || 
-          e.target.classList.contains('device-status')){
-            var id = e.target.parentNode.parentNode.id
-            var device = mapping[id]
-            user = AppState.user
-            var para = arguments
-            if(device.using){
-              if(device.owner && 
-                device.owner.email && 
-                device.owner.name &&
-                user &&
-                user.name == device.owner.name &&
-                user.email == device.owner.email) {
-                  if(confirm('设备处于使用状态，你确定需要停止租用吗？')){
-                    kickDevice(device)
-                    DeviceRentService.free_rent(device,socket)
-                  }
-                }
-                
+
+        if (e.target.classList.contains('device-rent-status') ||
+          e.target.classList.contains('device-status')) {
+          var id = e.target.parentNode.parentNode.id
+          var device = mapping[id]
+          user = AppState.user
+          var para = arguments
+          if (device.using) {
+            if (device.owner &&
+              device.owner.email &&
+              device.owner.name &&
+              user &&
+              user.name == device.owner.name &&
+              user.email == device.owner.email) {
+              if (confirm('设备处于使用状态，你确定需要停止租用吗？')) {
+                kickDevice(device)
+                DeviceRentService.free_rent(device, socket)
+              }
             }
-            else  if(device.state === 'available') {
-              if(device.deivce_rent_conf &&
-                device.deivce_rent_conf.rent) {
-                  if(device.deivce_rent_conf.owner && 
-                    device.deivce_rent_conf.owner.email && 
-                    device.deivce_rent_conf.owner.name &&
-                    user ){
-                      if(user.name == device.deivce_rent_conf.owner.name &&
-                        user.email == device.deivce_rent_conf.owner.email) {
-                        }
-                        else{
-                          alert("设备已经被"+device.deivce_rent_conf.owner.name + " "+device.deivce_rent_conf.owner.email+" 租用")
-                        }
-                    }
-                }else{
-                  return Promise.all([device].map(function(device) {
-                    e.preventDefault()
-                    return DeviceRentService.open(device) 
-                  })).then(function(result){
-                    if(result[0].result==true){   
-                      $location.path('/control/' + result[0].device.serial);
-                    }
-                  })
-                  .catch(function(err) {
-                    console.log('err: ', err)
-                  })
+
+          }
+          else if (device.state === 'available') {
+            if (device.device_rent_conf &&
+              device.device_rent_conf.rent) {
+              if (device.device_rent_conf.owner &&
+                device.device_rent_conf.owner.email &&
+                device.device_rent_conf.owner.name &&
+                user) {
+                if (user.name == device.device_rent_conf.owner.name &&
+                  user.email == device.device_rent_conf.owner.email) {
                 }
+                else {
+                  alert("设备已经被" + device.device_rent_conf.owner.name + " " + device.device_rent_conf.owner.email + " 租用")
+                }
+              }
+            } else {
+              return Promise.all([device].map(function (device) {
+                e.preventDefault()
+                return DeviceRentService.open(device)
+              })).then(function (result) {
+                if (result[0].result == true) {
+                  $location.path('/control/' + result[0].device.serial);
+                }
+              })
+                .catch(function (err) {
+                  console.log('err: ', err)
+                })
             }
+          }
         }
       }
 
@@ -154,8 +154,8 @@ module.exports = function DeviceListDetailsDirective(
           var col = tr.cells[i]
 
           if (col.firstChild &&
-              col.firstChild.nodeName.toLowerCase() === 'span' &&
-              col.firstChild.classList.contains('xeditable-wrapper')) {
+            col.firstChild.nodeName.toLowerCase() === 'span' &&
+            col.firstChild.classList.contains('xeditable-wrapper')) {
 
             var xeditableWrapper = col.firstChild
             var children = xeditableWrapper.children
@@ -169,16 +169,16 @@ module.exports = function DeviceListDetailsDirective(
         childScopes[id].$destroy()
       }
 
-      scope.updateNote = function(id, serial, note) {
+      scope.updateNote = function (id, serial, note) {
         DeviceService.updateNote(serial, note)
         destroyXeditableNote(id)
       }
 
-      scope.onDeviceNoteCancel = function(id) {
+      scope.onDeviceNoteCancel = function (id) {
         destroyXeditableNote(id)
       }
 
-      element.on('click', function(e) {
+      element.on('click', function (e) {
         checkDeviceStatus(e)
         checkDeviceSmallImage(e)
         checkDeviceNote(e)
@@ -188,7 +188,7 @@ module.exports = function DeviceListDetailsDirective(
       scope.columnDefinitions = DeviceColumnService
 
       // Sorting
-      scope.sortBy = function(column, multiple) {
+      scope.sortBy = function (column, multiple) {
         function findInSorting(sorting) {
           for (var i = 0, l = sorting.length; i < l; ++i) {
             if (sorting[i].name === column.name) {
@@ -200,7 +200,7 @@ module.exports = function DeviceListDetailsDirective(
 
         var swap = {
           asc: 'desc'
-        , desc: 'asc'
+          , desc: 'asc'
         }
 
         var fixedMatch = findInSorting(scope.sort.fixed)
@@ -222,36 +222,36 @@ module.exports = function DeviceListDetailsDirective(
           }
           scope.sort.user.push({
             name: column.name
-          , order: scope.columnDefinitions[column.name].defaultOrder || 'asc'
+            , order: scope.columnDefinitions[column.name].defaultOrder || 'asc'
           })
         }
       }
 
       // Watch for sorting changes
       scope.$watch(
-        function() {
+        function () {
           return scope.sort
         }
-      , function(newValue) {
+        , function (newValue) {
           activeSorting = newValue.fixed.concat(newValue.user)
           scope.sortedColumns = Object.create(null)
-          activeSorting.forEach(function(sort) {
+          activeSorting.forEach(function (sort) {
             scope.sortedColumns[sort.name] = sort
           })
           sortAll()
         }
-      , true
+        , true
       )
 
       // Watch for column updates
       scope.$watch(
-        function() {
+        function () {
           return scope.columns()
         }
-      , function(newValue) {
+        , function (newValue) {
           updateColumns(newValue)
         }
-      , true
+        , true
       )
 
       // Update now so that we don't have to wait for the scope watcher to
@@ -264,7 +264,7 @@ module.exports = function DeviceListDetailsDirective(
         var newActiveColumns = []
 
         // Check what we're supposed to show now
-        columnSettings.forEach(function(column) {
+        columnSettings.forEach(function (column) {
           if (column.selected) {
             newActiveColumns.push(column.name)
           }
@@ -335,13 +335,13 @@ module.exports = function DeviceListDetailsDirective(
 
       // Watch for filter updates.
       scope.$watch(
-        function() {
+        function () {
           return scope.filter()
         }
-      , function(newValue) {
+        , function (newValue) {
           updateFilters(newValue)
         }
-      , true
+        , true
       )
 
       // Calculates a DOM ID for the device. Should be consistent for the
@@ -352,12 +352,12 @@ module.exports = function DeviceListDetailsDirective(
 
       // Compares two devices using the currently active sorting. Returns <0
       // if deviceA is smaller, >0 if deviceA is bigger, or 0 if equal.
-      var compare = (function() {
+      var compare = (function () {
         var mapping = {
           asc: 1
-        , desc: -1
+          , desc: -1
         }
-        return function(deviceA, deviceB) {
+        return function (deviceA, deviceB) {
           var diff
 
           // Find the first difference
@@ -412,17 +412,17 @@ module.exports = function DeviceListDetailsDirective(
         for (var i = 0, l = patch.length; i < l; ++i) {
           var op = patch[i]
           switch (op[0]) {
-          case 'insert':
-            var col = scope.columnDefinitions[op[2]]
-            tr.insertBefore(col.update(col.build(), device), tr.cells[op[1]])
-            break
-          case 'remove':
-            tr.deleteCell(op[1])
-            break
-          case 'swap':
-            tr.insertBefore(tr.cells[op[1]], tr.cells[op[2]])
-            tr.insertBefore(tr.cells[op[2]], tr.cells[op[1]])
-            break
+            case 'insert':
+              var col = scope.columnDefinitions[op[2]]
+              tr.insertBefore(col.update(col.build(), device), tr.cells[op[1]])
+              break
+            case 'remove':
+              tr.deleteCell(op[1])
+              break
+            case 'swap':
+              tr.insertBefore(tr.cells[op[1]], tr.cells[op[2]])
+              tr.insertBefore(tr.cells[op[2]], tr.cells[op[1]])
+              break
           }
         }
 
@@ -537,7 +537,7 @@ module.exports = function DeviceListDetailsDirective(
       function sortAll() {
         // This could be improved by getting rid of the array copying. The
         // copy is made because rows can't be sorted directly.
-        var sorted = [].slice.call(rows).sort(function(rowA, rowB) {
+        var sorted = [].slice.call(rows).sort(function (rowA, rowB) {
           return compare(mapping[rowA.id], mapping[rowB.id])
         })
 
@@ -598,7 +598,7 @@ module.exports = function DeviceListDetailsDirective(
       // Maybe we're already late
       tracker.devices.forEach(addListener)
 
-      scope.$on('$destroy', function() {
+      scope.$on('$destroy', function () {
         tracker.removeListener('add', addListener)
         tracker.removeListener('change', changeListener)
         tracker.removeListener('remove', removeListener)

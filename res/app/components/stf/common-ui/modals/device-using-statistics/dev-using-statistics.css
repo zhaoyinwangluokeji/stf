@@ -1,0 +1,167 @@
+.inlineli{
+    display:inline;
+    display: inline-block;
+}
+
+.heading {
+    background-color: lightgray;
+    height: 30px;
+    margin: 6px;
+    padding: 3px;
+}
+
+.content-align-left {
+    align-items: left;
+    text-align: left;
+}
+
+.ColumWidth {
+    width: 200px;
+  }
+
+.StaticsHeight {
+    height: 400px;
+  }
+
+
+.DatepickerWidth {
+    width: 200px;
+  }
+
+.DateAlignLeft {
+    float: left;
+  }
+
+.DateAlignRight {
+    float: right;
+  }
+
+ 
+
+.noneliststyle {
+    list-style-type: none;
+}
+
+.timetip { 
+    display: table;
+    height: 20px;
+    margin: 7px;
+    }
+
+.DateAlignLeft .timetip { 
+    display: table;
+    height: 20px;
+    margin: 7px;
+    }
+   
+
+.json_table_container .json_table .click_detector div {
+        cursor: text;
+}
+
+.json_table_container .json_table .jta_attr {
+    margin: 0px 5px 0px 0px;
+    padding: 7px 0px 5px 15px;
+    cursor: auto;
+    overflow: hidden;
+}
+
+
+
+.json_table_container .json_table .td_attr {
+    color: #444;
+    background: #f1f1f1;
+    -webkit-box-shadow: inset 0 4px 4px -4px #fff;
+    -moz-box-shadow: inset 0 4px 4px -4px #fff;
+    box-shadow: inset 0 4px 4px -4px #fff;
+}
+
+.json_table_container {
+    display: block;
+}
+.json_table_container .json_table {
+    font: 13px/18px monospace, mono, consolas;
+    padding: 0px;
+    margin: 0px 0px 15px 0px;
+    table-layout: fixed;
+    white-space: nowrap;
+    border-spacing: 0px;
+    border-collapse: collapse;
+}
+.json_table_container .json_table td {
+    max-width: 310px;
+    padding: 0px;
+    vertical-align: top;
+    border: 1px solid #dfdfdf;
+    overflow: hidden;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+.json_table_container .json_table tr {
+    padding: 20px;
+}
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+.json_table_container .json_table .jta_value {
+    cursor: auto;
+    margin: 0px 5px 0px 0px;
+    padding: 7px 0px 5px 15px;
+    max-width: 290px;
+    overflow: hidden;
+}
+.json_table_container .json_table .jta_string {
+    color: green;
+    white-space: pre;
+}
+.json_table_container .json_table .click_detector {
+    width: 100%;
+    cursor: e-resize;
+}
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+.json_table_container .json_table .col-record {
+    color: #aaa;
+    padding: 7px 10px 5px 10px;
+}
+
+
+tfoot td, tfoot th {
+    font-weight: bold;
+    padding: 4px 8px 6px 9px;
+    text-align:center;
+}
+
+
+.btnwidth{
+    width: 30px;
+}
+.msgwidth{
+    width: 100px;
+}
+.alignleft{
+    text-align: left;
+}
+.alignright{
+    text-align: right;
+}
+.floatright{
+    float: right;
+}
+.floatleft{
+    float: left;
+}
+.fill-parent-width{
+    width: -webkit-fill-available;
+}

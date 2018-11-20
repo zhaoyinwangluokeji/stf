@@ -1,0 +1,59 @@
+.stf-modal
+  .modal-header
+    button(type='button', ng-click='cancel()').close &times;
+    h4.modal-title.text-info 
+      i.fa.fa-warning
+      .button-spacer
+      span.text-align-center(translate) 设备租用统计
+  .modal-body
+    .content-align-left
+        ul
+            li.heading 属性列表
+                .div.input-group.input-group-sm
+                li.inlineli.ColumWidth(ng-repeat='col in columns',ng-click='$event.stopPropagation()')
+                    label
+                        input(type='checkbox', ng-model='col.selected')
+                        | {{col.name}}&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+            li.heading 时间范围
+                li.noneliststyle
+                    ul
+                        .DateAlignLeft.timetip 开始时间: &nbsp;&nbsp;
+                        .input-group.DatepickerWidth.DateAlignLeft
+                            input.form-control(type="text", uib-datepicker-popup="{{format}}", 
+                            ng-model="dat1", is-open="popup1.opened", ng-required="true",
+                            close-text="关闭", clear-text="清空", current-text="今天", 
+                            alt-input-formats="altInputFormats", datepicker-options="dateOptions")
+                            |             
+                            span.input-group-btn
+                                button.btn.btn-default(type="button", ng-click="open1()")
+                                    i.glyphicon.glyphicon-calendar
+                        .DateAlignLeft.timetip 结束时间:&nbsp;&nbsp;
+                        .input-group.DatepickerWidth.DateAlignLeft
+                            input.form-control(type="text", uib-datepicker-popup="{{format}}", 
+                            ng-model="dat2", is-open="popup2.opened", ng-required="true",
+                            close-text="关闭", clear-text="清空", current-text="今天", 
+                            alt-input-formats="altInputFormats", datepicker-options="dateOptions")
+                            |             
+                            span.input-group-btn 
+                                button.btn.btn-default(type="button", ng-click="open2()")
+                                    i.glyphicon.glyphicon-calendar
+                        .DateAlignRight
+                            button.btn.btn-default(type="button", ng-click="check()") &nbsp; Query &nbsp;
+            li.heading 统计结果   
+                div( ng-controller="Ctrl as v")
+                    table.table.table-hover.dataTable.ng-table(ng-table="tableParams")
+                        thead
+                            tr
+                            th.header.sortable(ng-repeat="(key,value) in $data[0]",ng-click='sortBy(column, $event.shiftKey)')
+                                div(ng-bind='key | translate')
+                        tbody
+                            tr.device-not-usable(ng-repeat="row in $data")
+                                td(ng-repeat="ceil in row" ) {{ceil}}
+                        device-list-empty(tracker='tracker()')
+
+                              
+  .modal-footer
+    button.btn.btn-primary-outline.pull-left(type='button', ng-click='cancel()')
+      i.fa.fa-refresh
+      span(translate) Cancel
+        

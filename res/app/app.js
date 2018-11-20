@@ -2,7 +2,7 @@ require.ensure([], function(require) {
   require('angular')
   require('angular-route')
   require('angular-touch')
-
+  
   angular.module('app', [
     'ngRoute',
     'ngTouch',

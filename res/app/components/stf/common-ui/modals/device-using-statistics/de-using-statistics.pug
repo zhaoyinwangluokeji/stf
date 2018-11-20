@@ -1,0 +1,180 @@
+.stf-modal
+  .modal-header
+    button(type='button', ng-click='cancel()').close &times;
+    h4.modal-title.text-info 
+      i.fa.fa-warning
+      .button-spacer
+      span.text-align-center(translate) 设备租用统计
+  .modal-body
+    .content-align-left
+        table
+            tr   
+                .heading 时间范围
+                table 
+                    tr
+                        td
+                            .DateAlignLeft.timetip 开始时间: &nbsp;&nbsp;
+                        td
+                            .input-group.DatepickerWidth.DateAlignLeft
+                                input.form-control(type="text", uib-datepicker-popup="{{format}}", 
+                                ng-model="dat1", is-open="popup1.opened", ng-required="true",
+                                close-text="关闭", clear-text="清空", current-text="今天", 
+                                alt-input-formats="altInputFormats", datepicker-options="dateOptions")
+                                |             
+                                span.input-group-btn
+                                    button.btn.btn-default(type="button", ng-click="open1()")
+                                        i.glyphicon.glyphicon-calendar
+                        td
+                            .DateAlignLeft.timetip 结束时间:&nbsp;&nbsp;
+                        td    
+                            .input-group.DatepickerWidth.DateAlignLeft
+                                input.form-control(type="text", uib-datepicker-popup="{{format}}", 
+                                ng-model="dat2", is-open="popup2.opened", ng-required="true",
+                                close-text="关闭", clear-text="清空", current-text="今天", 
+                                alt-input-formats="altInputFormats", datepicker-options="dateOptions")
+                                |             
+                                span.input-group-btn 
+                                    button.btn.btn-default(type="button", ng-click="open2()")
+                                        i.glyphicon.glyphicon-calendar
+                        td.btnwidth
+                        td.btnwidth
+                        td
+                            .DateAlignRight
+                                button.btn.btn-default(type="button", ng-click="QueryMessage()") &nbsp; Query &nbsp;
+            tr
+                .heading 统计结果  
+                uib-tabset.overflow-auto.device-list-active-tabs(ng-if='activeTabs')
+                    uib-tab(active='activeTabs.project', select='focusSearch()')
+                        uib-tab-heading
+                            i.fa.fa-th-large
+                            span(translate) Projects
+                        div.device-list-devices-content(ng-if='activeTabs.project').selectable
+                            table.table.dataTable.ng-table(ng-table="tableParams")
+                                thead
+                                    th.header.sortable(ng-repeat='(k,v) in tableParams.data[0] track by $index')
+                                        div(ng-bind='k | translate')
+                                tr(ng-repeat="row in tableParams.data")
+                                    td(ng-repeat="vv in row" ) {{vv}}
+                                tr  
+                                    td(colspan="100") 
+                                        table.fill-parent-width(ng-init="sel=5")
+                                            tr
+                                                td
+                                                    div.floatleft
+                                                        button.btnwidth(ng-disabled="params.parameters().page<=1" ng-click="params.page(1)") <<<
+                                                    div.floatleft
+                                                        button.btnwidth(ng-disabled="params.parameters().page<=1" ng-click="params.page(params.parameters().page-1)") <
+                                                    div.floatleft
+                                                        button.btnwidth(ng-disabled=" (params.total() / params.parameters().count) < params.parameters().page " ng-click="params.page(params.parameters().page+1)") >
+                                                    div.floatleft
+                                                        button.btnwidth(ng-disabled=" (params.total() / params.parameters().count) < params.parameters().page " ng-click="params.page(pagescount)") >>>
+                                     
+                                                td
+                                                    span.msgwidth 
+                                                    | Totals: {{params.total()}}  
+                                                td
+                                                    span.msgwidth  
+                                                    | Pages: {{params.parameters().page}} / {{pagescount}}
+                                                td(colspan="0")
+                                                    div.btn-group(uib-dropdown).floatright
+                                                        button.btn.btn-sm.btn-primary-outline(type='button', uib-dropdown-toggle)
+                                                            span {{selectedSite}}
+                                                            span(ng-bind='">>"|translate')
+                                                        ul.uib-dropdown-menu(role='menu')
+                                                            li(ng-repeat='ceil in params.settings().counts track by $index',
+                                                            ng-hide='!adminMode && columnDefinitions[column.name].admin')
+                                                                button(ng-click='params.count(ceil);sel=ceil').btn.btn-xs
+                                                                    i.fa.fa-circle-thin
+                                                                    span(ng-bind='ceil | translate') 
+                    uib-tab(active='activeTabs.date', select='focusSearch()')
+                        uib-tab-heading
+                            i.fa.fa-th-large
+                            span(translate) Dates
+                        div.device-list-devices-content(ng-if='activeTabs.date').selectable  
+                            table.table.dataTable.ng-table(ng-table="tableParamsDate")
+                                thead
+                                    th.header.sortable(ng-repeat='(k,v) in tableParamsDate.data[0] track by $index')
+                                        div(ng-bind='k | translate')
+                                tr(ng-repeat="row in tableParamsDate.data")
+                                    td(ng-repeat="vv in row" ) {{vv}} 
+                                tr  
+                                    td(colspan="100") 
+                                        table.fill-parent-width(ng-init="sel=5")
+                                            tr
+                                                td
+                                                    div.floatleft
+                                                        button.btnwidth(ng-disabled="params.parameters().page<=1" ng-click="params.page(1)") <<<
+                                                    div.floatleft
+                                                        button.btnwidth(ng-disabled="params.parameters().page<=1" ng-click="params.page(params.parameters().page-1)") <
+                                                    div.floatleft
+                                                        button.btnwidth(ng-disabled=" (params.total() / params.parameters().count) < params.parameters().page " ng-click="params.page(params.parameters().page+1)") >
+                                                    div.floatleft
+                                                        button.btnwidth(ng-disabled=" (params.total() / params.parameters().count) < params.parameters().page " ng-click="params.page(pages2count)") >>>
+                                                td
+                                                    span.msgwidth 
+                                                    | Totals: {{params.total()}}  
+                                                td
+                                                    span.msgwidth  
+                                                    | Pages: {{params.parameters().page}} / {{pages2count}}
+                                                td(colspan="0")
+                                                    div.btn-group(uib-dropdown).floatright
+                                                        button.btn.btn-sm.btn-primary-outline(type='button', uib-dropdown-toggle)
+                                                            span {{selectedSite}}
+                                                            span(ng-bind='">>"|translate')
+                                                        ul.uib-dropdown-menu(role='menu')
+                                                            li(ng-repeat='ceil in params.settings().counts track by $index',
+                                                            ng-hide='!adminMode && columnDefinitions[column.name].admin')
+                                                                button(ng-click='params.count(ceil);sel=ceil').btn.btn-xs
+                                                                    i.fa.fa-circle-thin
+                                                                    span(ng-bind='ceil | translate') 
+                    uib-tab(active='activeTabs.custom', select='focusSearch()')
+                        uib-tab-heading
+                            i.fa.fa-th-large
+                            span(translate) Custom
+                        div.device-list-devices-content(ng-if='activeTabs.custom').selectable  
+                            table.table.dataTable.ng-table(ng-table="tableParamsCustom")
+                                thead
+                                    th.header.sortable(ng-repeat='(k,v) in tableParamsCustom.data[0] track by $index')
+                                        div(ng-bind='k | translate')
+                                tr(ng-repeat="row in tableParamsCustom.data")
+                                    td(ng-repeat="vv in row" ) {{vv}} 
+                                tr  
+                                    td(colspan="100") 
+                                        table.fill-parent-width(ng-init="sel=5")
+                                            tr
+                                                td
+                                                    div.floatleft
+                                                        button.btnwidth(ng-disabled="params.parameters().page<=1" ng-click="params.page(1)") <<<
+                                                    div.floatleft
+                                                        button.btnwidth(ng-disabled="params.parameters().page<=1" ng-click="params.page(params.parameters().page-1)") <
+                                                    div.floatleft
+                                                        button.btnwidth(ng-disabled=" (params.total() / params.parameters().count) < params.parameters().page " ng-click="params.page(params.parameters().page+1)") >
+                                                    div.floatleft
+                                                        button.btnwidth(ng-disabled=" (params.total() / params.parameters().count) < params.parameters().page " ng-click="params.page(pages2count)") >>>
+                                                td
+                                                    span.msgwidth 
+                                                    | Totals: {{params.total()}}  
+                                                td
+                                                    span.msgwidth  
+                                                    | Pages: {{params.parameters().page}} / {{pagesCustomCount}}
+                                                td(colspan="0")
+                                                    div.btn-group(uib-dropdown).floatright
+                                                        button.btn.btn-sm.btn-primary-outline(type='button', uib-dropdown-toggle)
+                                                            span {{selectedSite}}
+                                                            span(ng-bind='">>"|translate')
+                                                        ul.uib-dropdown-menu(role='menu')
+                                                            li(ng-repeat='ceil in params.settings().counts track by $index',
+                                                            ng-hide='!adminMode && columnDefinitions[column.name].admin')
+                                                                button(ng-click='params.count(ceil);sel=ceil').btn.btn-xs
+                                                                    i.fa.fa-circle-thin
+                                                                    span(ng-bind='ceil | translate') 
+
+
+
+
+
+  .modal-footer
+    button.btn.btn-primary-outline.pull-left(type='button', ng-click='cancel()')
+      i.fa.fa-refresh
+      span(translate) Cancel
+        

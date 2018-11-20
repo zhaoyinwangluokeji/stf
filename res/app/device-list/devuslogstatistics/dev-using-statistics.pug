@@ -1,0 +1,39 @@
+
+div(ng-controller="DevUsingStatisticsController as dv")
+    table.table.dataTable.ng-table(ng-table="dv.tableParams")
+        thead
+            th.header.sortable(ng-repeat='(k,v) in $data[0] track by $index')
+                div(ng-bind='k | translate')
+        tr.device-not-usable(ng-repeat="row in $data")
+            td(ng-repeat="ceil in row" ng-bind="") {{ceil}}
+        tr
+            td(colspan="100")
+                table.fill-parent-width(ng-init="sel=5")
+                    tr
+                        td
+                            div.floatleft
+                                button.btnwidth(ng-disabled="params.parameters().page<=1" ng-click="params.page(params.parameters().page-1)") <<
+                            div.floatleft
+                                button.btnwidth(ng-disabled=" (params.total() / params.parameters().count) < params.parameters().page " ng-click="params.page(params.parameters().page+1)") >>
+                             
+                        td(colspan="0")
+                            div.btn-group(uib-dropdown).floatright
+                                button.btn.btn-sm.btn-primary-outline(type='button', uib-dropdown-toggle)
+                                    span {{v.selectedSite}}
+                                    span(ng-bind='">>"|translate')
+                                ul.uib-dropdown-menu(role='menu')
+                                    li(ng-repeat='ceil in params.settings().counts track by $index',
+                                    ng-hide='!adminMode && columnDefinitions[column.name].admin')
+                                        button(ng-click='params.count(ceil);sel=ceil').btn.btn-xs
+                                            i.fa.fa-circle-thin
+                                            span(ng-bind='ceil | translate')
+                                          
+
+
+
+
+         
+
+                 
+    
+   

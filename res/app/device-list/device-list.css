@@ -87,3 +87,20 @@ img.device-icon-smallest {
 .stf-device-list .device-note:hover .device-note-edit {
   visibility: visible;
 }
+
+.full button span {
+  background-color: limegreen;
+  border-radius: 32px;
+  color: black;
+}
+.partially button span {
+  background-color: orange;
+  border-radius: 32px;
+  color: black;
+}
+.DatepickerWidth{
+  width: 200px;
+}
+.DateAlignRight{
+  float:right;
+}

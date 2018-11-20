@@ -1,13 +1,6 @@
-/*
-this model is writed by d.f.chen
-date: 2018.10.16
-*/
-
-require('./select-project.css')
+require('./select-project-box.css')
 
 module.exports = angular.module('stf.device-rent.select-project', [
-   require('stf/socket').name,
-   require('stf/socket').name,
-   ngModel
+   require('stf/socket').name
 ])
-  .directive('selectProjects', require('./select-project'))
+.directive('selectProjects', require('./select-project-box'))
