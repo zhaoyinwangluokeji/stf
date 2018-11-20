@@ -18,11 +18,13 @@
         i.fa.fa-spinner.fa-spin
         span Loadding...
     .col-md-4
-      div(style="text-align:right")
-        input(type="text", size="30", ng-model='get_xpath')
-        button.btn.btn-primary-outline(ng-click='searchXpath()', style='border：2；') 查找xpath
+      div(style="text-align:left")
+        input(type="text", size="40", ng-model='get_xpath')
+        button.btn.btn-primary-outline(ng-click='searchXpath()' style='border：2；') 查找xpath
       div
-        pre(ng-show='showNode') {{showNode.text}}
+        button.btn.btn-primary-outline(ng-click="copyXPath()" style="border：2；") 复制xpath
+        button.btn.btn-primary-outline(ng-click="copyFullXPath()" data-clipboard-target="#show-full-xpath" style="border：2；") 复制全路径xpath
+        pre(id="show-full-xpath") {{showNode.text}}
 
   script#recursion(type='text/ng-template').
     <div class="tree-heading">
