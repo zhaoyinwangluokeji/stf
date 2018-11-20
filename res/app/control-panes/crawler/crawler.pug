@@ -3,18 +3,6 @@
   .col-md-6.packery-item
     .widget-container.fluid-height.stf-screenshots
       .heading
-        button.btn.btn-sm.btn-primary-outline(ng-click='takeScreenShot()',
-        title='{{"Take Screenshot"|translate}}')
-          i.fa.fa-camera
-          span(translate) Screenshot
-        //button.btn.btn-sm.btn-info-outline(ng-click='takePageShot()',
-          title='{{"Take Pageshot (Needs WebView running)"|translate}}',
-          ng-if='$root.platform == "web" && $root.browser == "webview"')
-          i.fa.fa-camera-retro(translate)
-          span(translate) Pageshot
-
-        .button-spacer
-
         .pull-right
           button.btn.btn-primary-outline.btn-sm.transparent-border(
             ng-click='zoom({min: 80, step: -50})',
@@ -34,12 +22,11 @@
         nothing-to-show(message='{{"No screenshots taken"|translate}}', icon='fa-camera', ng-show='!screenshots.length')
 
         ul.screenshots-icon-view.clear-fix.selectable
-          li.screenshots-icon-item(ng-repeat='shot in screenshots').cursor-select
+          li.screenshots-icon-item(ng-repeat='i in error_screen_indexs track by $index').cursor-select
             //- h5 {{ device.name }}
-            h6 {{$index+1}}: {{pic_click_path_list[$index]}}
-            a(ng-href='{{ shot.body.href }}', target='_blank')
-              img(ng-src='{{ shot.body.href + shotSizeParameter(480, 1) }}',
-              ng-srcset='{{ shot.body.href + shotSizeParameter(480, 2) }} 2x').screenshot-image
+            h6 {{$index}}: {{pic_click_path_list[i]}}
+            a(target='_blank')
+              img(ng-src='{{screenshots[i]}}' style='width: {{screenShotSize}}px;')
         .clearfix
 
   .col-md-6.packery-item
@@ -48,11 +35,12 @@
         button.btn.btn-primary-outline(ng-click='startCraw()', style='border：2；align:center;') 开始深度遍历
         button.btn.btn-primary-outline(ng-click='stopCraw()', style='border：2；align:center;') 停止深度遍历
         button.btn.btn-primary-outline(ng-click='clearCraw()', style='border：2；align:center;') 清空深度遍历结果
+        button.btn.btn-primary-outline(ng-click='downloadResult()', style='border：2；align:center;') 结果下载
         tbody
           tr
-            td(translate) 验证码
+            td(translate) 图片验证接口url
             td
-              div {{verify_code}}
+              div {{predict_url}}
           tr
             td(translate) xpath
             td

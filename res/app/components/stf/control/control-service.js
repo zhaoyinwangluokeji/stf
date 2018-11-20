@@ -144,6 +144,13 @@ module.exports = function ControlServiceFactory(
       return sendTwoWay('get.verifycode',url)
     }
 
+    this.predictImg = function(url,imgBase64) {
+      return sendTwoWay('get.predictimg',{
+        url: url,
+        img: imgBase64
+      })
+    }
+
     this.identify = function() {
       return sendTwoWay('device.identify')
     }

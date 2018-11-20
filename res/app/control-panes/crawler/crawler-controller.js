@@ -1,8 +1,8 @@
 
 
-
-
 module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
+  JSZip = require("jszip")
+  fs = require("filesaver.js")
   var md5 = require('./md5.js')
   var hex = new md5()
 
@@ -125,6 +125,8 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
 
   //开始crawler程序
   //通用配置
+  $scope.predict_url = "http://99.13.199.4:8501/v1/models/phone_image_model:predict" 
+  $scope.predict_result = false
   $scope.max_click = 50
   $scope.max_level = 10
   $scope.wait_sec = 3
@@ -180,23 +182,59 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
   }
   $scope.loadWhiteList();
 
-  $scope.takeScreenShot = function (operateInfo = "") {
-    return $scope.control.screenshot().then(function (result) {
-      $scope.pic_click_path.push(operateInfo)
-      var tmp1 = JSON.parse(JSON.stringify($scope.pic_click_path))
-      $scope.pic_click_path_list.push(tmp1)
-      $scope.$apply(function () {
-        $scope.screenshot = result;
-        $scope.screenshots.push(result)
-        $scope.click_num += 1
-        var tmp3 = $scope.page_content.slice(0)
-        $scope.page_cotent_list.push([$scope.click_num, tmp3]);
-      })
-      // img.src = result.body.href
-      
+  $scope.predictImgResult = function(img64){
+    return $scope.control.predictImg($scope.predict_url,img64).then(function (result) {
+      console.log("got predict result:" + result.data[0]);
+      if(result.data[0] == "Success"){
+        $scope.predict_result = true
+      } else{
+        $scope.predict_result = false
+      }
     })
-
   }
+
+  $scope.takeScreenShot = function (operateInfo = "") {
+    var c=document.getElementById("live-screen");
+    var imgData=c.toDataURL()
+    // // imgData = imgData.replace("data:image/png;base64,","")
+    // console.log(imgData)
+    $scope.tmpImg = imgData
+    $scope.$apply(function () {
+    var tmpIndex = $scope.screenshots.length
+    $scope.screenshots.push(imgData)
+    $scope.pic_click_path.push(operateInfo)
+    $scope.predictImgResult(imgData.replace("data:image/png;base64,","")).then(function(){
+      if(!$scope.predict_result){
+        $scope.error_screen_indexs.push(tmpIndex)
+      }
+    })
+    var tmp1 = JSON.parse(JSON.stringify($scope.pic_click_path))
+    $scope.pic_click_path_list.push(tmp1)
+    $scope.click_num += 1
+    var tmp3 = $scope.page_content.slice(0)
+    $scope.page_cotent_list.push([$scope.click_num, tmp3]);
+    })
+  }
+
+  // $scope.takeScreenShot = function (operateInfo = "") {
+  //   return $scope.control.screenshot().then(function (result) {
+  //     $scope.pic_click_path.push(operateInfo)
+  //     var tmp1 = JSON.parse(JSON.stringify($scope.pic_click_path))
+  //     $scope.pic_click_path_list.push(tmp1)
+  //     $scope.$apply(function () {
+  //       $scope.screenshot = result;
+  //       $scope.screenshots.push(result)
+  //       console.log(JSON.stringify(result))
+        
+  //       $scope.click_num += 1
+  //       var tmp3 = $scope.page_content.slice(0)
+  //       $scope.page_cotent_list.push([$scope.click_num, tmp3]);
+  //     })
+  //     // img.src = result.body.href
+      
+  //   })
+
+  // }
   $scope.dicNum = { '0': [0.5, 0.85], '1': [0.2, 0.12], '2': [0.5, 0.12], '3': [0.2, 0.12], '4': [0.2, 0.37], '5': [0.5, 0.37], '6': [0.8, 0.37], '7': [0.2, 0.62], '8': [0.5, 0.62], '9': [0.8, 0.62] }
 
   $scope.inputNumPwd = function (arr, bounds) {
@@ -387,6 +425,7 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
 
   $scope.click_num = 1;
   $scope.screenshots = []
+  $scope.error_screen_indexs = []
   $scope.screenShotSize = 150
 
   $scope.clear = function () {
@@ -638,5 +677,23 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
   $scope.$on("$destroy", function () {
     $scope.endCraw = true;
   })
+
+
+  $scope.downloadResult = function(){  
+    var zip = new JSZip();
+    var img = zip.folder("images");
+    var len = $scope.screenshots.length
+    var name = ""
+    for (i=0;i<len;i++){
+      name = i + ".png"
+      img.file(name, $scope.screenshots[i].replace("data:image/png;base64,",""), {base64: true});
+    }
+    zip.generateAsync({type:"blob"})
+    .then(function(content) {
+        // see FileSaver.js
+        fs.saveAs(content, "report.zip");
+    });
+  }
+
 
 }
