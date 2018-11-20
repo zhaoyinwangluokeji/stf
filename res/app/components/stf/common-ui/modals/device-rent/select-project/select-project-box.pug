@@ -1,0 +1,5 @@
+input.search-box-show(ng-change="changeKeyValue(searchField)" placeholder="添加关联项目（可搜索）..." ng-model="searchField" ng-click = "hidden=!hidden" value="{{searchField}}" ) 
+div(ng-hide="hidden")
+    select.select-box(ng-change="change(x)" ng-model="x")
+        option(ng-repeat="data in datas") {{data}}
+   

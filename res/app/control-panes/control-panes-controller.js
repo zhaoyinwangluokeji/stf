@@ -83,12 +83,12 @@ module.exports =
           // $rootScope.pageTitle = device.name
 
           SettingsService.set('lastUsedDevice', serial)
-          if(device.deivce_rent_conf && 
-            device.deivce_rent_conf.rent ){
+          if(device.device_rent_conf && 
+            device.device_rent_conf.rent ){
 
-            if( device.deivce_rent_conf.owner && 
-              AppState.user.email == device.deivce_rent_conf.owner.email && 
-              AppState.user.name == device.deivce_rent_conf.owner.name ){
+            if( device.device_rent_conf.owner && 
+              AppState.user.email == device.device_rent_conf.owner.email && 
+              AppState.user.name == device.device_rent_conf.owner.name ){
                 $scope.device = device
                 $scope.control = ControlService.create(device, device.channel)
                 return device

@@ -10,7 +10,7 @@
     "angular-touch": "~1.5.0-rc.2",
     "lodash": "~3.10.1",
     "oboe": "~2.1.2",
-    "ng-table": "~1.0.0-beta.9",
+    "ng-table": "~1.0.0",
     "angular-gettext": "~2.2.0",
     "angular-ui-ace": "~0.2.3",
     "angular-dialog-service": "~5.2.11",
@@ -33,7 +33,8 @@
     "angular-ladda": "~0.3.1",
     "d3": "~3.5.14",
     "spin.js": "~2.3.2",
-    "angular-xeditable": "~0.1.9"
+    "angular-xeditable": "~0.1.9",
+    "angular-ui-select":"latest"
   },
   "private": true,
   "devDependencies": {

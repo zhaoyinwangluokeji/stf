@@ -43,8 +43,13 @@ module.exports = function DeviceColumnService(
     , value: function(device) {
         return $filter('translate')(device.enhancedRentStateMsg)
       }
-    
     },DeviceRentService,$location,AppState,GroupService,socket)
+   , rentProject: TextCell({
+      title: ('rentProject')
+    , value: function(device) {
+        return $filter('translate')(device.enhancedRentProject)
+      }
+    })
   , model: DeviceModelCell({
       title: gettext('Model')
     , value: function(device) {
@@ -663,17 +668,17 @@ function DeviceRentCell(options,DeviceRentService,$location,AppState,GroupServic
               
           }
           else  if(device.state === 'available') {
-            if(device.deivce_rent_conf &&
-              device.deivce_rent_conf.rent) {
-                if(device.deivce_rent_conf.owner && 
-                  device.deivce_rent_conf.owner.email && 
-                  device.deivce_rent_conf.owner.name &&
+            if(device.device_rent_conf &&
+              device.device_rent_conf.rent) {
+                if(device.device_rent_conf.owner && 
+                  device.device_rent_conf.owner.email && 
+                  device.device_rent_conf.owner.name &&
                   user ){
-                    if(user.name == device.deivce_rent_conf.owner.name &&
-                      user.email == device.deivce_rent_conf.owner.email) {
+                    if(user.name == device.device_rent_conf.owner.name &&
+                      user.email == device.device_rent_conf.owner.email) {
                       }
                       else{
-                        alert("设备已经被"+device.deivce_rent_conf.owner.name + " "+device.deivce_rent_conf.owner.email+" 租用")
+                        alert("设备已经被"+device.device_rent_conf.owner.name + " "+device.device_rent_conf.owner.email+" 租用")
                       }
                   }
               }else{
@@ -721,6 +726,55 @@ function DeviceRentCell(options,DeviceRentService,$location,AppState,GroupServic
     })()
   , filter: function(device, filter) {
       return device.state === filter.query
+    }
+  })
+}
+
+
+function DeviceRentProjectCell(options) {
+  return _.defaults(options, {
+    title: options.title
+  , defaultOrder: 'asc'
+  , build: function() {
+      var td = document.createElement('td')
+      var span = document.createElement('span')
+      span.className = 'device-browser-list'
+      td.appendChild(span)
+      return td
+    }
+  , update: function(td, device) {
+      var span = td.firstChild
+      var browser = options.value(device)
+      var apps = browser.apps.slice().sort(function(appA, appB) {
+            return compareIgnoreCase(appA.name, appB.name)
+          })
+
+      for (var i = 0, l = apps.length; i < l; ++i) {
+        var app = apps[i]
+        var img = span.childNodes[i] || span.appendChild(document.createElement('img'))
+        var src = '/static/app/browsers/icon/36x36/' + (app.type || '_default') + '.png'
+
+        // Only change if necessary so that we don't trigger a download
+        if (img.getAttribute('src') !== src) {
+          img.setAttribute('src', src)
+        }
+
+        img.title = app.name + ' (' + app.developer + ')'
+      }
+
+      while (span.childNodes.length > browser.apps.length) {
+        span.removeChild(span.lastChild)
+      }
+
+      return td
+    }
+  , compare: function(a, b) {
+      return options.value(a).apps.length - options.value(b).apps.length
+    }
+  , filter: function(device, filter) {
+      return options.value(device).apps.some(function(app) {
+        return filterIgnoreCase(app.type, filter.query)
+      })
     }
   })
 }

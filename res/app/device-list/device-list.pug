@@ -9,16 +9,64 @@
         .widget-content.padded
 
           .filtering-buttons
+            span.pull-right(ng-if='activeTabs.deviceusinglog && !$root.basicMode')
+              .btn-group(uib-dropdown).pull-right
+                button.btn.btn-sm.btn-primary-outline(type='button', uib-dropdown-toggle)
+                  i.fa.fa-align-justify
+                ul.uib-dropdown-menu(role='Menus').pointer
+                  li(ng-repeat='menu in Menus track by menu.name',
+                  ng-hide='!adminMode && menu.admin',
+                  ng-click='$event.stopPropagation()')
+                    button(ng-click='menu.click()').btn.btn-xs.btn-default-outline
+                      i.fa.fa-genderless
+                      span(ng-bind='menu.name')
+                  li
+                    button(ng-click='CloseReportWnd()').btn.btn-xs.btn-danger-outline
+                      i.fa.fa-trash-o
+                      span(ng-bind='"CLOSE"|translate')
+
+
             datalist(id='searchFields')
               select(name='searchFields')
-                option(ng-repeat='column in columns', ng-value='column.name + ": "',
+                option(ng-repeat='column in columns', ng-value='column.name + ": "',ng-if='column.selected'
                 ng-bind='columnDefinitions[column.name].title | translate')
-            input(type='search', autosave='deviceFilter'
+            input(type='search', autosave='deviceFilter',ng-if='activeTabs.details || activeTabs.icons' 
               name='deviceFilter', ng-model='search.deviceFilter', ng-change='applyFilter(search.deviceFilter)',
               ng-model-options='{debounce: 150}'
               autocorrect='off', autocapitalize='off', spellcheck='false',
               list='searchFields', multiple, focus-element='search.focusElement',
               text-focus-select, accesskey='4').form-control.input-sm.device-search.pull-right
+
+            datalist(id='searchFieldsLog')
+              select(name='searchFieldsLog')
+                option(ng-repeat='column in logsColumns', ng-value='column.name + ": "',ng-if='column.selected'
+                ng-bind='LogscolumnDefinitions[column.name].title | translate')
+            input(type='search', autosave='deviceFilter',ng-if='activeTabs.deviceusinglog' 
+              name='deviceFilter', ng-model='search.deviceFilter', ng-change='applyFilter(search.deviceFilter)',
+              ng-model-options='{debounce: 150}'
+              autocorrect='off', autocapitalize='off', spellcheck='false',ng-keypress="enterSomething($event)"
+              list='searchFieldsLog', multiple, focus-element='search.focusElement',
+              text-focus-select, accesskey='4').form-control.input-sm.device-search.pull-right
+            
+            input(type="text" ng-show='false' ng-model='condi',ng-required="true" ,ng-if='activeTabs.deviceusinglog')
+
+            span.pull-right(ng-if='activeTabs.deviceusinglog' )
+              .btn-group(uib-dropdown).pull-right
+                button.btn.btn-sm.btn-primary-outline(type='button', uib-dropdown-toggle)
+                  i.fa.fa-columns
+                  span(ng-bind='"Customize"|translate')
+
+                ul.uib-dropdown-menu(role='menu').pointer.stf-device-details-customize
+                  li(ng-repeat='column in logsColumns track by column.name',
+                  ng-hide='!adminMode && LogscolumnDefinitions[column.name].admin',
+                  ng-click='$event.stopPropagation()')
+                    label.checkbox.pointer
+                      input(type='checkbox', ng-model='column.selected')
+                      span(ng-bind='LogscolumnDefinitions[column.name].title | translate')
+                  li
+                    button(ng-click='LogReset()').btn.btn-xs.btn-danger-outline
+                      i.fa.fa-trash-o
+                      span(ng-bind='"Reset"|translate')
 
             span.pull-right(ng-if='activeTabs.details && !$root.basicMode')
               .btn-group(uib-dropdown).pull-right
@@ -37,6 +85,16 @@
                     button(ng-click='reset()').btn.btn-xs.btn-danger-outline
                       i.fa.fa-trash-o
                       span(ng-bind='"Reset"|translate')
+   
+            .input-group.DatepickerWidth.DateAlignRight(ng-show='activeTabs.deviceusinglog')
+              input.form-control(type="text", uib-datepicker-popup="{{format}}", 
+              ng-model="dat", is-open="popup1.opened", ng-required="true",
+              close-text="关闭", clear-text="清空", current-text="今天", 
+              alt-input-formats="altInputFormats", datepicker-options="dateOptions")
+              |             
+              span.input-group-btn
+                button.btn.btn-default(type="button", ng-click="open1()")
+                  i.glyphicon.glyphicon-calendar
 
           uib-tabset.overflow-auto.device-list-active-tabs(ng-if='activeTabs')
             uib-tab(active='activeTabs.icons', select='focusSearch()')
@@ -44,7 +102,6 @@
                 i.fa.fa-th-large
                 span(translate) Devices
               div.device-list-devices-content(ng-if='activeTabs.icons').selectable
-
                 device-list-icons(tracker='tracker', columns='columns', sort='sort', filter='filter')
 
             uib-tab(active='activeTabs.details', select='focusSearch()', ng-if='!$root.basicMode')
@@ -52,5 +109,16 @@
                 i.fa.fa-list
                 span(translate) Details
               div.device-list-details-content(ng-if='activeTabs.details').selectable
-
                 device-list-details(tracker='tracker', columns='columns', sort='sort', filter='filter').selectable
+            
+            uib-tab(active='activeTabs.deviceusinglog', select='focusSearch()', ng-if='!$root.basicMode')
+              uib-tab-heading
+                i.fa.fa-list
+                span(translate) RentLog
+              div.device-list-details-content(ng-if='activeTabs.deviceusinglog').selectable
+                device-rent-log(tracker='tracker', columns='logsColumns'
+                ,sort='Logssort',dat='dat', filter='filter',condi='condi').selectable
+
+            
+                
+                

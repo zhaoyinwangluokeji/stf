@@ -20,24 +20,24 @@ module.exports = angular.module('stf.device-status', [])
     return function(device) {
       var text=device.state;
       
-      if(!device.deivce_rent_conf || 
-        !device.deivce_rent_conf.rent ||
-        device.deivce_rent_conf.rent==false){
+      if(!device.device_rent_conf || 
+        !device.device_rent_conf.rent ||
+        device.device_rent_conf.rent==false){
         return ('可租用');
       }
-      else if(device.deivce_rent_conf && device.deivce_rent_conf.rent){
+      else if(device.device_rent_conf && device.device_rent_conf.rent){
         var now = Date.now();
-        if(device.deivce_rent_conf && device.deivce_rent_conf.now){
-          now=device.deivce_rent_conf.now;
+        if(device.device_rent_conf && device.device_rent_conf.now){
+          now=device.device_rent_conf.now;
         }
-        var time = device.deivce_rent_conf.start_time + device.deivce_rent_conf.rent_time*1000*60 - now;
+        var time = device.device_rent_conf.start_time + device.device_rent_conf.rent_time*1000*60 - now;
         var hour = Math.floor(time/(1000*3600));
         var minute = Math.floor((time%(1000*3600))/(1000*60));
         var second = Math.floor((time%(1000*60))/(1000));
         if(time>=0){
           var tip = "剩" +hour+"时"+minute+"分"+second+"秒";
-          if(device.deivce_rent_conf.owner){
-            tip =  device.deivce_rent_conf.owner.name +':'+ tip;
+          if(device.device_rent_conf.owner){
+            tip =  device.device_rent_conf.owner.name +':'+ tip;
           }
           return (tip) 
         }
