@@ -253,7 +253,7 @@ module.exports = function UiautomatorviewerCtrl($scope) {
             $scope.xmlStr = $scope.xmlStr.replace(reg,"<$3$2$3$4")
             reg=new RegExp('</node>',"g");
             $scope.xmlStr = $scope.xmlStr.replace(reg,"")
-            console.log($scope.xmlStr)
+            // console.log($scope.xmlStr)
             parser = new DOMParser();
             tmpDoc = parser.parseFromString($scope.xmlStr,"text/xml");
             $scope.nodesArray = xml2json(angular.element(result.data.join(''))[1]);
