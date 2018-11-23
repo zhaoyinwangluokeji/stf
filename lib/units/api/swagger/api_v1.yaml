@@ -103,6 +103,34 @@ paths:
             $ref: "#/definitions/ErrorResponse"
       security:
         - accessTokenAuth: []
+
+        
+
+  /devicelog/getStatisticsPerCustom:
+    x-swagger-router-controller: devicelog
+    get:
+      summary: Get getStatisticsPerCustom function
+      description: Get All getStatisticsPerCustom
+      operationId: getStatisticsPerCustom
+      tags:
+        - devicelog
+      parameters:
+        - name: startdate
+          in: query
+          description: getStatisticsPerCustom startdate
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Get getStatisticsPerCustom 
+          schema:
+            $ref: "#/definitions/DeviceLogPerCustom"
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+        - accessTokenAuth: []      
   /projects/getprojects:
     x-swagger-router-controller: projects
     get:
@@ -128,6 +156,58 @@ paths:
             $ref: "#/definitions/ErrorResponse"
       security:
         - accessTokenAuth: []
+  /projects/updateProjects:
+    x-swagger-router-controller: projects
+    get:
+      summary: updateProjects
+      description: update all Projects
+      operationId: updateProjects
+      tags:
+        - projects
+      parameters:
+        - name: user
+          in: query
+          description: update all Projects  
+          required: false
+          type: string
+      responses:
+        "200":
+          description: update all Projects success
+          schema:
+            $ref: "#/definitions/UpdateProjects"
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+        - accessTokenAuth: []
+
+  /projects/getProjectSynBar:
+    x-swagger-router-controller: projects
+    get:
+      summary: getProjectSynBar
+      description: getProjectSynBar Projects
+      operationId: getProjectSynBar
+      tags:
+        - projects
+      parameters:
+        - name: user
+          in:  query 
+          description: update all Projects  
+          required: false
+          type: string
+      responses:
+        "200":
+          description: update all Projects success
+          schema:
+            $ref: "#/definitions/GetProjectSynBar"
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+        - accessTokenAuth: []
+        
   /user:
     x-swagger-router-controller: user
     get:
@@ -393,6 +473,24 @@ definitions:
         items:
           type: string
 
+  UpdateProjects:
+    required:
+      - user
+    properties:
+      user:
+        type: string
+        items:
+          type: string
+
+  GetProjectSynBar:
+    required:
+      - user
+    properties:
+      user:
+        type: string
+        items:
+          type: string
+          
   DeviceLogResponse:
     required:
       - startdate
@@ -418,7 +516,14 @@ definitions:
         type: string
         items:
           type: string 
-          
+  DeviceLogPerCustom:
+    required:
+      - startdate
+    properties:
+      startdate:
+        type: string
+        items:
+          type: string         
 
   DeviceListResponse:
     required:

@@ -1,7 +1,8 @@
 module.exports = angular.module('ui-settings', [
   require('./general').name,
   require('./keys').name,
-  require('stf/common-ui/nice-tabs').name
+  require('stf/common-ui/nice-tabs').name,
+  require('./projectsyn').name
   //require('./notifications').name
 ])
   .config(['$routeProvider', function($routeProvider) {
@@ -10,3 +11,4 @@ module.exports = angular.module('ui-settings', [
     })
   }])
   .controller('SettingsCtrl', require('./settings-controller'))
+ 
