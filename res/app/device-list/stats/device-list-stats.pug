@@ -19,3 +19,12 @@
       .icon.fa.fa-user.visitors(ng-class='{"fa-trophy": $root.adminMode, "fa-user": !$root.adminMode}')
       span(class='counter', data-type='using') 0
     .text(ng-bind='currentUser.name')
+.widget-container.device-statics
+  .col-md-3.packery-item
+    canvas#model
+  .col-md-3.packery-item
+    canvas#sdkversion
+  .col-md-3.packery-item
+    canvas#screensize
+  .col-md-3.packery-item
+    canvas#platform
