@@ -1,5 +1,5 @@
-module.exports = function DeviceRentWebControlService($filter, 
-    DeviceRentService, GroupService,socket) {
+module.exports = function DeviceRentWebControlService($filter,
+    DeviceRentService, GroupService, socket) {
     var DeviceRentWebControl = {}
     var device_list = {}
     var Timer = null
@@ -35,26 +35,26 @@ module.exports = function DeviceRentWebControlService($filter,
                             var time = element.device_rent_conf.rent_time;
                             var start_time = Math.floor(element.device_rent_conf.start_time / 1000);
 
-                            console.log("now:" + now)
-                            console.log("start+time:" + (start_time + time * 60))
-                            
+                            //    console.log("now:" + now)
+                            //    console.log("start+time:" + (start_time + time * 60))
+
                             if (now >= (start_time + time * 60)) {
-                                console.log("-->getEvent")
+                                //    console.log("-->getEvent")
                                 getEvent(element)
-                                GroupService.kick(device, true).then(function(){
-                                    console.log("kick end")
-                                    DeviceRentService.free_rent(device,socket)    
-                                }) 
+                                GroupService.kick(device, true).then(function () {
+                                    //    console.log("kick end")
+                                    DeviceRentService.free_rent(device, socket)
+                                })
                             }
                             else {
-                                console.log("-->changeEvent")
+                                //    console.log("-->changeEvent")
                                 changeEvent(device_list[key], element)
-                            }   
+                            }
                             //changeEvent(device_list[key], element) 
-                        }  
+                        }
 
                     }
-                    catch (e) {    
+                    catch (e) {
                         console.log(e)
                     }
                 };

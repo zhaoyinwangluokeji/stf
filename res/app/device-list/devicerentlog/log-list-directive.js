@@ -102,6 +102,7 @@ module.exports = function DeviceListDetailsDirective(
                 , true
             )
 
+
             // Update now so that we don't have to wait for the scope watcher to
             // trigger.
             updateColumns(scope.columns)
@@ -371,17 +372,41 @@ module.exports = function DeviceListDetailsDirective(
                         return diff
                     }
                 }
-
                 if (next) {
                     diff = compare(device, mapping[next.id])
                     if (diff > 0) {
                         return diff
                     }
                 }
-
                 return 0
             }
+            scope.pagesCount = 5
+            scope.total = 0;
+            scope.page = 1
+            scope.count = 30
+            scope.counts = [15, 30, 50]
 
+            scope.$watch(
+                function () {
+                    return scope.page
+                }
+                , function (newValue) {
+                    console.log("$dat page LogsCondition:" + scope.page)
+                    LoadData(scope.dat);
+                }
+                , true
+            )
+            scope.$watch(
+                function () {
+                    return scope.count
+                }
+                , function (newValue) {
+
+                    console.log("$dat count:" + newValue)
+                    LoadData(scope.dat);
+                }
+                , true
+            )
             // Sort all rows.
             function sortAll() {
                 // This could be improved by getting rid of the array copying. The
@@ -425,7 +450,15 @@ module.exports = function DeviceListDetailsDirective(
                 }
                 , true
             )
-
+            scope.showMessage = function (count) {
+                // alert(count)
+                if (scope.count != count) {
+                    scope.count = count
+                    scope.page = 1
+                    scope.pagesCount = Math.ceil(scope.total / scope.count)
+                    LoadData(scope.LogsCondition);
+                }
+            }
             scope.$watch(
                 function () {
                     return scope.condi
@@ -471,8 +504,12 @@ module.exports = function DeviceListDetailsDirective(
                 var date = new Date(condition)
                 console.log("LoadData Type:" + typeof (date))
                 var condi = date.format("yyyy-MM-dd")
-                DeviceRentLogService.getLogs(condi, '', '', 50, '', '').then(function (data) {
-                    scope.Logs = data;
+                DeviceRentLogService.getLogs(condi, '', scope.page, scope.count, '', '').then(function (result) {
+                    scope.Logs = result.data;
+                    scope.total = result.total
+                    scope.pagesCount = Math.ceil(scope.total / scope.count)
+                    console.log("total:" + result.total + ",count:" + scope.count + ",page=" + scope.page
+                        + ",pagesCount:" + scope.pagesCount + ",cur:" + scope.Logs.length)
                     var len = rows.length
                     for (var i = 0; i < len; i++) {
                         var row = rows[0];
@@ -482,14 +519,19 @@ module.exports = function DeviceListDetailsDirective(
                         scope.Logs.forEach(addLogRow)
                     }
                 })
-            }   
+            }
             function LoadDataFilter(startdate, field, Filter) {
                 console.log("LoadData field" + field)
                 console.log("LoadDataFilter:" + Filter)
                 var date = new Date(startdate)
                 var condi = date.format("yyyy-MM-dd")
-                DeviceRentLogService.getLogs(condi, '', '', 50, field, Filter).then(function (data) {
-                    scope.Logs = data;
+                DeviceRentLogService.getLogs(condi, '', scope.page, scope.count, field, Filter).then(function (data) {
+                    scope.Logs = result.data;
+                    scope.total = result.total
+                    scope.pagesCount = Math.ceil(scope.total / scope.count)
+                    console.log("totalFilter:" + result.total + ",count:"
+                        + scope.count + ",pagesCount:" + scope.pagesCount + ",cur:" + scope.Logs.length)
+
                     var len = rows.length
                     for (var i = 0; i < len; i++) {
                         var row = rows[0];
