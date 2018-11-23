@@ -153,6 +153,44 @@
         ]
       }
     },
+    "/devicelog/getStatisticsPerCustom": {
+      "get": {
+        "summary": "Get getStatisticsPerCustom",
+        "description": "Get All Projects with conditon",
+        "operationId": "getStatisticsPerCustom",
+        "tags": [
+          "devicelog"
+        ],
+        "parameters": [
+          {
+            "name": "startdate",
+            "in": "query",
+            "description": "Projects getStatisticsPerCustom",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get getStatisticsPerCustom",
+            "schema": {
+              "$ref": "#/definitions/DeviceLogPerCustom"
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "security": [
+          {
+            "accessTokenAuth": []
+          }
+        ]
+      }
+    },
 
     "/projects/getprojects": {
       "get": {
@@ -192,6 +230,85 @@
         ]
       }
     },
+    "/projects/updateProjects": {
+      "get": {
+        "summary": "updateProjects",
+        "description": "update All Projects ",
+        "operationId": "updateProjects",
+        "tags": [
+          "projects"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "query",
+            "description": "user",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Update Projects Syn",
+            "schema": {
+              "$ref": "#/definitions/UpdateProjects"
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "security": [
+          {
+            "accessTokenAuth": []
+          }
+        ]
+      }
+    },
+    
+    "/projects/getProjectSynBar": {
+      "get": {
+        "summary": "getProjectSynBar",
+        "description": "get  getProjectSynBar ",
+        "operationId": "getProjectSynBar",
+        "tags": [
+          "projects"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "query",
+            "description": "user",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "get getProjectSynBar",
+            "schema": {
+              "$ref": "#/definitions/GetProjectSynBar"
+            }
+          },
+          "default": {
+            "description": "Unexpected Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "security": [
+          {
+            "accessTokenAuth": []
+          }
+        ]
+      }
+    },
+    
+
     "/user": {
       "get": {
         "summary": "User Profile",

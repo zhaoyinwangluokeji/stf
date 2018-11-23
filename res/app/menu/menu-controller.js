@@ -1,5 +1,5 @@
 module.exports = function MenuCtrl($scope, $rootScope, SettingsService,
-  $location,AppState) {
+  $location, AppState) {
 
   SettingsService.bind($scope, {
     target: 'lastUsedDevice'
@@ -10,8 +10,15 @@ module.exports = function MenuCtrl($scope, $rootScope, SettingsService,
     defaultValue: 'native'
   })
   $scope.user = AppState.user
-  $scope.$on('$routeChangeSuccess', function() {
+  $scope.$on('$routeChangeSuccess', function () {
     $scope.isControlRoute = $location.path().search('/control') !== -1
   })
+
+
+
+  
+
+
+
 
 }

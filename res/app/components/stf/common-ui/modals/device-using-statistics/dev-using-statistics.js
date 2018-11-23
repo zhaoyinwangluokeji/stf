@@ -22,13 +22,21 @@ module.exports =
 
                 $scope.columns = columns
                 $scope.columns.forEach(element => {
-                    if (element.name == "rent_time") {
+                    if (element.name == "ProjectName" ||
+                        element.name == "ProjectCode") {
                         element.selected = true;
                     } else {
                         element.selected = false;
                     }
-
                 });
+                $scope.columns.push({
+                    name: "CurrentTime Month",
+                    selected: false
+                })
+                $scope.columns.push({
+                    name: "CurrentTime Year",
+                    selected: false
+                })
                 var self = this
                 self.selectedSite = 5;
                 $scope.cancel = function () {
@@ -210,17 +218,29 @@ module.exports =
 
                     var datestart = $scope.dat1
                     var dateend = $scope.dat2
-
+                    var group_by = "";
+                    $scope.columns.forEach(element => {
+                        if (element.selected == true) {
+                            group_by += element.name + "|"
+                        }
+                    });
+                    if (group_by.indexOf("|") == -1) {
+                        alert("请选择分组维度")
+                        return
+                    } else {
+                        group_by = group_by.substr(0, group_by.length-1)
+                    }
+                    console.log('group_by:' + group_by)
                     var d = new Date();
                     console.log('format:' + d.format('yyyy-MM-dd'));
                     console.log('type:' + typeof ($scope.dat1))
 
-                    return DeviceRentLogService.getStatisticsPerDate(datestart.format('yyyy-MM-dd'), dateend.format('yyyy-MM-dd'), 'ProjectName', page, count).then(function (data) {
+                    return DeviceRentLogService.getStatisticsPerCustom(datestart.format('yyyy-MM-dd'), dateend.format('yyyy-MM-dd'), group_by, page, count).then(function (data) {
                         var ret = data
                         params.total(ret.total);
                         console.log("all page count:" + ret.total)
                         console.log("recv count:" + ret.data.length)
-                        $scope.pages2count = Math.ceil($scope.tableParamsCustom.total() / $scope.tableParamsCustom.parameters().count)
+                        $scope.pagesCustomCount = Math.ceil($scope.tableParamsCustom.total() / $scope.tableParamsCustom.parameters().count)
                         return ret.data;
                     })
                 }
@@ -236,23 +256,21 @@ module.exports =
 
 
                 $scope.QueryMessage = function () {
-
                     if ($scope.activeTabs.project == true) {
-                        var params = $scope.tableParams.parameters();
                         try {
                             $scope.tableParams.reload()
                         } catch (e) {
                             console.log("[Error] $scope.tableParams.reload()");
                         }
                     } else if ($scope.activeTabs.date == true) {
-                        var params = $scope.tableParamsDate.parameters();
+
                         try {
                             $scope.tableParamsDate.reload()
                         } catch (e) {
                             console.log("[Error] $scope.tableParamsDate.reload()");
                         }
                     } else if ($scope.activeTabs.custom == true) {
-                        var params = $scope.tableParamsCustom.parameters();
+
                         try {
                             $scope.tableParamsCustom.reload()
                         } catch (e) {
@@ -260,10 +278,6 @@ module.exports =
                         }
                     }
                 };
-
-
-
-
 
                 function changePage(nextPage) {
                     $scope.tableParams.page(nextPage);

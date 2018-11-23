@@ -7,7 +7,6 @@
     .col-md-12
       .widget-container.fluid-height.stf-device-list-tabs
         .widget-content.padded
-
           .filtering-buttons
             span.pull-right(ng-if='activeTabs.deviceusinglog && !$root.basicMode')
               .btn-group(uib-dropdown).pull-right
@@ -24,7 +23,6 @@
                     button(ng-click='CloseReportWnd()').btn.btn-xs.btn-danger-outline
                       i.fa.fa-trash-o
                       span(ng-bind='"CLOSE"|translate')
-
 
             datalist(id='searchFields')
               select(name='searchFields')
@@ -50,7 +48,7 @@
             
             input(type="text" ng-show='false' ng-model='condi',ng-required="true" ,ng-if='activeTabs.deviceusinglog')
 
-            span.pull-right(ng-if='activeTabs.deviceusinglog' )
+            span.pull-right(ng-if='activeTabs.deviceusinglog')
               .btn-group(uib-dropdown).pull-right
                 button.btn.btn-sm.btn-primary-outline(type='button', uib-dropdown-toggle)
                   i.fa.fa-columns
