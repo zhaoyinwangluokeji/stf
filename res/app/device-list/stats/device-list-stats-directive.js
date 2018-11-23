@@ -11,6 +11,129 @@ module.exports = function DeviceListStatsDirective(
       var tracker = scope.tracker()
       var mapping = Object.create(null)
       var nodes = Object.create(null)
+      require("chart.js")
+
+      scope.modelData = {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            data: [],
+            backgroundColor: [],
+            label: 'model'
+          }],
+          labels: []
+        },
+        options: {
+          responsive: true,
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: '手机品牌'
+          },
+          animation: {
+            animateScale: true,
+            animateRotate: true
+          }
+        }
+      }
+      scope.versionData = {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            data: [],
+            backgroundColor: [],
+            label: 'version'
+          }],
+          labels: []
+        },
+        options: {
+          responsive: true,
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: '系统版本'
+          },
+          animation: {
+            animateScale: true,
+            animateRotate: true
+          }
+        }
+      }
+      scope.screensizeData = {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            data: [],
+            backgroundColor: [],
+            label: 'screensize'
+          }],
+          labels: []
+        },
+        options: {
+          responsive: true,
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: '分辨率'
+          },
+          animation: {
+            animateScale: true,
+            animateRotate: true
+          }
+        }
+      }
+      scope.platformData = {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            data: [],
+            backgroundColor: [],
+            label: 'platform'
+          }],
+          labels: []
+        },
+        options: {
+          responsive: true,
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: '手机操作系统'
+          },
+          animation: {
+            animateScale: true,
+            animateRotate: true
+          }
+        }
+      }
+      scope.modelChart = null
+      scope.versionChart = null
+      scope.platformChart = null
+      scope.screensizeChart = null
+
+
+      scope.chartOptions = {
+        responsive: true,
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: 'Chart.js Doughnut Chart'
+        },
+        animation: {
+          animateScale: true,
+          animateRotate: true
+        }
+      }
+      
      // console.log('DeviceListStatsDirective initial ')
       scope.counter = {
         total: 0
@@ -44,6 +167,58 @@ module.exports = function DeviceListStatsDirective(
         })
       }
 
+      function drawChart(elementId, data){
+        var ctx = document.getElementById(elementId).getContext("2d");
+        return new Chart(ctx,data)
+      }
+
+      function addToData(tag,device,targetData){
+        var value = ""
+        if(tag == "display"){
+          value = device.display.width + "x" + device.display.height
+        }else{
+          value = device[tag]
+        }
+        var len = targetData.data.labels.length
+        for(i=0;i<len;i++){
+          if (value == targetData.data.labels[i]){
+            targetData.data.datasets[0].data[i]++
+            return;
+          }
+        }
+        var rColor1 = randomHexColor()
+        console.log("color: " + rColor1)
+        targetData.data.datasets[0].data.push(1)
+        targetData.data.datasets[0].backgroundColor.push(rColor1)
+        targetData.data.labels.push(value)
+        // console.log("adding Data: " + JSON.stringify(targetData.data))
+      }
+
+      function delFromData(tag,device,targetData){
+        var value = ""
+        if(tag == "display"){
+          value = device.display.width + "x" + device.display.height
+        }else{
+          value = device[tag]
+        }
+        for(i=0;i<len;i++){
+          if (value == targetData.data.labels[i]){
+            if (targetData.data.datasets[0].data[i] <= 1){
+              targetData.data.datasets[0].data.splice(i,1)
+              targetData.data.labels.splice(i,1)
+              return
+            } else{
+              targetData.data.datasets[0].data[i]--
+              return
+            }
+          }
+        }
+      }
+
+      function randomHexColor() { //随机生成十六进制颜色
+        return ('#' + ('00000' + (Math.random() * 0x1000000 << 0).toString(16)).substr(-6)).toUpperCase();
+       }
+
       function addListener(device) {
        // console.log('addListener '+device.serial)
         var stats = updateStats(device)
@@ -52,7 +227,15 @@ module.exports = function DeviceListStatsDirective(
         scope.counter.usable += stats.usable
         scope.counter.busy += stats.busy
         scope.counter.using += stats.using
-
+        addToData("display",device,scope.screensizeData)
+        addToData("version",device,scope.versionData)
+        addToData("manufacturer",device,scope.modelData)
+        addToData("platform",device,scope.platformData)
+        scope.modelChart = drawChart("model",scope.modelData)
+        scope.versionChart = drawChart("sdkversion",scope.versionData)
+        scope,screensizeChart = drawChart("screensize",scope.screensizeData)
+        scope.platformChart = drawChart("platform",scope.platformData)
+        scope.modelChart.update()
         notify()
       }
 
@@ -84,6 +267,15 @@ module.exports = function DeviceListStatsDirective(
         scope.counter.using += newStats.using - oldStats.using
 
         delete mapping[device.serial]
+
+        delFromData("display",device,scope.screensizeData)
+        delFromData("version",device,scope.versionData)
+        delFromData("manufacturer",device,scope.modelData)
+        delFromData("platform",device,scope.platformData)
+        scope.modelChart = drawChart("model",scope.modelData)
+        scope.versionChart = drawChart("sdkversion",scope.versionData)
+        scope,screensizeChart = drawChart("screensize",scope.screensizeData)
+        scope.platformChart = drawChart("platform",scope.platformData)
 
         notify()
       }

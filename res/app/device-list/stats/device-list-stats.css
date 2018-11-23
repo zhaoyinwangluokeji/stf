@@ -4,6 +4,12 @@
   text-align: center;
 }
 
+.device-statics {
+  min-height: 100px;
+  height: 200px;
+  text-align: center;
+}
+
 .device-stats [class^="col-"],
 .device-stats [class*="col-"] {
   height: 100%;
