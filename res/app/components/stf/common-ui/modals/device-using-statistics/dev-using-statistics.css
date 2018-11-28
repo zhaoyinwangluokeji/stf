@@ -276,4 +276,7 @@ tfoot td, tfoot th {
   .DateAlignRight{
     float:right;
   }
-  
+  .padding-zero{
+    margin: 0px;
+    padding: 0px
+  }
