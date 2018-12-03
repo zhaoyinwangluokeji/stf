@@ -525,8 +525,8 @@ module.exports = function DeviceListDetailsDirective(
                 console.log("LoadDataFilter:" + Filter)
                 var date = new Date(startdate)
                 var condi = date.format("yyyy-MM-dd")
-                DeviceRentLogService.getLogs(condi, '', scope.page, scope.count, field, Filter).then(function (data) {
-                    scope.Logs = result.data;
+                DeviceRentLogService.getLogs(condi, '', scope.page, scope.count, field, Filter).then(function (result) {
+                    scope.Logs = result.data
                     scope.total = result.total
                     scope.pagesCount = Math.ceil(scope.total / scope.count)
                     console.log("totalFilter:" + result.total + ",count:"

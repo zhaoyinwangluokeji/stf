@@ -69,6 +69,17 @@ module.exports =
                             console.log(error);
                         });
                 }
+
+                $scope.IsArray = Array.isArray || function (obj) {
+                    return Object.prototype.toString.call(obj) === '[object Array]';
+                }
+
+                $scope.HeadWidth = function (head) {
+                    if (head == "pergroup") return "200px"
+                    else if (head == "index") return "40px"
+                    else return "130px"
+                }
+
                 $scope.enterSomething = function ($event) {
                     if ($event.keyCode == 13) {//回车
                         loaddata();
@@ -228,7 +239,7 @@ module.exports =
                         alert("请选择分组维度")
                         return
                     } else {
-                        group_by = group_by.substr(0, group_by.length-1)
+                        group_by = group_by.substr(0, group_by.length - 1)
                     }
                     console.log('group_by:' + group_by)
                     var d = new Date();
