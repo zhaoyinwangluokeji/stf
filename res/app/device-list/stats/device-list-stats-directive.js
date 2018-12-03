@@ -35,7 +35,10 @@ module.exports = function DeviceListStatsDirective(
           animation: {
             animateScale: true,
             animateRotate: true
-          }
+          },
+          responsive: true,
+          maintainAspectRatio: false
+
         }
       }
       scope.versionData = {
@@ -60,7 +63,9 @@ module.exports = function DeviceListStatsDirective(
           animation: {
             animateScale: true,
             animateRotate: true
-          }
+          },
+          responsive: true,
+          maintainAspectRatio: false
         }
       }
       scope.screensizeData = {
@@ -85,7 +90,9 @@ module.exports = function DeviceListStatsDirective(
           animation: {
             animateScale: true,
             animateRotate: true
-          }
+          },
+          responsive: true,
+          maintainAspectRatio: false
         }
       }
       scope.platformData = {
@@ -110,14 +117,19 @@ module.exports = function DeviceListStatsDirective(
           animation: {
             animateScale: true,
             animateRotate: true
-          }
+          },
+          responsive: true,
+          maintainAspectRatio: false
         }
       }
-      scope.modelChart = null
-      scope.versionChart = null
-      scope.platformChart = null
-      scope.screensizeChart = null
-
+      // scope.modelChart = null
+      // scope.versionChart = null
+      // scope.platformChart = null
+      // scope.screensizeChart = null
+      scope.modelChart = drawChart("model",scope.modelData)
+      scope.versionChart = drawChart("sdkversion",scope.versionData)
+      scope.screensizeChart = drawChart("screensize",scope.screensizeData)
+      scope.platformChart = drawChart("platform",scope.platformData)
 
       scope.chartOptions = {
         responsive: true,
@@ -172,7 +184,7 @@ module.exports = function DeviceListStatsDirective(
         return new Chart(ctx,data)
       }
 
-      function addToData(tag,device,targetData){
+      function addToData(tag,device,targetData,chart){
         var value = ""
         if(tag == "display"){
           value = device.display.width + "x" + device.display.height
@@ -194,7 +206,7 @@ module.exports = function DeviceListStatsDirective(
         // console.log("adding Data: " + JSON.stringify(targetData.data))
       }
 
-      function delFromData(tag,device,targetData){
+      function delFromData(tag,device,targetData,chart){
         var value = ""
         if(tag == "display"){
           value = device.display.width + "x" + device.display.height
@@ -228,14 +240,13 @@ module.exports = function DeviceListStatsDirective(
         scope.counter.busy += stats.busy
         scope.counter.using += stats.using
         addToData("display",device,scope.screensizeData)
+        scope.screensizeChart.update()
         addToData("version",device,scope.versionData)
+        scope.versionChart.update()
         addToData("manufacturer",device,scope.modelData)
-        addToData("platform",device,scope.platformData)
-        scope.modelChart = drawChart("model",scope.modelData)
-        scope.versionChart = drawChart("sdkversion",scope.versionData)
-        scope,screensizeChart = drawChart("screensize",scope.screensizeData)
-        scope.platformChart = drawChart("platform",scope.platformData)
         scope.modelChart.update()
+        addToData("platform",device,scope.platformData)
+        scope.platformChart.update()
         notify()
       }
 
@@ -269,14 +280,13 @@ module.exports = function DeviceListStatsDirective(
         delete mapping[device.serial]
 
         delFromData("display",device,scope.screensizeData)
+        scope.screensizeChart.update()
         delFromData("version",device,scope.versionData)
+        scope.versionChart.update()
         delFromData("manufacturer",device,scope.modelData)
+        scope.modelChart.update()
         delFromData("platform",device,scope.platformData)
-        scope.modelChart = drawChart("model",scope.modelData)
-        scope.versionChart = drawChart("sdkversion",scope.versionData)
-        scope,screensizeChart = drawChart("screensize",scope.screensizeData)
-        scope.platformChart = drawChart("platform",scope.platformData)
-
+        scope.platformChart.update()
         notify()
       }
 
