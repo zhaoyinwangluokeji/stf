@@ -3,11 +3,11 @@ module.exports = function DeviceListStatsDirective(
 ) {
   return {
     restrict: 'E'
-  , template: require('./device-list-stats.pug')
-  , scope: {
+    , template: require('./device-list-stats.pug')
+    , scope: {
       tracker: '&tracker'
     }
-  , link: function(scope, element) {
+    , link: function (scope, element) {
       var tracker = scope.tracker()
       var mapping = Object.create(null)
       var nodes = Object.create(null)
@@ -35,7 +35,10 @@ module.exports = function DeviceListStatsDirective(
           animation: {
             animateScale: true,
             animateRotate: true
-          }
+          },
+          responsive: true,
+          maintainAspectRatio: false
+
         }
       }
       scope.versionData = {
@@ -60,7 +63,9 @@ module.exports = function DeviceListStatsDirective(
           animation: {
             animateScale: true,
             animateRotate: true
-          }
+          },
+          responsive: true,
+          maintainAspectRatio: false
         }
       }
       scope.screensizeData = {
@@ -85,7 +90,9 @@ module.exports = function DeviceListStatsDirective(
           animation: {
             animateScale: true,
             animateRotate: true
-          }
+          },
+          responsive: true,
+          maintainAspectRatio: false
         }
       }
       scope.platformData = {
@@ -110,14 +117,19 @@ module.exports = function DeviceListStatsDirective(
           animation: {
             animateScale: true,
             animateRotate: true
-          }
+          },
+          responsive: true,
+          maintainAspectRatio: false
         }
       }
-      scope.modelChart = null
-      scope.versionChart = null
-      scope.platformChart = null
-      scope.screensizeChart = null
-
+      // scope.modelChart = null
+      // scope.versionChart = null
+      // scope.platformChart = null
+      // scope.screensizeChart = null
+      scope.modelChart = drawChart("model", scope.modelData)
+      scope.versionChart = drawChart("sdkversion", scope.versionData)
+      scope.screensizeChart = drawChart("screensize", scope.screensizeData)
+      scope.platformChart = drawChart("platform", scope.platformData)
 
       scope.chartOptions = {
         responsive: true,
@@ -133,19 +145,19 @@ module.exports = function DeviceListStatsDirective(
           animateRotate: true
         }
       }
-      
-     // console.log('DeviceListStatsDirective initial ')
+
+      // console.log('DeviceListStatsDirective initial ')
       scope.counter = {
         total: 0
-      , usable: 0
-      , busy: 0
-      , using: 0
+        , usable: 0
+        , busy: 0
+        , using: 0
       }
 
       scope.currentUser = UserService.currentUser
 
       function findTextNodes() {
-       // console.log('findTextNodes ')
+        // console.log('findTextNodes ')
         var elements = element[0].getElementsByClassName('counter')
         for (var i = 0, l = elements.length; i < l; ++i) {
           nodes[elements[i].getAttribute('data-type')] = elements[i].firstChild
@@ -162,26 +174,26 @@ module.exports = function DeviceListStatsDirective(
       function updateStats(device) {
         return (mapping[device.serial] = {
           usable: device.usable ? 1 : 0
-        , busy: device.owner ? 1 : 0
-        , using: device.using ? 1 : 0
+          , busy: device.owner ? 1 : 0
+          , using: device.using ? 1 : 0
         })
       }
 
-      function drawChart(elementId, data){
+      function drawChart(elementId, data) {
         var ctx = document.getElementById(elementId).getContext("2d");
-        return new Chart(ctx,data)
+        return new Chart(ctx, data)
       }
 
-      function addToData(tag,device,targetData){
+      function addToData(tag, device, targetData, chart) {
         var value = ""
-        if(tag == "display"){
+        if (tag == "display") {
           value = device.display.width + "x" + device.display.height
-        }else{
+        } else {
           value = device[tag]
         }
         var len = targetData.data.labels.length
-        for(i=0;i<len;i++){
-          if (value == targetData.data.labels[i]){
+        for (i = 0; i < len; i++) {
+          if (value == targetData.data.labels[i]) {
             targetData.data.datasets[0].data[i]++
             return;
           }
@@ -194,20 +206,20 @@ module.exports = function DeviceListStatsDirective(
         // console.log("adding Data: " + JSON.stringify(targetData.data))
       }
 
-      function delFromData(tag,device,targetData){
+      function delFromData(tag, device, targetData, chart) {
         var value = ""
-        if(tag == "display"){
+        if (tag == "display") {
           value = device.display.width + "x" + device.display.height
-        }else{
+        } else {
           value = device[tag]
         }
-        for(i=0;i<len;i++){
-          if (value == targetData.data.labels[i]){
-            if (targetData.data.datasets[0].data[i] <= 1){
-              targetData.data.datasets[0].data.splice(i,1)
-              targetData.data.labels.splice(i,1)
+        for (i = 0; i < len; i++) {
+          if (value == targetData.data.labels[i]) {
+            if (targetData.data.datasets[0].data[i] <= 1) {
+              targetData.data.datasets[0].data.splice(i, 1)
+              targetData.data.labels.splice(i, 1)
               return
-            } else{
+            } else {
               targetData.data.datasets[0].data[i]--
               return
             }
@@ -217,31 +229,30 @@ module.exports = function DeviceListStatsDirective(
 
       function randomHexColor() { //随机生成十六进制颜色
         return ('#' + ('00000' + (Math.random() * 0x1000000 << 0).toString(16)).substr(-6)).toUpperCase();
-       }
+      }
 
       function addListener(device) {
-       // console.log('addListener '+device.serial)
+        // console.log('addListener '+device.serial)
         var stats = updateStats(device)
 
         scope.counter.total += 1
         scope.counter.usable += stats.usable
         scope.counter.busy += stats.busy
         scope.counter.using += stats.using
-        addToData("display",device,scope.screensizeData)
-        addToData("version",device,scope.versionData)
-        addToData("manufacturer",device,scope.modelData)
-        addToData("platform",device,scope.platformData)
-        scope.modelChart = drawChart("model",scope.modelData)
-        scope.versionChart = drawChart("sdkversion",scope.versionData)
-        scope,screensizeChart = drawChart("screensize",scope.screensizeData)
-        scope.platformChart = drawChart("platform",scope.platformData)
+        addToData("display", device, scope.screensizeData)
+        scope.screensizeChart.update()
+        addToData("version", device, scope.versionData)
+        scope.versionChart.update()
+        addToData("manufacturer", device, scope.modelData)
         scope.modelChart.update()
+        addToData("platform", device, scope.platformData)
+        scope.platformChart.update()
         notify()
       }
 
       function changeListener(device) {
-      
-        console.log('stats-changeListener '+device.serial)
+
+        console.log('stats-changeListener ' + device.serial)
         var oldStats = mapping[device.serial]
         var newStats = updateStats(device)
         var diffs = Object.create(null)
@@ -256,9 +267,9 @@ module.exports = function DeviceListStatsDirective(
       }
 
       function removeListener(device) {
-        console.log('removeListener '+device.serial)
-        
-        
+        console.log('removeListener ' + device.serial)
+
+
         var oldStats = mapping[device.serial]
         var newStats = updateStats(device)
 
@@ -268,15 +279,14 @@ module.exports = function DeviceListStatsDirective(
 
         delete mapping[device.serial]
 
-        delFromData("display",device,scope.screensizeData)
-        delFromData("version",device,scope.versionData)
-        delFromData("manufacturer",device,scope.modelData)
-        delFromData("platform",device,scope.platformData)
-        scope.modelChart = drawChart("model",scope.modelData)
-        scope.versionChart = drawChart("sdkversion",scope.versionData)
-        scope,screensizeChart = drawChart("screensize",scope.screensizeData)
-        scope.platformChart = drawChart("platform",scope.platformData)
-
+        delFromData("display", device, scope.screensizeData)
+        scope.screensizeChart.update()
+        delFromData("version", device, scope.versionData)
+        scope.versionChart.update()
+        delFromData("manufacturer", device, scope.modelData)
+        scope.modelChart.update()
+        delFromData("platform", device, scope.platformData)
+        scope.platformChart.update()
         notify()
       }
 
@@ -286,8 +296,8 @@ module.exports = function DeviceListStatsDirective(
       tracker.on('change', changeListener)
       tracker.on('remove', removeListener)
 
-      scope.$on('$destroy', function() {
-       
+      scope.$on('$destroy', function () {
+
         tracker.removeListener('add', addListener)
         tracker.removeListener('change', changeListener)
         tracker.removeListener('remove', removeListener)

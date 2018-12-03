@@ -15,6 +15,11 @@ module.exports = function SettingsCtrl($scope, gettext) {
       title: gettext('ProjectSyn'),
       icon: 'fa-ban fa-fw',
       templateUrl: 'settings/projectsyn/projectsyn.pug'
+    },
+    {
+      title: gettext('Users'),
+      icon: 'fa fa-user',
+      templateUrl: 'settings/users/users.pug'
     }
   ]
 }

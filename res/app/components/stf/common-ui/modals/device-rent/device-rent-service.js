@@ -72,13 +72,27 @@ module.exports =
                     if (!$scope.search.deviceFilter) {
                         alert('请关联项目')
                     } else {
-                        if ($scope.search.deviceFilter.indexOf(":T") == -1) {
+                        if ($scope.search.deviceFilter.indexOf(":T") == -1 &&
+                            $scope.search.deviceFilter.indexOf(":P") == -1) {
                             alert('项目格式错误')
                         }
                         else {
                             var query = $scope.search.deviceFilter;
-                            var proName = query.substr(0, query.indexOf(':T'))
-                            var proCode = query.substr(query.indexOf(':T') + 1)
+                            var proN0 = query.substr(0, query.indexOf(':T'))
+                            var proC0 = query.substr(query.indexOf(':T') + 1)
+
+                            var proN1 = query.substr(0, query.indexOf(':P'))
+                            var proC1 = query.substr(query.indexOf(':P') + 1)
+                            var proName
+                            var proCode
+                            if (query.indexOf(':T') != -1) {
+                                proName = proN0
+                                proCode = proC0
+                            } else if (query.indexOf(':P') != -1) {
+                                proName = proN1
+                                proCode = proC1
+                            }
+
                             $scope.device.device_rent_conf = {
                                 rent: true,
                                 rent_time: $scope.rent_time_selected,
