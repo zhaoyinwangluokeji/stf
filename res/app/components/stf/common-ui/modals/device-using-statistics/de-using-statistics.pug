@@ -152,9 +152,13 @@
                                     table.table.dataTable.ng-table(ng-table="tableParamsCustom")
                                         thead
                                             th.header.sortable(ng-repeat='(k,v) in tableParamsCustom.data[0] track by $index')
-                                                div(ng-bind='k | translate')
+                                                div(ng-bind='k | translate' ng-style="{width: HeadWidth(k)}")
                                         tr(ng-repeat="row in tableParamsCustom.data")
-                                            td(ng-repeat="vv in row" ) {{vv}} 
+                                            td(ng-repeat="vv in row")
+                                                span(ng-if="IsArray(vv) != true") {{vv}} 
+                                                span(ng-if="IsArray(vv) == true")
+                                                    ul.padding-zero
+                                                        li.padding-zero(ng-repeat="l in vv") {{l}}
                                         tr  
                                             td(colspan="100") 
                                                 table.fill-parent-width(ng-init="sel=5")
