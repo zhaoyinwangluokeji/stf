@@ -9,7 +9,9 @@ require.ensure([], function(require) {
     'ngRoute',
     'ngTouch',
     require('gettext').name,
-    require('./signin').name
+    require('./signin').name,
+    require('./create-account').name,
+    require('./modify-password').name
   ])
     .config(function($routeProvider, $locationProvider) {
       $locationProvider.html5Mode(true)

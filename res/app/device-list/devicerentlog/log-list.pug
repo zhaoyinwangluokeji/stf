@@ -28,7 +28,7 @@ table.table.table-hover.dataTable.ng-table
                           button.btn.btn-sm.btn-primary-outline(type='button', uib-dropdown-toggle)
                               span {{count}}
                               span(ng-bind='">>"|translate')
-                          ul.uib-dropdown-menu(role='menu')
+                          ul.uib-dropdown-menu(role='menu' z-index="1")
                               li(ng-repeat='ceil in counts track by $index',
                               ng-hide='!adminMode && columnDefinitions[column.name].admin')
                                   button(ng-click='showMessage(ceil)').btn.btn-xs

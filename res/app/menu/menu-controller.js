@@ -16,7 +16,23 @@ module.exports = function MenuCtrl($scope, $rootScope, SettingsService,
 
 
 
-  
+  var MenusDefault = [
+    {
+      name: '设备租用日志统计'
+      , selected: true
+      , admin : false
+//      , click: DeviceUsingStatistics
+      , parameter:'Msg'
+    },
+    {
+      name: '设备统计'
+      , selected: true
+      , admin : false
+    }
+  ]
+
+ 
+  $scope.Menus = MenusDefault
 
 
 
