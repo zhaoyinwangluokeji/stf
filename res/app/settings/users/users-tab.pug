@@ -1,0 +1,14 @@
+div(ng-controller='UsersTabController')
+    uib-tabset.overflow-auto.device-list-active-tabs(ng-if='activeTabs' )
+        uib-tab(active='activeTabs.users', select='focusSearch()')
+            uib-tab-heading
+                i.fa.fa-th-large
+                span(translate) user info
+            div.selectable
+                users-info(filter='filter')
+        uib-tab(active='activeTabs.group', select='focusSearch()')
+            uib-tab-heading
+                i.fa.fa-th-large
+                span(translate) group setting
+            div.selectable
+                users-group(filter='filter')

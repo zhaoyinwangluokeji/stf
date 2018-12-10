@@ -5,13 +5,25 @@
     width: 150px
 }
 .btnWidth{
-    width: 100px
+    width: 30px
 }
 .QueryHeight{
     height: 30px;
 }
 .btnHeight{
     height: 30px;
+}
+.wid50px{
+    width: 50px;
+}
+.wid40px{
+    width: 40px;
+}
+.wid30px{
+    width: 30px;
+}
+.wid20px{
+    width: 20px;
 }
 .rowhover:hover{
     background-color:#bbb
@@ -30,4 +42,20 @@
 .name-info {
     margin: 5px;
     margin-left: 20px
+}
+.btn-width{
+    margin: 5px
+    
+}
+.blackbackground {
+    background: white
+}
+.align-right{
+    float: right;
+}
+.align-left{
+    float: left;
+}
+.align-center{
+    text-align: center
 }

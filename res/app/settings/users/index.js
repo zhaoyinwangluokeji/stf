@@ -1,14 +1,20 @@
-require('./users.css')
+ 
 
 module.exports = angular.module('stf.settings.users', [
-    require('stf/app-state').name
+    require('stf/app-state').name,
+    require('ui-bootstrap').name,
+    require('angular-xeditable').name,
+    require('./users-info').name,
+    require('./users-group').name,
     ,'ngTable'
   ])
   .run(['$templateCache', function($templateCache) {
     $templateCache.put(
-      'settings/users/users.pug', require('./users.pug')
+      'settings/users/users-tab.pug', require('./users-tab.pug')
     )
   }])
-   .controller('UsersController', require('./usersController'))
-   .service('UsersService', require('./UsersService'))
- 
+ //  .controller('UsersController', require('./users-controller'))
+   .controller('UsersTabController', require('./users-tab-controller'))
+ //  .service('UsersService', require('./users-service'))
+ //  .service('UsersGroupService',require('./users-group-service'))
+  

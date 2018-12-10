@@ -1,5 +1,6 @@
 var oboe = require('oboe')
-module.exports = function usersController($scope, NgTableParams, UsersService, AppState) {
+/*
+module.exports = function usersController($scope, NgTableParams, UsersService, UsersGroupService, AppState) {
 
     $scope.synenable = true
     $scope.vm = {
@@ -14,7 +15,6 @@ module.exports = function usersController($scope, NgTableParams, UsersService, A
         var total = 0
     }
     $scope.check = function (row) {
-        
         $scope.CurRow = row
     }
 
@@ -42,9 +42,13 @@ module.exports = function usersController($scope, NgTableParams, UsersService, A
         { "id": 12, "name": "Carlos", "age": 80, "money": 193 }
     ];
     $scope.CurRow
+    $scope.CurGroup
     $scope.RowClick = function (row) {
-        row.checked = true
+        //    row.checked = true
         $scope.CurRow = row
+    }
+    $scope.SelectGroup = function (row) {
+        $scope.CurGroup = row
     }
     $scope.ResetPassword = function () {
         if (!$scope.CurRow) {
@@ -69,11 +73,7 @@ module.exports = function usersController($scope, NgTableParams, UsersService, A
 
                 var email = $scope.CurRow.email
                 var name = $scope.CurRow.name
-                /*    var content = password
-                    var md5 = crypto.createHash('md5')//定义加密方式:md5不可逆,此处的md5可以换成任意hash加密的方法名称；
-                    md5.update(content);
-                    var password_md5 = md5.digest('hex')  //加密后的值d
-    */
+   
                 return UsersService.ModifyPassword($scope.CurRow, password).then(function (data) {
                     alert(data.msg)
                 }).catch(function (err) {
@@ -107,23 +107,93 @@ module.exports = function usersController($scope, NgTableParams, UsersService, A
         {
             counts: [5, 10, 15, 30, 50],
             getData: $scope.Query3
-            /*          getData: function (params) {
-                            return $scope.simpleList
-                        }
-            */
+           
         }
     );
 
     $scope.pagesCustomCount = Math.ceil($scope.tableParamsCustom.total() / $scope.tableParamsCustom.parameters().count)
 
-
     $scope.QueryMessage = function () {
         try {
-
             $scope.tableParamsCustom.reload()
         } catch (e) {
             console.log("[Error] $scope.tableParamsDate.reload()");
         }
     };
 
+
+    $scope.Query2 = function (params) {
+        var filter = $scope.filterGroup
+        var count = params.parameters().count
+        var page = params.parameters().page
+        console.log("count:" + count)
+        console.log("page:" + page)
+        return UsersGroupService.GetGroups(page, count, filter).then(function (data) {
+            var ret = data
+            params.total(ret.total)
+            console.log("all page count:" + ret.total)
+            console.log("recv count:" + ret.datasets.length)
+            $scope.pagesGroupCount = Math.ceil($scope.tableParamsGroup.total() / $scope.tableParamsGroup.parameters().count)
+            return ret.datasets
+        }).catch(function (err) {
+            console.log("err:" + JSON.stringify(err))
+        })
+    }
+    $scope.tableParamsGroup = new NgTableParams(
+        { count: 5 },
+        {
+            counts: [5, 10, 15, 30, 50],
+            getData: $scope.Query2
+        }
+    );
+    $scope.pagesGroupCount = Math.ceil($scope.tableParamsGroup.total() / $scope.tableParamsGroup.parameters().count)
+
+    $scope.AddNewGroup = function () {
+        var group = prompt("输入新的用户组", ""); //将输入的内容赋给变量 name ，   
+        if (group) {
+            return UsersGroupService.NewGroups(group).then(function (data) {
+                alert(JSON.stringify(data))
+                $scope.QueryGroup()
+            }).catch(function (err) {
+                console.log("err:" + JSON.stringify(err))
+            })
+        }
+    }
+
+    $scope.filterGroup = ""
+    $scope.QueryGroup = function () {
+        try {
+            $scope.tableParamsGroup.reload()
+        } catch (e) {
+            console.log("[Error] $scope.tableParamsDate.reload()");
+        }
+    };
+
+    $scope.ModifyGroup = function () {
+        var group = prompt("修改为新的用户组", ""); //将输入的内容赋给变量 name ，   
+        if (group) {
+            return UsersGroupService.ModifyGroup($scope.CurGroup.GroupName, group).then(function (data) {
+                alert(JSON.stringify(data))
+                $scope.QueryGroup()
+            }).catch(function (err) {
+                console.log("err:" + JSON.stringify(err))
+            })
+        }
+    }
+    $scope.DeleteGroup = function () {
+
+        if ($scope.CurGroup) {
+            return UsersGroupService.DeleteGroup($scope.CurGroup.GroupName, group).then(function (data) {
+                alert(JSON.stringify(data))
+                $scope.QueryGroup()
+            }).catch(function (err) {
+                console.log("err:" + JSON.stringify(err))
+            })
+        } else {
+            alert("fail:当前用户组为空，请选择用户组！")
+        }
+    }
+
+
 }
+*/
