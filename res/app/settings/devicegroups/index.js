@@ -1,0 +1,14 @@
+require('./devicegroups.css')
+
+module.exports = angular.module('stf.settings.devicegroups', [
+    require('stf/app-state').name
+    ,'ngTable'
+  ])
+  .run(['$templateCache', function($templateCache) {
+    $templateCache.put(
+      'settings/devicegroups/devicegroups.pug', require('./devicegroups.pug')
+    )
+  }])
+   .controller('DeviceGroupsController', require('./device-groups-controller'))
+   .service('UsersService', require('./device-groups-service'))
+ 

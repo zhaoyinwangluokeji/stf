@@ -3,7 +3,8 @@ module.exports = angular.module('ui-settings', [
   require('./keys').name,
   require('stf/common-ui/nice-tabs').name,
   require('./projectsyn').name,
-  require('./users').name
+  require('./users').name,
+  require('./devicegroups').name
 ])
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/settings', {
