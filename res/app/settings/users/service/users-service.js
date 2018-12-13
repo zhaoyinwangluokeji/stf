@@ -1,8 +1,8 @@
 var oboe = require('oboe')
 
-module.exports = function UsersService($http,
-    AppState) {
+module.exports = function UsersService($http,AppState) {
     return {
+         
         GetUsers: function (page, count, filter) {
             var data = {
                 page: page
@@ -19,9 +19,23 @@ module.exports = function UsersService($http,
                         console.log("fail")
                         return reject(response.data)
                     })
-
             });
-
+        },
+        GetGroupUsers: function (group_id, count, filter) {
+            var data = {
+                user_group_id: group_id
+            }
+            return new Promise(function (resolve, reject) {
+                $http.post('/auth/api/v1/mock/GetGroupUsers', data)
+                    .success(function (response) {
+                        console.log("success")
+                        return resolve(response.data)
+                    })
+                    .error(function (response) {
+                        console.log("fail")
+                        return reject(response.data)
+                    })
+            });
         },
         ResetUserPassword: function (email,name) {
             var data = {
@@ -58,7 +72,5 @@ module.exports = function UsersService($http,
                     })
             });
         }
-
     }
-
 }

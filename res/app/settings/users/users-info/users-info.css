@@ -1,0 +1,13 @@
+.rowhover:hover{
+    background-color: #C0C0C0
+}
+.select-color{
+    background-color: #C0C0C0;
+}
+
+.name-width{
+    min-width: 80px;
+}
+.blackbackground {
+    background: white
+}

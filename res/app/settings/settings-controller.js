@@ -19,7 +19,7 @@ module.exports = function SettingsCtrl($scope, gettext) {
     {
       title: gettext('Users'),
       icon: 'fa fa-user',
-      templateUrl: 'settings/users/users.pug'
+      templateUrl: 'settings/users/users-tab.pug'
     },
     {
       title: gettext('DeviceGroups'),

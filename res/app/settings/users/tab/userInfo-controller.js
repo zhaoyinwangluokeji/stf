@@ -1,4 +1,5 @@
 var oboe = require('oboe')
+/*
 module.exports = function UserInfoController($scope,AppState) {
 
     $scope.synenable = true
@@ -11,3 +12,4 @@ module.exports = function UserInfoController($scope,AppState) {
     
 
 }
+*/
