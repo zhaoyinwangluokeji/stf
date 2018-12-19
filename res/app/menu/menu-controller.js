@@ -10,6 +10,7 @@ module.exports = function MenuCtrl($scope, $rootScope, SettingsService,
     defaultValue: 'native'
   })
   $scope.user = AppState.user
+  $rootScope.user = AppState.user
   $scope.$on('$routeChangeSuccess', function () {
     $scope.isControlRoute = $location.path().search('/control') !== -1
   })
