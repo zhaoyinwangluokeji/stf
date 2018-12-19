@@ -1,7 +1,9 @@
 require('./devicegroups.css')
 
 module.exports = angular.module('stf.settings.devicegroups', [
-    require('stf/app-state').name
+    require('stf/app-state').name,
+    require('ui-bootstrap').name,
+    require('angular-xeditable').name,
     ,'ngTable'
   ])
   .run(['$templateCache', function($templateCache) {
