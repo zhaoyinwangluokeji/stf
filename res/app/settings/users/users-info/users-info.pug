@@ -9,7 +9,7 @@
                 tr.rowhover(ng-repeat="row in tableParamsCustom.data")
                     td(ng-repeat="(kk,vv) in row" ng-click="RowClick(row)" )
                         span(ng-if="kk != 'selected'") {{vv}}  
-                        input(type="checkbox" ng-model="vv"  ng-if="kk == 'selected'" )                      
+                        input(type="checkbox" ng-model="vv" disabled  ng-if="kk == 'selected'" )                      
                 tr  
                     td(colspan="100") 
                         table.fill-parent-width(ng-init="sel=5") 
@@ -54,7 +54,9 @@
                 button.btn-width(ng-click="ResetPassword()") 密码重置
             div
                 button.btn-width(ng-click="ModifyPassword()") 密码设置
-        
+            div            
+                button.btn-width(ng-click="AddNewUser()") 增加用户
+            
 
 
 

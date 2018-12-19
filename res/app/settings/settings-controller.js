@@ -12,7 +12,7 @@ module.exports = function SettingsCtrl($scope, gettext) {
       templateUrl: 'settings/keys/keys.pug'
     },
     {
-      title: gettext('ProjectSyn'),
+      title: gettext('DataSynchron'),
       icon: 'fa-ban fa-fw',
       templateUrl: 'settings/projectsyn/projectsyn.pug'
     },
