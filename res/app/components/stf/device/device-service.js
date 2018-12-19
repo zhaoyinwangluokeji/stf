@@ -123,8 +123,9 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
           return b
         }
       })
+
       sync(data)
-      console.log("emit change ")
+    //  console.log("emit change :"+JSON.stringify(data.device_rent_conf))
       this.emit('change', data)
     }.bind(this)
 
@@ -150,22 +151,22 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
         .catch(function () { })
     }
 
-    function MergeArray(arr1,arr2){
+    function MergeArray(arr1, arr2) {
       var _arr = new Array();
-      for(var i=0;i<arr1.length;i++){
-         _arr.push(arr1[i]);
+      for (var i = 0; i < arr1.length; i++) {
+        _arr.push(arr1[i]);
       }
-      for(var i=0;i<arr2.length;i++){
-          var flag = true;
-          for(var j=0;j<arr1.length;j++){
-              if(arr2[i]==arr1[j]){
-                  flag=false;
-                  break;
-              }
+      for (var i = 0; i < arr2.length; i++) {
+        var flag = true;
+        for (var j = 0; j < arr1.length; j++) {
+          if (arr2[i] == arr1[j]) {
+            flag = false;
+            break;
           }
-          if(flag){
-              _arr.push(arr2[i]);
-          }
+        }
+        if (flag) {
+          _arr.push(arr2[i]);
+        }
       }
       return _arr;
     }
@@ -188,7 +189,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
         $scope.device_groups.forEach(ele => {
           $scope.in_groups.forEach(element => {
             if (ele.usergroups.indexOf(element) > -1) {
-              $scope.usable_devices_lists = MergeArray($scope.usable_devices_lists,ele.devices)
+              $scope.usable_devices_lists = MergeArray($scope.usable_devices_lists, ele.devices)
               console.log("usable device lists: " + JSON.stringify($scope.usable_devices_lists))
               return
             }

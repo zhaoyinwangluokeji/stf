@@ -1,6 +1,6 @@
 module.exports = angular.module('stf.device-status', [])
-  .filter('statusNameAction', function(gettext) {
-    return function(text) {
+  .filter('statusNameAction', function (gettext) {
+    return function (text) {
       return {
         absent: gettext('Disconnected'),
         present: gettext('Connected'),
@@ -10,38 +10,38 @@ module.exports = angular.module('stf.device-status', [])
         ready: gettext('Ready'),
         using: gettext('Stop Using'),
         busy: gettext('Busy'),
-        available: gettext('Use'),
+        available: gettext('Available'),
         automation: gettext('Stop Automation')
-      }[text] || text  
+      }[text] || text
     }
   })
-  .filter('statusNameActionFromDevice', function(gettext) {
-   
-    return function(device) {
-      var text=device.state;
-      
-      if(!device.device_rent_conf || 
+  .filter('statusNameActionFromDevice', function (gettext) {
+
+    return function (device) {
+      var text = device.state;
+
+      if (!device.device_rent_conf ||
         !device.device_rent_conf.rent ||
-        device.device_rent_conf.rent==false){
+        device.device_rent_conf.rent == false) {
         return ('可租用');
       }
-      else if(device.device_rent_conf && device.device_rent_conf.rent){
+      else if (device.device_rent_conf && device.device_rent_conf.rent) {
         var now = Date.now();
-        if(device.device_rent_conf && device.device_rent_conf.now){
-          now=device.device_rent_conf.now;
+        if (device.device_rent_conf && device.device_rent_conf.now) {
+          now = device.device_rent_conf.now;
         }
-        var time = device.device_rent_conf.start_time + device.device_rent_conf.rent_time*1000*60 - now;
-        var hour = Math.floor(time/(1000*3600));
-        var minute = Math.floor((time%(1000*3600))/(1000*60));
-        var second = Math.floor((time%(1000*60))/(1000));
-        if(time>=0){
-          var tip = "剩" +hour+"时"+minute+"分"+second+"秒";
-          if(device.device_rent_conf.owner){
-            tip =  device.device_rent_conf.owner.name +':'+ tip;
+        var time = device.device_rent_conf.start_time + device.device_rent_conf.rent_time * 1000 * 60 - now;
+        var hour = Math.floor(time / (1000 * 3600));
+        var minute = Math.floor((time % (1000 * 3600)) / (1000 * 60));
+        var second = Math.floor((time % (1000 * 60)) / (1000));
+        if (time >= 0) {
+          var tip = "剩" + hour + "时" + minute + "分" + second + "秒";
+          if (device.device_rent_conf.owner) {
+            tip = device.device_rent_conf.owner.name + ':' + tip;
           }
-          return (tip) 
+          return (tip)
         }
-        else{
+        else {
           return gettext('租用过期')
         }
       }
@@ -50,8 +50,8 @@ module.exports = angular.module('stf.device-status', [])
       }
     }
   })
-  .filter('statusNamePassive', function(gettext) {
-    return function(text) {
+  .filter('statusNamePassive', function (gettext) {
+    return function (text) {
       return {
         absent: gettext('Disconnected'),
         present: gettext('Connected'),
@@ -66,19 +66,19 @@ module.exports = angular.module('stf.device-status', [])
       }[text] || gettext('Unknown')
     }
   })
- .filter('likelyLeaveReason', function(gettext) {
-    return function(text) {
+  .filter('likelyLeaveReason', function (gettext) {
+    return function (text) {
       return {
         ungroup_request: gettext('You (or someone else) kicked the device.'),
         owner_change: gettext('Someone stole your device.'),
         automatic_timeout: gettext('Device was kicked by automatic timeout.	'),
         device_absent: gettext('Device is not present anymore for some reason.'),
         status_change: gettext('Device is present but offline.')
-      }[text] ||  text
+      }[text] || text
     }
   })
-  .filter('batteryHealth', function(gettext) {
-    return function(text) {
+  .filter('batteryHealth', function (gettext) {
+    return function (text) {
       return {
         cold: gettext('Cold'),
         good: gettext('Good'),
@@ -89,8 +89,8 @@ module.exports = angular.module('stf.device-status', [])
       }[text] || gettext('-')
     }
   })
-  .filter('batterySource', function(gettext) {
-    return function(text) {
+  .filter('batterySource', function (gettext) {
+    return function (text) {
       return {
         ac: gettext('AC'),
         usb: gettext('USB'),
@@ -98,8 +98,8 @@ module.exports = angular.module('stf.device-status', [])
       }[text] || gettext('-')
     }
   })
-  .filter('batteryStatus', function(gettext) {
-    return function(text) {
+  .filter('batteryStatus', function (gettext) {
+    return function (text) {
       return {
         charging: gettext('Charging'),
         discharging: gettext('Discharging'),
@@ -108,8 +108,8 @@ module.exports = angular.module('stf.device-status', [])
       }[text] || gettext('-')
     }
   })
-  .filter('displayDensity', function() {
-    return function(text) {
+  .filter('displayDensity', function () {
+    return function (text) {
       return {
         '0.5': 'LDPI', // (120 dpi)
         '1': 'MDPI', // (160 dpi)
@@ -120,8 +120,8 @@ module.exports = angular.module('stf.device-status', [])
       }[text] || text
     }
   })
-  .filter('networkType', function(gettext) {
-    return function(text) {
+  .filter('networkType', function (gettext) {
+    return function (text) {
       return {
         bluetooth: gettext('Bluetooth'),
         dummy: gettext('Dummy'),
@@ -136,15 +136,15 @@ module.exports = angular.module('stf.device-status', [])
       }[text] || text
     }
   })
-  .filter('networkSubType', function(gettext) {
-    return function(text) {
+  .filter('networkSubType', function (gettext) {
+    return function (text) {
       return {
         mobile_wifi: gettext('WiFi')
       }[text] || text
     }
   })
-  .filter('humanizedBool', function(gettext) {
-    return function(text) {
+  .filter('humanizedBool', function (gettext) {
+    return function (text) {
       switch (text) {
         case true:
           return gettext('Yes')
