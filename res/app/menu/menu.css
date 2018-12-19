@@ -76,3 +76,9 @@
 .nameemail{
   font-size:18px;
 } 
+.nonedot{
+list-style:none;
+}
+.mouse-background :hover{ 
+  background:#aaa;  
+} 

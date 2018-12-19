@@ -21,6 +21,25 @@ module.exports = function UsersService($http,AppState) {
                     })
             });
         },
+        AddNewUser: function (user) {
+            var data = {
+                email: user.email
+                , name: email.name
+                 
+            }
+            return new Promise(function (resolve, reject) {
+                $http.post('/auth/api/v1/mock/AddNewUser', data)
+                    .success(function (response) {
+                        console.log("success")
+                        return resolve(response.data)
+                    })
+                    .error(function (response) {
+                        console.log("fail")
+                        return reject(response.data)
+                    })
+            });
+        },
+        
         GetGroupUsers: function (group_id, count, filter) {
             var data = {
                 user_group_id: group_id

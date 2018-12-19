@@ -7,5 +7,9 @@ div(ng-controller='ProjectSynController')
          div(ng-class="{progress: true, 'progress-striped': vm.striped}")
             div(ng-class="['progress-bar', vm.style]" ng-style="{width: vm.value + '%'}")
                 div(ng-if="vm.showLabel") {{vm.value}}%
-        button(type="button" ng-click="func()") SynProjects
-        
+        button(type="button" ng-click="synProjects()") SynProjects
+    .widget-content.padded
+         div(ng-class="{progress: true, 'progress-striped': vm.striped}")
+            div(ng-class="['progress-bar', vm.style]" ng-style="{width: vm.value + '%'}")
+                div(ng-if="vm.showLabel") {{vm2.value}}%
+        button(type="button" ng-click="synUsers()") SynUsers   

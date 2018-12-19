@@ -6,7 +6,7 @@ module.exports = function UsersInfoDirective(
     //  
     return {
         restrict: 'E'
-        , template: require('./users-info.pug')  
+        , template: require('./users-info.pug')
         , scope: {
             //      tracker: '&tracker'
             //    , columns: '&columns'
@@ -53,7 +53,11 @@ module.exports = function UsersInfoDirective(
                     }
                 }
             }
-            scope.SelectRowColor = function (row) {
+
+            scope.AddNewUser = function () {
+                window.open("/auth/mock/create-account", "_blank", "scrollbars=yes,resizable=1,modal=true,alwaysRaised=yes,width=600,height=400");
+            }
+            scope.SelectRowColor = function (row) { 
                 if (row.selected == true) {
                     return '#C0C0C0'
                 } else {

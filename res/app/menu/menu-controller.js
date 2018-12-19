@@ -1,4 +1,4 @@
-module.exports = function MenuCtrl($scope, $rootScope, SettingsService,
+module.exports = function MenuCtrl($scope, $rootScope, SettingsService, UsersService,
   $location, AppState) {
 
   SettingsService.bind($scope, {
@@ -15,27 +15,35 @@ module.exports = function MenuCtrl($scope, $rootScope, SettingsService,
     $scope.isControlRoute = $location.path().search('/control') !== -1
   })
 
-
+  $scope.ModifyPassword = function () {
+    if (!AppState.user) {
+      alert('没有选择用户')
+    } else {
+      var password = prompt("请输入新的密码", ""); //将输入的内容赋给变量 name ，   
+      if (password) {
+        return UsersService.ModifyPassword(AppState.user, password).then(function (data) {
+          alert(data.msg)
+        }).catch(function (err) {
+          console.log("err:" + JSON.stringify(err))
+        })
+      }
+    }
+  }
 
   var MenusDefault = [
     {
       name: '设备租用日志统计'
       , selected: true
-      , admin : false
-//      , click: DeviceUsingStatistics
-      , parameter:'Msg'
+      , admin: false
+      //      , click: DeviceUsingStatistics
+      , parameter: 'Msg'
     },
     {
       name: '设备统计'
       , selected: true
-      , admin : false
+      , admin: false
     }
   ]
-
- 
   $scope.Menus = MenusDefault
-
-
-
 
 }
