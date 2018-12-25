@@ -72,13 +72,39 @@ module.exports =
                     if (!$scope.search.deviceFilter) {
                         alert('请关联项目')
                     } else {
-                        if ($scope.search.deviceFilter.indexOf(":T") == -1) {
+                        if ($scope.search.deviceFilter.indexOf(":T") == -1 &&
+                            $scope.search.deviceFilter.indexOf(":P") == -1 &&
+                            $scope.search.deviceFilter.indexOf(":M") == -1)
+                            {
                             alert('项目格式错误')
                         }
                         else {
                             var query = $scope.search.deviceFilter;
-                            var proName = query.substr(0, query.indexOf(':T'))
-                            var proCode = query.substr(query.indexOf(':T') + 1)
+                            var proN0 = query.substr(0, query.indexOf(':T'))
+                            var proC0 = query.substr(query.indexOf(':T') + 1)
+
+                            var proN1 = query.substr(0, query.indexOf(':P'))
+                            var proC1 = query.substr(query.indexOf(':P') + 1)
+
+                            var proN2 = query.substr(0, query.indexOf(':M'))
+                            var proC2 = query.substr(query.indexOf(':M') + 1)
+
+
+
+                            var proName
+                            var proCode
+                            if (query.indexOf(':T') != -1) {
+                                proName = proN0
+                                proCode = proC0
+                            } else if (query.indexOf(':P') != -1) {
+                                proName = proN1
+                                proCode = proC1
+                            }
+                            else if (query.indexOf(':M') != -1) {
+                                proName = proN2
+                                proCode = proC2
+                            }
+
                             $scope.device.device_rent_conf = {
                                 rent: true,
                                 rent_time: $scope.rent_time_selected,
@@ -214,18 +240,26 @@ module.exports =
             })
 
             return modalInstance.result.then(function (result) {
-                if (confirm("需要直接打开手机的远程控制吗？")) {
-                    return {
-                        result: true,
-                        device: device,
-                        message: "open"
+                if (device.platform == "Android" && device.state == 'available') {
+                    if (confirm("需要直接打开手机的远程控制吗？")) {
+                        return {
+                            result: true,
+                            device: device,
+                            message: "open"
+                        }
                     }
-                }
-                else {
-                    return {
+                    else {
+                        return {
+                            result: false,
+                            device: device,
+                            message: "not open"
+                        }
+                    }
+                }else{
+                    return{
                         result: false,
                         device: device,
-                        message: "not open"
+                        message: "not available"
                     }
                 }
             }, function (reason) {
@@ -239,10 +273,17 @@ module.exports =
         }
 
         DeviceRentService.free_rent = function (device, socket) {
-            if (device.device_rent_conf) {
-                device.device_rent_conf.rent = false;
-            }
-            socket.emit('device.rent_conf.set', device)
+            console.log("free_rent")
+            return new Promise(function (resolve, reject) {
+                if (device.device_rent_conf) {
+                    device.device_rent_conf.rent = false;
+                } else {
+                    device.device_rent_conf = {}
+                    device.device_rent_conf.rent = false
+                }
+                resolve(socket.emit('device.rent_conf.set', device))
+            })
+
         }
 
         return DeviceRentService

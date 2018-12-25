@@ -2,7 +2,7 @@ var oboe = require('oboe')
 var _ = require('lodash')
 var EventEmitter = require('eventemitter3')
 
-module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceService,DeviceRentWebControl) {
+module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceService, DeviceRentWebControl, AppState) {
   var deviceService = {}
 
   function Tracker($scope, options) {
@@ -10,8 +10,45 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     var devicesBySerial = Object.create(null)
     var scopedSocket = socket.scoped($scope)
     var digestTimer, lastDigest
+    $scope.device_groups = null
+    $scope.user_groups = null
+    $scope.in_groups = []
+    $scope.usable_devices_lists = []
+
+    function getAllDeviceGroups() {
+      return new Promise(function (resolve, reject) {
+        data = {}
+        $http.post('/auth/api/v1/mock/get-all-device-groups', data)
+          .success(function (response) {
+            $scope.device_groups = response.data
+            console.log("success: " + JSON.stringify(response.data))
+            return resolve(response.data)
+          })
+          .error(function (response) {
+            console.log("fail")
+            return reject(response.data)
+          })
+      });
+    }
+
+    function getAllUserGroups() {
+      return new Promise(function (resolve, reject) {
+        data = {}
+        $http.post('/auth/api/v1/mock/get-all-user-groups', data)
+          .success(function (response) {
+            $scope.user_groups = response.data
+            console.log("success: " + JSON.stringify(response.data))
+            return resolve(response.data)
+          })
+          .error(function (response) {
+            console.log("fail")
+            return reject(response.data)
+          })
+      });
+    }
+
     console.log("new Tracker() ")
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
       console.log("Tracker destroy")
       clearTimeout(digestTimer)
     })
@@ -74,20 +111,21 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
 
     var insert = function insert(data) {
       console.log("insert ")
-      devicesBySerial[data.serial] = devices.push(data) - 1
-      sync(data)
+      // devicesBySerial[data.serial] = devices.push(data) - 1
+      // sync(data)
       this.emit('add', data)
     }.bind(this)
 
     var modify = function modify(data, newData) {
-      _.merge(data, newData, function(a, b) {
+      _.merge(data, newData, function (a, b) {
         // New Arrays overwrite old Arrays
         if (_.isArray(b)) {
           return b
         }
       })
+
       sync(data)
-      console.log("emit change ")
+    //  console.log("emit change :"+JSON.stringify(data.device_rent_conf))
       this.emit('change', data)
     }.bind(this)
 
@@ -102,57 +140,150 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     }.bind(this)
 
     function fetch(data) {
-      console.log("fetch "+data.serial)
+      console.log("fetch " + data.serial)
       deviceService.load(data.serial)
-        .then(function(device) {
+        .then(function (device) {
           return changeListener({
             important: true
-          , data: device
+            , data: device
           })
         })
-        .catch(function() {})
+        .catch(function () { })
+    }
+
+    function MergeArray(arr1, arr2) {
+      var _arr = new Array();
+      for (var i = 0; i < arr1.length; i++) {
+        _arr.push(arr1[i]);
+      }
+      for (var i = 0; i < arr2.length; i++) {
+        var flag = true;
+        for (var j = 0; j < arr1.length; j++) {
+          if (arr2[i] == arr1[j]) {
+            flag = false;
+            break;
+          }
+        }
+        if (flag) {
+          _arr.push(arr2[i]);
+        }
+      }
+      return _arr;
+    }
+
+    function getAllUsableDevices(serial) {
+      var email = AppState.user.email
+      console.log("loading all device groups ...")
+      return getAllDeviceGroups().then(function () {
+        console.log("loading all user groups ...")
+        return getAllUserGroups()
+      }).then(function () {
+        console.log("Got User Groups: " + JSON.stringify($scope.user_groups))
+        $scope.user_groups.forEach(ele => {
+          if (ele.userslist) {
+            ele.userslist.forEach(element => {
+              if (element.email == email) {
+                $scope.in_groups.push(ele.GroupName)
+              }
+            });
+          }
+        });
+        $scope.device_groups.forEach(ele => {
+          $scope.in_groups.forEach(element => {
+            if (ele.usergroups.indexOf(element) > -1) {
+              $scope.usable_devices_lists = MergeArray($scope.usable_devices_lists, ele.devices)
+              console.log("usable device lists: " + JSON.stringify($scope.usable_devices_lists))
+              return
+            }
+          });
+        });
+      })
+    }
+
+    function ifDeviceUsable(serial) {
+      if ($scope.usable_devices_lists.indexOf(serial) > -1) {
+        return true
+      } else {
+        return false
+      }
+    }
+
+    function handleAddListener(event,isNew,device){
+      if (!isNew) {
+        modify(device, event.data)
+        notify(event)
+        DeviceRentWebControl.open(device, modify, fetch)
+      }
+      else {
+        if (options.filter(event.data)) {
+          insert(event.data)
+          notify(event)
+          device = get(event.data)
+          DeviceRentWebControl.open(device, modify, fetch)
+        }
+      }
     }
 
     function addListener(event) {
       console.log("addListener ")
       var device = get(event.data)
-      if (device) {
-        modify(device, event.data)
-        notify(event)
-        DeviceRentWebControl.open(device,modify,fetch)
+      var isNew = true
+      if(device){
+        var isNew = false
+      }else{
+        devicesBySerial[event.data.serial] = devices.push(event.data) - 1
+        sync(event.data)
+        device = get(event.data)
       }
-      else {
-        if (options.filter(event.data)) {
-          insert(event.data)
-          notify(event)
-          device = get(event.data)
-          DeviceRentWebControl.open(device,modify,fetch)
-        }
+
+      if (event.checkPermition) {
+        return (new Promise(function (resolve) {
+          if ($scope.device_groups == null || $scope.user_groups == null) {
+            console.log("initializing device group and user group...")
+            return resolve(getAllUsableDevices())
+          } else {
+            return resolve()
+          }
+        })).then(function () {
+          if (!ifDeviceUsable(event.data.serial)) {
+            console.log("device is not permitted for user, usable devices:  " + JSON.stringify($scope.usable_devices_lists))
+            return
+          } else {
+            console.log("device is ready for user, usable devices:  " + JSON.stringify($scope.usable_devices_lists))
+            handleAddListener(event,isNew,device)
+          }
+        })
+      } else {
+        console.log("Adding Device and not checking permition ")
+        handleAddListener(event,isNew,device)
       }
     }
 
     function changeListener(event) {
       var device = get(event.data)
-     
+
       if (device) {
-        console.log("changeListener1 "+event.data.serial)
+        console.log("changeListener1 " + event.data.serial)
         modify(device, event.data)
         if (!options.filter(device)) {
-          console.log("remove device "+event.data.serial)
+          console.log("remove device " + event.data.serial)
           remove(device)
         }
         notify(event)
-        DeviceRentWebControl.open(device,modify,fetch)
+        DeviceRentWebControl.open(device, modify, fetch)
       }
       else {
         if (options.filter(event.data)) {
-          console.log("changeListener2 "+event.data.serial)  
+          console.log("changeListener2 " + event.data.serial)
+          devicesBySerial[event.data.serial] = devices.push(event.data) - 1
+          sync(event.data)
+          device = get(event.data)
           insert(event.data)
           // We've only got partial data
           fetch(event.data)
           notify(event)
           device = get(event.data)
-          DeviceRentWebControl.open(device,modify,fetch)
+          DeviceRentWebControl.open(device, modify, fetch)
 
         }
       }
@@ -162,73 +293,73 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     scopedSocket.on('device.remove', changeListener)
     scopedSocket.on('device.change', changeListener)
 
-    this.add = function(device) {
+    this.add = function (device, checkPermition) {
       addListener({
         important: true
-      , data: device
+        , data: device
+        , checkPermition: checkPermition
       })
     }
-
     this.devices = devices
   }
 
   Tracker.prototype = new EventEmitter()
 
-  deviceService.trackAll = function($scope) {
+  deviceService.trackAll = function ($scope) {
     var tracker = new Tracker($scope, {
-      filter: function() {
+      filter: function () {
         return true
       }
-    , digest: false
+      , digest: false
     })
 
     oboe('/api/v1/devices')
-      .node('devices[*]', function(device) {
-        tracker.add(device)
+      .node('devices[*]', function (device) {
+        tracker.add(device, true)
       })
 
     return tracker
   }
 
-  deviceService.trackGroup = function($scope) {
+  deviceService.trackGroup = function ($scope) {
     var tracker = new Tracker($scope, {
-      filter: function(device) {
+      filter: function (device) {
         return device.using
       }
-    , digest: true
+      , digest: true
     })
 
     oboe('/api/v1/user/devices')
-      .node('devices[*]', function(device) {
-        tracker.add(device)
+      .node('devices[*]', function (device) {
+        tracker.add(device, false)
       })
 
     return tracker
   }
 
-  deviceService.load = function(serial) {
+  deviceService.load = function (serial) {
     return $http.get('/api/v1/devices/' + serial)
-      .then(function(response) {
+      .then(function (response) {
         return response.data.device
       })
   }
 
-  deviceService.get = function(serial, $scope) {
+  deviceService.get = function (serial, $scope) {
     var tracker = new Tracker($scope, {
-      filter: function(device) {
+      filter: function (device) {
         return device.serial === serial
       }
-    , digest: true
+      , digest: true
     })
 
     return deviceService.load(serial)
-      .then(function(device) {
+      .then(function (device) {
         tracker.add(device)
         return device
       })
   }
 
-  deviceService.updateNote = function(serial, note) {
+  deviceService.updateNote = function (serial, note) {
     socket.emit('device.note', {
       serial: serial,
       note: note

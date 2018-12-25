@@ -1,0 +1,101 @@
+
+
+div(ng-controller='DeviceManagerController')
+    .widget-content.padded
+        .row
+            .col-md-4
+                Div.name-title-info
+                    strong.align-middle 请填写新增设备信息
+                    button.align-right.btn-width(ng-click="deleteDevices()")
+                        i.fa.fa-minus
+                        span 删除
+                    button.align-right.btn-width(ng-click="addDevice()")
+                        i.fa.fa-plus
+                        span 增加
+                table.blackbackground.table.dataTable
+                    thead
+                        th.header
+                            div 属性
+                        th.header
+                            div 值
+                    tr
+                        td
+                            div {{serialName}}
+                        td
+                            input(ng-model='addSerial')
+                    tr
+                        td
+                            div 设备类型
+                        td
+                            select.my-select(ng-model='addPlatform',ng-options="tp for tp in TypeList",ng-change="changePlatform()")
+                    tr
+                        td
+                            div 系统版本
+                        td
+                            input(ng-model='addVersion')
+                    tr
+                        td
+                            div 品牌
+                        td
+                            select.my-select(ng-model='addManufacturer',ng-options="pp for pp in ManufactureList")
+                    tr
+                        td
+                            div 型号
+                        td
+                            input(ng-model='addModel', ng-show="isAndroid")
+                            select(ng-model='addModel',ng-options="md for md in AppleModels",ng-show="!isAndroid")
+                    tr
+                        td
+                            div 屏幕高
+                            input(ng-model='addHeight')
+                        td
+                            div 屏幕宽
+                            input(ng-model='addWidth')
+                    
+            .col-md-8
+                input.floatleft.QueryHeight.form-control(type="text" ng-model="deviceFilter" ng-keyup="FreshDevice()")
+                table.blackbackground.table.dataTable.ng-table(ng-table="tableParamsDevices")
+                    thead
+                        th.header.sortable(ng-repeat='(k,v) in tableParamsDevices.data[0] track by $index' ng-if="k!='userslist' && k!= 'id'")
+                            div(ng-bind='k | translate' ng-style="{width: HeadWidth(k)}")
+                    tr.rowhover(ng-repeat="row in tableParamsDevices.data" ng-click="SelectDevice(row)")
+                        td(ng-repeat="(kk,vv) in row" ng-if="kk!= 'id' ")
+                            span(ng-if="kk != 'selected'") {{vv}}    
+                            input(type="checkbox" ng-if="kk == 'selected'" disabled ng-model="vv")    
+                    tr  
+                        td(colspan="100") 
+                            table.fill-parent-width(ng-init="sel2=15") 
+                                tr 
+                                    td
+                                        div.floatleft
+                                            button.wid30px(ng-disabled="params.parameters().page<=1" ng-click="params.page(1)") <<
+                                        div.floatleft
+                                            button.wid30px(ng-disabled="params.parameters().page<=1" ng-click="params.page(params.parameters().page-1)") <
+                                        div.floatleft
+                                            button.wid30px(ng-disabled=" pagesDeviceCount <= (params.parameters().page )" ng-click="params.page(params.parameters().page+1)") >
+                                        div.floatleft
+                                            button.wid30px(ng-disabled=" pagesDeviceCount <= (params.parameters().page )" ng-click="params.page(pagesGroupCount)") >>
+                                    td
+                                        span.msgwidth 
+                                        | Totals: {{params.total()}}  
+                                    td
+                                        span.msgwidth  
+                                        | Pages: {{params.parameters().page}} / {{pagesDeviceCount}}
+                                    td(colspan="0")
+                                        div.btn-group(uib-dropdown).floatright
+                                            button.btn.btn-sm.btn-primary-outline(type='button', uib-dropdown-toggle)
+                                                span {{params.parameters().count}}
+                                                span(ng-bind='">>"|translate')
+                                            ul.uib-dropdown-menu(role='menu')
+                                                li(ng-repeat='ceil in params.settings().counts track by $index',
+                                                ng-hide='!adminMode && columnDefinitions[column.name].admin')
+                                                    button(ng-click='params.count(ceil);sel2=ceil').btn.btn-xs
+                                                        i.fa.fa-circle-thin
+                                                        span(ng-bind='ceil | translate') 
+
+
+
+
+
+
+

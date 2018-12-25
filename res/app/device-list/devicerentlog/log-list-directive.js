@@ -505,7 +505,7 @@ module.exports = function DeviceListDetailsDirective(
                 console.log("LoadData Type:" + typeof (date))
                 var condi = date.format("yyyy-MM-dd")
                 DeviceRentLogService.getLogs(condi, '', scope.page, scope.count, '', '').then(function (result) {
-                    scope.Logs = result.data;
+                    scope.Logs = result.data
                     scope.total = result.total
                     scope.pagesCount = Math.ceil(scope.total / scope.count)
                     console.log("total:" + result.total + ",count:" + scope.count + ",page=" + scope.page

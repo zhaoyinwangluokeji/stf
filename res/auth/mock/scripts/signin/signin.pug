@@ -1,13 +1,20 @@
 .login2(ng-controller='SignInCtrl')
+  .create-user-wrapper
+    a(href="/auth/mock/create-account")
+      i.fa.fa-user-md
+      p create new account
   .login-wrapper
     a(href='./')
       img(width='160', height='160', src='/static/logo/exports/STF-512.png', title='STF')
 
     form(name='signin', novalidate, ng-submit='submit()')
       .alert.alert-danger(ng-show='error')
-        span(ng-show='error.$invalid', translate) Check errors below
-        span(ng-show='error.$incorrect', translate) Incorrect login details
-        span(ng-show='error.$server', translate) Server error. Check log output.
+        span(ng-show='error.$invalid', translate) Check errors below,,
+        span(ng-show='error.$invalid && error.message', translate) {{error.message}}
+        span(ng-show='error.$incorrect', translate) Incorrect login details,,
+        span(ng-show='error.$incorrect && error.message', translate) {{error.message}}
+        span(ng-show='error.$server', translate) Server error. Check log output.,,
+        span(ng-show='error.$server && error.message', translate) {{error.message}}
 
       .form-group
         .input-group
@@ -28,4 +35,14 @@
           span(ng-show='signin.email.$error.email', translate) Please enter a valid email
           span(ng-show='signin.email.$error.required', translate) Please enter your email
 
+      .form-group
+        .input-group
+          span.input-group-addon
+            i.fa.fa-key.fa-fw
+          input.form-control(ng-model='password', name='password', required, type='password', placeholder='',
+          autocorrect='off', autocapitalize='off', spellcheck='false', autocomplete='section-login username')
+        .alert.alert-warning(ng-show='signin.password.$dirty && signin.password.$invalid')
+          span(translate) Please enter password
+
       input.btn.btn-lg.btn-primary.btn-block(type='submit', value='Log In')
+

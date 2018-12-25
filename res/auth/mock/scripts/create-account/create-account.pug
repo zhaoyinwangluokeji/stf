@@ -1,0 +1,44 @@
+.login2(ng-controller='CreateAccountController')
+  .login-wrapper
+    a(href='./')
+      img(width='160', height='160', src='/static/logo/exports/STF-512.png', title='STF')
+
+    form(name='signin', novalidate, ng-submit='submit()')
+      .alert.alert-danger(ng-show='error')
+        span(ng-show='error.$invalid', translate) Check errors below,,
+        span(ng-show='error.$invalid && error.message', translate) {{error.message}}
+        span(ng-show='error.$incorrect', translate) Incorrect login details,,
+        span(ng-show='error.$incorrect && error.message', translate) {{error.message}}
+        span(ng-show='error.$server', translate) Server error. Create account Error,,
+        span(ng-show='error.$server && error.message', translate) {{error.message}}
+
+      .form-group
+        .input-group
+          span.input-group-addon
+            i.fa.fa-user
+          input.form-control(ng-model='create_account.username', name='username', required, type='text', placeholder='Name',
+          autocorrect='off', autocapitalize='off', spellcheck='false',
+         autocomplete='section-login username')
+        .alert.alert-warning(ng-show='create_account.username.$dirty && create_account.username.$invalid')
+          span(translate) Please enter your name
+
+      .form-group
+        .input-group
+          span.input-group-addon
+            i.fa.fa-envelope
+          input.form-control(ng-model='create_account.email', name='email', required, type='email', placeholder='E-mail',
+          autocorrect='off', autocapitalize='off', spellcheck='false', autocomplete='section-login email')
+        .alert.alert-warning(ng-show='create_account.email.$dirty && create_account.email.$invalid')
+          span(ng-show='create_account.email.$error.email', translate) Please enter a valid email
+          span(ng-show='create_account.email.$error.required', translate) Please enter your email
+
+      .form-group
+        .input-group
+          span.input-group-addon
+            i.fa.fa-key.fa-fw
+          input.form-control(ng-model='create_account.password', name='password', required, type='password', placeholder='',
+          autocorrect='off', autocapitalize='off', spellcheck='false', autocomplete='section-login username')
+        .alert.alert-warning(ng-show='create_account.password.$dirty && create_account.password.$invalid')
+          span(translate) Please enter password
+
+      input.btn.btn-lg.btn-primary.btn-block(type='submit', value='Cretea New Account')
