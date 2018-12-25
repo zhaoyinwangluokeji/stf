@@ -12,5 +12,5 @@ module.exports = angular.module('stf.settings.devicegroups', [
     )
   }])
    .controller('DeviceGroupsController', require('./device-groups-controller'))
-   .service('UsersService', require('./device-groups-service'))
+   .service('DeviceGroupService', require('./device-groups-service'))
  

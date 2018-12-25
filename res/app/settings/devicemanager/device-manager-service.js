@@ -1,6 +1,6 @@
 var oboe = require('oboe')
 
-module.exports = function DeviceGroupsService($http,
+module.exports = function DeviceManagerService($http,
     AppState) {
     return {
         

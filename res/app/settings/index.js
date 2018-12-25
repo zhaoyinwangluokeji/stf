@@ -4,7 +4,8 @@ module.exports = angular.module('ui-settings', [
   require('stf/common-ui/nice-tabs').name,
   require('./projectsyn').name,
   require('./users').name,
-  require('./devicegroups').name
+  require('./devicegroups').name,
+  require('./devicemanager').name
 ])
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/settings', {

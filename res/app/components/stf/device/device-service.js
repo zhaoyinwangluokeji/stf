@@ -111,8 +111,8 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
 
     var insert = function insert(data) {
       console.log("insert ")
-      devicesBySerial[data.serial] = devices.push(data) - 1
-      sync(data)
+      // devicesBySerial[data.serial] = devices.push(data) - 1
+      // sync(data)
       this.emit('add', data)
     }.bind(this)
 
@@ -180,11 +180,13 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
       }).then(function () {
         console.log("Got User Groups: " + JSON.stringify($scope.user_groups))
         $scope.user_groups.forEach(ele => {
-          ele.userslist.forEach(element => {
-            if (element.email == email) {
-              $scope.in_groups.push(ele.GroupName)
-            }
-          });
+          if (ele.userslist) {
+            ele.userslist.forEach(element => {
+              if (element.email == email) {
+                $scope.in_groups.push(ele.GroupName)
+              }
+            });
+          }
         });
         $scope.device_groups.forEach(ele => {
           $scope.in_groups.forEach(element => {
@@ -206,37 +208,55 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
       }
     }
 
+    function handleAddListener(event,isNew,device){
+      if (!isNew) {
+        modify(device, event.data)
+        notify(event)
+        DeviceRentWebControl.open(device, modify, fetch)
+      }
+      else {
+        if (options.filter(event.data)) {
+          insert(event.data)
+          notify(event)
+          device = get(event.data)
+          DeviceRentWebControl.open(device, modify, fetch)
+        }
+      }
+    }
+
     function addListener(event) {
       console.log("addListener ")
-      return (new Promise(function (resolve) {
-        if ($scope.device_groups == null || $scope.user_groups == null) {
-          console.log("initializing device group and user group...")
-          return resolve(getAllUsableDevices())
-        } else {
-          return resolve()
-        }
-      })).then(function () {
-        if (!ifDeviceUsable(event.data.serial)) {
-          console.log("device is not permitted for user, usable devices:  " + JSON.stringify($scope.usable_devices_lists))
-          return
-        } else {
-          console.log("device is ready for user, usable devices:  " + JSON.stringify($scope.usable_devices_lists))
-          var device = get(event.data)
-          if (device) {
-            modify(device, event.data)
-            notify(event)
-            DeviceRentWebControl.open(device, modify, fetch)
+      var device = get(event.data)
+      var isNew = true
+      if(device){
+        var isNew = false
+      }else{
+        devicesBySerial[event.data.serial] = devices.push(event.data) - 1
+        sync(event.data)
+        device = get(event.data)
+      }
+
+      if (event.checkPermition) {
+        return (new Promise(function (resolve) {
+          if ($scope.device_groups == null || $scope.user_groups == null) {
+            console.log("initializing device group and user group...")
+            return resolve(getAllUsableDevices())
+          } else {
+            return resolve()
           }
-          else {
-            if (options.filter(event.data)) {
-              insert(event.data)
-              notify(event)
-              device = get(event.data)
-              DeviceRentWebControl.open(device, modify, fetch)
-            }
+        })).then(function () {
+          if (!ifDeviceUsable(event.data.serial)) {
+            console.log("device is not permitted for user, usable devices:  " + JSON.stringify($scope.usable_devices_lists))
+            return
+          } else {
+            console.log("device is ready for user, usable devices:  " + JSON.stringify($scope.usable_devices_lists))
+            handleAddListener(event,isNew,device)
           }
-        }
-      })
+        })
+      } else {
+        console.log("Adding Device and not checking permition ")
+        handleAddListener(event,isNew,device)
+      }
     }
 
     function changeListener(event) {
@@ -255,6 +275,9 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
       else {
         if (options.filter(event.data)) {
           console.log("changeListener2 " + event.data.serial)
+          devicesBySerial[event.data.serial] = devices.push(event.data) - 1
+          sync(event.data)
+          device = get(event.data)
           insert(event.data)
           // We've only got partial data
           fetch(event.data)
@@ -270,13 +293,13 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     scopedSocket.on('device.remove', changeListener)
     scopedSocket.on('device.change', changeListener)
 
-    this.add = function (device) {
+    this.add = function (device, checkPermition) {
       addListener({
         important: true
         , data: device
+        , checkPermition: checkPermition
       })
     }
-
     this.devices = devices
   }
 
@@ -292,7 +315,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
 
     oboe('/api/v1/devices')
       .node('devices[*]', function (device) {
-        tracker.add(device)
+        tracker.add(device, true)
       })
 
     return tracker
@@ -308,7 +331,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
 
     oboe('/api/v1/user/devices')
       .node('devices[*]', function (device) {
-        tracker.add(device)
+        tracker.add(device, false)
       })
 
     return tracker
