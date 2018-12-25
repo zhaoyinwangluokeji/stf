@@ -14,7 +14,7 @@ module.exports = function SettingsCtrl($scope, gettext) {
     {
       title: gettext('数据同步'),
       icon: 'fa-ban fa-fw',
-      templateUrl: 'settings/projectsyn/projectsyn.pug'
+      templateUrl: 'settings/datasyn/datasyn.pug'
     },
     {
       title: gettext('用户管理'),

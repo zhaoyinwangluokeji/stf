@@ -670,17 +670,6 @@ function DeviceRentReleaseCell(options, DeviceRentService, $location, AppState, 
               }
             }
           }
-        } else {
-          return Promise.all([device].map(function (device) {
-            return DeviceRentService.open(device)
-          })).then(function (result) {
-            if (result[0].result == true) {
-              $location.path('/control/' + result[0].device.serial);
-            }
-          })
-            .catch(function (err) {
-              console.log('err: ', err)
-            })
         }
         e.preventDefault()
       };

@@ -2,7 +2,7 @@ module.exports = angular.module('ui-settings', [
   require('./general').name,
   require('./keys').name,
   require('stf/common-ui/nice-tabs').name,
-  require('./projectsyn').name,
+  require('./datasyn').name,
   require('./users').name,
   require('./devicegroups').name,
   require('./devicemanager').name

@@ -51,7 +51,7 @@ module.exports = function DeviceListDetailsDirective(
       }
 
       function checkDeviceStatus(e) {
-        if (e.target.classList.contains('device-status')) {
+        if (e.target.classList.contains('device-rent-status')) {
           var id = e.target.parentNode.parentNode.id
           var device = mapping[id]
           user = AppState.user
