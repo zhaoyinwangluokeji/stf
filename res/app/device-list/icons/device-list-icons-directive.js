@@ -51,6 +51,7 @@ module.exports = function DeviceListIconsDirective(
         divBody.appendChild(divImage)
 
         var divInfo = document.createElement('div')
+        divInfo.className = "phoneInfoList"
         divBody.appendChild(divInfo)
 
         var model = document.createElement('div')
@@ -117,7 +118,7 @@ module.exports = function DeviceListIconsDirective(
         var headerbtn = divheader.children[1]
 
         headerbtn.classList.add("nonedisplay")
-        
+
         // .device-photo-small
         if (img.getAttribute('src') !== device.enhancedImage120) {
           img.setAttribute('src', device.enhancedImage120)
@@ -126,7 +127,7 @@ module.exports = function DeviceListIconsDirective(
 
         manufacturer.nodeValue = device.manufacturer
         model.firstChild.nodeValue = "型号：" + device.enhancedName
-        platform.firstChild.nodeValue = "系统：" + device.platform + " " + device.version
+        platform.firstChild.nodeValue = "系统：" + device.platform + "" + device.version
         if (device.display) {
           display.firstChild.nodeValue = "分辨率:" + device.display.width + "X" + device.display.height
         } else {
@@ -158,7 +159,7 @@ module.exports = function DeviceListIconsDirective(
           }
           return stateClasses
         }
-        state.className = getStateClasses(device.state)
+        state.className = getStateClasses(device.state) +" phoneInfo"
         function getStateClasses2(state) {
           var stateClasses = {
             using: 'devIsBusy',
@@ -248,7 +249,7 @@ module.exports = function DeviceListIconsDirective(
       function kickDevice(device, force) {
         console.log('kickDevice  ')
         return GroupService.kick(device, force).catch(function (e) {
-        //  alert($filter('translate')(gettext('Device cannot get kicked from the group')))
+          //  alert($filter('translate')(gettext('Device cannot get kicked from the group')))
           throw new Error(e)
         })
       }
@@ -280,7 +281,7 @@ module.exports = function DeviceListIconsDirective(
         if (e.target.classList.contains("devRentStatus")) {
           id = e.target.parentNode.parentNode.parentNode.id
           click_target = "rent"
-        }  
+        }
         else if (e.target.classList.contains('headerbtn')) {
           id = e.target.parentNode.parentNode.id
           click_target = "stop"
@@ -298,9 +299,11 @@ module.exports = function DeviceListIconsDirective(
         if (id) {
           var device = mapping[id]
           if (click_target == "stop") {
-            kickDevice(device)
-            DeviceRentService.free_rent(device, socket)
-            e.preventDefault()
+            if (confirm('设备处于使用状态，你确定需要停止租用吗？')) {
+              kickDevice(device)
+              DeviceRentService.free_rent(device, socket)
+              e.preventDefault()
+            }
           } else if (click_target == "use") {
             $location.path('/control/' + device.serial);
           } else {
@@ -312,9 +315,11 @@ module.exports = function DeviceListIconsDirective(
                 user.name == device.owner.name &&
                 user.email == device.owner.email) {
                 if (e.target.classList.contains('btn-xs')) {
-                  kickDevice(device)
-                  DeviceRentService.free_rent(device, socket)
-                  e.preventDefault()
+                  if (confirm('你确定需要停止租用吗？')) {
+                    kickDevice(device)
+                    DeviceRentService.free_rent(device, socket)
+                    e.preventDefault()
+                  }
                 }
               }
               else {
