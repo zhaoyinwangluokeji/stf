@@ -12,7 +12,7 @@ module.exports = function DeviceListStatsDirective(
       var mapping = Object.create(null)
       var nodes = Object.create(null)
       require("chart.js")
-
+ 
       scope.modelData = {
         type: 'doughnut',
         data: {
@@ -252,7 +252,7 @@ module.exports = function DeviceListStatsDirective(
 
       function changeListener(device) {
 
-        console.log('stats-changeListener ' + device.serial)
+      //  console.log('stats-changeListener ' + device.serial)
         var oldStats = mapping[device.serial]
         var newStats = updateStats(device)
         var diffs = Object.create(null)
@@ -302,6 +302,6 @@ module.exports = function DeviceListStatsDirective(
         tracker.removeListener('change', changeListener)
         tracker.removeListener('remove', removeListener)
       })
-    }
+    } 
   }
 }

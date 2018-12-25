@@ -123,8 +123,9 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
           return b
         }
       })
+
       sync(data)
-      console.log("emit change ")
+    //  console.log("emit change :"+JSON.stringify(data.device_rent_conf))
       this.emit('change', data)
     }.bind(this)
 

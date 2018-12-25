@@ -2,73 +2,144 @@ var patchArray = require('./../util/patch-array')
 
 module.exports = function DeviceListIconsDirective(
   $filter
-, gettext
-, DeviceColumnService
-, GroupService
-, StandaloneService
-,DeviceRentService
-,$location
-,AppState
-,socket
+  , gettext
+  , DeviceColumnService
+  , GroupService
+  , StandaloneService
+  , DeviceRentService
+  , $location
+  , AppState
+  , socket
 ) {
   function DeviceItem() {
     return {
-      build: function() {
+      build: function () {
         var li = document.createElement('li')
-        li.className = 'cursor-select pointer thumbnail'
+        li.className = 'cursor-select thumbnail'
 
-        // the whole li is a link
-        var a = document.createElement('a')
-        li.appendChild(a)
 
-        // .device-photo-small
+
+        var divHeader = document.createElement('div')
+        divHeader.className = "phoneInfoHeader"
+        li.appendChild(divHeader)
+        var manufacturer = document.createElement('div')
+        manufacturer.appendChild(document.createTextNode(''))
+        manufacturer.className = "floatleft"
+        divHeader.appendChild(manufacturer)
+        var headerbtn = document.createElement('div')
+        var i = document.createElement('i')
+        i.className = "fa fa-times"
+        headerbtn.appendChild(i)
+        headerbtn.className = "floatright headerbtn pointer"
+        divHeader.appendChild(headerbtn)
+
+
+        var divBody = document.createElement('div')
+        divBody.className = "phoneInfoBody"
+        li.appendChild(divBody)
+        //  var a = document.createElement('a')
+        //  divBody.appendChild(a)
+        var divImage = document.createElement('div')
+        divImage.className = "phoneImg"
         var photo = document.createElement('div')
-        photo.className = 'device-photo-small'
+        //  photo.className = 'device-photo-small'
+        var a = document.createElement('a')
         var img = document.createElement('img')
-        photo.appendChild(img)
-        a.appendChild(photo)
+        photo.appendChild(a)
+        a.appendChild(img)
+        divImage.appendChild(photo)
+        divBody.appendChild(divImage)
 
-        // .device-name
-        var name = document.createElement('div')
-        name.className = 'device-name'
-        name.appendChild(document.createTextNode(''))
-        a.appendChild(name)
+        var divInfo = document.createElement('div')
+        divBody.appendChild(divInfo)
 
-        // button
-        var button = document.createElement('button')
-        button.appendChild(document.createTextNode(''))
-        a.appendChild(button)
+        var model = document.createElement('div')
+        model.appendChild(document.createTextNode(''))
+        model.className = "phoneInfo"
+        divInfo.appendChild(model)
 
-         
-        var infodiv = document.createElement('div')
-        infodiv.className = 'devices-icon-rent-info'
-        infodiv.appendChild(document.createTextNode(''))
-        a.appendChild(infodiv)
+        var platform = document.createElement('div')
+        platform.className = "phoneInfo"
+        platform.appendChild(document.createTextNode(''))
+        divInfo.appendChild(platform)
+
+        var display = document.createElement('div')
+        display.className = "phoneInfo"
+        display.appendChild(document.createTextNode(''))
+        divInfo.appendChild(display)
+
+        var state = document.createElement('div')
+        state.className = "phoneInfo"
+        state.appendChild(document.createTextNode(''))
+        divInfo.appendChild(state)
+
+        var divFoot = document.createElement('div')
+        //  divFoot.appendChild(document.createTextNode(''))
+        //  divFoot.className = "devRentStatus devFree"
+        li.appendChild(divFoot)
+
+        var renta = document.createElement('a')
+        renta.appendChild(document.createTextNode(''))
+
+        var rentbtn = document.createElement('div')
+        rentbtn.appendChild(document.createTextNode(''))
+        renta.appendChild(rentbtn)
+        divFoot.appendChild(renta)
+
+        var stop_rent_button = document.createElement('div')
+        stop_rent_button.appendChild(document.createTextNode('释放'))
+        stop_rent_button.classList.add("devStopBtn")
+        divFoot.appendChild(stop_rent_button)
 
         return li
-      }
-    , update: function(li, device) {
-        var a = li.firstChild
-        var img = a.firstChild.firstChild
-        var name = a.firstChild.nextSibling
-        var nt = name.firstChild
-        var button = name.nextSibling
-        var at = button.firstChild
-        var rentbtn = button.nextSibling.firstChild
-        var classes = 'btn btn-xs device-status '
 
+      }
+      , update: function (li, device) {
+        //  var list = li.find('ul')[0]
+        var user = AppState.user
+        var divheader = li.children[0]
+        var divbody = li.children[1]
+        var divfoot = li.children[2]
+
+        var manufacturer = divheader.firstChild.firstChild
+        //  var a = divbody.firstChild
+        var a = divbody.firstChild.firstChild.firstChild
+        var img = a.firstChild
+
+        var divInfo = divbody.children[1]
+        var model = divInfo.children[0]
+        var platform = divInfo.children[1]
+        var display = divInfo.children[2]
+        var state = divInfo.children[3]
+        var rent_button = divfoot.children[0].children[0]
+        var rent_buttona = divfoot.children[0]
+        var stop_rent_button = divfoot.children[1]
+        var headerbtn = divheader.children[1]
+
+        headerbtn.classList.add("nonedisplay")
+        
         // .device-photo-small
         if (img.getAttribute('src') !== device.enhancedImage120) {
           img.setAttribute('src', device.enhancedImage120)
+          img.className = "pointer"
         }
 
+        manufacturer.nodeValue = device.manufacturer
+        model.firstChild.nodeValue = "型号：" + device.enhancedName
+        platform.firstChild.nodeValue = "系统：" + device.platform + " " + device.version
+        if (device.display) {
+          display.firstChild.nodeValue = "分辨率:" + device.display.width + "X" + device.display.height
+        } else {
+          display.firstChild.nodeValue = "分辨率：----"
+        }
+        //  state.nodeValue = device.enhancedName
         // .device-name
-        nt.nodeValue = device.enhancedName
+        //  nt.nodeValue = device.enhancedName
 
         // button
-        at.nodeValue = $filter('translate')(device.enhancedStateAction)
+        state.firstChild.nodeValue = "状态：" + $filter('translate')(device.enhancedStateAction)
 
-        rentbtn.nodeValue = device.enhancedRentStateMsg
+        rent_button.firstChild.nodeValue = device.enhancedRentStateMsg
 
         function getStateClasses(state) {
           var stateClasses = {
@@ -87,21 +158,64 @@ module.exports = function DeviceListIconsDirective(
           }
           return stateClasses
         }
-
-        button.className = classes + getStateClasses(device.state)
+        state.className = getStateClasses(device.state)
+        function getStateClasses2(state) {
+          var stateClasses = {
+            using: 'devIsBusy',
+            busy: 'devIsBusy',
+            available: 'devFree',
+            ready: 'devFree',
+            present: 'devIsBusy',
+            preparing: 'devIspreparing',
+            unauthorized: 'devIsOutline',
+            offline: 'devIsOutline',
+            automation: 'devIsOutline'
+          }[state]
+          if (typeof stateClasses === 'undefined') {
+            stateClasses = 'devIsOutline'
+          }
+          return stateClasses
+        }
+        var classes = 'btn btn-xs device-status devRentStatus '
+        rent_button.className = classes + getStateClasses2(device.state)
 
         if (device.state === 'available') {
-          name.classList.add('state-available')
+          model.classList.add('state-available')
         } else {
-          name.classList.remove('state-available')
+          if (model.classList) {
+            model.classList.remove('state-available')
+          }
         }
+        stop_rent_button.classList.add("devStopBtn")
+        stop_rent_button.classList.add("nonedisplay")
+        if (device.device_rent_conf &&
+          device.device_rent_conf.rent) {
+          if (device.device_rent_conf.owner &&
+            device.device_rent_conf.owner.email &&
+            device.device_rent_conf.owner.name &&
+            user) {
+            if (user.name == device.device_rent_conf.owner.name &&
+              user.email == device.device_rent_conf.owner.email) {
+              rent_button.classList.remove("devRentStatus")
+              rent_button.classList.add("devRentStatus2")
+              stop_rent_button.classList.remove("nonedisplay")
+              stop_rent_button.classList.add("display")
+              headerbtn.classList.remove("nonedisplay")
+              headerbtn.classList.remove("display")
+              if (device.state === 'available') {
+                a.href = '#!/control/' + device.serial
+                rent_buttona.href = '#!/control/' + device.serial
+              }
 
+            }
+          }
+        }
         if (device.usable) {
-          a.href = '#!/control/' + device.serial
+          //  a.href = '#!/control/' + device.serial
           li.classList.remove('device-is-busy')
         }
         else {
-          a.removeAttribute('href')
+          //  a.removeAttribute('href')
           li.classList.add('device-is-busy')
         }
         return li
@@ -111,14 +225,14 @@ module.exports = function DeviceListIconsDirective(
 
   return {
     restrict: 'E'
-  , template: require('./device-list-icons.pug')
-  , scope: {
+    , template: require('./device-list-icons.pug')
+    , scope: {
       tracker: '&tracker'
-    , columns: '&columns'
-    , sort: '=sort'
-    , filter: '&filter'
+      , columns: '&columns'
+      , sort: '=sort'
+      , filter: '&filter'
     }
-  , link: function(scope, element) {
+    , link: function (scope, element) {
       console.log('link  ')
       var tracker = scope.tracker()
       var activeColumns = []
@@ -133,23 +247,25 @@ module.exports = function DeviceListIconsDirective(
 
       function kickDevice(device, force) {
         console.log('kickDevice  ')
-        return GroupService.kick(device, force).catch(function(e) {
-          alert($filter('translate')(gettext('Device cannot get kicked from the group')))
+        return GroupService.kick(device, force).catch(function (e) {
+        //  alert($filter('translate')(gettext('Device cannot get kicked from the group')))
           throw new Error(e)
         })
       }
 
       function inviteDevice(device) {
         console.log('inviteDevice  ')
-        return GroupService.invite(device).then(function() {
+        return GroupService.invite(device).then(function () {
           scope.$digest()
         })
       }
 
-      element.on('click', function(e) {
+      element.on('click', function (e) {
         var user = AppState.user
         var id
-         console.log('click  ')
+        console.log('click  ')
+        var click_target = ""
+        /*
         if (e.target.classList.contains('thumbnail')) {
           id = e.target.id
         } else if (e.target.classList.contains('device-status') ||
@@ -158,105 +274,128 @@ module.exports = function DeviceListIconsDirective(
           id = e.target.parentNode.parentNode.id
         } else if (e.target.parentNode.classList.contains('device-photo-small')) {
           id = e.target.parentNode.parentNode.parentNode.id
-        } else if(e.target.classList.contains('devices-icon-rent-info')){
-          id =  e.target.parentNode.parentNode.id 
+        } else if (e.target.classList.contains('devices-icon-rent-info')) {
+          id = e.target.parentNode.parentNode.id
+        }else */
+        if (e.target.classList.contains("devRentStatus")) {
+          id = e.target.parentNode.parentNode.parentNode.id
+          click_target = "rent"
+        }  
+        else if (e.target.classList.contains('headerbtn')) {
+          id = e.target.parentNode.parentNode.id
+          click_target = "stop"
+        } else if (e.target.classList.contains('fa-times')) {
+          id = e.target.parentNode.parentNode.parentNode.id
+          click_target = "stop"
+        } else if (e.target.classList.contains('src')) {
+          id = e.target.parentNode.parentNode.parentNode.id
+          click_target = "use"
+        } else if (e.target.classList.contains('devStopBtn')) {
+          id = e.target.parentNode.parentNode.id
+          click_target = "stop"
         }
-
 
         if (id) {
           var device = mapping[id]
-          if(device.using){
-            if(device.owner && 
-              device.owner.email && 
-              device.owner.name &&
-              user &&
-              user.name == device.owner.name &&
-              user.email == device.owner.email) {
-                if(e.target.classList.contains('btn-xs')) {
-                    kickDevice(device)
-                    DeviceRentService.free_rent(device,socket)
-                    e.preventDefault()
-                }
-              }
-              else{
-                e.preventDefault()
-              }
-          }
-          else {
-
-
-            if(device.using){
-              if(device.owner && 
-                device.owner.email && 
+          if (click_target == "stop") {
+            kickDevice(device)
+            DeviceRentService.free_rent(device, socket)
+            e.preventDefault()
+          } else if (click_target == "use") {
+            $location.path('/control/' + device.serial);
+          } else {
+            if (device.using) {
+              if (device.owner &&
+                device.owner.email &&
                 device.owner.name &&
                 user &&
                 user.name == device.owner.name &&
                 user.email == device.owner.email) {
-                  
-                  if(confirm('设备处于使用状态，你确定需要停止租用吗？')){
-                      kickDevice(device)
-                      DeviceRentService.free_rent(device,socket)
-                      e.preventDefault()
-                  }
-                }
-                else{
+                if (e.target.classList.contains('btn-xs')) {
+                  kickDevice(device)
+                  DeviceRentService.free_rent(device, socket)
                   e.preventDefault()
                 }
-            }
-            else if(device.state === 'available') {
-              if(device.device_rent_conf &&
-                device.device_rent_conf.rent) {
-                  if(device.device_rent_conf.owner && 
-                    device.device_rent_conf.owner.email && 
-                    device.device_rent_conf.owner.name &&
-                    user ){
-                      if(user.name == device.device_rent_conf.owner.name &&
-                        user.email == device.device_rent_conf.owner.email) {
-                        }
-                        else{
-                          e.preventDefault()
-                          alert("设备已经被"+device.device_rent_conf.owner.name + " "+device.device_rent_conf.owner.email+" 租用")
-                        }
-                    }
-                    else{
-                      e.preventDefault()
-                    }
-                }else{
-                  e.preventDefault()
-                  return Promise.all([device].map(function(device) {
-                    return DeviceRentService.open(device) 
-                  })).then(function(result){
-                    if(result[0].result==true){   
-                      $location.path('/control/' + result[0].device.serial);
-
-                    }
-                  })
-                  .catch(function(err) {
-                    console.log('err: ', err)
-                  })
-                }
+              }
+              else {
+                e.preventDefault()
+              }
             }
             else {
-              e.preventDefault()  
-            }
+              if (device.using) {
+                if (device.owner &&
+                  device.owner.email &&
+                  device.owner.name &&
+                  user &&
+                  user.name == device.owner.name &&
+                  user.email == device.owner.email) {
 
-            /*
-            else
-            {
-              if (e.altKey && device.state === 'available') {
-                inviteDevice(device)
+                  if (confirm('设备处于使用状态，你确定需要停止租用吗？')) {
+                    kickDevice(device)
+                    DeviceRentService.free_rent(device, socket)
+                    e.preventDefault()
+                  }
+                }
+                else {
+                  e.preventDefault()
+                }
               }
-              if (e.shiftKey && device.state === 'available') {
-                StandaloneService.open(device)
+              else //if (device.state === 'available') 
+              {
+                if (device.device_rent_conf &&
+                  device.device_rent_conf.rent) {
+                  if (device.device_rent_conf.owner &&
+                    device.device_rent_conf.owner.email &&
+                    device.device_rent_conf.owner.name &&
+                    user) {
+                    if (user.name == device.device_rent_conf.owner.name &&
+                      user.email == device.device_rent_conf.owner.email) {
+                    }
+                    else {
+                      e.preventDefault()
+                      alert("设备已经被" + device.device_rent_conf.owner.name + " " + device.device_rent_conf.owner.email + " 租用")
+                    }
+                  }
+                  else {
+                    e.preventDefault()
+                  }
+                } else {
+                  e.preventDefault()
+                  return Promise.all([device].map(function (device) {
+                    return DeviceRentService.open(device)
+                  })).then(function (result) {
+                    console.log("result:" + JSON.stringify(result))
+                    if (result[0].result == true) {
+                      $location.path('/control/' + result[0].device.serial);
+                    }
+                  })
+                    .catch(function (err) {
+                      console.log('err: ', err)
+                    })
+                }
               }
+              //  else {
+              //    e.preventDefault()
+              //  }
+
+              /*
+              else
+              {
+                if (e.altKey && device.state === 'available') {
+                  inviteDevice(device)
+                }
+                if (e.shiftKey && device.state === 'available') {
+                  StandaloneService.open(device)
+                }
+              }
+              */
+
             }
-            */
-            
           }
-          
+
         }
         else {
-          e.preventDefault()
+          //  e.preventDefault()
         }
       })
 
@@ -264,7 +403,7 @@ module.exports = function DeviceListIconsDirective(
       scope.columnDefinitions = DeviceColumnService
 
       // Sorting
-      scope.sortBy = function(column, multiple) {
+      scope.sortBy = function (column, multiple) {
         console.log('sortBy  ')
         function findInSorting(sorting) {
           for (var i = 0, l = sorting.length; i < l; ++i) {
@@ -277,7 +416,7 @@ module.exports = function DeviceListIconsDirective(
 
         var swap = {
           asc: 'desc'
-        , desc: 'asc'
+          , desc: 'asc'
         }
 
         var fixedMatch = findInSorting(scope.sort.fixed)
@@ -299,36 +438,36 @@ module.exports = function DeviceListIconsDirective(
           }
           scope.sort.user.push({
             name: column.name
-          , order: scope.columnDefinitions[column.name].defaultOrder || 'asc'
+            , order: scope.columnDefinitions[column.name].defaultOrder || 'asc'
           })
         }
       }
 
       // Watch for sorting changes
       scope.$watch(
-        function() {
+        function () {
           return scope.sort
         }
-      , function(newValue) {
+        , function (newValue) {
           activeSorting = newValue.fixed.concat(newValue.user)
           scope.sortedColumns = Object.create(null)
-          activeSorting.forEach(function(sort) {
+          activeSorting.forEach(function (sort) {
             scope.sortedColumns[sort.name] = sort
           })
           sortAll()
         }
-      , true
+        , true
       )
 
       // Watch for column updates
       scope.$watch(
-        function() {
+        function () {
           return scope.columns()
         }
-      , function(newValue) {
+        , function (newValue) {
           updateColumns(newValue)
         }
-      , true
+        , true
       )
 
       // Update now so that we don't have to wait for the scope watcher to
@@ -341,7 +480,7 @@ module.exports = function DeviceListIconsDirective(
         var newActiveColumns = []
 
         // Check what we're supposed to show now
-        columnSettings.forEach(function(column) {
+        columnSettings.forEach(function (column) {
           if (column.selected) {
             newActiveColumns.push(column.name)
           }
@@ -412,13 +551,13 @@ module.exports = function DeviceListIconsDirective(
 
       // Watch for filter updates.
       scope.$watch(
-        function() {
+        function () {
           return scope.filter()
         }
-      , function(newValue) {
+        , function (newValue) {
           updateFilters(newValue)
         }
-      , true
+        , true
       )
 
       // Calculates a DOM ID for the device. Should be consistent for the
@@ -429,12 +568,12 @@ module.exports = function DeviceListIconsDirective(
 
       // Compares two devices using the currently active sorting. Returns <0
       // if deviceA is smaller, >0 if deviceA is bigger, or 0 if equal.
-      var compare = (function() {
+      var compare = (function () {
         var mapping = {
           asc: 1
-        , desc: -1
+          , desc: -1
         }
-        return function(deviceA, deviceB) {
+        return function (deviceA, deviceB) {
           var diff
 
           // Find the first difference
@@ -483,10 +622,8 @@ module.exports = function DeviceListIconsDirective(
       // patchItem() if necessary).
       function updateItem(item, device) {
         var id = calculateId(device)
-
         item.id = id
         builder.update(item, device)
-
         return item
       }
 
@@ -576,7 +713,7 @@ module.exports = function DeviceListIconsDirective(
       function sortAll() {
         // This could be improved by getting rid of the array copying. The
         // copy is made because items can't be sorted directly.
-        var sorted = [].slice.call(items).sort(function(itemA, itemB) {
+        var sorted = [].slice.call(items).sort(function (itemA, itemB) {
           return compare(mapping[itemA.id], mapping[itemB.id])
         })
 
@@ -599,11 +736,11 @@ module.exports = function DeviceListIconsDirective(
       function changeListener(device) {
         console.log('device-list-changeListener ')
         var id = calculateId(device)
-        console.log('device-list-changeListener :'+id)
+        //  console.log('device-list-changeListener :' + id)
         var item = list.children[id]
 
         if (item) {
-          console.log('device-list-changeListener 2')
+          //    console.log('device-list-changeListener 2')
           // First, update columns
           updateItem(item, device)
 
@@ -617,9 +754,8 @@ module.exports = function DeviceListIconsDirective(
             insertItem(item, device)
           }
         }
-        else
-        {
-          console.log('device-list-changeListener 3')
+        else {
+          //  console.log('device-list-changeListener 3')
         }
       }
 
@@ -643,7 +779,7 @@ module.exports = function DeviceListIconsDirective(
       // Maybe we're already late
       tracker.devices.forEach(addListener)
 
-      scope.$on('$destroy', function() {
+      scope.$on('$destroy', function () {
         tracker.removeListener('add', addListener)
         tracker.removeListener('change', changeListener)
         tracker.removeListener('remove', removeListener)

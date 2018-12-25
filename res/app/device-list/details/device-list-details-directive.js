@@ -39,7 +39,7 @@ module.exports = function DeviceListDetailsDirective(
 
       function kickDevice(device, force) {
         return GroupService.kick(device, force).catch(function (e) {
-          alert($filter('translate')(gettext('Device cannot get kicked from the group')))
+        //  alert($filter('translate')(gettext('Device cannot get kicked from the group')))
           throw new Error(e)
         })
       }
@@ -72,7 +72,8 @@ module.exports = function DeviceListDetailsDirective(
             }
 
           }
-          else if (device.state === 'available') {
+          else // if (device.state === 'available') 
+          {
             if (device.device_rent_conf &&
               device.device_rent_conf.rent) {
               if (device.device_rent_conf.owner &&

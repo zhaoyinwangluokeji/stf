@@ -6,8 +6,8 @@ ul.devices-icon-view {
 }
 
 ul.devices-icon-view li {
-  width: 126px;
-  height: 200px;
+  width: 200px;
+  height: 210px;
   background: white;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
@@ -16,7 +16,137 @@ ul.devices-icon-view li {
   float: left;
   clear: none;
   margin: 6px;
+  text-align: left;
+}
+.floatleft{
+  float: left;
+}
+.floatright{
+  float: right;
+}
+.headerbtn{
+  width: 30px;
+   
+}
+
+.phoneInfoHeader {
+  background-position: left top;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  line-height: 30px;
+  color:black;
+  padding: 0px;
+  background: #64E8AB;
+  height: 32px;
+  border-bottom: 0 solid #e5e5e5;
+  margin-top: 0;
+  font-family: 微软雅黑;
+}
+
+.phoneInfoBody {
+  height: 125px;
+  padding-top: 5px;
+  padding-left: 10px;
+  margin-bottom: 5px;
+}
+.phoneInfoFoot {
+  margin: 0px;
+}
+.devRentStatus {
   text-align: center;
+  display: block;
+  padding: 0;
+  line-height: 30px;
+  border-radius: 6px;
+  width: 180px;
+  height: 32px;
+  margin: auto;
+}
+
+.devRentStatus2 {
+  text-align: center;
+  display: block;
+  padding: 0;
+  line-height: 30px;
+  border-radius: 6px;
+  width: 140px;
+  height: 32px;
+  margin: auto;
+  float: left;
+}
+
+
+.devStopBtn {
+  text-align: center;
+  display: block;
+  padding: 0;
+  line-height: 30px;
+  border-radius: 6px;
+  width: 40px;
+  height: 32px;
+  margin: auto;
+  float: right;
+  margin-top: 4px;
+}
+
+.devStopBtn {
+  cursor: pointer;
+  color: black;
+  background: red;
+}
+
+.devFree {
+  cursor: pointer;
+  color: #fff;
+  background: #00A55A;
+}
+.devIsBusy {
+  cursor: pointer;
+  color:black;
+  background: #FFB40C
+}
+.devIspreparing {
+  cursor: pointer;
+  color:black;
+  background:Khaki
+}
+.devIsOutline {
+  cursor: pointer;
+  color:black;
+  background: Gainsboro
+}
+
+.phoneInfo{
+  margin-left: 10px;
+  word-break: break-all;
+  color: #333333;
+  padding-bottom: 8px;
+  font-size: 12px;
+  font-family: 微软雅黑;
+}
+.phoneImg {
+  width: 68px;
+  height: 100px;
+  background-position: left top;
+  float: left;
+}
+.phone {
+  border-radius: 8px;
+  border: 1px solid #e6e6e6;
+  width: 200px;
+  height: 220px;
+  float: left;
+  padding: 0;
+  overflow: hidden;
+  margin-bottom: 30px;
+  border-top-style: hidden;
+}
+
+.display{
+  display: inline;
+}
+.nonedisplay{
+  display: none;
 }
 
 ul.devices-icon-view li:active {
