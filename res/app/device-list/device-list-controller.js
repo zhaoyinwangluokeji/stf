@@ -28,18 +28,18 @@ module.exports = function DeviceListCtrl(
     {
       name: '设备租用日志统计'
       , selected: true
-      , admin : false
+      , admin: false
       , click: DeviceUsingStatistics
-      , parameter:'Msg'
+      , parameter: 'Msg'
     },
     {
       name: '设备统计'
       , selected: true
-      , admin : false
+      , admin: false
     }
   ]
 
- 
+
   $scope.Menus = MenusDefault
 
   var defaultColumns = [
@@ -49,6 +49,11 @@ module.exports = function DeviceListCtrl(
     },
     {
       name: 'rent'
+      , selected: true
+    }
+    ,
+    {
+      name: 'RentRlease'
       , selected: true
     }
     ,
@@ -321,7 +326,7 @@ module.exports = function DeviceListCtrl(
     ]
   $scope.logsColumns = LogsColumns
 
-  function DeviceUsingStatistics(){
+  function DeviceUsingStatistics() {
     DevUsingStatisticsFactory.open($scope.logsColumns)
 
   }
@@ -405,7 +410,7 @@ module.exports = function DeviceListCtrl(
     icons: true
     , details: false
     , deviceusinglog: false
-    , usingstatics:false
+    , usingstatics: false
   }
 
   SettingsService.bind($scope, {
@@ -521,7 +526,7 @@ module.exports = function DeviceListCtrl(
   }
 
   function getLogs() {
-    DeviceRentLogService.getLogs('', '', '', 50, '','').then(function (data) {
+    DeviceRentLogService.getLogs('', '', '', 50, '', '').then(function (data) {
       $scope.Logs = data;
       console.log("load to:" + JSON.stringify(data))
     })
@@ -530,7 +535,7 @@ module.exports = function DeviceListCtrl(
   $scope.condi = ""
   $scope.enterSomething = function ($event) {
     if ($event.keyCode == 13) {//回车
-      console.log('enterSomething:'+$scope.search.deviceFilter)
+      console.log('enterSomething:' + $scope.search.deviceFilter)
       $scope.condi = $scope.search.deviceFilter
     }
   }
@@ -553,7 +558,7 @@ module.exports = function DeviceListCtrl(
   $scope.$watch('condi', function (newValue, oldValue) {
     console.log("condi:" + $scope.condi)
     console.log("Newcondi:" + newValue)
-    
+
   });
 
 

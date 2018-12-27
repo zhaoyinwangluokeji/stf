@@ -39,7 +39,7 @@ module.exports = function DeviceListDetailsDirective(
 
       function kickDevice(device, force) {
         return GroupService.kick(device, force).catch(function (e) {
-        //  alert($filter('translate')(gettext('Device cannot get kicked from the group')))
+          //  alert($filter('translate')(gettext('Device cannot get kicked from the group')))
           throw new Error(e)
         })
       }
@@ -51,57 +51,40 @@ module.exports = function DeviceListDetailsDirective(
       }
 
       function checkDeviceStatus(e) {
-
-        if (e.target.classList.contains('device-rent-status') ||
-          e.target.classList.contains('device-status')) {
+        if (e.target.classList.contains('device-rent-status')) {
           var id = e.target.parentNode.parentNode.id
           var device = mapping[id]
           user = AppState.user
           var para = arguments
-          if (device.using) {
-            if (device.owner &&
-              device.owner.email &&
-              device.owner.name &&
-              user &&
-              user.name == device.owner.name &&
-              user.email == device.owner.email) {
-              if (confirm('设备处于使用状态，你确定需要停止租用吗？')) {
-                kickDevice(device)
-                DeviceRentService.free_rent(device, socket)
+          if (device.device_rent_conf &&
+            device.device_rent_conf.rent) {
+            if (device.device_rent_conf.owner &&
+              device.device_rent_conf.owner.email &&
+              device.device_rent_conf.owner.name &&
+              user) {
+              if (user.name == device.device_rent_conf.owner.name &&
+                user.email == device.device_rent_conf.owner.email) {
+              }
+              else {
+                alert("设备已经被" + device.device_rent_conf.owner.name + " " + device.device_rent_conf.owner.email + " 租用")
               }
             }
-
-          }
-          else // if (device.state === 'available') 
-          {
-            if (device.device_rent_conf &&
-              device.device_rent_conf.rent) {
-              if (device.device_rent_conf.owner &&
-                device.device_rent_conf.owner.email &&
-                device.device_rent_conf.owner.name &&
-                user) {
-                if (user.name == device.device_rent_conf.owner.name &&
-                  user.email == device.device_rent_conf.owner.email) {
-                }
-                else {
-                  alert("设备已经被" + device.device_rent_conf.owner.name + " " + device.device_rent_conf.owner.email + " 租用")
-                }
+          } else {
+            return Promise.all([device].map(function (device) {
+              e.preventDefault()
+              return DeviceRentService.open(device)
+            })).then(function (result) {
+              if (result[0].result == true) {
+                $location.path('/control/' + result[0].device.serial);
               }
-            } else {
-              return Promise.all([device].map(function (device) {
-                e.preventDefault()
-                return DeviceRentService.open(device)
-              })).then(function (result) {
-                if (result[0].result == true) {
-                  $location.path('/control/' + result[0].device.serial);
-                }
+            })
+              .catch(function (err) {
+                console.log('err: ', err)
               })
-                .catch(function (err) {
-                  console.log('err: ', err)
-                })
-            }
           }
+
         }
+
       }
 
       function checkDeviceSmallImage(e) {
