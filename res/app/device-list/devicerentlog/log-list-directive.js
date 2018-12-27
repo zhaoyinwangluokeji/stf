@@ -444,8 +444,8 @@ module.exports = function DeviceListDetailsDirective(
                     return scope.dat
                 }
                 , function (newValue) {
-                    console.log("$dat changes1:" + scope.dat)
-                    console.log("$dat changes2:" + newValue)
+                //    console.log("$dat changes1:" + scope.dat)
+                //    console.log("$dat changes2:" + newValue)
                     LoadData(scope.dat);
                 }
                 , true
@@ -464,8 +464,8 @@ module.exports = function DeviceListDetailsDirective(
                     return scope.condi
                 }
                 , function (newValue) {
-                    console.log("$condi changes1:" + scope.condi)
-                    console.log("$condi changes2:" + newValue)
+                //    console.log("$condi changes1:" + scope.condi)
+                //    console.log("$condi changes2:" + newValue)
                     if (newValue != "") {
                         var filter = scope.filter()
                         var column
@@ -498,9 +498,9 @@ module.exports = function DeviceListDetailsDirective(
             }
 
             function LoadData(condition) {
-                console.log("LoadData:" + condition)
-                console.log("LoadData Type:" + typeof (condition))
-                console.log("isdate:" + (typeof (condition) == Date))
+            //    console.log("LoadData:" + condition)
+            //    console.log("LoadData Type:" + typeof (condition))
+            //    console.log("isdate:" + (typeof (condition) == Date))
                 var date = new Date(condition)
                 console.log("LoadData Type:" + typeof (date))
                 var condi = date.format("yyyy-MM-dd")

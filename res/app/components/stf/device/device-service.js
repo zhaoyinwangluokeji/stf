@@ -225,7 +225,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     }
 
     function addListener(event) {
-      console.log("addListener ")
+    //  console.log("addListener ")
       var device = get(event.data)
       var isNew = true
       if(device){

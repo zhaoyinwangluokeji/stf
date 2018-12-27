@@ -739,7 +739,7 @@ module.exports = function DeviceListIconsDirective(
 
       // Triggers when the tracker notices that a device changed.
       function changeListener(device) {
-        console.log('device-list-changeListener ')
+      //  console.log('device-list-changeListener ')
         var id = calculateId(device)
         //  console.log('device-list-changeListener :' + id)
         var item = list.children[id]
