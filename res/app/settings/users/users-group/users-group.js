@@ -197,15 +197,20 @@ module.exports = function UsersInfoDirective(
 
             $scope.ModifyGroup = function () {
                 if ($scope.CurGroup) {
-                    var group = prompt("修改为新的用户组", ""); //将输入的内容赋给变量 name ，   
-                    if (group) {
-                        return UsersGroupService.ModifyGroup($scope.CurGroup.GroupName, group).then(function (data) {
-                            alert(JSON.stringify(data))
-                            $scope.QueryGroup()
-                        }).catch(function (err) {
-                            console.log("err:" + JSON.stringify(err))
-                        })
+                    if ($scope.CurGroup.GroupName == "administrator") {
+                        alert(gettext("wranning:adminstrator usergroup cann't modify!"))
+                    } else {
+                        var group = prompt("修改为新的用户组", ""); //将输入的内容赋给变量 name ，   
+                        if (group) {
+                            return UsersGroupService.ModifyGroup($scope.CurGroup.GroupName, group).then(function (data) {
+                                alert(JSON.stringify(data))
+                                $scope.QueryGroup()
+                            }).catch(function (err) {
+                                console.log("err:" + JSON.stringify(err))
+                            })
+                        }
                     }
+
                 }
                 else {
                     alert('还没有选择用户组')
@@ -214,12 +219,16 @@ module.exports = function UsersInfoDirective(
             $scope.DeleteGroup = function () {
 
                 if ($scope.CurGroup) {
-                    return UsersGroupService.DeleteGroup($scope.CurGroup.GroupName).then(function (data) {
-                        alert(JSON.stringify(data))
-                        $scope.QueryGroup()
-                    }).catch(function (err) {
-                        console.log("err:" + JSON.stringify(err))
-                    })
+                    if ($scope.CurGroup.GroupName == "administrator") {
+                        alert(gettext("warnning:adminstrator usergroup cann't delete!"))
+                    } else {
+                        return UsersGroupService.DeleteGroup($scope.CurGroup.GroupName).then(function (data) {
+                            alert(JSON.stringify(data))
+                            $scope.QueryGroup()
+                        }).catch(function (err) {
+                            console.log("err:" + JSON.stringify(err))
+                        })
+                    }
                 } else {
                     alert("fail:当前用户组为空，请选择用户组！")
                 }

@@ -7,6 +7,7 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
   var hex = new md5()
 
   $scope.xpath = "//*[@text='相机']";
+  $scope.crash_log_path = "/sdcard/cmb/log"
   $scope.inputContent = "12345"
   $scope.findEle = null;
 
@@ -742,6 +743,7 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
       "开始时间": $scope.startTime,
       "执行时间": elaspe,
       "元素点击数量": $scope.click_num,
+      "崩溃日志数量": $scope.crash_log_num
     }
     var baseTable = genTableFromDict(base)
     reportText+=baseTable
@@ -758,23 +760,72 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
     reportText+='</body></html>'
     $scope.zip.file("report.html", reportText)
   }
+  $scope.crash_log_num = 0
 
+  function getCrashLog(){
+    $scope.crash_log_num = 0
+    return $scope.control.shell('ls ' + $scope.crash_log_path)
+    .then(function (result) {
+      var logNames = result.data.join('');
+      if (logNames.indexOf("No such file or directory") != -1){
+        alert("崩溃日志路径不存在！")
+        return
+      }
+      if($scope.startTime == null){
+        alert("深度遍历未开始！")
+        return
+      }
+      startDate = "" + $scope.startTime.getFullYear() + $scope.startTime.getMonth() + $scope.startTime.getDate()
+      
+      var names = logNames.split('  ')
+      var len = names.length
+      var newLogs = []
+
+      for(var i=0; i<len; i++){
+        var name = names[i].replace("_log.txt",'')
+        console.log("log: " + name)
+        if(parseInt(name) >= parseInt(startDate)){
+          $scope.crash_log_num +=1
+          newLogs.push(names[i])
+        }
+      }
+      return getCrashFile(newLogs)
+    })
+  }
+
+  function getCrashFile(list){
+    if(list.length == 0){
+      return new Promise()
+    }
+    var logName = list.shift()
+    return $scope.control.shell('cat ' + $scope.crash_log_path+'/'+logName)
+    .then(function (result) {
+      var tmpLogs = result.data.join('');
+      $scope.zip.file("崩溃日志/"+logName, tmpLogs)
+    }).then(function(){
+      if(list.length > 0){
+        return getCrashFile(list)
+      }
+    })
+  }
 
   $scope.zip = new JSZip();
   $scope.downloadResult = function(){  
-    genReport()
-    var img = $scope.zip.folder("images");
-    var len = $scope.screenshots.length
-    var name = ""
-    for (i=0;i<len;i++){
-      name = i + ".png"
-      img.file(name, $scope.screenshots[i].replace("data:image/png;base64,",""), {base64: true});
-    }
-    $scope.zip.generateAsync({type:"blob"})
-    .then(function(content) {
-        // see FileSaver.js
-        fs.saveAs(content, "report.zip");
-    });
+    getCrashLog().then(function(){
+      genReport()
+      var img = $scope.zip.folder("截图");
+      var len = $scope.screenshots.length
+      var name = ""
+      for (i=0;i<len;i++){
+        name = i + ".png"
+        img.file(name, $scope.screenshots[i].replace("data:image/png;base64,",""), {base64: true});
+      }
+      $scope.zip.generateAsync({type:"blob"})
+      .then(function(content) {
+          // see FileSaver.js
+          fs.saveAs(content, "report.zip");
+      });
+    })
   }
 
 
