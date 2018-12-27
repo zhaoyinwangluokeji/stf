@@ -20,8 +20,8 @@ module.exports = function DeviceRentWebControlService($filter,
         device_list[device.serial] = device
         //    device_list[device.serial] = device
         console.log("device.serial==" + device.serial)
-        console.log("open==" + (device_list[device.serial] == device))
-        console.log("===" + (device_list[device.serial] === device))
+    //    console.log("open==" + (device_list[device.serial] == device))
+    //    console.log("===" + (device_list[device.serial] === device))
         if (!Timer) {
             console.log("create timer")
             Timer = setInterval(function () {
