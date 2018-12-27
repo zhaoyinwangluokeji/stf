@@ -369,7 +369,7 @@ module.exports = function DeviceListIconsDirective(
                   return Promise.all([device].map(function (device) {
                     return DeviceRentService.open(device)
                   })).then(function (result) {
-                    console.log("result:" + JSON.stringify(result))
+                  //  console.log("result:" + JSON.stringify(result))
                     if (result[0].result == true) {
                       $location.path('/control/' + result[0].device.serial);
                     }

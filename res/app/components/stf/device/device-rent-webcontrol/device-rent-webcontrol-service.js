@@ -63,7 +63,7 @@ module.exports = function DeviceRentWebControlService($filter,
                             }
                             //changeEvent(device_list[key], element) 
                         } else {
-                            console.log("device_o:" + device_o.serial) //+ "," + JSON.stringify(device_o.device_rent_conf))
+                        //    console.log("device_o:" + device_o.serial) //+ "," + JSON.stringify(device_o.device_rent_conf))
                         }
 
                     }

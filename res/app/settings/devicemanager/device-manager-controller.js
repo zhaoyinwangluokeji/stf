@@ -6,7 +6,7 @@ module.exports = function DeviceManagerController($scope, $http, NgTableParams) 
     $scope.addSerial = ""
     $scope.addPlatform = "Android"
     $scope.addVersion = "8.0.0"
-    $scope.addManufacturer = "SAMSUNG"
+    $scope.addManufacturer = "HUAWEI"
     $scope.addModel = ""
     $scope.addHeight = ""
     $scope.addWidth = ""
@@ -54,13 +54,13 @@ module.exports = function DeviceManagerController($scope, $http, NgTableParams) 
             $scope.isAndroid = true
             $scope.addVersion = "8.0.0"
             $scope.addModel = ""
+            $scope.addManufacturer = "HUAWEI"
             $scope.ManufactureList = [
                 "SAMSUNG",
                 "HUAWEI",
                 "OPPO",
                 "XIAOMI",
                 "HTC",
-                "Apple",
                 "VIVO",
                 "MEIZU",
             ]
