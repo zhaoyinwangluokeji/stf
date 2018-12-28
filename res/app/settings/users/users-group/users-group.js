@@ -34,6 +34,11 @@ module.exports = function UsersInfoDirective(
                 $scope.CurRow = row
             }
 
+            $scope.activeTabs = {
+                users: true,
+                permission: false
+            }
+
             $scope.IsArray = Array.isArray || function (obj) {
                 return Object.prototype.toString.call(obj) === '[object Array]';
             }
@@ -238,12 +243,20 @@ module.exports = function UsersInfoDirective(
 
                 if ($scope.CurGroup) {
                     var list = []
+                    var isselected_admin = false
                     $scope.tableParamsUser.data.forEach(element => {
-                        if (element.selected == true) {
+                        if (element.selected == true && element.name != "admin") {
                             delete element.selected;
                             list.push(element)
                         }
+                        if (element.selected == true && element.name == "admin") {
+                            isselected_admin = true
+                        }
                     })
+                    if (list.length == 0 && isselected_admin == true) {
+                        alert("warning:can not add user:admin to any group!")
+                        return
+                    }
                     return UsersGroupService.AddUserToGroup($scope.CurGroup.GroupName, list).then(function (data) {
                         alert(JSON.stringify(data))
                         $scope.QueryGroup()
@@ -259,30 +272,58 @@ module.exports = function UsersInfoDirective(
                 if ($scope.CurGroup) {
                     if ($scope.CurGroup.userslist) {
                         var list = []
-                        $scope.CurGroup.userslist.forEach(element => {
-                            if (element.selected == true) {
-                                list.push(element)
+                        if ($scope.CurGroup.GroupName == "administrator") {
+                            var badmin = false
+                            $scope.CurGroup.userslist.forEach(element => {
+                                if (element.selected == true && element.name != "admin") {
+                                    list.push(element)
+                                    if (element.name == "admin") {
+                                        badmin = true
+                                    }
+                                }
+                                if (element.selected == true && element.name == "admin") {
+                                    badmin = true
+                                }
+                            })
+                            if (list.length == 0 && badmin == true) {
+                                alert("cann't remove user:admin!")
+                                return
                             }
-                        })
-                        return UsersGroupService.RemoveUserOfGroup($scope.CurGroup.GroupName, list).then(function (data) {
-                            alert(JSON.stringify(data))
-                            $scope.QueryGroup()
-                        }).catch(function (err) {
-                            console.log("err:" + JSON.stringify(err))
-                        })
+
+                        } else {
+                            $scope.CurGroup.userslist.forEach(element => {
+                                if (element.selected == true) {
+                                    list.push(element)
+                                }
+                            })
+                        }
+                        if (list.length == 0) {
+                            alert("warnning:there is no selected user!")
+                            return
+
+                        } else {
+                            return UsersGroupService.RemoveUserOfGroup($scope.CurGroup.GroupName, list).then(function (data) {
+                                alert(JSON.stringify(data))
+                                $scope.QueryGroup()
+                            }).catch(function (err) {
+                                console.log("err:" + JSON.stringify(err))
+                            })
+                        }
+
                     }
                 } else {
                     alert("fail:当前用户组为空，请选择用户组！")
                 }
             }
 
-            $scope.filterUser
+            $scope.filterUser = ""
             $scope.QueryUser = function (params) {
                 var filter = $scope.filterUser
                 var count = params.parameters().count
                 var page = params.parameters().page
                 console.log("count:" + count)
                 console.log("page:" + page)
+                console.log("filter:" + filter)
                 return UsersService.GetUsers(page, count, filter).then(function (data) {
                     var ret = data
                     params.total(ret.total)
