@@ -14,6 +14,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     $scope.user_groups = null
     $scope.in_groups = []
     var usable_devices_lists = []
+    $scope.is_admin = false
 
     function getAllDeviceGroups() {
       return new Promise(function (resolve, reject) {
@@ -183,11 +184,16 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
           if (ele.userslist) {
             ele.userslist.forEach(element => {
               if (element.email == email) {
+                if(ele.GroupName == "administrator"){
+                  console.log("user is Admin!!")
+                  $scope.is_admin = true
+                }
                 $scope.in_groups.push(ele.GroupName)
               }
             });
           }
         });
+
         $scope.device_groups.forEach(ele => {
           $scope.in_groups.forEach(element => {
             if (ele.usergroups.indexOf(element) > -1) {
@@ -224,11 +230,6 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
       }
     }
 
-    function handleDevicesList(event){
-
-
-    }
-
     function addListener(event) {
       //  console.log("addListener ")
       var device = get(event.data)
@@ -250,7 +251,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
             return resolve()
           }
         })).then(function () {
-          if (!ifDeviceUsable(event.data.serial)) {
+          if (!$scope.is_admin && !ifDeviceUsable(event.data.serial)) {
             console.log("device is not permitted for user, usable devices:  " + JSON.stringify(usable_devices_lists))
             return
           } else {
@@ -308,6 +309,9 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     this.devices = devices
     this.getUsableList = function(){
       return usable_devices_lists
+    }
+    this.getIfAdmin = function(){
+      return $scope.is_admin
     }
   }
 

@@ -783,8 +783,9 @@ module.exports = function DeviceListIconsDirective(
 
       // Maybe we're already late
       tracker.devices.forEach(element => {
+        var isAdmin = tracker.getIfAdmin()
         var list = tracker.getUsableList()
-        if(list.indexOf(element.serial) > -1){
+        if(isAdmin || list.indexOf(element.serial) > -1){
           console.log("device:" + element.serial + " is in list:  " + JSON.stringify(list))
           addListener(element)
         } else{

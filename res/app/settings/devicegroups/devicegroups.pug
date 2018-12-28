@@ -54,7 +54,7 @@ div(ng-controller='DeviceGroupsController')
                     span 删除
                                                             
             .col-md-4(ng-show="showUserGroup")
-                Div.name-title-info
+                Div.device-group-title-info
                     button.align-left.btn-width(ng-click="switchShow()")
                         i.fa.fa-mobile-phone
                         span 切换到设备列表
@@ -115,7 +115,7 @@ div(ng-controller='DeviceGroupsController')
                                                         span(ng-bind='ceil | translate') 
             
             .col-md-4(ng-show="!showUserGroup")
-                Div.name-title-info
+                Div.device-group-title-info
                     button.align-left.btn-width(ng-click="switchShow()")
                         i.fa.fa-mobile-phone
                         span 切换到用户组列表
