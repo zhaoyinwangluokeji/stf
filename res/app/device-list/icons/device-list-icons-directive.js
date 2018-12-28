@@ -782,7 +782,16 @@ module.exports = function DeviceListIconsDirective(
       tracker.on('remove', removeListener)
 
       // Maybe we're already late
-      tracker.devices.forEach(addListener)
+      tracker.devices.forEach(element => {
+        var list = tracker.getUsableList()
+        if(list.indexOf(element.serial) > -1){
+          console.log("device:" + element.serial + " is in list:  " + JSON.stringify(list))
+          addListener(element)
+        } else{
+          console.log("device:" + element.serial + " is not in list:  " + JSON.stringify(list))
+        }
+      });
+      // tracker.devices.forEach(addListener)
 
       scope.$on('$destroy', function () {
         tracker.removeListener('add', addListener)
