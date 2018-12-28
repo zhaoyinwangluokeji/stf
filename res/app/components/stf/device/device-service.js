@@ -13,7 +13,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     $scope.device_groups = null
     $scope.user_groups = null
     $scope.in_groups = []
-    $scope.usable_devices_lists = []
+    var usable_devices_lists = []
 
     function getAllDeviceGroups() {
       return new Promise(function (resolve, reject) {
@@ -191,8 +191,8 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
         $scope.device_groups.forEach(ele => {
           $scope.in_groups.forEach(element => {
             if (ele.usergroups.indexOf(element) > -1) {
-              $scope.usable_devices_lists = MergeArray($scope.usable_devices_lists, ele.devices)
-              console.log("usable device lists: " + JSON.stringify($scope.usable_devices_lists))
+              usable_devices_lists = MergeArray(usable_devices_lists, ele.devices)
+              console.log("usable device lists: " + JSON.stringify(usable_devices_lists))
               return
             }
           });
@@ -201,7 +201,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     }
 
     function ifDeviceUsable(serial) {
-      if ($scope.usable_devices_lists.indexOf(serial) > -1) {
+      if (usable_devices_lists.indexOf(serial) > -1) {
         return true
       } else {
         return false
@@ -222,6 +222,11 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
           DeviceRentWebControl.open(device, modify, fetch)
         }
       }
+    }
+
+    function handleDevicesList(event){
+
+
     }
 
     function addListener(event) {
@@ -246,11 +251,11 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
           }
         })).then(function () {
           if (!ifDeviceUsable(event.data.serial)) {
-            console.log("device is not permitted for user, usable devices:  " + JSON.stringify($scope.usable_devices_lists))
+            console.log("device is not permitted for user, usable devices:  " + JSON.stringify(usable_devices_lists))
             return
           } else {
-            console.log("device is ready for user, usable devices:  " + JSON.stringify($scope.usable_devices_lists))
-            handleAddListener(event, isNew, device)
+            console.log("device is ready for user, usable devices:  " + JSON.stringify(usable_devices_lists))
+            handleAddListener(event,isNew,device)
           }
         })
       } else {
@@ -301,6 +306,9 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
       })
     }
     this.devices = devices
+    this.getUsableList = function(){
+      return usable_devices_lists
+    }
   }
 
   Tracker.prototype = new EventEmitter()
