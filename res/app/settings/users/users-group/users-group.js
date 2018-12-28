@@ -4,6 +4,7 @@ module.exports = function UsersInfoDirective(
     NgTableParams,
     UsersGroupService,
     UsersService,
+    PermissionService,
     AppState
 ) {
     //  
@@ -81,7 +82,12 @@ module.exports = function UsersInfoDirective(
                     }
                 })
                 row.selected = true
-                $scope.QueryMessage()
+                if ($scope.activeTabs.users) {
+                    $scope.QueryUsersOfGroup()
+                } else {
+                    $scope.QueryPermissionOfGroup()
+                }
+
             }
 
             $scope.ResetPassword = function () {
@@ -123,7 +129,7 @@ module.exports = function UsersInfoDirective(
                 }
             }
 
-            $scope.tableParamsCustom = new NgTableParams(
+            $scope.tableParamsUsersOfGroup = new NgTableParams(
                 { count: 5 },
                 {
                     counts: [5, 10, 15, 30, 50],
@@ -132,15 +138,45 @@ module.exports = function UsersInfoDirective(
                 }
             );
 
-            $scope.pagesCustomCount = Math.ceil($scope.tableParamsCustom.total() / $scope.tableParamsCustom.parameters().count)
+            $scope.pagesCustomCount = Math.ceil($scope.tableParamsUsersOfGroup.total() / $scope.tableParamsUsersOfGroup.parameters().count)
 
-            $scope.QueryMessage = function () {
+            $scope.QueryUsersOfGroup = function () {
                 try {
-                    $scope.tableParamsCustom.reload()
+                    $scope.tableParamsUsersOfGroup.reload()
                 } catch (e) {
                     console.log("[Error] $scope.tableParamsDate.reload()");
                 }
             };
+
+            $scope.QueryPermission = function (params) {
+                if ($scope.CurGroup && $scope.CurGroup.permissionlist) {
+                    return $scope.CurGroup.permissionlist
+                } else {
+                    return []
+                }
+            }
+
+            $scope.tableParamsPermissionOfGroup = new NgTableParams(
+                { count: 5 },
+                {
+                    counts: [5, 10, 15, 30, 50],
+                    getData: $scope.QueryPermission
+
+                }
+            );
+
+            $scope.pagesCustomCount = Math.ceil($scope.tableParamsPermissionOfGroup.total() / $scope.tableParamsPermissionOfGroup.parameters().count)
+
+            $scope.QueryPermissionOfGroup = function () {
+                try {
+                    $scope.tableParamsPermissionOfGroup.reload()
+                } catch (e) {
+                    console.log("[Error] $scope.tableParamsDate.reload()");
+                }
+            };
+
+
+
             $scope.sel = 15
             $scope.sel2 = 15
             $scope.Query2 = function (params) {
@@ -160,7 +196,11 @@ module.exports = function UsersInfoDirective(
                             if (ele.GroupName == $scope.CurGroup.GroupName) {
                                 ele.selected = true
                                 $scope.CurGroup = ele
-                                $scope.QueryMessage()
+                                if ($scope.activeTabs.users) {
+                                    $scope.QueryUsersOfGroup()
+                                } else {
+                                    $scope.QueryPermissionOfGroup()
+                                }
                             }
                         })
                     }
@@ -268,6 +308,7 @@ module.exports = function UsersInfoDirective(
                 }
             }
 
+
             $scope.RemoveUserOfGroup = function () {
                 if ($scope.CurGroup) {
                     if ($scope.CurGroup.userslist) {
@@ -343,7 +384,8 @@ module.exports = function UsersInfoDirective(
                     getData: $scope.QueryUser
                 }
             )
-            $scope.SelectUser = function (row) {
+            $scope.pagesUserCount = 0
+            $scope.SelectRow = function (row) {
                 if (row.selected == true) row.selected = false
                 else row.selected = true
             }
@@ -356,6 +398,97 @@ module.exports = function UsersInfoDirective(
             }
 
 
+            $scope.AddPermissiionToGroup = function () {
+                if ($scope.CurGroup) {
+                    var list = []
+                    var isselected_admin = false
+
+                    if ($scope.CurGroup.GroupName == "administrator") {
+                        alert("warnning: there is not need to add any permission to administrator")
+                        return
+                    } else {
+                        $scope.tableParamsPermission.data.forEach(element => {
+                            if (element.selected == true) {
+                                delete element.selected;
+                                list.push(element)
+                            }
+                        })
+                        return PermissionService.AddPermissionToGroup($scope.CurGroup.GroupName, list).then(function (data) {
+                            alert(JSON.stringify(data))
+                            $scope.QueryGroup ()
+                        }).catch(function (err) {
+                            console.log("err:" + JSON.stringify(err))
+                        })
+                    }
+
+                } else {
+                    alert("fail:当前用户组为空，请选择用户组！")
+                }
+            }
+
+            $scope.RemovePermissionOfGroup = function () {
+                if ($scope.CurGroup) {
+                    if ($scope.CurGroup.permissionlist) {
+                        var list = []
+                        if ($scope.CurGroup.GroupName != "administrator") {
+                            $scope.CurGroup.permissionlist.forEach(element => {
+                                if (element.selected == true) {
+                                    list.push(element)
+                                }
+                            })
+                        }
+                        if (list.length == 0) {
+                            alert("warnning:there is no selected permission!")
+                            return
+                        } else {
+                            return PermissionService.RemovePermissionOfGroup($scope.CurGroup.GroupName, list).then(function (data) {
+                                alert(JSON.stringify(data))
+                                $scope.QueryGroup()
+                            }).catch(function (err) {
+                                console.log("err:" + JSON.stringify(err))
+                            })
+                        }
+
+                    }
+                } else {
+                    alert("fail:当前用户组为空，请选择用户组！")
+                }
+            }
+            $scope.filterPermission = ""
+            $scope.QueryAllPermission = function (params) {
+                var filter = $scope.filterPermission
+                var count = params.parameters().count
+                var page = params.parameters().page
+                console.log("count:" + count)
+                console.log("page:" + page)
+                console.log("filter:" + filter)
+                return PermissionService.GetAllPermission(page, count, filter).then(function (data) {
+                    var ret = data
+                    params.total(ret.total)
+                    console.log("all page count:" + ret.total)
+                    console.log("recv count:" + ret.datasets.length)
+                    $scope.pagesUserCount = Math.ceil($scope.tableParamsPermission.total() / $scope.tableParamsPermission.parameters().count)
+                    return ret.datasets
+                }).catch(function (err) {
+                    console.log("err:" + JSON.stringify(err))
+                })
+            }
+
+            $scope.tableParamsPermission = new NgTableParams(
+                { count: 15 },
+                {
+                    counts: [10, 15, 30, 50],
+                    getData: $scope.QueryAllPermission
+                }
+            )
+
+            $scope.FreshAllPermission = function () {
+                try {
+                    $scope.tableParamsPermission.reload()
+                } catch (e) {
+                    console.log("[Error] $scope.tableParamsPermission.reload()");
+                }
+            }
 
         }
     }
