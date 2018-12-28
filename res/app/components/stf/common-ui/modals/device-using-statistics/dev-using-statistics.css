@@ -188,15 +188,15 @@ tfoot td, tfoot th {
   }
   
   .stf-device-list .device-not-usable img {
-    opacity: 0.8;
+    /* opacity: 0.8; */
   }
   
   .stf-device-list .device-not-usable .btn {
-    cursor: not-allowed;
+    /* cursor: not-allowed; */
   }
   
   .stf-device-list .devices-not-available {
-    background: #f6f6f6;
+    /* background: #f6f6f6; */
   }
   
   .stf-device-list .line {
