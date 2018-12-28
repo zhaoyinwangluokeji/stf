@@ -125,7 +125,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
       })
 
       sync(data)
-    //  console.log("emit change :"+JSON.stringify(data.device_rent_conf))
+      //  console.log("emit change :"+JSON.stringify(data.device_rent_conf))
       this.emit('change', data)
     }.bind(this)
 
@@ -208,7 +208,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
       }
     }
 
-    function handleAddListener(event,isNew,device){
+    function handleAddListener(event, isNew, device) {
       if (!isNew) {
         modify(device, event.data)
         notify(event)
@@ -230,12 +230,12 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     }
 
     function addListener(event) {
-    //  console.log("addListener ")
+      //  console.log("addListener ")
       var device = get(event.data)
       var isNew = true
-      if(device){
+      if (device) {
         var isNew = false
-      }else{
+      } else {
         devicesBySerial[event.data.serial] = devices.push(event.data) - 1
         sync(event.data)
         device = get(event.data)
@@ -260,7 +260,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
         })
       } else {
         console.log("Adding Device and not checking permition ")
-        handleAddListener(event,isNew,device)
+        handleAddListener(event, isNew, device)
       }
     }
 
