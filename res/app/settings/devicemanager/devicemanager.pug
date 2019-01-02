@@ -4,7 +4,7 @@ div(ng-controller='DeviceManagerController')
     .widget-content.padded
         .row
             .col-md-4
-                Div.name-title-info
+                Div.device-title-info
                     strong.align-middle 请填写新增设备信息
                     button.align-right.btn-width(ng-click="deleteDevices()")
                         i.fa.fa-minus
@@ -20,14 +20,14 @@ div(ng-controller='DeviceManagerController')
                             div 值
                     tr
                         td
-                            div {{serialName}}
-                        td
-                            input(ng-model='addSerial')
-                    tr
-                        td
                             div 设备类型
                         td
                             select.my-select(ng-model='addPlatform',ng-options="tp for tp in TypeList",ng-change="changePlatform()")
+                    tr
+                        td
+                            div {{serialName}}
+                        td
+                            input(ng-model='addSerial')
                     tr
                         td
                             div 系统版本

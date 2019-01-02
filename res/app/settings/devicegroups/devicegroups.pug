@@ -95,7 +95,7 @@ div(ng-controller='DeviceGroupsController')
                                         div.floatleft
                                             button.wid30px(ng-disabled=" pagesUserCount <= (params.parameters().page )" ng-click="params.page(params.parameters().page+1)") >
                                         div.floatleft
-                                            button.wid30px(ng-disabled=" pagesUserCount <= (params.parameters().page )" ng-click="params.page(pagesGroupCount)") >>
+                                            button.wid30px(ng-disabled=" pagesUserCount <= (params.parameters().page )" ng-click="params.page(pagesUserCount)") >>
                                     td
                                         span.msgwidth 
                                         | Totals: {{params.total()}}  
@@ -117,7 +117,7 @@ div(ng-controller='DeviceGroupsController')
             .col-md-4(ng-show="!showUserGroup")
                 Div.device-group-title-info
                     button.align-left.btn-width(ng-click="switchShow()")
-                        i.fa.fa-mobile-phone
+                        i.fa.fa-user
                         span 切换到用户组列表
                     strong.align-middle 设备列表
                     button.align-right.btn-width(ng-click="AddDevicesToDeviceGroup()")
@@ -156,7 +156,7 @@ div(ng-controller='DeviceGroupsController')
                                         div.floatleft
                                             button.wid30px(ng-disabled=" pagesDeviceCount <= (params.parameters().page )" ng-click="params.page(params.parameters().page+1)") >
                                         div.floatleft
-                                            button.wid30px(ng-disabled=" pagesDeviceCount <= (params.parameters().page )" ng-click="params.page(pagesGroupCount)") >>
+                                            button.wid30px(ng-disabled=" pagesDeviceCount <= (params.parameters().page )" ng-click="params.page(pagesDeviceCount)") >>
                                     td
                                         span.msgwidth 
                                         | Totals: {{params.total()}}  
