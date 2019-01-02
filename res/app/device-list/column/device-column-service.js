@@ -677,6 +677,14 @@ function DeviceRentReleaseCell(options, DeviceRentService, $location, AppState, 
       t.nodeValue = options.value(device)
       return td
     }
+    , filter: function (device, filter) {
+      if (device.enhancedRentReleaseMsg) {
+        return device.enhancedRentReleaseMsg === filter.query
+      } else {
+        return false
+      }
+
+    }
   })
 }
 

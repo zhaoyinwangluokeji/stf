@@ -142,7 +142,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
 
     function fetch(data) {
       console.log("fetch " + data.serial)
-      deviceService.load(data.serial)
+      return deviceService.load(data.serial)
         .then(function (device) {
           return changeListener({
             important: true
@@ -265,12 +265,13 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
       }
     }
 
-    function changeListener(event) {
+    var changeListener = function(event) {
       var device = get(event.data)
 
       if (device) {
         console.log("changeListener1 " + event.data.serial)
         modify(device, event.data)
+        console.log("data:" + JSON.stringify(event.data))
         if (!options.filter(device)) {
           console.log("remove device " + event.data.serial)
           remove(device)
@@ -284,6 +285,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
           devicesBySerial[event.data.serial] = devices.push(event.data) - 1
           sync(event.data)
           device = get(event.data)
+          console.log("data:" + JSON.stringify(event.data))
           insert(event.data)
           // We've only got partial data
           fetch(event.data)
@@ -293,7 +295,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
 
         }
       }
-    }
+    }.bind(this)
 
     scopedSocket.on('device.add', addListener)
     scopedSocket.on('device.remove', changeListener)
