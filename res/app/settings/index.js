@@ -5,7 +5,8 @@ module.exports = angular.module('ui-settings', [
   require('./datasyn').name,
   require('./users').name,
   require('./devicegroups').name,
-  require('./devicemanager').name
+  require('./devicemanager').name,
+  require('stf/app-state').name
 ])
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/settings', {

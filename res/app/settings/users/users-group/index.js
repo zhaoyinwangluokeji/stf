@@ -6,5 +6,4 @@ module.exports = angular.module('stf.users.users-group', [
     'ngRoute',
     'ngTable'
 ]).directive('usersGroup', require('./users-group'))
-.service('UsersGroupService', require('../service/users-group-service'))  
-.service('UsersService', require('../service/users-service'))  
+ 
