@@ -309,7 +309,7 @@ msgstr "密度"
 
 #: app/device-list/device-list.html:1
 msgid "Details"
-msgstr "细节"
+msgstr "详情"
 
 #: app/control-panes/dashboard/apps/apps.html:1
 msgid "Developer"

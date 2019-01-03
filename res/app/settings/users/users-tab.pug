@@ -3,12 +3,12 @@ div(ng-controller='UsersTabController')
         uib-tab(active='activeTabs.users', select='focusSearch()')
             uib-tab-heading
                 i.fa.fa-th-large
-                span(translate) user info
+                span(translate) 用户
             div.selectable
                 users-info(filter='filter')
         uib-tab(active='activeTabs.group', select='focusSearch()')
             uib-tab-heading
                 i.fa.fa-th-large
-                span(translate) group setting
+                span(translate) 用户组
             div.selectable
                 users-group(filter='filter')
