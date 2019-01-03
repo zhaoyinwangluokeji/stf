@@ -8,7 +8,7 @@ module.exports = angular.module('stf.device-status', [])
         unauthorized: gettext('Unauthorized'),
         preparing: gettext('Preparing'),
         ready: gettext('Ready'),
-        using: gettext('Stop Using'),
+        using: gettext('Using'),
         busy: gettext('Busy'),
         available: gettext('Available'),
         automation: gettext('Stop Automation')
@@ -44,6 +44,23 @@ module.exports = angular.module('stf.device-status', [])
         else {
           return gettext('租用过期')
         }
+      }
+      else {
+        return ('Error State')
+      }
+    }
+  })
+  .filter('RentReleaseMsg', function (gettext) {
+
+    return function (device) {
+      var text = device.state;
+      if (!device.device_rent_conf ||
+        !device.device_rent_conf.rent ||
+        device.device_rent_conf.rent == false) {
+        return ('---');
+      }
+      else if (device.device_rent_conf && device.device_rent_conf.rent) {
+        return gettext("释放")
       }
       else {
         return ('Error State')

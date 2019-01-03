@@ -13,7 +13,8 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     $scope.device_groups = null
     $scope.user_groups = null
     $scope.in_groups = []
-    $scope.usable_devices_lists = []
+    var usable_devices_lists = []
+    $scope.is_admin = false
 
     function getAllDeviceGroups() {
       return new Promise(function (resolve, reject) {
@@ -125,7 +126,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
       })
 
       sync(data)
-    //  console.log("emit change :"+JSON.stringify(data.device_rent_conf))
+      //  console.log("emit change :"+JSON.stringify(data.device_rent_conf))
       this.emit('change', data)
     }.bind(this)
 
@@ -141,7 +142,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
 
     function fetch(data) {
       console.log("fetch " + data.serial)
-      deviceService.load(data.serial)
+      return deviceService.load(data.serial)
         .then(function (device) {
           return changeListener({
             important: true
@@ -183,16 +184,21 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
           if (ele.userslist) {
             ele.userslist.forEach(element => {
               if (element.email == email) {
+                if(ele.GroupName == "administrator"){
+                  console.log("user is Admin!!")
+                  $scope.is_admin = true
+                }
                 $scope.in_groups.push(ele.GroupName)
               }
             });
           }
         });
+
         $scope.device_groups.forEach(ele => {
           $scope.in_groups.forEach(element => {
             if (ele.usergroups.indexOf(element) > -1) {
-              $scope.usable_devices_lists = MergeArray($scope.usable_devices_lists, ele.devices)
-              console.log("usable device lists: " + JSON.stringify($scope.usable_devices_lists))
+              usable_devices_lists = MergeArray(usable_devices_lists, ele.devices)
+              console.log("usable device lists: " + JSON.stringify(usable_devices_lists))
               return
             }
           });
@@ -201,14 +207,14 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     }
 
     function ifDeviceUsable(serial) {
-      if ($scope.usable_devices_lists.indexOf(serial) > -1) {
+      if (usable_devices_lists.indexOf(serial) > -1) {
         return true
       } else {
         return false
       }
     }
 
-    function handleAddListener(event,isNew,device){
+    function handleAddListener(event, isNew, device) {
       if (!isNew) {
         modify(device, event.data)
         notify(event)
@@ -225,12 +231,12 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     }
 
     function addListener(event) {
-      console.log("addListener ")
+      //  console.log("addListener ")
       var device = get(event.data)
       var isNew = true
-      if(device){
+      if (device) {
         var isNew = false
-      }else{
+      } else {
         devicesBySerial[event.data.serial] = devices.push(event.data) - 1
         sync(event.data)
         device = get(event.data)
@@ -245,26 +251,27 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
             return resolve()
           }
         })).then(function () {
-          if (!ifDeviceUsable(event.data.serial)) {
-            console.log("device is not permitted for user, usable devices:  " + JSON.stringify($scope.usable_devices_lists))
+          if (!$scope.is_admin && !ifDeviceUsable(event.data.serial)) {
+            console.log("device is not permitted for user, usable devices:  " + JSON.stringify(usable_devices_lists))
             return
           } else {
-            console.log("device is ready for user, usable devices:  " + JSON.stringify($scope.usable_devices_lists))
+            console.log("device is ready for user, usable devices:  " + JSON.stringify(usable_devices_lists))
             handleAddListener(event,isNew,device)
           }
         })
       } else {
         console.log("Adding Device and not checking permition ")
-        handleAddListener(event,isNew,device)
+        handleAddListener(event, isNew, device)
       }
     }
 
-    function changeListener(event) {
+    var changeListener = function(event) {
       var device = get(event.data)
 
       if (device) {
         console.log("changeListener1 " + event.data.serial)
         modify(device, event.data)
+        console.log("data:" + JSON.stringify(event.data))
         if (!options.filter(device)) {
           console.log("remove device " + event.data.serial)
           remove(device)
@@ -278,6 +285,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
           devicesBySerial[event.data.serial] = devices.push(event.data) - 1
           sync(event.data)
           device = get(event.data)
+          console.log("data:" + JSON.stringify(event.data))
           insert(event.data)
           // We've only got partial data
           fetch(event.data)
@@ -287,7 +295,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
 
         }
       }
-    }
+    }.bind(this)
 
     scopedSocket.on('device.add', addListener)
     scopedSocket.on('device.remove', changeListener)
@@ -301,6 +309,12 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
       })
     }
     this.devices = devices
+    this.getUsableList = function(){
+      return usable_devices_lists
+    }
+    this.getIfAdmin = function(){
+      return $scope.is_admin
+    }
   }
 
   Tracker.prototype = new EventEmitter()

@@ -392,6 +392,28 @@ paths:
             $ref: "#/definitions/ErrorResponse"
       security:
         - accessTokenAuth: []
+
+        
+  /user/updateAllUsers:
+    x-swagger-router-controller: user
+    get:
+      summary: Access Tokens
+      description: update All Users
+      operationId: updateAllUsers
+      tags:
+        - user
+      responses:
+        "200":
+          description: update All Users
+          schema:
+            $ref: "#/definitions/UpdateAllUsersList"
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      security:
+        - accessTokenAuth: []
+
   /devices:
     x-swagger-router-controller: devices
     get:
@@ -464,6 +486,14 @@ definitions:
         type: array
         items:
           type: string
+  UpdateAllUsersList:
+    required:
+      - user
+    properties:
+      user:
+        type: object
+  
+          
   ProjectsResponse:
     required:
       - requirement

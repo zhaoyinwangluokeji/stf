@@ -1,6 +1,6 @@
 var oboe = require('oboe')
 
-module.exports = function UsersService($http,AppState) {
+module.exports = function UsersService($http,$q,$location,AppState) {
     return {
          
         GetUsers: function (page, count, filter) {
@@ -76,8 +76,7 @@ module.exports = function UsersService($http,AppState) {
         ModifyPassword: function (user, password) {
             var data = {
                 email: user.email,
-                name: user.name,
-                password: password
+                name: user.name
             }
             return new Promise(function (resolve, reject) {
                 $http.post('/auth/api/v1/mock/modify-password', data)
@@ -90,6 +89,26 @@ module.exports = function UsersService($http,AppState) {
                         return reject(response.data)
                     })
             });
+        },
+        Logout: function (user, password) {
+            var data = {
+                email: user.email,
+                name: user.name,
+                password: password
+            }
+            var url='/auth/api/v1/mock/Logout?'+"email="+user.email+"&name="+user.name
+            return new Promise(function (resolve, reject) {
+                $http.post('/auth/api/v1/mock/Logout', data)
+                    .success(function (response) {
+                        console.log("success："+response.data.url)
+                        return resolve(response.data)
+                    })
+                    .error(function (response) {
+                        console.log("fail")
+                        return reject(response.data)
+                    })
+            });
         }
+        
     }
 }

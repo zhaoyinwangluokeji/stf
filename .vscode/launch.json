@@ -75,7 +75,7 @@
         "args" : ["app", "--port", "7105", "--secret", "kute", "kittykat", "--auth-url", "http://localhost:7100/auth/mock/", "--websocket-url", "http://localhost:7110/"]
         }
         ,  
- */
+
  
         {
         "request" : "launch",
@@ -85,10 +85,8 @@
         "args" : ["api", "--port", "7106", "--secret", "kute", "kittykat", "--connect-push", "tcp://127.0.0.1:7113", "--connect-sub", "tcp://127.0.0.1:7111"]
         }
         
-        /*
+      
         , 
-    
-
         {
         "request" : "launch",
         "program" : "${workspaceFolder}/bin/stf",

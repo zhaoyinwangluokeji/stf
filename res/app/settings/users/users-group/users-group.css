@@ -35,6 +35,7 @@
     height: 30px;
     margin: 5px;
     font-style: inherit;
+    float: right;
 }
 .reset-btn{
     margin: 5px
@@ -58,4 +59,14 @@
 }
 .align-center{
     text-align: center
+}
+.filtering-buttons {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+}
+
+.headerbtn{
+    margin-left: 5px;
+    margin-right: 5px;
 }

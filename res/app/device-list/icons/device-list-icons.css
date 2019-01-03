@@ -46,7 +46,7 @@ ul.devices-icon-view li {
 .phoneInfoBody {
   height: 125px;
   padding-top: 5px;
-  padding-left: 10px;
+  padding-left: 1px;
   margin-bottom: 5px;
 }
 .phoneInfoFoot {
@@ -117,19 +117,27 @@ ul.devices-icon-view li {
 }
 
 .phoneInfo{
-  margin-left: 10px;
+  margin-left: 5px;
   word-break: break-all;
   color: #333333;
   padding-bottom: 8px;
   font-size: 12px;
   font-family: 微软雅黑;
 }
+.phoneInfoList {
+  width: 120px;
+  float: right;
+  margin: 0;
+  padding: 0;
+}
+
 .phoneImg {
   width: 68px;
   height: 100px;
   background-position: left top;
   float: left;
 }
+
 .phone {
   border-radius: 8px;
   border: 1px solid #e6e6e6;
@@ -194,14 +202,14 @@ ul.devices-icon-view .device-product {
 }
 
 ul.devices-icon-view .device-is-busy {
-  opacity: 0.6;
-  cursor: not-allowed;
+  /* opacity: 0.6;
+  cursor: not-allowed; */
   /*-webkit-filter: grayscale(100%);*/
   /*filter: grayscale(100%);*/
 }
 
 ul.devices-icon-view .device-is-busy .btn {
-  cursor: not-allowed;
+  /* cursor: not-allowed; */
 }
 
 ul.devices-icon-view .device-is-busy .device-photo-small img {

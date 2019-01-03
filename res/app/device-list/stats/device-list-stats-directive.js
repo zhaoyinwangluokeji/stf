@@ -13,6 +13,7 @@ module.exports = function DeviceListStatsDirective(
       var nodes = Object.create(null)
       require("chart.js")
  
+      unhandled_serials = []
       scope.modelData = {
         type: 'doughnut',
         data: {
@@ -187,7 +188,12 @@ module.exports = function DeviceListStatsDirective(
       function addToData(tag, device, targetData, chart) {
         var value = ""
         if (tag == "display") {
-          value = device.display.width + "x" + device.display.height
+          if(device.display){
+            value = device.display.width + "x" + device.display.height
+          }else{
+            value = undefined
+          }
+          
         } else {
           value = device[tag]
         }
@@ -209,7 +215,11 @@ module.exports = function DeviceListStatsDirective(
       function delFromData(tag, device, targetData, chart) {
         var value = ""
         if (tag == "display") {
-          value = device.display.width + "x" + device.display.height
+          if(device.display){
+            value = device.display.width + "x" + device.display.height
+          }else{
+            value = "null"
+          }
         } else {
           value = device[tag]
         }
@@ -239,6 +249,12 @@ module.exports = function DeviceListStatsDirective(
         scope.counter.usable += stats.usable
         scope.counter.busy += stats.busy
         scope.counter.using += stats.using
+
+        if(!device.display){
+          console.log("unhandled serial: "+device.serial)
+          unhandled_serials.push(device.serial)
+          return
+        }
         addToData("display", device, scope.screensizeData)
         scope.screensizeChart.update()
         addToData("version", device, scope.versionData)
@@ -253,6 +269,20 @@ module.exports = function DeviceListStatsDirective(
       function changeListener(device) {
 
       //  console.log('stats-changeListener ' + device.serial)
+        var tmp = unhandled_serials.indexOf(device.serial)
+        if(tmp != -1 && device.display){
+          console.log("handling serial: "+device.serial)
+          addToData("display", device, scope.screensizeData)
+          scope.screensizeChart.update()
+          addToData("version", device, scope.versionData)
+          scope.versionChart.update()
+          addToData("manufacturer", device, scope.modelData)
+          scope.modelChart.update()
+          addToData("platform", device, scope.platformData)
+          scope.platformChart.update()
+          unhandled_serials.splice(tmp,1)
+        }
+        
         var oldStats = mapping[device.serial]
         var newStats = updateStats(device)
         var diffs = Object.create(null)

@@ -7,6 +7,7 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
   var hex = new md5()
 
   $scope.xpath = "//*[@text='相机']";
+  $scope.crash_log_path = "/sdcard/cmb/log"
   $scope.inputContent = "12345"
   $scope.findEle = null;
 
@@ -216,25 +217,6 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
     })
   }
 
-  // $scope.takeScreenShot = function (operateInfo = "") {
-  //   return $scope.control.screenshot().then(function (result) {
-  //     $scope.pic_click_path.push(operateInfo)
-  //     var tmp1 = JSON.parse(JSON.stringify($scope.pic_click_path))
-  //     $scope.pic_click_path_list.push(tmp1)
-  //     $scope.$apply(function () {
-  //       $scope.screenshot = result;
-  //       $scope.screenshots.push(result)
-  //       console.log(JSON.stringify(result))
-        
-  //       $scope.click_num += 1
-  //       var tmp3 = $scope.page_content.slice(0)
-  //       $scope.page_cotent_list.push([$scope.click_num, tmp3]);
-  //     })
-  //     // img.src = result.body.href
-      
-  //   })
-
-  // }
   $scope.dicNum = { '0': [0.5, 0.85], '1': [0.2, 0.12], '2': [0.5, 0.12], '3': [0.2, 0.12], '4': [0.2, 0.37], '5': [0.5, 0.37], '6': [0.8, 0.37], '7': [0.2, 0.62], '8': [0.5, 0.62], '9': [0.8, 0.62] }
 
   $scope.inputNumPwd = function (arr, bounds) {
@@ -450,6 +432,33 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
     $scope.screenShotSize = newValue
   }
 
+  $scope.operateActivities = {}
+  function getCurActivity(){
+    return $scope.control.shell('dumpsys activity | grep -i run | grep ActivityRecord')
+    .then(function (ret) {
+      // console.log("Activity Result: " + JSON.stringify(ret.data[0].split('\n')[0].split(' ')))
+      var act = ""
+      var tmp = ret.data[0].split('\n')[0].split(' ')
+      var len = tmp.length
+      for(var i=0;i<len;i++){
+        if(tmp[i].indexOf("com") != -1){
+          console.log("got act: " + tmp[i])
+          act = tmp[i]
+          break
+        }
+      }
+      console.log("current Activity: " + act)
+      if($scope.operateActivities[act]){
+        $scope.operateActivities[act]+=1
+      }else{
+        $scope.operateActivities[act] = 1
+      }
+
+    })
+  }
+
+
+
   $scope.operateElement = function (node, level) {
     //node: class, text, content-desc, id,index
     console.log("operating element..." + node.toString())
@@ -466,48 +475,52 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
       while ($scope.pic_click_path.length >= level) {
         $scope.pic_click_path.pop()
       }
-      if (node[0].indexOf("EditText") >= 0) {
-        if (node[3].indexOf($scope.msg_code_id) >= 0) {
-          return $scope.getVerifyCode().then(function () {
-            return $scope.clickElement().then(function () {
-              return $scope.inputText($scope.verify_code)
-                .then(function () {
-                  return $scope.takeScreenShot("android input verify code    " + $scope.xpath + "    " + $scope.phone_num);
-                })
-            })
-          })
-        }
-        for (var k in $scope.edittext_content_settings) {
-          if (node[3].indexOf(k) >= 0) {
-            return $scope.clickElement().then(function () {
-              return $scope.inputText($scope.edittext_content_settings[k])
-                .then(function () {
-                  return $scope.takeScreenShot("input text    " + $scope.xpath + "    " + $scope.edittext_content_settings[k]);
-                })
+      return getCurActivity().then(function(){
+        if (node[0].indexOf("EditText") >= 0) {
+          if (node[3].indexOf($scope.msg_code_id) >= 0) {
+            return $scope.getVerifyCode().then(function () {
+              return $scope.clickElement().then(function () {
+                return $scope.inputText($scope.verify_code)
+                  .then(function () {
+                    return $scope.takeScreenShot("android input verify code    " + $scope.xpath + "    " + $scope.phone_num);
+                  })
+              })
             })
           }
-        }
-        return $scope.clickElement().then(function () {
-          return $scope.inputText($scope.filling_edittext_default)
-            .then(function () {
-              return $scope.takeScreenShot("input text    " + $scope.xpath + "    " + $scope.filling_edittext_default);
-            })
-        })
-      } else {
-        return $scope.clickElement()
-          .then(function () {
-            return $scope.sleep($scope.wait_sec * 1000).then(function () {
-              console.log("taking screenshot.")
-              return $scope.takeScreenShot("click element    " + $scope.xpath);
-            })
+          for (var k in $scope.edittext_content_settings) {
+            if (node[3].indexOf(k) >= 0) {
+              return $scope.clickElement().then(function () {
+                return $scope.inputText($scope.edittext_content_settings[k])
+                  .then(function () {
+                    return $scope.takeScreenShot("input text    " + $scope.xpath + "    " + $scope.edittext_content_settings[k]);
+                  })
+              })
+            }
+          }
+          return $scope.clickElement().then(function () {
+            return $scope.inputText($scope.filling_edittext_default)
+              .then(function () {
+                return $scope.takeScreenShot("input text    " + $scope.xpath + "    " + $scope.filling_edittext_default);
+              })
           })
-      }
+        } else {
+          return $scope.clickElement()
+            .then(function () {
+              return $scope.sleep($scope.wait_sec * 1000).then(function () {
+                console.log("taking screenshot.")
+                return $scope.takeScreenShot("click element    " + $scope.xpath);
+              })
+            })
+        }
+      })
+      
     })
   }
 
   $scope.handleResultList = function (list, ptree, level, go_back) {
     if($scope.endCraw){
       console.log("craw ended!")
+      $scope.endTime = new Date()
       return Promise.resolve()
     }
     if ($scope.click_num > $scope.max_click) {
@@ -571,6 +584,7 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
     console.log("craw level is " + level)
     if($scope.endCraw){
       console.log("craw ended!")
+      $scope.endTime = new Date()
       return Promise.resolve()
     }
     if ($scope.click_num > $scope.max_click) {
@@ -629,6 +643,8 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
         })
     })
   }
+  $scope.startTime = null
+  $scope.endTime = null
 
   $scope.startCraw = function(){
     $scope.click_num = 1
@@ -647,6 +663,8 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
     $scope.pic_click_path = []
     $scope.pic_click_path_list = []
     $scope.page_stack = []
+    $scope.endTime = null
+    $scope.startTime = new Date()
     $scope.craw(1,$scope.p_tree)
   }
 
@@ -671,6 +689,8 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
     $scope.pic_click_path = []
     $scope.pic_click_path_list = []
     $scope.page_stack = []
+    $scope.endTime = null
+    $scope.startTime = null
   }
 
   $scope.endCraw = false;
@@ -678,21 +698,134 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
     $scope.endCraw = true;
   })
 
-
-  $scope.downloadResult = function(){  
-    var zip = new JSZip();
-    var img = zip.folder("images");
-    var len = $scope.screenshots.length
-    var name = ""
-    for (i=0;i<len;i++){
-      name = i + ".png"
-      img.file(name, $scope.screenshots[i].replace("data:image/png;base64,",""), {base64: true});
+  function genTableFromDict(dict){
+    var text = '<table align="center" border="1" style="width:80%">'
+    for(var key in dict){
+      text+='<tr><td><span>'+key+':</span></td><td><span>'+dict[key]+'</span></td></tr>'
     }
-    zip.generateAsync({type:"blob"})
-    .then(function(content) {
-        // see FileSaver.js
-        fs.saveAs(content, "report.zip");
-    });
+    text+='</table>'
+    return text
+  }
+
+  function MillisecondToTime(msd) {
+    var time = parseInt(msd) / 1000;
+    if (time <= 60) {
+        time = time + '秒';
+        return time;
+    } else if (time > 60 && time < 60 * 60) {
+        time = parseInt(time / 60) + "分钟";
+        return time;
+    } else {
+        var hour = parseInt(time / 3600) + "小时";
+        var minute = parseInt(parseInt(time % 3600) / 60) + "分钟";
+        time = hour + minute;
+        return time;
+    }
+}
+
+  function genReport(){
+    if($scope.startTime == null){
+      alert("请先开始遍历！")
+    }
+    reportText = '<!DOCTYPE html><html ><head><meta charset="utf-8"></head><body> <h1 style="text-align:center">深度遍历报告</h1>'
+    reportText+='<h2 >基本信息</h2>'
+    if($scope.endTime == null){
+      var end = new Date()
+      var elaspe = MillisecondToTime(end - $scope.startTime)
+    }else{
+      var elaspe = MillisecondToTime($scope.endTime - $scope.startTime)
+    }
+    var base = {
+      "手机系统": $scope.device.platform,
+      "手机品牌": $scope.device.manufacturer,
+      "手机型号": $scope.device.model,
+      "系统版本": $scope.device.version,
+      "开始时间": $scope.startTime,
+      "执行时间": elaspe,
+      "元素点击数量": $scope.click_num,
+      "崩溃日志数量": $scope.crash_log_num
+    }
+    var baseTable = genTableFromDict(base)
+    reportText+=baseTable
+
+    reportText+='<h2 >Activity Clicked List</h2>'
+    var actHead = {
+      "Activity ": "操作次数"
+    }
+    var activityTable = genTableFromDict(actHead)
+    reportText+=activityTable
+
+    var activityTable = genTableFromDict($scope.operateActivities)
+    reportText+=activityTable
+    reportText+='</body></html>'
+    $scope.zip.file("report.html", reportText)
+  }
+  $scope.crash_log_num = 0
+
+  function getCrashLog(){
+    $scope.crash_log_num = 0
+    return $scope.control.shell('ls ' + $scope.crash_log_path)
+    .then(function (result) {
+      var logNames = result.data.join('');
+      if (logNames.indexOf("No such file or directory") != -1){
+        alert("崩溃日志路径不存在！")
+        return
+      }
+      if($scope.startTime == null){
+        alert("深度遍历未开始！")
+        return
+      }
+      startDate = "" + $scope.startTime.getFullYear() + $scope.startTime.getMonth() + $scope.startTime.getDate()
+      
+      var names = logNames.split('  ')
+      var len = names.length
+      var newLogs = []
+
+      for(var i=0; i<len; i++){
+        var name = names[i].replace("_log.txt",'')
+        console.log("log: " + name)
+        if(parseInt(name) >= parseInt(startDate)){
+          $scope.crash_log_num +=1
+          newLogs.push(names[i])
+        }
+      }
+      return getCrashFile(newLogs)
+    })
+  }
+
+  function getCrashFile(list){
+    if(list.length == 0){
+      return new Promise()
+    }
+    var logName = list.shift()
+    return $scope.control.shell('cat ' + $scope.crash_log_path+'/'+logName)
+    .then(function (result) {
+      var tmpLogs = result.data.join('');
+      $scope.zip.file("崩溃日志/"+logName, tmpLogs)
+    }).then(function(){
+      if(list.length > 0){
+        return getCrashFile(list)
+      }
+    })
+  }
+
+  $scope.zip = new JSZip();
+  $scope.downloadResult = function(){  
+    getCrashLog().then(function(){
+      genReport()
+      var img = $scope.zip.folder("截图");
+      var len = $scope.screenshots.length
+      var name = ""
+      for (i=0;i<len;i++){
+        name = i + ".png"
+        img.file(name, $scope.screenshots[i].replace("data:image/png;base64,",""), {base64: true});
+      }
+      $scope.zip.generateAsync({type:"blob"})
+      .then(function(content) {
+          // see FileSaver.js
+          fs.saveAs(content, "report.zip");
+      });
+    })
   }
 
 

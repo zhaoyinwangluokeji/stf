@@ -20,8 +20,8 @@ module.exports = function DeviceRentWebControlService($filter,
         device_list[device.serial] = device
         //    device_list[device.serial] = device
         console.log("device.serial==" + device.serial)
-        console.log("open==" + (device_list[device.serial] == device))
-        console.log("===" + (device_list[device.serial] === device))
+    //    console.log("open==" + (device_list[device.serial] == device))
+    //    console.log("===" + (device_list[device.serial] === device))
         if (!Timer) {
             console.log("create timer")
             Timer = setInterval(function () {
@@ -63,7 +63,7 @@ module.exports = function DeviceRentWebControlService($filter,
                             }
                             //changeEvent(device_list[key], element) 
                         } else {
-                            console.log("device_o:" + device_o.serial) //+ "," + JSON.stringify(device_o.device_rent_conf))
+                        //    console.log("device_o:" + device_o.serial) //+ "," + JSON.stringify(device_o.device_rent_conf))
                         }
 
                     }
