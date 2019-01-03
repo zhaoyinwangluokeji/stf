@@ -11,5 +11,52 @@ block content
             i.fa.fa-home.fa-fw
         .widget-content.padded
           .row
-            .col-md-10.col-md-offset-1.selectable
-              != markdownFile.parseContent()
+            //- .col-md-10.col-md-offset-1.selectable
+              //- != markdownFile.parseContent()
+            h1(align='center') 帮助文档
+            p 新增功能
+            ul
+              li
+                p 用户设置
+                ul
+                  li 同步测试管理平台用户（设置-数据同步-同步用户）
+                  li 用户注销 （右上角注销按钮）
+                  li 用户管理 （设置-用户管理-用户）
+                  li 用户组管理 （设置-用户管理-用户组）
+                  li 增加默认管理员admin、管理员组administrator
+              li
+                p 设备设置
+                ul
+                  li 设备组管理，关联用户组、设备（设置-设备组管理）
+                  li 根据设备组显示登录用户相关联的设备
+                    p
+                      ul
+                        li 如用户在administrator组，首页显示全部设备
+                        li 如果用户所在的组，有关联对应的设备，则在首页显示这些设备
+                  li 自定义设备的增加、删除（设置-设备添加删除），此功能可以添加手工测试的设备
+              li
+                p 数据统计
+                ul
+                  li 设备分类统计（品牌、系统、分辨率、操作系统）
+                  li 租用日志（租用时间、时长、项目、用户等纬度的统计、过滤功能）
+              li
+                p 设备租用
+                ul
+                  li 设备限定时长租用，需绑定项目编号
+                  li 设备被租用后，在首页倒计时显示剩余时长
+                  li 设备剩余时长清零，自动释放被租设备
+                  li 用户在首页点击释放按钮，手动释放被租设备
+                  li 用户在远程控制页面点击停止使用按钮，手动释放被租设备
+                  li 在线连接的设备租用后可以直接远程使用，拔出离线或手动添加离线设备也可租用，租用后到环境室申领
+              li
+                p 设备远程控制页面增加功能，详情请看问答平台
+                  a(href='http://99.8.49.87/tipask/public/article/323') 文章
+                ul
+                  li UiViewer页面元素定位工具、xpath自动生成、xpath查找、RGB显示
+                  li 性能数据实时统计（CPU、内存、流量）、monkey测试
+                  li UI深度遍历工具，截图智能分析后在页面显示可能出错的截图，报告生成及下载
+              li
+                p 其它
+                ul
+                  li 首页设备列表优化
+                  li 同步测试管理平台项目（设置-数据同步-同步用户）

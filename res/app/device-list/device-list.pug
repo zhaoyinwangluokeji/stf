@@ -112,7 +112,7 @@
             uib-tab(active='activeTabs.deviceusinglog', select='focusSearch()', ng-if='!$root.basicMode')
               uib-tab-heading
                 i.fa.fa-list
-                span(translate) RentLog
+                span(translate) 租用日志
               div.device-list-details-content(ng-if='activeTabs.deviceusinglog').selectable
                 device-rent-log(tracker='tracker', columns='logsColumns'
                 ,sort='Logssort',dat='dat', filter='filter',condi='condi').selectable

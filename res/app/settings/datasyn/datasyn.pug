@@ -4,10 +4,10 @@ div(ng-controller='DataSynController')
          div(ng-class="{progress: true, 'progress-striped': vm.striped}")
             div(ng-class="['progress-bar', vm.style]" ng-style="{width: vm.value + '%'}")
                 div(ng-if="vm.showLabel") {{vm.value}}%
-        button(type="button" ng-click="synProjects()") SynProjects
+        button(type="button" ng-click="synProjects()") 同步项目
     .widget-content.padded.processBar
          div(ng-class="{progress: true, 'progress-striped': vm1.striped}")
             div(ng-class="['progress-bar', vm2.style]" ng-style="{width: vm1.value + '%'}")
                 div(ng-if="vm1.showLabel") {{vm1.value}}%
                 div(ng-if="vm1.value==0") ......准备中......
-        button(type="button" ng-click="synUsers()") SynUsers   
+        button(type="button" ng-click="synUsers()") 同步用户   
