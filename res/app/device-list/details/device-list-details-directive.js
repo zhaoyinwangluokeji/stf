@@ -64,12 +64,18 @@ module.exports = function DeviceListDetailsDirective(
               user) {
               if (user.name == device.device_rent_conf.owner.name &&
                 user.email == device.device_rent_conf.owner.email) {
+                  if (confirm('你确定需要停止租用吗？')) {
+                    GroupService.kick(device, true)
+                    DeviceRentService.free_rent(device, socket)
+                    e.preventDefault()
+                  }
               }
               else {
                 alert("设备已经被" + device.device_rent_conf.owner.name + " " + device.device_rent_conf.owner.email + " 租用")
               }
             }
-          } else {
+          }
+          else {
             return Promise.all([device].map(function (device) {
               e.preventDefault()
               return DeviceRentService.open(device)
@@ -367,9 +373,9 @@ module.exports = function DeviceListDetailsDirective(
 
         tr.id = id
 
-        if (!device.usable) {
+      /*  if (!device.usable) {
           tr.classList.add('device-not-usable')
-        }
+        }*/
 
         for (var i = 0, l = activeColumns.length; i < l; ++i) {
           td = scope.columnDefinitions[activeColumns[i]].build()
@@ -420,13 +426,13 @@ module.exports = function DeviceListDetailsDirective(
         var id = calculateId(device)
 
         tr.id = id
-
+/*
         if (!device.usable) {
           tr.classList.add('device-not-usable')
         }
         else {
           tr.classList.remove('device-not-usable')
-        }
+        }*/
 
         for (var i = 0, l = activeColumns.length; i < l; ++i) {
           scope.columnDefinitions[activeColumns[i]].update(tr.cells[i], device)
@@ -584,10 +590,10 @@ module.exports = function DeviceListDetailsDirective(
       tracker.devices.forEach(element => {
         var isAdmin = tracker.getIfAdmin()
         var list = tracker.getUsableList()
-        if(isAdmin || list.indexOf(element.serial) > -1){
+        if (isAdmin || list.indexOf(element.serial) > -1) {
           console.log("device:" + element.serial + " is in list:  " + JSON.stringify(list))
           addListener(element)
-        } else{
+        } else {
           console.log("device:" + element.serial + " is not in list:  " + JSON.stringify(list))
         }
       });

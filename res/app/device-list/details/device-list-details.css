@@ -18,7 +18,19 @@
 
 
 .btn-outline-rent {
-  background: #BC8F8F;
-  color: white;
+  color: #BC8F8F;
+  
+}
 
+.pointer {
+  cursor: pointer;
+}
+.pointer-not-allowed {
+  cursor:not-allowed
+}
+.black-font-color{
+  color: #757575
+}
+.rowhover:hover{
+  background-color:#bbb
 }

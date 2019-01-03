@@ -657,36 +657,54 @@ function DeviceRentReleaseCell(options, DeviceRentService, $location, AppState, 
         device.device_rent_conf.owner &&
         device.device_rent_conf.owner.email &&
         device.device_rent_conf.owner.name &&
-        user &&
-        user.name == device.device_rent_conf.owner.name &&
-        user.email == device.device_rent_conf.owner.email) {
-        a.className = 'btn btn-xs device-rent-status btn-outline-rent'
+        user) {
+        if (user.name == device.device_rent_conf.owner.name &&
+          user.email == device.device_rent_conf.owner.email) {
+          a.className = 'pointer btn btn-xs device-rent-status btn-outline-rent rowhover'
+        } else {
+          a.className = 'pointer-not-allowed btn btn-xs device-rent-status black-font-color'
+        }
 
       } else {
-        a.className = 'btn btn-xs device-rent-status ' +
+        a.className = 'pointer btn btn-xs device-rent-status' +
           (stateClasses[device.state] || 'btn-default-outline')
       }
 
       a.onclick = function (e) {
         user = AppState.user
         var para = arguments
-
-        if (device.device_rent_conf &&
-          device.device_rent_conf.rent) {
-          if (device.device_rent_conf.owner &&
-            device.device_rent_conf.owner.email &&
-            device.device_rent_conf.owner.name &&
-            user) {
-            if (user.name == device.device_rent_conf.owner.name &&
-              user.email == device.device_rent_conf.owner.email) {
-              if (confirm('你确定需要停止租用吗？')) {
-                GroupService.kick(device, true)
-                DeviceRentService.free_rent(device, socket)
-              }
-            }
-          }
-        }
-        e.preventDefault()
+        /*
+                if (device.device_rent_conf &&
+                  device.device_rent_conf.rent) {
+                  if (device.device_rent_conf.owner &&
+                    device.device_rent_conf.owner.email &&
+                    device.device_rent_conf.owner.name &&
+                    user) {
+                    if (user.name == device.device_rent_conf.owner.name &&
+                      user.email == device.device_rent_conf.owner.email) {
+                      if (confirm('你确定需要停止租用吗？')) {
+                        GroupService.kick(device, true)
+                        DeviceRentService.free_rent(device, socket)
+                        e.preventDefault()
+                      }
+                    }
+                  }
+                }
+                else {
+                  return Promise.all([device].map(function (device) {
+                    e.preventDefault()
+                    return DeviceRentService.open(device)
+                  })).then(function (result) {
+                    if (result[0].result == true) {
+                      $location.path('/control/' + result[0].device.serial);
+                    }
+                  })
+                    .catch(function (err) {
+                      console.log('err: ', err)
+                    })
+                }
+                */
+        //  e.preventDefault()
       };
 
       t.nodeValue = options.value(device)
@@ -725,66 +743,15 @@ function DeviceRentCell(options, DeviceRentService, $location, AppState, GroupSe
       var a = td.firstChild
       var t = a.firstChild
       if (device.device_rent_conf && device.device_rent_conf.rent && !stateClasses[device.state]) {
-        a.className = 'btn btn-xs device-rent-status btn-outline-rent'
+        a.className = 'btn btn-xs device-rent-status btn-outline-rent rowhover '
 
       } else {
         a.className = 'btn btn-xs device-rent-status ' +
           (stateClasses[device.state] || 'btn-default-outline')
       }
 
-
       if (device.usable && (device.state == 'available' || device.state == 'using')) {
         a.href = '#!/control/' + device.serial
-        /*
-         a.onclick = function(e) {
-           user = AppState.user
-           var para = arguments
-           if(device.using){
-             if(device.owner && 
-               device.owner.email && 
-               device.owner.name &&
-               user &&
-               user.name == device.owner.name &&
-               user.email == device.owner.email) {
-                 if(confirm('设备处于使用状态，你确定需要停止租用吗？')){
-                   GroupService.kick(device,true)
-                   DeviceRentService.free_rent(device,socket)
-                     
-                 }
-               }
-               
-           }
-           else  if(device.state === 'available') {
-             if(device.device_rent_conf &&
-               device.device_rent_conf.rent) {
-                 if(device.device_rent_conf.owner && 
-                   device.device_rent_conf.owner.email && 
-                   device.device_rent_conf.owner.name &&
-                   user ){
-                     if(user.name == device.device_rent_conf.owner.name &&
-                       user.email == device.device_rent_conf.owner.email) {
-                       }
-                       else{
-                         alert("设备已经被"+device.device_rent_conf.owner.name + " "+device.device_rent_conf.owner.email+" 租用")
-                       }
-                   }
-               }else{
-                 return Promise.all([device].map(function(device) {
-                   return DeviceRentService.open(device) 
-                 })).then(function(result){
-                   if(result[0].result==true){   
-                     $location.path('/control/' + result[0].device.serial);
-                   }
-                 })
-                 .catch(function(err) {
-                   console.log('err: ', err)
-                 })
-               }
-           }
-           
-           e.preventDefault()  
-         };
-         */
       }
       else {
         a.removeAttribute('href')
