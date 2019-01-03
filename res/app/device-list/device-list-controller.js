@@ -437,6 +437,7 @@ module.exports = function DeviceListCtrl(
   $scope.applyFilter = function (query) {
     console.log('applyFilter : ' + query)
     $scope.filter = QueryParser.parse(query)
+    console.log('applyFilter result : ' + JSON.stringify($scope.filter))
   }
 
 

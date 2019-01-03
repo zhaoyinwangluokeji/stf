@@ -203,7 +203,7 @@ module.exports = function DeviceListIconsDirective(
               stop_rent_button.classList.add("display")
               headerbtn.classList.remove("nonedisplay")
               headerbtn.classList.remove("display")
-              if (device.state === 'available') {
+              if (device.state === 'available' || device.usable) {
                 a.href = '#!/control/' + device.serial
                 rent_buttona.href = '#!/control/' + device.serial
               }

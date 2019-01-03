@@ -1,11 +1,11 @@
 /* Based on https://ryankaskel.com/blog/2013/05/27/
  a-different-approach-to-angularjs-navigation-menus */
 
-module.exports = function($location) {
+module.exports = function ($location) {
   return {
     restrict: 'EA',
     scope: {},
-    link: function(scope, element, attrs) {
+    link: function (scope, element, attrs) {
       var links = element.find('a')
       var onClass = attrs.navMenu || 'current'
       var urlMap = []
@@ -18,14 +18,15 @@ module.exports = function($location) {
       for (var i = 0; i < links.length; i++) {
         link = angular.element(links[i])
         url = link.attr('ng-href')
+        if (url) {
+          // Remove angular route expressions
+          url = url.replace(/\/{{.*}}/g, '')
 
-        // Remove angular route expressions
-        url = url.replace(/\/{{.*}}/g, '')
-
-        if ($location.$$html5) {
-          urlMap.push({url: url, link: link})
-        } else {
-          urlMap.push({url: url.replace(routePattern, ''), link: link})
+          if ($location.$$html5) {
+            urlMap.push({ url: url, link: link })
+          } else {
+            urlMap.push({ url: url.replace(routePattern, ''), link: link })
+          }
         }
       }
 
