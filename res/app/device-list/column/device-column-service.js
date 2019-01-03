@@ -649,8 +649,23 @@ function DeviceRentReleaseCell(options, DeviceRentService, $location, AppState, 
       var a = td.firstChild
       var t = a.firstChild
 
-      a.className = 'btn btn-xs device-rent-release ' +
-        (stateClasses[device.state] || 'btn-default-outline')
+      user = AppState.user
+      var para = arguments
+
+      if (device.device_rent_conf &&
+        device.device_rent_conf.rent &&
+        device.device_rent_conf.owner &&
+        device.device_rent_conf.owner.email &&
+        device.device_rent_conf.owner.name &&
+        user &&
+        user.name == device.device_rent_conf.owner.name &&
+        user.email == device.device_rent_conf.owner.email) {
+        a.className = 'btn btn-xs device-rent-status btn-outline-rent'
+
+      } else {
+        a.className = 'btn btn-xs device-rent-status ' +
+          (stateClasses[device.state] || 'btn-default-outline')
+      }
 
       a.onclick = function (e) {
         user = AppState.user
@@ -678,12 +693,7 @@ function DeviceRentReleaseCell(options, DeviceRentService, $location, AppState, 
       return td
     }
     , filter: function (device, filter) {
-      if (device.enhancedRentReleaseMsg) {
-        return device.enhancedRentReleaseMsg.indexOf(filter.query) != -1
-      } else {
-        return false
-      }
-
+      return filterIgnoreCase(options.value(device), filter.query)
     }
   })
 }
@@ -714,9 +724,14 @@ function DeviceRentCell(options, DeviceRentService, $location, AppState, GroupSe
     , update: function (td, device) {
       var a = td.firstChild
       var t = a.firstChild
+      if (device.device_rent_conf && device.device_rent_conf.rent && !stateClasses[device.state]) {
+        a.className = 'btn btn-xs device-rent-status btn-outline-rent'
 
-      a.className = 'btn btn-xs device-rent-status ' +
-        (stateClasses[device.state] || 'btn-default-outline')
+      } else {
+        a.className = 'btn btn-xs device-rent-status ' +
+          (stateClasses[device.state] || 'btn-default-outline')
+      }
+
 
       if (device.usable && (device.state == 'available' || device.state == 'using')) {
         a.href = '#!/control/' + device.serial
@@ -797,7 +812,7 @@ function DeviceRentCell(options, DeviceRentService, $location, AppState, GroupSe
       }
     })()
     , filter: function (device, filter) {
-      return device.state === filter.query
+      return filterIgnoreCase(options.value(device), filter.query)
     }
   })
 }
@@ -908,7 +923,8 @@ function DeviceStatusCell(options) {
       }
     })()
     , filter: function (device, filter) {
-      return device.state === filter.query
+      return filterIgnoreCase(options.value(device), filter.query)
+
     }
   })
 }
