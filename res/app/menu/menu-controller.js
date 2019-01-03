@@ -1,4 +1,4 @@
-module.exports = function MenuCtrl($scope, $rootScope, SettingsService, UsersService,
+module.exports = function MenuCtrl($scope, $rootScope,$http,$location, SettingsService, UsersService,
   $location, AppState) {
 
   SettingsService.bind($scope, {
@@ -28,6 +28,16 @@ module.exports = function MenuCtrl($scope, $rootScope, SettingsService, UsersSer
       }
     }
   }
+  $scope.Logout = function () {
+    return UsersService.Logout(AppState.user).then(function (data) {
+      console.log("url:"+data.url)
+      $location.path(data.url)
+      $state.go(data.url)
+    }).catch(function (err) {
+      console.log("Logout err:" + JSON.stringify(err))
+    })
+  }
+  
 
   var MenusDefault = [
     {
