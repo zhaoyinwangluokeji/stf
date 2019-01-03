@@ -679,7 +679,7 @@ function DeviceRentReleaseCell(options, DeviceRentService, $location, AppState, 
     }
     , filter: function (device, filter) {
       if (device.enhancedRentReleaseMsg) {
-        return device.enhancedRentReleaseMsg === filter.query
+        return device.enhancedRentReleaseMsg.indexOf(filter.query) != -1
       } else {
         return false
       }
