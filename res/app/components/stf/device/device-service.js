@@ -179,7 +179,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
         console.log("loading all user groups ...")
         return getAllUserGroups()
       }).then(function () {
-        console.log("Got User Groups: " + JSON.stringify($scope.user_groups))
+      //  console.log("Got User Groups: " + JSON.stringify($scope.user_groups))
         $scope.user_groups.forEach(ele => {
           if (ele.userslist) {
             ele.userslist.forEach(element => {

@@ -76,7 +76,8 @@ module.exports = function UsersService($http,$q,$location,AppState) {
         ModifyPassword: function (user, password) {
             var data = {
                 email: user.email,
-                name: user.name
+                name: user.name,
+                password:   password
             }
             return new Promise(function (resolve, reject) {
                 $http.post('/auth/api/v1/mock/modify-password', data)

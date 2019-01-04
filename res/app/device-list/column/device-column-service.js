@@ -660,13 +660,13 @@ function DeviceRentReleaseCell(options, DeviceRentService, $location, AppState, 
         user) {
         if (user.name == device.device_rent_conf.owner.name &&
           user.email == device.device_rent_conf.owner.email) {
-          a.className = 'pointer btn btn-xs device-rent-status btn-outline-rent rowhover'
+          a.className = 'pointer btn btn-xs device-rent-release-status btn-outline-rent rowhover'
         } else {
-          a.className = 'pointer-not-allowed btn btn-xs device-rent-status black-font-color'
+          a.className = 'pointer-not-allowed btn btn-xs device-rent-release-status black-font-color'
         }
 
       } else {
-        a.className = 'pointer btn btn-xs device-rent-status' +
+        a.className = 'pointer btn btn-xs device-rent-release-status' +
           (stateClasses[device.state] || 'btn-default-outline')
       }
 
