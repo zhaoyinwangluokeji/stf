@@ -209,16 +209,16 @@ module.exports = function DeviceListCtrl(
         }
         , {
           name: 'owner_name'
-          , selected: true
+          , selected: false
         }
 
         , {
           name: 'ProjectCode'
-          , selected: true
+          , selected: false
         }
         , {
           name: 'ProjectName'
-          , selected: true
+          , selected: false
         }
         , {
           name: 'real_rent_time'
@@ -226,7 +226,7 @@ module.exports = function DeviceListCtrl(
         }
         , {
           name: 'rent_time'
-          , selected: true
+          , selected: false
         }
         , {
           name: 'start_time'
@@ -288,12 +288,12 @@ module.exports = function DeviceListCtrl(
       }
       , {
         name: 'owner_name'
-        , selected: true
+        , selected: false
       }
 
       , {
         name: 'ProjectCode'
-        , selected: true
+        , selected: false
       }
       , {
         name: 'ProjectName'
@@ -305,7 +305,7 @@ module.exports = function DeviceListCtrl(
       }
       , {
         name: 'rent_time'
-        , selected: true
+        , selected: false
       }
       , {
         name: 'start_time'

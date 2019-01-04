@@ -6,7 +6,7 @@ ul.devices-icon-view {
 }
 
 ul.devices-icon-view li {
-  width: 200px;
+  width: 205px;
   height: 210px;
   background: white;
   -webkit-border-radius: 8px;
@@ -124,18 +124,35 @@ ul.devices-icon-view li {
   font-size: 12px;
   font-family: 微软雅黑;
 }
+
 .phoneInfoList {
   width: 120px;
   float: right;
   margin: 0;
   padding: 0;
 }
-
+/*
 .phoneImg {
   width: 68px;
   height: 100px;
   background-position: left top;
   float: left;
+}*/
+
+.phoneImgDiv {
+  width: 65px;
+  height: 100px;
+  background-position: left top;
+  float: left;
+  padding-top: 5px
+}
+
+.phoneImg{ 
+  width:auto;
+  height:auto;
+  max-width:100%;
+  max-height:100%;
+  margin: 0px;
 }
 
 .phone {

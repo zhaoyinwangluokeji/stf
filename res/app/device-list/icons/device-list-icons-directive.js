@@ -40,14 +40,14 @@ module.exports = function DeviceListIconsDirective(
         //  var a = document.createElement('a')
         //  divBody.appendChild(a)
         var divImage = document.createElement('div')
-        divImage.className = "phoneImg"
-        var photo = document.createElement('div')
+        divImage.className = "phoneImgDiv"
+      //  var photo = document.createElement('div')
         //  photo.className = 'device-photo-small'
         var a = document.createElement('a')
         var img = document.createElement('img')
-        photo.appendChild(a)
+        img.className = "phoneImg"
+        divImage.appendChild(a)
         a.appendChild(img)
-        divImage.appendChild(photo)
         divBody.appendChild(divImage)
 
         var divInfo = document.createElement('div')
@@ -104,7 +104,8 @@ module.exports = function DeviceListIconsDirective(
 
         var manufacturer = divheader.firstChild.firstChild
         //  var a = divbody.firstChild
-        var a = divbody.firstChild.firstChild.firstChild
+        var a = divbody.firstChild.firstChild
+        
         var img = a.firstChild
 
         var divInfo = divbody.children[1]
@@ -122,7 +123,7 @@ module.exports = function DeviceListIconsDirective(
         // .device-photo-small
         if (img.getAttribute('src') !== device.enhancedImage120) {
           img.setAttribute('src', device.enhancedImage120)
-          img.className = "pointer"
+          img.classList.add("pointer")
         }
 
         manufacturer.nodeValue = device.manufacturer
