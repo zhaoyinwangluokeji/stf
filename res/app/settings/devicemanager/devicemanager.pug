@@ -53,7 +53,7 @@ div(ng-controller='DeviceManagerController')
                             input(ng-model='addWidth')
                     
             .col-md-8
-                input.floatleft.QueryHeight.form-control(type="text" ng-model="deviceFilter" ng-keyup="FreshDevice()")
+                input.floatleft.QueryHeight.form-control(type="text" ng-model="deviceFilter" ng-keyup="freshDevice()")
                 table.blackbackground.table.dataTable.ng-table(ng-table="tableParamsDevices")
                     thead
                         th.header.sortable(ng-repeat='(k,v) in tableParamsDevices.data[0] track by $index' ng-if="k!='userslist' && k!= 'id'")

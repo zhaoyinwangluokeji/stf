@@ -55,10 +55,13 @@ module.exports = function DeviceListCtrl(
     {
       name: 'RentRlease'
       , selected: true
-    }
-    ,
+    },
+     {
+      name: 'owner'
+      , selected: true
+    }, 
     {
-      name: 'rentProject'
+      name: 'manufacturer'
       , selected: true
     }
     , {
@@ -67,7 +70,7 @@ module.exports = function DeviceListCtrl(
     }
     , {
       name: 'name'
-      , selected: true
+      , selected: false
     }
     , {
       name: 'serial'
@@ -75,11 +78,11 @@ module.exports = function DeviceListCtrl(
     }
     , {
       name: 'operator'
-      , selected: true
+      , selected: false
     }
     , {
       name: 'releasedAt'
-      , selected: true
+      , selected: false
     }
     , {
       name: 'version'
@@ -91,11 +94,11 @@ module.exports = function DeviceListCtrl(
     }
     , {
       name: 'display'
-      , selected: false
-    }
-    , {
-      name: 'manufacturer'
-      , selected: false
+      , selected: true
+    },
+    {
+      name: 'rentProject'
+      , selected: true
     }
     , {
       name: 'sdk'
@@ -155,15 +158,11 @@ module.exports = function DeviceListCtrl(
     }
     , {
       name: 'provider'
-      , selected: true
+      , selected: false
     }
     , {
       name: 'notes'
-      , selected: true
-    }
-    , {
-      name: 'owner'
-      , selected: true
+      , selected: false
     }
   ]
 
