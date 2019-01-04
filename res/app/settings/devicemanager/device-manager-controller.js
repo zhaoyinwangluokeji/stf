@@ -214,6 +214,7 @@ module.exports = function DeviceManagerController($scope, $http, NgTableParams) 
 
     $scope.freshDevice = function () {
         try {
+            console.log("Fresh Devices By Filter: " + $scope.deviceFilter)
             $scope.tableParamsDevices.reload()
         } catch (e) {
             console.log("[Error] $scope.tableParamsDevices.reload()");

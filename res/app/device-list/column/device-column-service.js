@@ -38,19 +38,19 @@ module.exports = function DeviceColumnService(
       }
     })
     , rent: DeviceRentCell({
-      title: ('rent')
+      title: ('租用状态')
       , value: function (device) {
         return $filter('translate')(device.enhancedRentStateMsg)
       }
     }, DeviceRentService, $location, AppState, GroupService, socket)
     , RentRlease: DeviceRentReleaseCell({
-      title: ('RentRlease')
+      title: ('释放')
       , value: function (device) {
         return $filter('translate')(device.enhancedRentReleaseMsg)
       }
     }, DeviceRentService, $location, AppState, GroupService, socket)
     , rentProject: TextCell({
-      title: ('rentProject')
+      title: ('关联项目')
       , value: function (device) {
         return $filter('translate')(device.enhancedRentProject)
       }
@@ -172,7 +172,7 @@ module.exports = function DeviceColumnService(
       }
     })
     , display: TextCell({
-      title: gettext('Screen')
+      title: gettext('分辨率')
       , defaultOrder: 'desc'
       , value: function (device) {
         return device.display && device.display.width
@@ -202,7 +202,7 @@ module.exports = function DeviceColumnService(
       }
     })
     , manufacturer: TextCell({
-      title: gettext('Manufacturer')
+      title: gettext('品牌')
       , value: function (device) {
         return device.manufacturer || ''
       }
