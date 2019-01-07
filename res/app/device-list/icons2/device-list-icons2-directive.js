@@ -1,6 +1,6 @@
-var patchArray = require('./../util/patch-array')
+var patchArray = require('../util/patch-array')
 
-module.exports = function DeviceListIconsDirective(
+module.exports = function DeviceListicons2Directive(
   $filter
   , gettext
   , DeviceColumnService
@@ -227,7 +227,7 @@ module.exports = function DeviceListIconsDirective(
 
   return {
     restrict: 'E'
-    , template: require('./device-list-icons.pug')
+    , template: require('./device-list-icons2.pug')
     , scope: {
       tracker: '&tracker'
       , columns: '&columns'
@@ -267,18 +267,7 @@ module.exports = function DeviceListIconsDirective(
         var id
         console.log('click  ')
         var click_target = ""
-        /*
-        if (e.target.classList.contains('thumbnail')) {
-          id = e.target.id
-        } else if (e.target.classList.contains('device-status') ||
-          e.target.classList.contains('device-photo-small') ||
-          e.target.classList.contains('device-name')) {
-          id = e.target.parentNode.parentNode.id
-        } else if (e.target.parentNode.classList.contains('device-photo-small')) {
-          id = e.target.parentNode.parentNode.parentNode.id
-        } else if (e.target.classList.contains('devices-icon-rent-info')) {
-          id = e.target.parentNode.parentNode.id
-        }else */
+        
         if (e.target.classList.contains("devRentStatus")) {
           id = e.target.parentNode.parentNode.parentNode.id
           click_target = "rent"
@@ -732,21 +721,19 @@ module.exports = function DeviceListIconsDirective(
 
       // Triggers when the tracker sees a device for the first time.
       function addListener(device) {
-        if(device.deviceType == '现场测试'){
-          return
-        }
         console.log('addListener ')
-        var item = createItem(device)
-        filterItem(item, device)
-        insertItem(item, device)
+        if(device.deviceType == '现场测试'){
+          var item = createItem(device)
+          filterItem(item, device)
+          insertItem(item, device)
+        }
+        
       }
 
       // Triggers when the tracker notices that a device changed.
       function changeListener(device) {
-        if(device.deviceType == '现场测试'){
-          return
-        }
       //  console.log('device-list-changeListener ')
+      if(device.deviceType == '现场测试'){
         var id = calculateId(device)
         //  console.log('device-list-changeListener :' + id)
         var item = list.children[id]
@@ -770,13 +757,12 @@ module.exports = function DeviceListIconsDirective(
           //  console.log('device-list-changeListener 3')
         }
       }
+      }
 
       // Triggers when a device is removed entirely from the tracker.
       function removeListener(device) {
-        if(device.deviceType == '现场测试'){
-          return
-        }
         //console.log('removeListener  ')
+        if(device.deviceType == '现场测试'){
         var id = calculateId(device)
         var item = list.children[id]
 
@@ -785,6 +771,7 @@ module.exports = function DeviceListIconsDirective(
         }
 
         delete mapping[id]
+      }
       }
 
       tracker.on('add', addListener)
