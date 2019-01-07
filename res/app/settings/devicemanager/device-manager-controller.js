@@ -104,7 +104,7 @@ module.exports = function DeviceManagerController($scope, $http, NgTableParams) 
         return new Promise(function (resolve, reject) {
             $http.post('/auth/api/v1/mock/delete-device', data)
                 .success(function (response) {
-                    console.log("success:" + JSON.stringify(response))
+                //    console.log("success:" + JSON.stringify(response))
                     $scope.freshDevice()
                     return resolve(response.data)
                 })
@@ -163,7 +163,7 @@ module.exports = function DeviceManagerController($scope, $http, NgTableParams) 
         return new Promise(function (resolve, reject) {
             $http.post('/auth/api/v1/mock/add-device', data)
                 .success(function (response) {
-                    console.log("success:" + JSON.stringify(response))
+                //    console.log("success:" + JSON.stringify(response))
                     $scope.freshDevice()
                     return resolve(response.data)
                 })

@@ -29,7 +29,7 @@ module.exports = function UsersGroupService($http,
             return new Promise(function (resolve, reject) {
                 $http.post('/auth/api/v1/mock/newGroup', data)
                     .success(function (response) {
-                        console.log("success:" + JSON.stringify(response))
+                    //    console.log("success:" + JSON.stringify(response))
                         return resolve(response.data)
                     })
                     .error(function (response) {
@@ -47,7 +47,7 @@ module.exports = function UsersGroupService($http,
             return new Promise(function (resolve, reject) {
                 $http.post('/auth/api/v1/mock/ModifyGroup', data)
                     .success(function (response) {
-                        console.log("success:" + JSON.stringify(response))
+                    //    console.log("success:" + JSON.stringify(response))
                         return resolve(response.data)
                     })
                     .error(function (response) {
@@ -63,7 +63,7 @@ module.exports = function UsersGroupService($http,
             return new Promise(function (resolve, reject) {
                 $http.post('/auth/api/v1/mock/DeleteGroup', data)
                     .success(function (response) {
-                        console.log("success:" + JSON.stringify(response))
+                    //    console.log("success:" + JSON.stringify(response))
                         return resolve(response.data)
                     })
                     .error(function (response) {
@@ -80,7 +80,7 @@ module.exports = function UsersGroupService($http,
             return new Promise(function (resolve, reject) {
                 $http.post('/auth/api/v1/mock/AddUserToGroup', data)
                     .success(function (response) {
-                        console.log("success:" + JSON.stringify(response))
+                    //    console.log("success:" + JSON.stringify(response))
                         return resolve(response.data)
                     })
                     .error(function (response) {
@@ -98,7 +98,7 @@ module.exports = function UsersGroupService($http,
             return new Promise(function (resolve, reject) {
                 $http.post('/auth/api/v1/mock/RemoveUserOfGroup', data)
                     .success(function (response) {
-                        console.log("success:" + JSON.stringify(response))
+                    //    console.log("success:" + JSON.stringify(response))
                         return resolve(response.data)
                     })
                     .error(function (response) {

@@ -48,7 +48,7 @@ module.exports = function PermissionService($http,AppState) {
             return new Promise(function (resolve, reject) {
                 $http.post('/auth/api/v1/mock/RemovePermissionOfGroup', data)
                     .success(function (response) {
-                        console.log("success:" + JSON.stringify(response))
+                    //    console.log("success:" + JSON.stringify(response))
                         return resolve(response.data)
                     })
                     .error(function (response) {
