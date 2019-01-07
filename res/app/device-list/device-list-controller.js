@@ -74,7 +74,15 @@ module.exports = function DeviceListCtrl(
     }
     , {
       name: 'serial'
+      , selected: true
+    }
+    , {
+      name: 'createdAt'
       , selected: false
+    }
+    , {
+      name: 'deviceType'
+      , selected: true
     }
     , {
       name: 'operator'
@@ -102,6 +110,14 @@ module.exports = function DeviceListCtrl(
     }
     , {
       name: 'sdk'
+      , selected: false
+    }
+    , {
+      name: 'productNo'
+      , selected: false
+    }
+    , {
+      name: 'deviceLocation'
       , selected: false
     }
     , {
@@ -156,10 +172,10 @@ module.exports = function DeviceListCtrl(
       name: 'batteryTemp'
       , selected: false
     }
-    , {
-      name: 'provider'
-      , selected: false
-    }
+    // , {
+    //   name: 'provider'
+    //   , selected: false
+    // }
     , {
       name: 'notes'
       , selected: false

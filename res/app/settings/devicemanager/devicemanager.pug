@@ -51,6 +51,21 @@ div(ng-controller='DeviceManagerController')
                         td
                             div 屏幕宽
                             input(ng-model='addWidth')
+                    tr
+                        td
+                            div 测试中心设备编号
+                        td
+                            input(ng-model='addProductNo')
+                    tr
+                        td
+                            div 所在地
+                        td
+                            select.my-select(ng-model='addLocation',ng-options="al for al in locations")
+                    tr
+                        td
+                            div 标注
+                        td
+                            input(ng-model='addNotes')
                     
             .col-md-8
                 input.floatleft.QueryHeight.form-control(type="text" ng-model="deviceFilter" ng-keyup="freshDevice()")

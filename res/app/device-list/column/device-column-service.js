@@ -196,9 +196,21 @@ module.exports = function DeviceColumnService(
       }
     })
     , serial: TextCell({
-      title: gettext('Serial')
+      title: gettext('序列号')
       , value: function (device) {
         return device.serial || ''
+      }
+    })
+    , createdAt: TextCell({
+      title: gettext('创建时间')
+      , value: function (device) {
+        return device.createdAt || ''
+      }
+    })
+    , deviceType: TextCell({
+      title: gettext('设备类型')
+      , value: function (device) {
+        return device.deviceType || '远程测试'
       }
     })
     , manufacturer: TextCell({
@@ -215,6 +227,18 @@ module.exports = function DeviceColumnService(
       }
       , format: function (value) {
         return value || ''
+      }
+    })
+    , productNo: TextCell({
+      title: gettext('设备编号')
+      , value: function (device) {
+        return device.productNo || ''
+      }
+    })
+    , deviceLocation: TextCell({
+      title: gettext('所在地')
+      , value: function (device) {
+        return device.deviceLocation || ''
       }
     })
     , abi: TextCell({
@@ -303,12 +327,12 @@ module.exports = function DeviceColumnService(
         return value === null ? '' : value + '°C'
       }
     })
-    , provider: TextCell({
-      title: gettext('Location')
-      , value: function (device) {
-        return device.provider ? device.provider.name : ''
-      }
-    })
+    // , provider: TextCell({
+    //   title: gettext('Location')
+    //   , value: function (device) {
+    //     return device.provider ? device.provider.name : ''
+    //   }
+    // })
     , notes: DeviceNoteCell({
       title: gettext('Notes')
       , value: function (device) {
