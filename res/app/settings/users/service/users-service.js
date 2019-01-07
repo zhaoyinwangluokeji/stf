@@ -64,7 +64,7 @@ module.exports = function UsersService($http,$q,$location,AppState) {
             return new Promise(function (resolve, reject) {
                 $http.post('/auth/api/v1/mock/ResetUserPassword', data)
                     .success(function (response) {
-                        console.log("success:" + response.msg)
+                    //    console.log("success:" + response.msg)
                             return resolve(response)
                     })
                     .error(function (response) {

@@ -16,7 +16,7 @@
         span(ng-show='error.$server', translate) Server error. Check log output.,,
         span(ng-show='error.$server && error.message', translate) {{error.message}}
 
-      .form-group
+      .form-group(ng-if="login_mode=='name'")
         .input-group
           span.input-group-addon
             i.fa.fa-user
@@ -25,7 +25,7 @@
         .alert.alert-warning(ng-show='signin.username.$dirty && signin.username.$invalid')
           span(translate) Please enter your name
 
-      .form-group
+      .form-group(ng-if="login_mode=='email'")
         .input-group
           span.input-group-addon
             i.fa.fa-envelope

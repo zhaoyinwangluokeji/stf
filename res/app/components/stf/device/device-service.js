@@ -22,7 +22,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
         $http.post('/auth/api/v1/mock/get-all-device-groups', data)
           .success(function (response) {
             $scope.device_groups = response.data
-            console.log("success: " + JSON.stringify(response.data))
+          //  console.log("success: " + JSON.stringify(response.data))
             return resolve(response.data)
           })
           .error(function (response) {
@@ -38,7 +38,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
         $http.post('/auth/api/v1/mock/get-all-user-groups', data)
           .success(function (response) {
             $scope.user_groups = response.data
-            console.log("success: " + JSON.stringify(response.data))
+          //  console.log("success: " + JSON.stringify(response.data))
             return resolve(response.data)
           })
           .error(function (response) {
