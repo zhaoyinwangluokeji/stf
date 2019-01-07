@@ -14,6 +14,7 @@ module.exports = angular.module('device-list', [
   require('./devicerentlog').name,
   require('./empty').name,
   require('./icons').name,
+  require('./icons2').name,
   require('./stats').name,
   require('./customize').name,
   require('./search').name,

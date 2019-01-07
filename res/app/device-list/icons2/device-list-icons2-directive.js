@@ -1,6 +1,6 @@
-var patchArray = require('./../util/patch-array')
+var patchArray = require('../util/patch-array')
 
-module.exports = function DeviceListIconsDirective(
+module.exports = function DeviceListicons2Directive(
   $filter
   , gettext
   , DeviceColumnService
@@ -194,16 +194,16 @@ module.exports = function DeviceListIconsDirective(
           if (device.device_rent_conf.owner &&
             device.device_rent_conf.owner.email &&
             device.device_rent_conf.owner.name &&
-            user) {
+            user ) { 
             if ((user.name == device.device_rent_conf.owner.name &&
-              user.email == device.device_rent_conf.owner.email) || is_adminstrator) {
+              user.email == device.device_rent_conf.owner.email)|| is_adminstrator) {
               rent_button.classList.remove("devRentStatus")
               rent_button.classList.add("devRentStatus2")
               stop_rent_button.classList.remove("nonedisplay")
               stop_rent_button.classList.add("display")
               headerbtn.classList.remove("nonedisplay")
               headerbtn.classList.remove("display")
-              if (device.state === 'available' || device.state ==='Busy' || device.usable) {
+              if (device.state === 'available' || device.usable) {
                 a.href = '#!/control/' + device.serial
                 rent_buttona.href = '#!/control/' + device.serial
               }
@@ -226,7 +226,7 @@ module.exports = function DeviceListIconsDirective(
 
   return {
     restrict: 'E'
-    , template: require('./device-list-icons.pug')
+    , template: require('./device-list-icons2.pug')
     , scope: {
       tracker: '&tracker'
       , columns: '&columns'
@@ -266,18 +266,7 @@ module.exports = function DeviceListIconsDirective(
         var id
         console.log('click  ')
         var click_target = ""
-        /*
-        if (e.target.classList.contains('thumbnail')) {
-          id = e.target.id
-        } else if (e.target.classList.contains('device-status') ||
-          e.target.classList.contains('device-photo-small') ||
-          e.target.classList.contains('device-name')) {
-          id = e.target.parentNode.parentNode.id
-        } else if (e.target.parentNode.classList.contains('device-photo-small')) {
-          id = e.target.parentNode.parentNode.parentNode.id
-        } else if (e.target.classList.contains('devices-icon-rent-info')) {
-          id = e.target.parentNode.parentNode.id
-        }else */
+
         if (e.target.classList.contains("devRentStatus")) {
           id = e.target.parentNode.parentNode.parentNode.id
           click_target = "rent"
@@ -345,7 +334,8 @@ module.exports = function DeviceListIconsDirective(
                   e.preventDefault()
                 }
               }
-              else if (device.state === 'available') {
+              else //if (device.state === 'available') 
+              {
                 if (device.device_rent_conf &&
                   device.device_rent_conf.rent) {
                   if (device.device_rent_conf.owner &&
@@ -377,10 +367,6 @@ module.exports = function DeviceListIconsDirective(
                       console.log('err: ', err)
                     })
                 }
-              } else if (device.state == 'busy') {
-                alert("warnning: 设备繁忙不能租用!")
-              } else {
-                alert("warnning: 离线设备不能租用!")
               }
               //  else {
               //    e.preventDefault()
@@ -734,59 +720,57 @@ module.exports = function DeviceListIconsDirective(
 
       // Triggers when the tracker sees a device for the first time.
       function addListener(device) {
-        if (device.deviceType == '现场测试') {
-          return
-        }
         console.log('addListener ')
-        var item = createItem(device)
-        filterItem(item, device)
-        insertItem(item, device)
+        if (device.deviceType == '现场测试') {
+          var item = createItem(device)
+          filterItem(item, device)
+          insertItem(item, device)
+        }
+
       }
 
       // Triggers when the tracker notices that a device changed.
       function changeListener(device) {
-        if (device.deviceType == '现场测试') {
-          return
-        }
         //  console.log('device-list-changeListener ')
-        var id = calculateId(device)
-        //  console.log('device-list-changeListener :' + id)
-        var item = list.children[id]
+        if (device.deviceType == '现场测试') {
+          var id = calculateId(device)
+          //  console.log('device-list-changeListener :' + id)
+          var item = list.children[id]
 
-        if (item) {
-          //    console.log('device-list-changeListener 2')
-          // First, update columns
-          updateItem(item, device)
+          if (item) {
+            //    console.log('device-list-changeListener 2')
+            // First, update columns
+            updateItem(item, device)
 
-          // Maybe the item is not sorted correctly anymore?
-          var diff = compareItem(item, device)
-          if (diff !== 0) {
-            // Because the item is no longer sorted correctly, we must
-            // remove it so that it doesn't confuse the binary search.
-            // Then we will simply add it back.
-            list.removeChild(item)
-            insertItem(item, device)
+            // Maybe the item is not sorted correctly anymore?
+            var diff = compareItem(item, device)
+            if (diff !== 0) {
+              // Because the item is no longer sorted correctly, we must
+              // remove it so that it doesn't confuse the binary search.
+              // Then we will simply add it back.
+              list.removeChild(item)
+              insertItem(item, device)
+            }
           }
-        }
-        else {
-          //  console.log('device-list-changeListener 3')
+          else {
+            //  console.log('device-list-changeListener 3')
+          }
         }
       }
 
       // Triggers when a device is removed entirely from the tracker.
       function removeListener(device) {
-        if (device.deviceType == '现场测试') {
-          return
-        }
         //console.log('removeListener  ')
-        var id = calculateId(device)
-        var item = list.children[id]
+        if (device.deviceType == '现场测试') {
+          var id = calculateId(device)
+          var item = list.children[id]
 
-        if (item) {
-          list.removeChild(item)
+          if (item) {
+            list.removeChild(item)
+          }
+
+          delete mapping[id]
         }
-
-        delete mapping[id]
       }
 
       tracker.on('add', addListener)
