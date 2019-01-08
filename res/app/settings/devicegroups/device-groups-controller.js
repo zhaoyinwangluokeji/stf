@@ -18,7 +18,7 @@ module.exports = function DeviceGroupsController($scope, $http, NgTableParams) {
             $http.post('/auth/api/v1/mock/get-all-device-groups', data)
                 .success(function (response) {
                     $scope.device_groups = response.data
-                    console.log("success: " + JSON.stringify(response.data))
+                //    console.log("success: " + JSON.stringify(response.data))
                     return resolve(response.data)
                 })
                 .error(function (response) {
@@ -38,7 +38,7 @@ module.exports = function DeviceGroupsController($scope, $http, NgTableParams) {
         return new Promise(function (resolve, reject) {
             $http.post('/auth/api/v1/mock/delete-device-group', data)
                 .success(function (response) {
-                    console.log("success:" + JSON.stringify(response))
+                //    console.log("success:" + JSON.stringify(response))
                     return resolve(response.data)
                 })
                 .error(function (response) {
@@ -75,7 +75,7 @@ module.exports = function DeviceGroupsController($scope, $http, NgTableParams) {
         return new Promise(function (resolve, reject) {
             $http.post('/auth/api/v1/mock/modify-device-group', data)
                 .success(function (response) {
-                    console.log("success:" + JSON.stringify(response))
+                //    console.log("success:" + JSON.stringify(response))
                     return resolve(response.data)
                 })
                 .error(function (response) {
@@ -334,7 +334,7 @@ module.exports = function DeviceGroupsController($scope, $http, NgTableParams) {
         return new Promise(function (resolve, reject) {
             $http.post('/auth/api/v1/mock/add-user-group-to-device-group', data)
                 .success(function (response) {
-                    console.log("success:" + JSON.stringify(response))
+                //    console.log("success:" + JSON.stringify(response))
                     return resolve(response.data)
                 })
                 .error(function (response) {
@@ -373,7 +373,7 @@ module.exports = function DeviceGroupsController($scope, $http, NgTableParams) {
         return new Promise(function (resolve, reject) {
             $http.post('/auth/api/v1/mock/remove-user-group-from-device-group', data)
                 .success(function (response) {
-                    console.log("success:" + JSON.stringify(response))
+                //    console.log("success:" + JSON.stringify(response))
                     return resolve(response.data)
                 })
                 .error(function (response) {
@@ -527,7 +527,7 @@ module.exports = function DeviceGroupsController($scope, $http, NgTableParams) {
         return new Promise(function (resolve, reject) {
             $http.post('/auth/api/v1/mock/add-devices-to-device-group', data)
                 .success(function (response) {
-                    console.log("success:" + JSON.stringify(response))
+                //    console.log("success:" + JSON.stringify(response))
                     return resolve(response.data)
                 })
                 .error(function (response) {
@@ -568,7 +568,7 @@ module.exports = function DeviceGroupsController($scope, $http, NgTableParams) {
         return new Promise(function (resolve, reject) {
             $http.post('/auth/api/v1/mock/remove-devices-from-device-group', data)
                 .success(function (response) {
-                    console.log("success:" + JSON.stringify(response))
+                //    console.log("success:" + JSON.stringify(response))
                     return resolve(response.data)
                 })
                 .error(function (response) {

@@ -38,19 +38,19 @@ module.exports = function DeviceColumnService(
       }
     })
     , rent: DeviceRentCell({
-      title: ('rent')
+      title: ('租用状态')
       , value: function (device) {
         return $filter('translate')(device.enhancedRentStateMsg)
       }
     }, DeviceRentService, $location, AppState, GroupService, socket)
     , RentRlease: DeviceRentReleaseCell({
-      title: ('RentRlease')
+      title: ('释放')
       , value: function (device) {
         return $filter('translate')(device.enhancedRentReleaseMsg)
       }
     }, DeviceRentService, $location, AppState, GroupService, socket)
     , rentProject: TextCell({
-      title: ('rentProject')
+      title: ('关联项目')
       , value: function (device) {
         return $filter('translate')(device.enhancedRentProject)
       }
@@ -172,7 +172,7 @@ module.exports = function DeviceColumnService(
       }
     })
     , display: TextCell({
-      title: gettext('Screen')
+      title: gettext('分辨率')
       , defaultOrder: 'desc'
       , value: function (device) {
         return device.display && device.display.width
@@ -196,13 +196,25 @@ module.exports = function DeviceColumnService(
       }
     })
     , serial: TextCell({
-      title: gettext('Serial')
+      title: gettext('序列号')
       , value: function (device) {
         return device.serial || ''
       }
     })
+    , createdAt: TextCell({
+      title: gettext('创建时间')
+      , value: function (device) {
+        return device.createdAt || ''
+      }
+    })
+    , deviceType: DeviceTypeCell({
+      title: gettext('设备类型')
+      , value: function (device) {
+        return device.deviceType || '远程测试'
+      }
+    })
     , manufacturer: TextCell({
-      title: gettext('Manufacturer')
+      title: gettext('品牌')
       , value: function (device) {
         return device.manufacturer || ''
       }
@@ -215,6 +227,18 @@ module.exports = function DeviceColumnService(
       }
       , format: function (value) {
         return value || ''
+      }
+    })
+    , productNo: TextCell({
+      title: gettext('设备编号')
+      , value: function (device) {
+        return device.productNo || ''
+      }
+    })
+    , deviceLocation: TextCell({
+      title: gettext('所在地')
+      , value: function (device) {
+        return device.deviceLocation || ''
       }
     })
     , abi: TextCell({
@@ -303,12 +327,12 @@ module.exports = function DeviceColumnService(
         return value === null ? '' : value + '°C'
       }
     })
-    , provider: TextCell({
-      title: gettext('Location')
-      , value: function (device) {
-        return device.provider ? device.provider.name : ''
-      }
-    })
+    // , provider: TextCell({
+    //   title: gettext('Location')
+    //   , value: function (device) {
+    //     return device.provider ? device.provider.name : ''
+    //   }
+    // })
     , notes: DeviceNoteCell({
       title: gettext('Notes')
       , value: function (device) {
@@ -371,6 +395,34 @@ function TextCell(options) {
     , update: function (td, item) {
       var t = td.firstChild
       t.nodeValue = options.value(item)
+      return td
+    }
+    , compare: function (a, b) {
+      return compareIgnoreCase(options.value(a), options.value(b))
+    }
+    , filter: function (item, filter) {
+      return filterIgnoreCase(options.value(item), filter.query)
+    }
+  })
+}
+
+function DeviceTypeCell(options) {
+  return _.defaults(options, {
+    title: options.title
+    , defaultOrder: 'asc'
+    , build: function () {
+      var td = document.createElement('td')
+      td.appendChild(document.createTextNode(''))
+      return td
+    }
+    , update: function (td, device) {
+      var t = td.firstChild
+      if (device.deviceType && device.deviceType == "现场测试") {
+        td.className = 'WheatColor'
+      } else {
+        td.className = 'Gainsboro'
+      }
+      t.nodeValue = options.value(device)
       return td
     }
     , compare: function (a, b) {
@@ -649,41 +701,72 @@ function DeviceRentReleaseCell(options, DeviceRentService, $location, AppState, 
       var a = td.firstChild
       var t = a.firstChild
 
-      a.className = 'btn btn-xs device-rent-release ' +
-        (stateClasses[device.state] || 'btn-default-outline')
+      user = AppState.user
+      var para = arguments
+
+      if (device.device_rent_conf &&
+        device.device_rent_conf.rent &&
+        device.device_rent_conf.owner &&
+        device.device_rent_conf.owner.email &&
+        device.device_rent_conf.owner.name &&
+        user) {
+        if (user.name == device.device_rent_conf.owner.name &&
+          user.email == device.device_rent_conf.owner.email) {
+          a.className = 'pointer btn btn-xs device-rent-release-status btn-outline-rent rowhover'
+        } else {
+          a.className = 'pointer-not-allowed btn btn-xs device-rent-release-status black-font-color'
+        }
+
+      } else {
+        a.className = 'pointer btn btn-xs device-rent-release-status' +
+          (stateClasses[device.state] || 'btn-default-outline')
+      }
 
       a.onclick = function (e) {
         user = AppState.user
         var para = arguments
-
-        if (device.device_rent_conf &&
-          device.device_rent_conf.rent) {
-          if (device.device_rent_conf.owner &&
-            device.device_rent_conf.owner.email &&
-            device.device_rent_conf.owner.name &&
-            user) {
-            if (user.name == device.device_rent_conf.owner.name &&
-              user.email == device.device_rent_conf.owner.email) {
-              if (confirm('你确定需要停止租用吗？')) {
-                GroupService.kick(device, true)
-                DeviceRentService.free_rent(device, socket)
-              }
-            }
-          }
-        }
-        e.preventDefault()
+        /*
+                if (device.device_rent_conf &&
+                  device.device_rent_conf.rent) {
+                  if (device.device_rent_conf.owner &&
+                    device.device_rent_conf.owner.email &&
+                    device.device_rent_conf.owner.name &&
+                    user) {
+                    if (user.name == device.device_rent_conf.owner.name &&
+                      user.email == device.device_rent_conf.owner.email) {
+                      if (confirm('你确定需要停止租用吗？')) {
+                        GroupService.kick(device, true)
+                        DeviceRentService.free_rent(device, socket)
+                        e.preventDefault()
+                      }
+                    }
+                  }
+                }
+                else {
+                  return Promise.all([device].map(function (device) {
+                    e.preventDefault()
+                    return DeviceRentService.open(device)
+                  })).then(function (result) {
+                    if (result[0].result == true) {
+                      $location.path('/control/' + result[0].device.serial);
+                    }
+                  })
+                    .catch(function (err) {
+                      console.log('err: ', err)
+                    })
+                }
+                */
+        //  e.preventDefault()
       };
 
       t.nodeValue = options.value(device)
       return td
     }
+    , compare: function (a, b) {
+      return options.value(a) - options.value(b)
+    }
     , filter: function (device, filter) {
-      if (device.enhancedRentReleaseMsg) {
-        return device.enhancedRentReleaseMsg.indexOf(filter.query) != -1
-      } else {
-        return false
-      }
-
+      return filterIgnoreCase(options.value(device), filter.query)
     }
   })
 }
@@ -714,62 +797,16 @@ function DeviceRentCell(options, DeviceRentService, $location, AppState, GroupSe
     , update: function (td, device) {
       var a = td.firstChild
       var t = a.firstChild
+      if (device.device_rent_conf && device.device_rent_conf.rent && !stateClasses[device.state]) {
+        a.className = 'btn btn-xs device-rent-status btn-outline-rent rowhover '
 
-      a.className = 'btn btn-xs device-rent-status ' +
-        (stateClasses[device.state] || 'btn-default-outline')
+      } else {
+        a.className = 'btn btn-xs device-rent-status ' +
+          (stateClasses[device.state] || 'btn-default-outline')
+      }
 
       if (device.usable && (device.state == 'available' || device.state == 'using')) {
         a.href = '#!/control/' + device.serial
-        /*
-         a.onclick = function(e) {
-           user = AppState.user
-           var para = arguments
-           if(device.using){
-             if(device.owner && 
-               device.owner.email && 
-               device.owner.name &&
-               user &&
-               user.name == device.owner.name &&
-               user.email == device.owner.email) {
-                 if(confirm('设备处于使用状态，你确定需要停止租用吗？')){
-                   GroupService.kick(device,true)
-                   DeviceRentService.free_rent(device,socket)
-                     
-                 }
-               }
-               
-           }
-           else  if(device.state === 'available') {
-             if(device.device_rent_conf &&
-               device.device_rent_conf.rent) {
-                 if(device.device_rent_conf.owner && 
-                   device.device_rent_conf.owner.email && 
-                   device.device_rent_conf.owner.name &&
-                   user ){
-                     if(user.name == device.device_rent_conf.owner.name &&
-                       user.email == device.device_rent_conf.owner.email) {
-                       }
-                       else{
-                         alert("设备已经被"+device.device_rent_conf.owner.name + " "+device.device_rent_conf.owner.email+" 租用")
-                       }
-                   }
-               }else{
-                 return Promise.all([device].map(function(device) {
-                   return DeviceRentService.open(device) 
-                 })).then(function(result){
-                   if(result[0].result==true){   
-                     $location.path('/control/' + result[0].device.serial);
-                   }
-                 })
-                 .catch(function(err) {
-                   console.log('err: ', err)
-                 })
-               }
-           }
-           
-           e.preventDefault()  
-         };
-         */
       }
       else {
         a.removeAttribute('href')
@@ -779,25 +816,11 @@ function DeviceRentCell(options, DeviceRentService, $location, AppState, GroupSe
 
       return td
     }
-    , compare: (function () {
-      var order = {
-        using: 10
-        , automation: 15
-        , available: 20
-        , busy: 30
-        , ready: 40
-        , preparing: 50
-        , unauthorized: 60
-        , offline: 70
-        , present: 80
-        , absent: 90
-      }
-      return function (deviceA, deviceB) {
-        return order[deviceA.state] - order[deviceB.state]
-      }
-    })()
+    , compare: function (a, b) {
+      return compareIgnoreCase(options.value(a), options.value(b))
+   }
     , filter: function (device, filter) {
-      return device.state === filter.query
+      return filterIgnoreCase(options.value(device), filter.query)
     }
   })
 }
@@ -841,7 +864,7 @@ function DeviceRentProjectCell(options) {
       return td
     }
     , compare: function (a, b) {
-      return options.value(a).apps.length - options.value(b).apps.length
+       return compareIgnoreCase(options.value(a), options.value(b))
     }
     , filter: function (device, filter) {
       return options.value(device).apps.some(function (app) {
@@ -881,7 +904,7 @@ function DeviceStatusCell(options) {
       a.className = 'btn btn-xs device-status ' +
         (stateClasses[device.state] || 'btn-default-outline')
 
-      if (device.usable) {
+      if (device.usable || device.state === 'Busy' || device.state === 'available') {
         a.href = '#!/control/' + device.serial
       }
       else {
@@ -890,25 +913,12 @@ function DeviceStatusCell(options) {
       t.nodeValue = options.value(device)
       return td
     }
-    , compare: (function () {
-      var order = {
-        using: 10
-        , automation: 15
-        , available: 20
-        , busy: 30
-        , ready: 40
-        , preparing: 50
-        , unauthorized: 60
-        , offline: 70
-        , present: 80
-        , absent: 90
-      }
-      return function (deviceA, deviceB) {
-        return order[deviceA.state] - order[deviceB.state]
-      }
-    })()
+    , compare: function (a, b) {
+      return compareIgnoreCase(options.value(a), options.value(b))
+    }
     , filter: function (device, filter) {
-      return device.state === filter.query
+      return filterIgnoreCase(options.value(device), filter.query)
+
     }
   })
 }

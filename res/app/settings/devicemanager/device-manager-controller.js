@@ -12,6 +12,9 @@ module.exports = function DeviceManagerController($scope, $http, NgTableParams) 
     $scope.addWidth = ""
     $scope.curDevices = []
     $scope.isAndroid = true
+    $scope.addLocation = "科兴"
+    $scope.addProductNo = ""
+    $scope.addNotes = ""
 
     $scope.TypeList = ["Android","iOS"]
     $scope.ManufactureList = [
@@ -24,6 +27,15 @@ module.exports = function DeviceManagerController($scope, $http, NgTableParams) 
         "VIVO",
         "MEIZU"
     ]
+
+    $scope.locations = [
+        "科兴",
+        "研祥",
+        "杭州",
+        "研发",
+        "成都"
+    ]
+
     $scope.AppleModels = [
         "iPhone 3G",
         "iPhone 3GS",
@@ -92,7 +104,7 @@ module.exports = function DeviceManagerController($scope, $http, NgTableParams) 
         return new Promise(function (resolve, reject) {
             $http.post('/auth/api/v1/mock/delete-device', data)
                 .success(function (response) {
-                    console.log("success:" + JSON.stringify(response))
+                //    console.log("success:" + JSON.stringify(response))
                     $scope.freshDevice()
                     return resolve(response.data)
                 })
@@ -130,6 +142,10 @@ module.exports = function DeviceManagerController($scope, $http, NgTableParams) 
             alert("屏幕宽不能为空且只能为数字！")
             return
         }
+        if($scope.addProductNo.trim() == "" || isNaN($scope.addHeight)){
+            alert("测试中心设备编号不能为空！")
+            return
+        }
         var data ={
             serial: $scope.addSerial,
             platform: $scope.addPlatform,
@@ -139,12 +155,15 @@ module.exports = function DeviceManagerController($scope, $http, NgTableParams) 
             display: {
                 height: $scope.addHeight,
                 width: $scope.addWidth
-            }
+            },
+            productNo: $scope.addProductNo,
+            deviceLocation: $scope.addLocation,
+            notes: $scope.addNotes
         }
         return new Promise(function (resolve, reject) {
             $http.post('/auth/api/v1/mock/add-device', data)
                 .success(function (response) {
-                    console.log("success:" + JSON.stringify(response))
+                //    console.log("success:" + JSON.stringify(response))
                     $scope.freshDevice()
                     return resolve(response.data)
                 })
@@ -214,6 +233,7 @@ module.exports = function DeviceManagerController($scope, $http, NgTableParams) 
 
     $scope.freshDevice = function () {
         try {
+            console.log("Fresh Devices By Filter: " + $scope.deviceFilter)
             $scope.tableParamsDevices.reload()
         } catch (e) {
             console.log("[Error] $scope.tableParamsDevices.reload()");

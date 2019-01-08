@@ -51,40 +51,53 @@ module.exports = function DeviceListDetailsDirective(
       }
 
       function checkDeviceStatus(e) {
+        var id = e.target.parentNode.parentNode.id
+        var device = mapping[id]
+        user = AppState.user
+        var is_adminstrtor = AppState.is_adminstrtor
         if (e.target.classList.contains('device-rent-status')) {
-          var id = e.target.parentNode.parentNode.id
-          var device = mapping[id]
-          user = AppState.user
+
           var para = arguments
+          if (device.device_rent_conf &&
+            device.device_rent_conf.rent) {
+          }
+          else {
+            if (device.state === 'available' || (device.deviceType && device.deviceType == "现场测试")) {
+              return Promise.all([device].map(function (device) {
+                e.preventDefault()
+                return DeviceRentService.open(device)
+              })).then(function (result) {
+                if (result[0].result == true) {
+                  $location.path('/control/' + result[0].device.serial);
+                }
+              })
+                .catch(function (err) {
+                  console.log('err: ', err)
+                })
+            }
+          }
+
+        } else if (e.target.classList.contains('device-rent-release-status')) {
           if (device.device_rent_conf &&
             device.device_rent_conf.rent) {
             if (device.device_rent_conf.owner &&
               device.device_rent_conf.owner.email &&
               device.device_rent_conf.owner.name &&
               user) {
-              if (user.name == device.device_rent_conf.owner.name &&
-                user.email == device.device_rent_conf.owner.email) {
+              if ((user.name == device.device_rent_conf.owner.name &&
+                user.email == device.device_rent_conf.owner.email) || is_adminstrtor) {
+                if (confirm('你确定需要停止租用吗？')) {
+                  GroupService.kick(device, true)
+                  DeviceRentService.free_rent(device, socket)
+                  e.preventDefault()
+                }
               }
               else {
                 alert("设备已经被" + device.device_rent_conf.owner.name + " " + device.device_rent_conf.owner.email + " 租用")
               }
             }
-          } else {
-            return Promise.all([device].map(function (device) {
-              e.preventDefault()
-              return DeviceRentService.open(device)
-            })).then(function (result) {
-              if (result[0].result == true) {
-                $location.path('/control/' + result[0].device.serial);
-              }
-            })
-              .catch(function (err) {
-                console.log('err: ', err)
-              })
           }
-
         }
-
       }
 
       function checkDeviceSmallImage(e) {
@@ -347,10 +360,18 @@ module.exports = function DeviceListDetailsDirective(
           // Find the first difference
           for (var i = 0, l = activeSorting.length; i < l; ++i) {
             var sort = activeSorting[i]
-            diff = scope.columnDefinitions[sort.name].compare(deviceA, deviceB)
-            if (diff !== 0) {
-              diff *= mapping[sort.order]
-              break
+            try {
+              var compare = scope.columnDefinitions[sort.name].compare
+              if (compare) {
+                diff = compare(deviceA, deviceB)
+                if (diff !== 0) {
+                  diff *= mapping[sort.order]
+                  break
+                }
+              }
+
+            } catch (e) {
+              console.log("Error:Fail to compare sort.name:" + sort.name)
             }
           }
 
@@ -367,9 +388,9 @@ module.exports = function DeviceListDetailsDirective(
 
         tr.id = id
 
-        if (!device.usable) {
-          tr.classList.add('device-not-usable')
-        }
+        /*  if (!device.usable) {
+            tr.classList.add('device-not-usable')
+          }*/
 
         for (var i = 0, l = activeColumns.length; i < l; ++i) {
           td = scope.columnDefinitions[activeColumns[i]].build()
@@ -420,13 +441,13 @@ module.exports = function DeviceListDetailsDirective(
         var id = calculateId(device)
 
         tr.id = id
-
-        if (!device.usable) {
-          tr.classList.add('device-not-usable')
-        }
-        else {
-          tr.classList.remove('device-not-usable')
-        }
+        /*
+                if (!device.usable) {
+                  tr.classList.add('device-not-usable')
+                }
+                else {
+                  tr.classList.remove('device-not-usable')
+                }*/
 
         for (var i = 0, l = activeColumns.length; i < l; ++i) {
           scope.columnDefinitions[activeColumns[i]].update(tr.cells[i], device)
@@ -534,7 +555,7 @@ module.exports = function DeviceListDetailsDirective(
 
       // Triggers when the tracker sees a device for the first time.
       function addListener(device) {
-        console.log("device list add Listiner: " + device.serial)
+        // console.log("device list add Listiner: " + device.serial)
         var row = createRow(device)
         filterRow(row, device)
         insertRow(row, device)
@@ -542,7 +563,7 @@ module.exports = function DeviceListDetailsDirective(
 
       // Triggers when the tracker notices that a device changed.
       function changeListener(device) {
-        console.log('details-list-changeListener')
+        // console.log('details-list-changeListener')
         var id = calculateId(device)
         var tr = tbody.children[id]
 
@@ -584,11 +605,11 @@ module.exports = function DeviceListDetailsDirective(
       tracker.devices.forEach(element => {
         var isAdmin = tracker.getIfAdmin()
         var list = tracker.getUsableList()
-        if(isAdmin || list.indexOf(element.serial) > -1){
-          console.log("device:" + element.serial + " is in list:  " + JSON.stringify(list))
+        if (isAdmin || list.indexOf(element.serial) > -1) {
+          // console.log("device:" + element.serial + " is in list:  " + JSON.stringify(list))
           addListener(element)
-        } else{
-          console.log("device:" + element.serial + " is not in list:  " + JSON.stringify(list))
+        } else {
+          // console.log("device:" + element.serial + " is not in list:  " + JSON.stringify(list))
         }
       });
       // tracker.devices.forEach(addListener)

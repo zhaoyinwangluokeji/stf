@@ -55,10 +55,13 @@ module.exports = function DeviceListCtrl(
     {
       name: 'RentRlease'
       , selected: true
-    }
-    ,
+    },
+     {
+      name: 'owner'
+      , selected: true
+    }, 
     {
-      name: 'rentProject'
+      name: 'manufacturer'
       , selected: true
     }
     , {
@@ -67,19 +70,27 @@ module.exports = function DeviceListCtrl(
     }
     , {
       name: 'name'
-      , selected: true
-    }
-    , {
-      name: 'serial'
       , selected: false
     }
     , {
-      name: 'operator'
+      name: 'serial'
       , selected: true
     }
     , {
-      name: 'releasedAt'
+      name: 'createdAt'
+      , selected: false
+    }
+    , {
+      name: 'deviceType'
       , selected: true
+    }
+    , {
+      name: 'operator'
+      , selected: false
+    }
+    , {
+      name: 'releasedAt'
+      , selected: false
     }
     , {
       name: 'version'
@@ -91,14 +102,22 @@ module.exports = function DeviceListCtrl(
     }
     , {
       name: 'display'
-      , selected: false
-    }
-    , {
-      name: 'manufacturer'
-      , selected: false
+      , selected: true
+    },
+    {
+      name: 'rentProject'
+      , selected: true
     }
     , {
       name: 'sdk'
+      , selected: false
+    }
+    , {
+      name: 'productNo'
+      , selected: false
+    }
+    , {
+      name: 'deviceLocation'
       , selected: false
     }
     , {
@@ -153,17 +172,13 @@ module.exports = function DeviceListCtrl(
       name: 'batteryTemp'
       , selected: false
     }
-    , {
-      name: 'provider'
-      , selected: true
-    }
+    // , {
+    //   name: 'provider'
+    //   , selected: false
+    // }
     , {
       name: 'notes'
-      , selected: true
-    }
-    , {
-      name: 'owner'
-      , selected: true
+      , selected: false
     }
   ]
 
@@ -209,16 +224,16 @@ module.exports = function DeviceListCtrl(
         }
         , {
           name: 'owner_name'
-          , selected: true
+          , selected: false
         }
 
         , {
           name: 'ProjectCode'
-          , selected: true
+          , selected: false
         }
         , {
           name: 'ProjectName'
-          , selected: true
+          , selected: false
         }
         , {
           name: 'real_rent_time'
@@ -226,7 +241,7 @@ module.exports = function DeviceListCtrl(
         }
         , {
           name: 'rent_time'
-          , selected: true
+          , selected: false
         }
         , {
           name: 'start_time'
@@ -288,12 +303,12 @@ module.exports = function DeviceListCtrl(
       }
       , {
         name: 'owner_name'
-        , selected: true
+        , selected: false
       }
 
       , {
         name: 'ProjectCode'
-        , selected: true
+        , selected: false
       }
       , {
         name: 'ProjectName'
@@ -305,7 +320,7 @@ module.exports = function DeviceListCtrl(
       }
       , {
         name: 'rent_time'
-        , selected: true
+        , selected: false
       }
       , {
         name: 'start_time'
@@ -437,6 +452,7 @@ module.exports = function DeviceListCtrl(
   $scope.applyFilter = function (query) {
     console.log('applyFilter : ' + query)
     $scope.filter = QueryParser.parse(query)
+    console.log('applyFilter result : ' + JSON.stringify($scope.filter))
   }
 
 

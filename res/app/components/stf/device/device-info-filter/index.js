@@ -20,10 +20,21 @@ module.exports = angular.module('stf.device-status', [])
     return function (device) {
       var text = device.state;
 
+       
+      
       if (!device.device_rent_conf ||
         !device.device_rent_conf.rent ||
         device.device_rent_conf.rent == false) {
-        return ('可租用');
+          if(device.deviceType && device.deviceType=="现场测试"){
+            return ('可租用');
+          }else{
+            if(device.state=="available"){
+              return ('可租用');
+            }else{
+              return ('离线不可用');
+            }
+          }
+        
       }
       else if (device.device_rent_conf && device.device_rent_conf.rent) {
         var now = Date.now();

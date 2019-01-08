@@ -51,7 +51,7 @@ module.exports = function EnhanceDeviceServiceFactory($filter, AppState) {
     device.enhancedRentReleaseMsg = $filter('RentReleaseMsg')(device)
     
     device.enhancedRentProject = (function(){
-      if(device && device.device_rent_conf && device.device_rent_conf.project) {
+      if(device && device.device_rent_conf && device.device_rent_conf.rent && device.device_rent_conf.project) {
         return device.device_rent_conf.project.ProjectName+':'+device.device_rent_conf.project.ProjectCode;
       }
       return "-----";

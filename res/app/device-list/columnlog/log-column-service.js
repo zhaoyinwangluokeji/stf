@@ -32,19 +32,19 @@ module.exports = function LogColumnService(
   // Definitions for all possible values.
   return {
     manufacturer: TextCell({
-      title: gettext('manufacturer')
+      title: gettext('品牌')
       , value: function (log_row) {
         return $filter('translate')(log_row.manufacturer)
       }
     })
     , CurrentTime: TextCell({
-      title: gettext('CurrentTime')
+      title: gettext('租用时间')
       , value: function (log_row) {
         return $filter('translate')(log_row.CurrentTime)
       }
     })
     , serial: LinkCell({
-      title: gettext('serial')
+      title: gettext('序列号')
       , target: '_blank'
       , value: function (log_row) {
         return log_row.serial
@@ -54,38 +54,38 @@ module.exports = function LogColumnService(
       }
     })
     , model: TextCell({
-      title: gettext('model')
+      title: gettext('型号')
       , value: function (log_row) {
         return $filter('translate')(log_row.model)
       }
     })
     , platform: TextCell({
-      title: gettext('platform')
+      title: gettext('操作系统')
       , value: function (log_row) {
         return $filter('translate')(log_row.platform)
       }
     })
     , version: TextCell({
-      title: gettext('version')
+      title: gettext('版本')
       , value: function (log_row) {
         return $filter('translate')(log_row.version)
       }
     })
 
     , owner_email: TextCell({
-      title: gettext('owner_email')
+      title: gettext('用户email')
       , value: function (log_row) {
         return $filter('translate')(log_row.owner_email)
       }
     })
     , owner_group: TextCell({
-      title: gettext('owner_group')
+      title: gettext('用户组')
       , value: function (log_row) {
         return $filter('translate')(log_row.owner_group)
       }
     })
     , owner_name: TextCell({
-      title: gettext('owner_name')
+      title: gettext('用户名')
       , value: function (log_row) {
         return $filter('translate')(log_row.owner_name)
       }
@@ -93,53 +93,53 @@ module.exports = function LogColumnService(
 
 
     , ProjectCode: TextCell({
-      title: gettext('ProjectCode')
+      title: gettext('项目编号')
       , value: function (log_row) {
         return $filter('translate')(log_row.ProjectCode)
       }
     })
     , ProjectName: TextCell({
-      title: gettext('ProjectName')
+      title: gettext('项目名')
       , value: function (log_row) {
         return $filter('translate')(log_row.ProjectName)
       }
     })
 
     , real_rent_time: TextCell({
-      title: gettext('real_rent_time')
+      title: gettext('使用时间')
       , value: function (log_row) {
         return $filter('translate')(log_row.real_rent_time)
       }
     })
     , rent_time: TextCell({
-      title: gettext('rent_time')
+      title: gettext('申请时长')
       , value: function (log_row) {
         return $filter('translate')(log_row.rent_time)
       }
     })
-    , start_time: NumberCell({
-      title: gettext('start_time')
-      , value: function (log_row) {
-        return $filter('translate')(log_row.start_time)
-      }
-      , format: function (value) {
-        return value === null ? '' : value
-      }
-    })
+    // , start_time: NumberCell({
+    //   title: gettext('开始时间')
+    //   , value: function (log_row) {
+    //     return $filter('translate')(log_row.start_time)
+    //   }
+    //   , format: function (value) {
+    //     return value === null ? '' : value
+    //   }
+    // })
     , test_centerCode: TextCell({
-      title: gettext('test_centerCode')
+      title: gettext('资产编号')
       , value: function (log_row) {
         return $filter('translate')(log_row.test_centerCode)
       }
     })
     , device_type: TextCell({
-      title: gettext('device_type')
+      title: gettext('设备类型')
       , value: function (log_row) {
         return $filter('translate')(log_row.device_type)
       }
     })
     , mac_address: TextCell({
-      title: gettext('mac_address')
+      title: gettext('mac地址')
       , value: function (log_row) {
         return $filter('translate')(log_row.mac_address)
       }

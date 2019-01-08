@@ -7,43 +7,43 @@ module.exports =
 
     var sharedTabs = [
       {
-        title: gettext('Screenshots'),
+        title: gettext('截图'),
         icon: 'fa-camera color-skyblue',
         templateUrl: 'control-panes/screenshots/screenshots.pug',
         filters: ['native', 'web']
       },
       {
-        title: gettext('Crawler'),
+        title: gettext('深度遍历'),
         icon: 'fa-info color-orange',
         templateUrl: 'control-panes/crawler/crawler.pug',
         filters: ['native', 'web']
       },
       {
-        title: gettext('Ui Viewer'),
+        title: gettext('元素定位工具'),
         icon: 'fa-camera color-skyblue color-blue',
         templateUrl: 'control-panes/uiautomatorviewer/uiautomatorviewer.pug',
         filters: ['native', 'web']
       },
       {
-        title: gettext('Automation'),
+        title: gettext('设置'),
         icon: 'fa-road color-lila',
         templateUrl: 'control-panes/automation/automation.pug',
         filters: ['native', 'web']
       },
       {
-        title: gettext('Advanced'),
+        title: gettext('高级'),
         icon: 'fa-bolt color-brown',
         templateUrl: 'control-panes/advanced/advanced.pug',
         filters: ['native', 'web']
       },
       {
-        title: gettext('File Explorer'),
+        title: gettext('文件浏览'),
         icon: 'fa-folder-open color-blue',
         templateUrl: 'control-panes/explorer/explorer.pug',
         filters: ['native', 'web']
       },
       {
-        title: gettext('Info'),
+        title: gettext('信息统计'),
         icon: 'fa-info color-orange',
         templateUrl: 'control-panes/info/info.pug',
         filters: ['native', 'web']

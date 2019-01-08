@@ -1,13 +1,21 @@
 module.exports = function SignInCtrl($scope, $http) {
 
   $scope.error = null
+  $scope.login_mode = "name"
 
   $scope.submit = function () {
     var data = {
       name: $scope.signin.username.$modelValue
+      , email: ""
+      , password: $scope.signin.password.$modelValue
+    }
+    /*
+var data = {
+      name: $scope.signin.username.$modelValue
       , email: $scope.signin.email.$modelValue
       , password: $scope.signin.password.$modelValue
     }
+    */
     $scope.invalid = false
     $http.post('/auth/api/v1/mock', data)
       .success(function (response) {

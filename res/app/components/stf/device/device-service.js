@@ -22,7 +22,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
         $http.post('/auth/api/v1/mock/get-all-device-groups', data)
           .success(function (response) {
             $scope.device_groups = response.data
-            console.log("success: " + JSON.stringify(response.data))
+          //  console.log("success: " + JSON.stringify(response.data))
             return resolve(response.data)
           })
           .error(function (response) {
@@ -38,7 +38,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
         $http.post('/auth/api/v1/mock/get-all-user-groups', data)
           .success(function (response) {
             $scope.user_groups = response.data
-            console.log("success: " + JSON.stringify(response.data))
+          //  console.log("success: " + JSON.stringify(response.data))
             return resolve(response.data)
           })
           .error(function (response) {
@@ -179,7 +179,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
         console.log("loading all user groups ...")
         return getAllUserGroups()
       }).then(function () {
-        console.log("Got User Groups: " + JSON.stringify($scope.user_groups))
+      //  console.log("Got User Groups: " + JSON.stringify($scope.user_groups))
         $scope.user_groups.forEach(ele => {
           if (ele.userslist) {
             ele.userslist.forEach(element => {
@@ -252,15 +252,15 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
           }
         })).then(function () {
           if (!$scope.is_admin && !ifDeviceUsable(event.data.serial)) {
-            console.log("device is not permitted for user, usable devices:  " + JSON.stringify(usable_devices_lists))
+            // console.log("device is not permitted for user, usable devices:  " + JSON.stringify(usable_devices_lists))
             return
           } else {
-            console.log("device is ready for user, usable devices:  " + JSON.stringify(usable_devices_lists))
+            // console.log("device is ready for user, usable devices:  " + JSON.stringify(usable_devices_lists))
             handleAddListener(event,isNew,device)
           }
         })
       } else {
-        console.log("Adding Device and not checking permition ")
+        // console.log("Adding Device and not checking permition ")
         handleAddListener(event, isNew, device)
       }
     }

@@ -15,7 +15,7 @@ module.exports = function SettingsCtrl($scope, gettext, PermissionService) {
       },
       {
         title: gettext('数据同步'),
-        icon: 'fa-ban fa-fw',
+        icon: 'fa-cloud fa-fw',
         templateUrl: 'settings/datasyn/datasyn.pug',
         PermissionId: "335e7c9c-3819-4fd5-b989-65e0a682970e"
       },

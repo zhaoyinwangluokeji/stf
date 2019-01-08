@@ -15,3 +15,29 @@
 .device-list-details-content .device-status.state-available {
   font-weight: 600;
 }
+
+
+.btn-outline-rent {
+  color: #BC8F8F;
+  
+}
+
+.pointer {
+  cursor: pointer;
+}
+.pointer-not-allowed {
+  cursor:not-allowed
+}
+.black-font-color{
+  color: #757575
+}
+.rowhover:hover{
+  background-color:#bbb
+}
+
+.WheatColor{
+  background-color: #F5DEB3
+}
+.Gainsboro{
+  background-color:	#DCDCDC
+}
