@@ -555,7 +555,7 @@ module.exports = function DeviceListDetailsDirective(
 
       // Triggers when the tracker sees a device for the first time.
       function addListener(device) {
-        console.log("device list add Listiner: " + device.serial)
+        // console.log("device list add Listiner: " + device.serial)
         var row = createRow(device)
         filterRow(row, device)
         insertRow(row, device)
@@ -563,7 +563,7 @@ module.exports = function DeviceListDetailsDirective(
 
       // Triggers when the tracker notices that a device changed.
       function changeListener(device) {
-        console.log('details-list-changeListener')
+        // console.log('details-list-changeListener')
         var id = calculateId(device)
         var tr = tbody.children[id]
 
@@ -606,10 +606,10 @@ module.exports = function DeviceListDetailsDirective(
         var isAdmin = tracker.getIfAdmin()
         var list = tracker.getUsableList()
         if (isAdmin || list.indexOf(element.serial) > -1) {
-          console.log("device:" + element.serial + " is in list:  " + JSON.stringify(list))
+          // console.log("device:" + element.serial + " is in list:  " + JSON.stringify(list))
           addListener(element)
         } else {
-          console.log("device:" + element.serial + " is not in list:  " + JSON.stringify(list))
+          // console.log("device:" + element.serial + " is not in list:  " + JSON.stringify(list))
         }
       });
       // tracker.devices.forEach(addListener)
