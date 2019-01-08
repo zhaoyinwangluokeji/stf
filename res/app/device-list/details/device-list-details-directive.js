@@ -54,40 +54,27 @@ module.exports = function DeviceListDetailsDirective(
         var id = e.target.parentNode.parentNode.id
         var device = mapping[id]
         user = AppState.user
+        var is_adminstrtor = AppState.is_adminstrtor
         if (e.target.classList.contains('device-rent-status')) {
 
           var para = arguments
           if (device.device_rent_conf &&
             device.device_rent_conf.rent) {
-          /*  if (device.device_rent_conf.owner &&
-              device.device_rent_conf.owner.email &&
-              device.device_rent_conf.owner.name &&
-              user) {
-              if (user.name == device.device_rent_conf.owner.name &&
-                user.email == device.device_rent_conf.owner.email) {
-                if (confirm('你确定需要停止租用吗？')) {
-                  GroupService.kick(device, true)
-                  DeviceRentService.free_rent(device, socket)
-                  e.preventDefault()
-                }
-              }
-              else {
-                alert("设备已经被" + device.device_rent_conf.owner.name + " " + device.device_rent_conf.owner.email + " 租用")
-              }
-              }*/
           }
           else {
-            return Promise.all([device].map(function (device) {
-              e.preventDefault()
-              return DeviceRentService.open(device)
-            })).then(function (result) {
-              if (result[0].result == true) {
-                $location.path('/control/' + result[0].device.serial);
-              }
-            })
-              .catch(function (err) {
-                console.log('err: ', err)
+            if (device.state === 'available' || (device.deviceType && device.deviceType == "现场测试")) {
+              return Promise.all([device].map(function (device) {
+                e.preventDefault()
+                return DeviceRentService.open(device)
+              })).then(function (result) {
+                if (result[0].result == true) {
+                  $location.path('/control/' + result[0].device.serial);
+                }
               })
+                .catch(function (err) {
+                  console.log('err: ', err)
+                })
+            }
           }
 
         } else if (e.target.classList.contains('device-rent-release-status')) {
@@ -97,8 +84,8 @@ module.exports = function DeviceListDetailsDirective(
               device.device_rent_conf.owner.email &&
               device.device_rent_conf.owner.name &&
               user) {
-              if (user.name == device.device_rent_conf.owner.name &&
-                user.email == device.device_rent_conf.owner.email) {
+              if ((user.name == device.device_rent_conf.owner.name &&
+                user.email == device.device_rent_conf.owner.email) || is_adminstrtor) {
                 if (confirm('你确定需要停止租用吗？')) {
                   GroupService.kick(device, true)
                   DeviceRentService.free_rent(device, socket)
@@ -110,7 +97,7 @@ module.exports = function DeviceListDetailsDirective(
               }
             }
           }
-        }      
+        }
       }
 
       function checkDeviceSmallImage(e) {
@@ -373,10 +360,18 @@ module.exports = function DeviceListDetailsDirective(
           // Find the first difference
           for (var i = 0, l = activeSorting.length; i < l; ++i) {
             var sort = activeSorting[i]
-            diff = scope.columnDefinitions[sort.name].compare(deviceA, deviceB)
-            if (diff !== 0) {
-              diff *= mapping[sort.order]
-              break
+            try {
+              var compare = scope.columnDefinitions[sort.name].compare
+              if (compare) {
+                diff = compare(deviceA, deviceB)
+                if (diff !== 0) {
+                  diff *= mapping[sort.order]
+                  break
+                }
+              }
+
+            } catch (e) {
+              console.log("Error:Fail to compare sort.name:" + sort.name)
             }
           }
 

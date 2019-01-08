@@ -207,7 +207,7 @@ module.exports = function DeviceColumnService(
         return device.createdAt || ''
       }
     })
-    , deviceType: TextCell({
+    , deviceType: DeviceTypeCell({
       title: gettext('设备类型')
       , value: function (device) {
         return device.deviceType || '远程测试'
@@ -395,6 +395,34 @@ function TextCell(options) {
     , update: function (td, item) {
       var t = td.firstChild
       t.nodeValue = options.value(item)
+      return td
+    }
+    , compare: function (a, b) {
+      return compareIgnoreCase(options.value(a), options.value(b))
+    }
+    , filter: function (item, filter) {
+      return filterIgnoreCase(options.value(item), filter.query)
+    }
+  })
+}
+
+function DeviceTypeCell(options) {
+  return _.defaults(options, {
+    title: options.title
+    , defaultOrder: 'asc'
+    , build: function () {
+      var td = document.createElement('td')
+      td.appendChild(document.createTextNode(''))
+      return td
+    }
+    , update: function (td, device) {
+      var t = td.firstChild
+      if (device.deviceType && device.deviceType == "现场测试") {
+        td.className = 'WheatColor'
+      } else {
+        td.className = 'Gainsboro'
+      }
+      t.nodeValue = options.value(device)
       return td
     }
     , compare: function (a, b) {
@@ -734,6 +762,9 @@ function DeviceRentReleaseCell(options, DeviceRentService, $location, AppState, 
       t.nodeValue = options.value(device)
       return td
     }
+    , compare: function (a, b) {
+      return options.value(a) - options.value(b)
+    }
     , filter: function (device, filter) {
       return filterIgnoreCase(options.value(device), filter.query)
     }
@@ -785,23 +816,9 @@ function DeviceRentCell(options, DeviceRentService, $location, AppState, GroupSe
 
       return td
     }
-    , compare: (function () {
-      var order = {
-        using: 10
-        , automation: 15
-        , available: 20
-        , busy: 30
-        , ready: 40
-        , preparing: 50
-        , unauthorized: 60
-        , offline: 70
-        , present: 80
-        , absent: 90
-      }
-      return function (deviceA, deviceB) {
-        return order[deviceA.state] - order[deviceB.state]
-      }
-    })()
+    , compare: function (a, b) {
+      return compareIgnoreCase(options.value(a), options.value(b))
+   }
     , filter: function (device, filter) {
       return filterIgnoreCase(options.value(device), filter.query)
     }
@@ -847,7 +864,7 @@ function DeviceRentProjectCell(options) {
       return td
     }
     , compare: function (a, b) {
-      return options.value(a).apps.length - options.value(b).apps.length
+       return compareIgnoreCase(options.value(a), options.value(b))
     }
     , filter: function (device, filter) {
       return options.value(device).apps.some(function (app) {
@@ -887,7 +904,7 @@ function DeviceStatusCell(options) {
       a.className = 'btn btn-xs device-status ' +
         (stateClasses[device.state] || 'btn-default-outline')
 
-      if (device.usable) {
+      if (device.usable || device.state === 'Busy' || device.state === 'available') {
         a.href = '#!/control/' + device.serial
       }
       else {
@@ -896,23 +913,9 @@ function DeviceStatusCell(options) {
       t.nodeValue = options.value(device)
       return td
     }
-    , compare: (function () {
-      var order = {
-        using: 10
-        , automation: 15
-        , available: 20
-        , busy: 30
-        , ready: 40
-        , preparing: 50
-        , unauthorized: 60
-        , offline: 70
-        , present: 80
-        , absent: 90
-      }
-      return function (deviceA, deviceB) {
-        return order[deviceA.state] - order[deviceB.state]
-      }
-    })()
+    , compare: function (a, b) {
+      return compareIgnoreCase(options.value(a), options.value(b))
+    }
     , filter: function (device, filter) {
       return filterIgnoreCase(options.value(device), filter.query)
 

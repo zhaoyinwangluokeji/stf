@@ -17,8 +17,6 @@ module.exports = function DeviceListIconsDirective(
         var li = document.createElement('li')
         li.className = 'cursor-select thumbnail'
 
-
-
         var divHeader = document.createElement('div')
         divHeader.className = "phoneInfoHeader"
         li.appendChild(divHeader)
@@ -41,7 +39,7 @@ module.exports = function DeviceListIconsDirective(
         //  divBody.appendChild(a)
         var divImage = document.createElement('div')
         divImage.className = "phoneImgDiv"
-      //  var photo = document.createElement('div')
+        //  var photo = document.createElement('div')
         //  photo.className = 'device-photo-small'
         var a = document.createElement('a')
         var img = document.createElement('img')
@@ -98,6 +96,7 @@ module.exports = function DeviceListIconsDirective(
       , update: function (li, device) {
         //  var list = li.find('ul')[0]
         var user = AppState.user
+        var is_adminstrator = AppState.is_adminstrator
         var divheader = li.children[0]
         var divbody = li.children[1]
         var divfoot = li.children[2]
@@ -105,7 +104,7 @@ module.exports = function DeviceListIconsDirective(
         var manufacturer = divheader.firstChild.firstChild
         //  var a = divbody.firstChild
         var a = divbody.firstChild.firstChild
-        
+
         var img = a.firstChild
 
         var divInfo = divbody.children[1]
@@ -160,7 +159,7 @@ module.exports = function DeviceListIconsDirective(
           }
           return stateClasses
         }
-        state.className = getStateClasses(device.state) +" phoneInfo"
+        state.className = getStateClasses(device.state) + " phoneInfo"
         function getStateClasses2(state) {
           var stateClasses = {
             using: 'devIsBusy',
@@ -196,15 +195,15 @@ module.exports = function DeviceListIconsDirective(
             device.device_rent_conf.owner.email &&
             device.device_rent_conf.owner.name &&
             user) {
-            if (user.name == device.device_rent_conf.owner.name &&
-              user.email == device.device_rent_conf.owner.email) {
+            if ((user.name == device.device_rent_conf.owner.name &&
+              user.email == device.device_rent_conf.owner.email) || is_adminstrator) {
               rent_button.classList.remove("devRentStatus")
               rent_button.classList.add("devRentStatus2")
               stop_rent_button.classList.remove("nonedisplay")
               stop_rent_button.classList.add("display")
               headerbtn.classList.remove("nonedisplay")
               headerbtn.classList.remove("display")
-              if (device.state === 'available' || device.usable) {
+              if (device.state === 'available' || device.state ==='Busy' || device.usable) {
                 a.href = '#!/control/' + device.serial
                 rent_buttona.href = '#!/control/' + device.serial
               }
@@ -346,8 +345,7 @@ module.exports = function DeviceListIconsDirective(
                   e.preventDefault()
                 }
               }
-              else //if (device.state === 'available') 
-              {
+              else if (device.state === 'available') {
                 if (device.device_rent_conf &&
                   device.device_rent_conf.rent) {
                   if (device.device_rent_conf.owner &&
@@ -370,7 +368,7 @@ module.exports = function DeviceListIconsDirective(
                   return Promise.all([device].map(function (device) {
                     return DeviceRentService.open(device)
                   })).then(function (result) {
-                  //  console.log("result:" + JSON.stringify(result))
+                    //  console.log("result:" + JSON.stringify(result))
                     if (result[0].result == true) {
                       $location.path('/control/' + result[0].device.serial);
                     }
@@ -379,6 +377,10 @@ module.exports = function DeviceListIconsDirective(
                       console.log('err: ', err)
                     })
                 }
+              } else if (device.state == 'busy') {
+                alert("warnning: 设备繁忙不能租用!")
+              } else {
+                alert("warnning: 离线设备不能租用!")
               }
               //  else {
               //    e.preventDefault()
@@ -732,7 +734,7 @@ module.exports = function DeviceListIconsDirective(
 
       // Triggers when the tracker sees a device for the first time.
       function addListener(device) {
-        if(device.deviceType == '现场测试'){
+        if (device.deviceType == '现场测试') {
           return
         }
         console.log('addListener ')
@@ -743,10 +745,10 @@ module.exports = function DeviceListIconsDirective(
 
       // Triggers when the tracker notices that a device changed.
       function changeListener(device) {
-        if(device.deviceType == '现场测试'){
+        if (device.deviceType == '现场测试') {
           return
         }
-      //  console.log('device-list-changeListener ')
+        //  console.log('device-list-changeListener ')
         var id = calculateId(device)
         //  console.log('device-list-changeListener :' + id)
         var item = list.children[id]
@@ -773,7 +775,7 @@ module.exports = function DeviceListIconsDirective(
 
       // Triggers when a device is removed entirely from the tracker.
       function removeListener(device) {
-        if(device.deviceType == '现场测试'){
+        if (device.deviceType == '现场测试') {
           return
         }
         //console.log('removeListener  ')
@@ -795,10 +797,10 @@ module.exports = function DeviceListIconsDirective(
       tracker.devices.forEach(element => {
         var isAdmin = tracker.getIfAdmin()
         var list = tracker.getUsableList()
-        if(isAdmin || list.indexOf(element.serial) > -1){
+        if (isAdmin || list.indexOf(element.serial) > -1) {
           // console.log("device:" + element.serial + " is in list:  " + JSON.stringify(list))
           addListener(element)
-        } else{
+        } else {
           // console.log("device:" + element.serial + " is not in list:  " + JSON.stringify(list))
         }
       });
