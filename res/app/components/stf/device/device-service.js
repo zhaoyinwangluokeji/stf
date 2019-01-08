@@ -252,15 +252,15 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
           }
         })).then(function () {
           if (!$scope.is_admin && !ifDeviceUsable(event.data.serial)) {
-            console.log("device is not permitted for user, usable devices:  " + JSON.stringify(usable_devices_lists))
+            // console.log("device is not permitted for user, usable devices:  " + JSON.stringify(usable_devices_lists))
             return
           } else {
-            console.log("device is ready for user, usable devices:  " + JSON.stringify(usable_devices_lists))
+            // console.log("device is ready for user, usable devices:  " + JSON.stringify(usable_devices_lists))
             handleAddListener(event,isNew,device)
           }
         })
       } else {
-        console.log("Adding Device and not checking permition ")
+        // console.log("Adding Device and not checking permition ")
         handleAddListener(event, isNew, device)
       }
     }
