@@ -339,6 +339,12 @@ module.exports = function DeviceColumnService(
         return device.notes || ''
       }
     })
+    , maintain: DeviceMaintainCell({
+      title: gettext('报修')
+      , value: function (device) {
+        return device.maintain || false
+      }
+    })
     , owner: LinkCell({
       title: gettext('User')
       , target: '_blank'
@@ -948,6 +954,47 @@ function DeviceNoteCell(options) {
       var t = span.firstChild
 
       t.nodeValue = options.value(item)
+      return td
+    }
+    , compare: function (a, b) {
+      return compareIgnoreCase(options.value(a), options.value(b))
+    }
+    , filter: function (item, filter) {
+      return filterIgnoreCase(options.value(item), filter.query)
+    }
+  })
+}
+
+function DeviceMaintainCell(options) {
+  return _.defaults(options, {
+    title: options.title
+    , defaultOrder: 'asc'
+    , build: function () {
+      var td = document.createElement('td')
+      var button = document.createElement('button')
+      var i = document.createElement('i')
+      var span = document.createElement('span')
+
+      button.className = 'device-maintain-edit device-maintain-button'
+      td.className ='device-maintain'
+      span.className = 'device-maintain-edit device-maintain-text'
+      span.appendChild(document.createTextNode(''))
+      i.className = 'fa fa-wrench device-maintain-edit'
+      td.appendChild(button)
+      button.appendChild(span)
+      button.appendChild(i)
+      return td
+    }
+    , update: function (td, item) {
+      var span = td.firstChild.firstChild
+      var t = span.firstChild
+      console.log("coloum 更新报修状态：" + options.value(item))
+      if(options.value(item)){
+        t.nodeValue = '取消报修'
+      } else{
+        t.nodeValue = '报修'
+      }
+      // t.nodeValue = options.value(item)
       return td
     }
     , compare: function (a, b) {

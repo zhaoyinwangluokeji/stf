@@ -380,5 +380,12 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     })
   }
 
+  deviceService.updateMaintain = function (serial, maintain) {
+    socket.emit('device.maintain', {
+      serial: serial,
+      maintain: maintain
+    })
+  }
+
   return deviceService
 }

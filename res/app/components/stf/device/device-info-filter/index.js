@@ -2,6 +2,7 @@ module.exports = angular.module('stf.device-status', [])
   .filter('statusNameAction', function (gettext) {
     return function (text) {
       return {
+        maintain: gettext('维护中'),
         absent: gettext('Disconnected'),
         present: gettext('Connected'),
         offline: gettext('Offline'),
