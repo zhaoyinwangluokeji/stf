@@ -2,6 +2,7 @@ module.exports = angular.module('stf.device-status', [])
   .filter('statusNameAction', function (gettext) {
     return function (text) {
       return {
+        maintain: gettext('维护中'),
         absent: gettext('Disconnected'),
         present: gettext('Connected'),
         offline: gettext('Offline'),
@@ -19,22 +20,29 @@ module.exports = angular.module('stf.device-status', [])
 
     return function (device) {
       var text = device.state;
-
-       
-      
       if (!device.device_rent_conf ||
         !device.device_rent_conf.rent ||
         device.device_rent_conf.rent == false) {
-          if(device.deviceType && device.deviceType=="现场测试"){
-            return ('可租用');
-          }else{
-            if(device.state=="available"){
-              return ('可租用');
-            }else{
-              return ('离线不可用');
-            }
+        if (device.deviceType && device.deviceType == "现场测试") {
+          if (device.state == "maintain") {
+            return gettext('不可用(报修状态)');
+          } else {
+            return gettext('可租用');
           }
-        
+          
+        } else {
+          if (device.state == "available") {
+            return gettext('可租用');
+          } else {
+            if (device.state == "maintain") {
+              return gettext('不可用(报修状态)');
+            } else {
+              return gettext('不可用(离线)');
+            }
+
+          }
+        }
+
       }
       else if (device.device_rent_conf && device.device_rent_conf.rent) {
         var now = Date.now();

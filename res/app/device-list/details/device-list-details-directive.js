@@ -65,7 +65,11 @@ module.exports = function DeviceListDetailsDirective(
             if (device.state === 'available' || (device.deviceType && device.deviceType == "现场测试")) {
               return Promise.all([device].map(function (device) {
                 e.preventDefault()
-                return DeviceRentService.open(device)
+                if (device.state == "maintain") {
+                  alert("warnning:设备处于报修状态中，不能租用!")
+                }  else {
+                  return DeviceRentService.open(device)
+                }
               })).then(function (result) {
                 if (result[0].result == true) {
                   $location.path('/control/' + result[0].device.serial);
@@ -145,6 +149,37 @@ module.exports = function DeviceListDetailsDirective(
         }
       }
 
+      function checkDeviceMaintain(e) {
+        if (e.target.classList.contains('device-maintain-edit')) {
+
+          var i = e.target
+
+          var id = i.parentNode.parentNode.parentNode.id
+          if (!id) {
+            id = i.parentNode.parentNode.id
+          }
+          var device = mapping[id]
+          if (device.deviceType != '现场测试') {
+            console.log('设备类型为：' + device.deviceType)
+            alert('设备类型为现场测试的设备才能报修！')
+            return
+          }
+          if (tracker.getIfAdmin()) {
+            console.log('报修设备： ' + device.serial)
+
+            if (device.maintain) {
+              console.log('报修状态修改为： false')
+              DeviceService.updateMaintain(device.serial, false)
+            } else {
+              console.log('报修状态修改为： true')
+              DeviceService.updateMaintain(device.serial, true)
+            }
+          } else {
+            alert("必须管理员才有权限修改报修状态！")
+          }
+        }
+      }
+
       function destroyXeditableNote(id) {
         var tr = tbody.children[id]
         for (var i = 0; i < tr.cells.length; i++) {
@@ -179,6 +214,7 @@ module.exports = function DeviceListDetailsDirective(
         checkDeviceStatus(e)
         checkDeviceSmallImage(e)
         checkDeviceNote(e)
+        checkDeviceMaintain(e)
       })
 
       // Import column definitions

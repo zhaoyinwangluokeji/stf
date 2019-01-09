@@ -194,9 +194,9 @@ module.exports = function DeviceListicons2Directive(
           if (device.device_rent_conf.owner &&
             device.device_rent_conf.owner.email &&
             device.device_rent_conf.owner.name &&
-            user ) { 
+            user) {
             if ((user.name == device.device_rent_conf.owner.name &&
-              user.email == device.device_rent_conf.owner.email)|| is_adminstrator) {
+              user.email == device.device_rent_conf.owner.email) || is_adminstrator) {
               rent_button.classList.remove("devRentStatus")
               rent_button.classList.add("devRentStatus2")
               stop_rent_button.classList.remove("nonedisplay")
@@ -355,17 +355,22 @@ module.exports = function DeviceListicons2Directive(
                   }
                 } else {
                   e.preventDefault()
-                  return Promise.all([device].map(function (device) {
-                    return DeviceRentService.open(device)
-                  })).then(function (result) {
-                    //  console.log("result:" + JSON.stringify(result))
-                    if (result[0].result == true) {
-                      $location.path('/control/' + result[0].device.serial);
-                    }
-                  })
-                    .catch(function (err) {
-                      console.log('err: ', err)
+                  if (device.state == "maintain") {
+                    alert("warnning:设备处于报修状态中，不能租用!")
+                  } else {
+                    return Promise.all([device].map(function (device) {
+                      return DeviceRentService.open(device)
+                    })).then(function (result) {
+                      //  console.log("result:" + JSON.stringify(result))
+                      if (result[0].result == true) {
+                        $location.path('/control/' + result[0].device.serial);
+                      }
                     })
+                      .catch(function (err) {
+                        console.log('err: ', err)
+                      })
+                  }
+
                 }
               }
               //  else {
