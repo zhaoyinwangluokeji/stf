@@ -891,6 +891,7 @@ function DeviceStatusCell(options) {
     , unauthorized: 'state-unauthorized btn-danger-outline'
     , offline: 'state-offline btn-warning-outline'
     , automation: 'state-automation btn-info'
+    , maintain: 'maintaincolor'
   }
 
   return _.defaults(options, {
@@ -906,7 +907,7 @@ function DeviceStatusCell(options) {
     , update: function (td, device) {
       var a = td.firstChild
       var t = a.firstChild
-
+       
       a.className = 'btn btn-xs device-status ' +
         (stateClasses[device.state] || 'btn-default-outline')
 

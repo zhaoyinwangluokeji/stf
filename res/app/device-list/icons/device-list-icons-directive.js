@@ -203,7 +203,7 @@ module.exports = function DeviceListIconsDirective(
               stop_rent_button.classList.add("display")
               headerbtn.classList.remove("nonedisplay")
               headerbtn.classList.remove("display")
-              if (device.state === 'available' || device.state ==='Busy' || device.usable) {
+              if (device.state === 'available' || device.state === 'Busy' || device.usable) {
                 a.href = '#!/control/' + device.serial
                 rent_buttona.href = '#!/control/' + device.serial
               }
@@ -365,17 +365,22 @@ module.exports = function DeviceListIconsDirective(
                   }
                 } else {
                   e.preventDefault()
-                  return Promise.all([device].map(function (device) {
-                    return DeviceRentService.open(device)
-                  })).then(function (result) {
-                    //  console.log("result:" + JSON.stringify(result))
-                    if (result[0].result == true) {
-                      $location.path('/control/' + result[0].device.serial);
-                    }
-                  })
-                    .catch(function (err) {
-                      console.log('err: ', err)
+                  if (device.state == "maintain") {
+                    alert("warnning:设备处于报修状态中，不能租用!")
+                  } else {
+                    return Promise.all([device].map(function (device) {
+                      return DeviceRentService.open(device)
+                    })).then(function (result) {
+                      //  console.log("result:" + JSON.stringify(result))
+                      if (result[0].result == true) {
+                        $location.path('/control/' + result[0].device.serial);
+                      }
                     })
+                      .catch(function (err) {
+                        console.log('err: ', err)
+                      })
+                  }
+
                 }
               } else if (device.state == 'busy') {
                 alert("warnning: 设备繁忙不能租用!")
