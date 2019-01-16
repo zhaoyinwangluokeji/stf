@@ -162,9 +162,13 @@ module.exports =
 
 
                 var query = $scope.search.deviceFilter;
-                if (query && query.indexOf(':T') != -1) {
+            /*    if (query && query.indexOf(':T') != -1) {
                     query = query.substr(0, query.indexOf(':T'))
-                }
+                }else if (query && query.indexOf(':P') != -1) {
+                    query = query.substr(0, query.indexOf(':P'))
+                }if (query && query.indexOf(':M') != -1) {
+                    query = query.substr(0, query.indexOf(':M'))
+                }*/
                 $scope.search.BlockDivshow = true;
                 return oboe('/api/v1/projects/getprojects?requirement=' + query)
                     .done(function (res) {
