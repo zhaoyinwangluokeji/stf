@@ -123,20 +123,29 @@ module.exports = function UsersInfoDirective(
 
             $scope.Query3 = function (params) {
                 if ($scope.CurGroup && $scope.CurGroup.userslist) {
-                    return $scope.CurGroup.userslist
+                    var count = params.parameters().count
+                    var page = params.parameters().page
+                    console.log("count:" + count)
+                    console.log("page:" + page)
+                    params.total($scope.CurGroup.userslist.length)
+                    $scope.pagesCustomCount = Math.ceil($scope.tableParamsUsersOfGroup.total() / $scope.tableParamsUsersOfGroup.parameters().count)
+
+                    return $scope.CurGroup.userslist.slice((page - 1) * count, page * count)
+
                 } else {
                     return []
                 }
             }
 
             $scope.tableParamsUsersOfGroup = new NgTableParams(
-                { count: 5 },
+                { count: 10 },
                 {
-                    counts: [5, 10, 15, 30, 50],
+                    counts: [10, 15, 30, 50],
                     getData: $scope.Query3
 
                 }
             );
+
 
             $scope.pagesCustomCount = Math.ceil($scope.tableParamsUsersOfGroup.total() / $scope.tableParamsUsersOfGroup.parameters().count)
 
@@ -165,7 +174,6 @@ module.exports = function UsersInfoDirective(
                 }
             );
 
-            $scope.pagesCustomCount = Math.ceil($scope.tableParamsPermissionOfGroup.total() / $scope.tableParamsPermissionOfGroup.parameters().count)
 
             $scope.QueryPermissionOfGroup = function () {
                 try {
@@ -415,7 +423,7 @@ module.exports = function UsersInfoDirective(
                         })
                         return PermissionService.AddPermissionToGroup($scope.CurGroup.GroupName, list).then(function (data) {
                             alert(JSON.stringify(data))
-                            $scope.QueryGroup ()
+                            $scope.QueryGroup()
                         }).catch(function (err) {
                             console.log("err:" + JSON.stringify(err))
                         })

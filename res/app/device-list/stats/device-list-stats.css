@@ -50,6 +50,41 @@
   font-size: 0.8em;
 }
 
+.filter-line {
+  position: relative;
+  top: 6px;
+}
+/* .more-filter-control.more-filter-hide {
+  float:right;
+} */
+/* .div-right{ 
+  text-align:right;
+  margin:0px auto 0px auto;
+}  */
+
+.more-arrow-top {
+  margin-top: 6px;
+  border-top: 9px solid #ccc;
+  border-bottom: 9px solid transparent;
+}
+
+.more-arrow {
+  margin-top: 6px;
+  display: inline-block;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+}
+
+.more-arrow-bottom {
+  margin-top: 6px;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid #ccc;
+}
+
+a {
+  text-decoration: none;
+}
+
 
 @media (max-width: 600px) {
   .device-stats {
@@ -81,4 +116,67 @@
     font-size: 0.8em;
     font-weight: 500;
   }
+}
+
+.filter{
+  font-family: 微软雅黑;
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+
+.filter dd{
+  display: inline-block;
+  float: left;
+  /* margin-top: 10px; */
+}
+
+.filter dl {
+  /* padding: 10px 0; */
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.filter dt {
+  display: inline-block;
+  width: 80px;
+  margin-top: 10px;
+  float: left;
+}
+
+.clearfix {
+  clear: both;
+}
+
+/* dt{
+  margin-top: 10px;
+  margin-bottom: 10px;
+} */
+
+dd {
+  display: block;
+  margin-inline-start: 40px;
+  margin: 5px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.filterOff {
+  background: #f7f7f7;
+  color: #666;
+}
+
+.filterOn {
+  background: #64E8AB;
+  color: #fff;
+}
+
+dl {
+  display: block;
+  margin-block-start: 0.2em;
+  margin-block-end: 0.2em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  margin: 10 10 10 10px
 }

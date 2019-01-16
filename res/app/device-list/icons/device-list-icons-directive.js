@@ -576,7 +576,8 @@ module.exports = function DeviceListIconsDirective(
       // Calculates a DOM ID for the device. Should be consistent for the
       // same device within the same table, but unique among other tables.
       function calculateId(device) {
-        return prefix + device.serial
+        // return prefix + device.serial
+        return device.serial
       }
 
       // Compares two devices using the currently active sorting. Returns <0
@@ -610,6 +611,7 @@ module.exports = function DeviceListIconsDirective(
         var item = builder.build()
 
         item.id = id
+        item.setAttribute('ng-show',true)
         builder.update(item, device)
         mapping[id] = device
 
@@ -811,6 +813,8 @@ module.exports = function DeviceListIconsDirective(
       });
       // tracker.devices.forEach(addListener)
 
+      tracker.emit('emptyFilter')
+      
       scope.$on('$destroy', function () {
         tracker.removeListener('add', addListener)
         tracker.removeListener('change', changeListener)
