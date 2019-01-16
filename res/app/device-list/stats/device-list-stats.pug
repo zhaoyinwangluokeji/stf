@@ -1,4 +1,18 @@
-
+.widget-container.device-statics
+  .col-md-3.packery-item
+    div
+      canvas#manufacturer
+  .col-md-3.packery-item
+    div
+      canvas#sdkversion
+  .col-md-3.packery-item
+    div
+      canvas#screensize
+  .col-md-3.packery-item
+    div
+      canvas#platform
+  br(style='clear:both')
+.hr-line-dashed.filter-line
 .widget-container.device-stats
   .more-filter-control.more-filter-hide.div-right(ng-click='hideShowStats()')
     a.more-arrow.more-arrow-top
@@ -23,21 +37,6 @@
       .icon.fa.fa-user.visitors(ng-class='{"fa-trophy": $root.adminMode, "fa-user": !$root.adminMode}')
       span(class='counter', data-type='using') 0
     .text(ng-bind='currentUser.name')
-  br(style='clear:both')
-.hr-line-dashed.filter-line
-.widget-container.device-statics
-  .col-md-3.packery-item
-    div
-      canvas#manufacturer
-  .col-md-3.packery-item
-    div
-      canvas#sdkversion
-  .col-md-3.packery-item
-    div
-      canvas#screensize
-  .col-md-3.packery-item
-    div
-      canvas#platform
   br(style='clear:both')
 .widget-container.device-statics.filter
   .hr-line-dashed.filter-line
