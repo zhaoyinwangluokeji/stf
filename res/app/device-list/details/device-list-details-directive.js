@@ -380,7 +380,8 @@ module.exports = function DeviceListDetailsDirective(
       // Calculates a DOM ID for the device. Should be consistent for the
       // same device within the same table, but unique among other tables.
       function calculateId(device) {
-        return prefix + device.serial
+        // return prefix + device.serial
+        return device.serial
       }
 
       // Compares two devices using the currently active sorting. Returns <0
@@ -649,6 +650,7 @@ module.exports = function DeviceListDetailsDirective(
         }
       });
       // tracker.devices.forEach(addListener)
+      tracker.emit('emptyFilter')
 
       scope.$on('$destroy', function () {
         tracker.removeListener('add', addListener)

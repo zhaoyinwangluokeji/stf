@@ -15,6 +15,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     $scope.in_groups = []
     var usable_devices_lists = []
     $scope.is_admin = false
+    var show_device_serials = []
 
     function getAllDeviceGroups() {
       return new Promise(function (resolve, reject) {
@@ -114,6 +115,8 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
       console.log("insert ")
       // devicesBySerial[data.serial] = devices.push(data) - 1
       // sync(data)
+      console.log("pushing device serial:  " + data.serial)
+      show_device_serials.push(data.serial)
       this.emit('add', data)
     }.bind(this)
 
@@ -198,7 +201,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
           $scope.in_groups.forEach(element => {
             if (ele.usergroups.indexOf(element) > -1) {
               usable_devices_lists = MergeArray(usable_devices_lists, ele.devices)
-              console.log("usable device lists: " + JSON.stringify(usable_devices_lists))
+              // console.log("usable device lists: " + JSON.stringify(usable_devices_lists))
               return
             }
           });
@@ -309,8 +312,12 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
       })
     }
     this.devices = devices
+    this.show_device_serials = show_device_serials
     this.getUsableList = function(){
       return usable_devices_lists
+    }
+    this.get = function(serial){
+      return devices[devicesBySerial[serial]]
     }
     this.getIfAdmin = function(){
       return $scope.is_admin

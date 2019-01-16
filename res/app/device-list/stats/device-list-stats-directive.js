@@ -12,15 +12,23 @@ module.exports = function DeviceListStatsDirective(
       var mapping = Object.create(null)
       var nodes = Object.create(null)
       require("chart.js")
+      var current_device_serials = tracker.show_device_serials
+
+      // 默认隐藏原来的统计
+      scope.showStats = false
+      scope.hideShowStats = function(){
+        scope.showStats = !scope.showStats
+      }
+
  
       unhandled_serials = []
-      scope.modelData = {
+      scope.manufacturerData = {
         type: 'doughnut',
         data: {
           datasets: [{
             data: [],
             backgroundColor: [],
-            label: 'model'
+            label: 'manufacturer'
           }],
           labels: []
         },
@@ -123,14 +131,128 @@ module.exports = function DeviceListStatsDirective(
           maintainAspectRatio: false
         }
       }
-      // scope.modelChart = null
+      // scope.manufacturerChart = null
       // scope.versionChart = null
       // scope.platformChart = null
       // scope.screensizeChart = null
-      scope.modelChart = drawChart("model", scope.modelData)
+      scope.manufacturerChart = drawChart("manufacturer", scope.manufacturerData)
       scope.versionChart = drawChart("sdkversion", scope.versionData)
       scope.screensizeChart = drawChart("screensize", scope.screensizeData)
       scope.platformChart = drawChart("platform", scope.platformData)
+
+      
+      var filter_list = {
+        manufacturer : [],
+        version: [],
+        display: [],
+        platform: []
+      }
+
+      function emptyFilter(){
+        var tmpEles = document.getElementsByClassName('filterOn')
+        console.log("tmpEles:  " + JSON.stringify(tmpEles))
+        while(tmpEles.length > 0){
+          for(i in tmpEles){
+            tmpEles[i].className = 'filterOff'
+          }
+          tmpEles = document.getElementsByClassName('filterOn')
+        }
+        
+        filter_list = {
+          manufacturer : [],
+          version: [],
+          display: [],
+          platform: []
+        }
+      }
+
+      var filtered_serials = current_device_serials.slice(0)
+      filterDeviceShow = function(){
+        console.log("current_device_serials: " + JSON.stringify(current_device_serials))
+        filtered_serials = current_device_serials.slice(0)
+        var tmp = {} 
+        for(var k in filter_list){
+          if(filter_list[k].length == 0){
+            tmp[k] = current_device_serials.slice(0)
+            continue
+          }else{
+            tmp[k] =  []
+            current_device_serials.forEach(d => {
+              filter_list[k].forEach(ele => {
+                var value=''
+                console.log("d: " + d)
+                if(k == 'display'){
+                  value = tracker.get(d).display.width + "x" + tracker.get(d).display.height
+                }else{
+                  value = tracker.get(d)[k]
+                }
+                if(value == ele){
+                  tmp[k].push(tracker.get(d).serial)
+                }
+              });
+            });
+          }
+        }
+        console.log("tmp: " + JSON.stringify(tmp))
+        console.log("filtered_serials: " + JSON.stringify(filtered_serials))
+        current_device_serials.forEach(ele => {
+          var i = filtered_serials.indexOf(ele)
+          if(i > -1){
+            for(var kk in tmp){
+              if(tmp[kk].indexOf(ele) == -1){
+                if(filtered_serials.indexOf(ele) > -1){
+                  console.log("deleting serial: " + ele)
+                  filtered_serials.splice(i,1)
+                }
+                
+              }
+            }
+          }
+        });
+        console.log("filtered_serials: " + JSON.stringify(filtered_serials))
+        current_device_serials.forEach(ele => {
+          if(filtered_serials.indexOf(ele) > -1){
+            setDeviceShow(ele,true)
+          }else{
+            setDeviceShow(ele,false)
+          }
+        });
+      }
+
+      function setDeviceShow(serial,show){
+        var target = document.getElementById(serial)
+            if(target){
+              if(show){
+                console.log("nodeName: " + target.nodeName)
+                if(target.nodeName == 'TR'){
+                  target.style.display="table-row"
+                }else{
+                  target.style.display="block"
+                }
+              }else{
+                console.log("set display none: " + serial)
+                target.style.display="none"
+              }
+              // target.setAttribute('ng-show',show)
+            }
+      }
+
+      scope.clickFilter = function(tag,manu,myevent){
+        console.log("tag: " + tag)
+        var target = myevent.target
+        if(target.className == 'filterOn'){
+          target.className = 'filterOff'
+          var i = filter_list[tag].indexOf(manu)
+          if(i != -1){
+            filter_list[tag].splice(i,1)
+          }
+        }else{
+          target.className = 'filterOn'
+          filter_list[tag].push(manu)
+        }
+        filterDeviceShow()
+      }
+
 
       scope.chartOptions = {
         responsive: true,
@@ -259,8 +381,8 @@ module.exports = function DeviceListStatsDirective(
         scope.screensizeChart.update()
         addToData("version", device, scope.versionData)
         scope.versionChart.update()
-        addToData("manufacturer", device, scope.modelData)
-        scope.modelChart.update()
+        addToData("manufacturer", device, scope.manufacturerData)
+        scope.manufacturerChart.update()
         addToData("platform", device, scope.platformData)
         scope.platformChart.update()
         notify()
@@ -276,8 +398,8 @@ module.exports = function DeviceListStatsDirective(
           scope.screensizeChart.update()
           addToData("version", device, scope.versionData)
           scope.versionChart.update()
-          addToData("manufacturer", device, scope.modelData)
-          scope.modelChart.update()
+          addToData("manufacturer", device, scope.manufacturerData)
+          scope.manufacturerChart.update()
           addToData("platform", device, scope.platformData)
           scope.platformChart.update()
           unhandled_serials.splice(tmp,1)
@@ -313,21 +435,21 @@ module.exports = function DeviceListStatsDirective(
         scope.screensizeChart.update()
         delFromData("version", device, scope.versionData)
         scope.versionChart.update()
-        delFromData("manufacturer", device, scope.modelData)
-        scope.modelChart.update()
+        delFromData("manufacturer", device, scope.manufacturerData)
+        scope.manufacturerChart.update()
         delFromData("platform", device, scope.platformData)
         scope.platformChart.update()
         notify()
       }
 
       findTextNodes()
-
+      emptyFilter()
+      tracker.on('emptyFilter', emptyFilter)
       tracker.on('add', addListener)
       tracker.on('change', changeListener)
       tracker.on('remove', removeListener)
 
       scope.$on('$destroy', function () {
-
         tracker.removeListener('add', addListener)
         tracker.removeListener('change', changeListener)
         tracker.removeListener('remove', removeListener)
