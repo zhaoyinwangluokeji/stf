@@ -20,7 +20,7 @@ bin/stf app --port 7105 --secret kute kittykat --auth-url http://localhost:7100/
 
 bin/stf api --port 7106 --secret kute kittykat --connect-push tcp://127.0.0.1:7113 --connect-sub tcp://127.0.0.1:7111 &
 
-bin/stf websocket --port 7110 --secret kute kittykat --storage-url http://localhost:7100/ --connect-sub tcp://127.0.0.1:7111 --connect-push tcp://127.0.0.1:7113 &
+#bin/stf websocket --port 7110 --secret kute kittykat --storage-url http://localhost:7100/ --connect-sub tcp://127.0.0.1:7111 --connect-push tcp://127.0.0.1:7113 &
 
 bin/stf storage-temp --port 7102 &
 
