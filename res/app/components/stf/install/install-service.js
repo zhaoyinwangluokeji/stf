@@ -129,5 +129,39 @@ module.exports = function InstallService(
       })
   }
 
+  installService.uploadFileNotInstall = function($files) {
+    var installation = new Installation('uploading')
+    $rootScope.$broadcast('installation', installation)
+    console.log("file: " + $files.length)
+    return StorageService.storeFile('apk', $files, {
+        filter: function(file) {
+          return /\.apk$/i.test(file.name)
+        }
+      })
+      .progressed(function(e) {
+        if (e.lengthComputable) {
+          installation.update(e.loaded / e.total * 100, 'uploading')
+        }
+      })
+      .then(function(res) {
+        installation.href = res.data.resources.file.href
+        return $http.get(installation.href + '/manifest')
+          .then(function(res) {
+            if (res.data.success) {
+              installation.manifest = res.data.manifest
+            }
+            else {
+              throw new Error('Unable to retrieve manifest')
+            }
+          })
+      })
+      .then(function() {
+        installation.okay('uploaded')
+      })
+      .catch(function(err) {
+        installation.fail(err.code || err.message)
+      })
+  }
+
   return installService
 }
