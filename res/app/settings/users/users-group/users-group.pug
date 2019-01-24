@@ -25,10 +25,10 @@
                                         button.wid30px(ng-disabled=" pagesGroupCount <= (params.parameters().page )" ng-click="params.page(pagesGroupCount)") >>
                                 td
                                     span.msgwidth 
-                                    | Totals: {{params.total()}}  
+                                    |  {{params.total()}}  / &nbsp;&nbsp;
                                 td
                                     span.msgwidth  
-                                    | Pages: {{params.parameters().page}} / {{pagesGroupCount}}
+                                    |  {{params.parameters().page}} / {{pagesGroupCount}}
                                 td(colspan="0")
                                     div.btn-group(uib-dropdown).floatright
                                         button.btn.btn-sm.btn-primary-outline(type='button', uib-dropdown-toggle)
@@ -118,10 +118,10 @@
                     div.selectable
                         table.blackbackground.table.dataTable.ng-table(ng-table="tableParamsPermissionOfGroup")
                             thead
-                                th.header.sortable(ng-repeat='(k,v) in tableParamsPermissionOfGroup.data[0] track by $index')
+                                th.header.sortable(ng-repeat='(k,v) in tableParamsPermissionOfGroup.data[0] track by $index' ng-if="k!='userslist' && k!= 'id' && k != 'PermissionId'")
                                     div(ng-bind='k | translate' ng-style="{width: HeadWidth(k)}")
                             tr.rowhover(ng-repeat="row in tableParamsPermissionOfGroup.data")
-                                td(ng-repeat="(kk,vv) in row" ng-click="RowClick(row)")
+                                td(ng-repeat="(kk,vv) in row" ng-click="RowClick(row)" ng-if="kk!='userslist' && kk!= 'id' && kk != 'PermissionId'")
                                     span(ng-if="kk != 'selected'") {{vv}}    
                                     input(type="checkbox" ng-if="kk == 'selected'"  disabled  ng-model="vv") 
                     

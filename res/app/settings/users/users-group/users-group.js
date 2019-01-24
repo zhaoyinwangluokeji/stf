@@ -167,18 +167,18 @@ module.exports = function UsersInfoDirective(
             $scope.FreshGroupUsersList = function () {
                 try {
                     $scope.tableParamsUsersOfGroup.reload()
+                 
                 } catch (e) {
                     console.log("[Error] $scope.tableParamsUser.reload()");
                 }
             }
-
-
 
             $scope.pagesCustomCount = Math.ceil($scope.tableParamsUsersOfGroup.total() / $scope.tableParamsUsersOfGroup.parameters().count)
 
             $scope.QueryUsersOfGroup = function () {
                 try {
                     $scope.tableParamsUsersOfGroup.reload()
+                    $scope.tableParamsUsersOfGroup.page(1)
                 } catch (e) {
                     console.log("[Error] $scope.tableParamsDate.reload()");
                 }
