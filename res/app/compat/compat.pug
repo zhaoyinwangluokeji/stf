@@ -1,0 +1,18 @@
+.stf-compat
+  .row.unselectable
+    .col-md-6
+      div(ng-include='"compat/install/install.pug"')
+    .col-md-12
+      .widget-container.fluid-height.stf-compatt-tabs
+        .widget-content.padded
+          .filtering-buttons
+          uib-tabset.overflow-auto.compat-active-tabs
+            uib-tab(active='activeTabs', select='focusSearch()')
+              uib-tab-heading
+                i.fa.fa-th-large
+                span(translate) 远程设备
+              div.compat-devices-content.selectable
+                compat-icons(tracker='tracker', columns='columns', sort='sort', filter='filter')
+
+                
+                

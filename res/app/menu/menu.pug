@@ -14,6 +14,9 @@
         a(ng-href='/#!/settings')
           span.fa.fa-gears
           span(ng-if='!$root.basicMode', translate) Settings
+        a(ng-href='/#!/compat')
+          span.fa.fa-cloud
+          span(ng-if='!$root.basicMode', translate) 兼容性测试
     
     ul.nav.stf-nav.stf-feedback.pull-right(ng-cloak, nav-menu='current').unselectable
       li.stf-nav-web-native-button(ng-if='!$root.basicMode && isControlRoute')

@@ -70,6 +70,7 @@
                         i.fa.fa-th-large
                         span(translate) UsesListOfGroup
                     div.selectable
+                        input.floatleft.QueryHeight.form-control(type="text" ng-model="activeTabs.filterGroupUserslist" ng-keyup="QueryUsersOfGroup()")
                         table.blackbackground.table.dataTable.ng-table(ng-table="tableParamsUsersOfGroup")
                             thead
                                 th.header.sortable(ng-repeat='(k,v) in tableParamsUsersOfGroup.data[0] track by $index')

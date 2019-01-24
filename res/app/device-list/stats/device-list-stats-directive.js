@@ -223,17 +223,14 @@ module.exports = function DeviceListStatsDirective(
         var target = document.getElementById(serial)
             if(target){
               if(show){
-                console.log("nodeName: " + target.nodeName)
-                if(target.nodeName == 'TR'){
-                  target.style.display="table-row"
-                }else{
-                  target.style.display="block"
+                if(target.className.indexOf('filter-out') > -1){
+                  target.classList.remove('filter-out')
                 }
               }else{
-                console.log("set display none: " + serial)
-                target.style.display="none"
+                if(target.className.indexOf('filter-out') == -1){
+                  target.classList.add('filter-out')
+                }
               }
-              // target.setAttribute('ng-show',show)
             }
       }
 
