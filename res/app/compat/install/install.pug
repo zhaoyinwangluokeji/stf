@@ -2,7 +2,6 @@
   .heading
     stacked-icon(icon='fa-upload', color='color-red')
     span(translate) App Upload
-    clear-button(ng-click='clear()', ng-disabled='!installation').btn-xs
 
   .widget-content.padded()
     .drop-area(ng-file-drop='installFile($files)', ng-file-drag-over-class='dragover').file-input.btn-file

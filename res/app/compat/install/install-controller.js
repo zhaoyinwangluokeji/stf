@@ -5,12 +5,7 @@ module.exports = function InstallCtrl(
   $scope.accordionOpen = true
   $scope.installation = null
   $scope.selected_serials = []
-
-  $scope.clear = function() {
-    $scope.installation = null
-    $scope.accordionOpen = false
-  }
-
+  
   $scope.$on('installation', function(e, installation) {
     $scope.installation = installation.apply($scope)
   })

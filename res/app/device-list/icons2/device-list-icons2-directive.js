@@ -111,7 +111,7 @@ module.exports = function DeviceListicons2Directive(
         var model = divInfo.children[0]
         var platform = divInfo.children[1]
         var display = divInfo.children[2]
-        var state = divInfo.children[3]
+        // var state = divInfo.children[3]
         var rent_button = divfoot.children[0].children[0]
         var rent_buttona = divfoot.children[0]
         var stop_rent_button = divfoot.children[1]
@@ -138,45 +138,48 @@ module.exports = function DeviceListicons2Directive(
         //  nt.nodeValue = device.enhancedName
 
         // button
-        state.firstChild.nodeValue = "状态：" + $filter('translate')(device.enhancedStateAction)
+        // state.firstChild.nodeValue = "状态：" + $filter('translate')(device.enhancedStateAction)
 
         rent_button.firstChild.nodeValue = device.enhancedRentStateMsg
 
-        function getStateClasses(state) {
-          var stateClasses = {
-            using: 'state-using btn-primary',
-            busy: 'state-busy btn-warning',
-            available: 'state-available btn-primary-outline',
-            ready: 'state-ready btn-primary-outline',
-            present: 'state-present btn-primary-outline',
-            preparing: 'state-preparing btn-primary-outline btn-success-outline',
-            unauthorized: 'state-unauthorized btn-danger-outline',
-            offline: 'state-offline btn-warning-outline',
-            automation: 'state-automation btn-info'
-          }[state]
-          if (typeof stateClasses === 'undefined') {
-            stateClasses = 'btn-default-outline'
-          }
-          return stateClasses
-        }
-        state.className = getStateClasses(device.state) + " phoneInfo"
+        // function getStateClasses(state) {
+        //   var stateClasses = {
+        //     using: 'state-using btn-primary',
+        //     busy: 'state-busy btn-warning',
+        //     available: 'state-available btn-primary-outline',
+        //     ready: 'state-ready btn-primary-outline',
+        //     present: 'state-present btn-primary-outline',
+        //     preparing: 'state-preparing btn-primary-outline btn-success-outline',
+        //     unauthorized: 'state-unauthorized btn-danger-outline',
+        //     offline: 'state-offline btn-warning-outline',
+        //     automation: 'state-automation btn-info'
+        //   }[state]
+        //   if (typeof stateClasses === 'undefined') {
+        //     stateClasses = 'btn-default-outline'
+        //   }
+        //   return stateClasses
+        // }
+        // state.className = getStateClasses(device.state) + " phoneInfo"
         function getStateClasses2(state) {
           var stateClasses = {
-            using: 'devIsBusy',
-            busy: 'devIsBusy',
+            absent: 'devFree',
+            using: 'devFree',
+            busy: 'devFree',
             available: 'devFree',
             ready: 'devFree',
-            present: 'devIsBusy',
-            preparing: 'devIspreparing',
-            unauthorized: 'devIsOutline',
-            offline: 'devIsOutline',
-            automation: 'devIsOutline'
+            present: 'devFree',
+            preparing: 'devFree',
+            unauthorized: 'devFree',
+            offline: 'devFree',
+            automation: 'devFree',
+            maintain: 'devIsOutline'
           }[state]
           if (typeof stateClasses === 'undefined') {
             stateClasses = 'devIsOutline'
           }
           return stateClasses
         }
+        // console.log('rent button device status: ' + device.state)
         var classes = 'btn btn-xs device-status devRentStatus '
         rent_button.className = classes + getStateClasses2(device.state)
 
@@ -264,7 +267,7 @@ module.exports = function DeviceListicons2Directive(
       element.on('click', function (e) {
         var user = AppState.user
         var id
-        console.log('click  ')
+        // console.log('click  ')
         var click_target = ""
 
         if (e.target.classList.contains("devRentStatus")) {
@@ -403,7 +406,7 @@ module.exports = function DeviceListicons2Directive(
 
       // Sorting
       scope.sortBy = function (column, multiple) {
-        console.log('sortBy  ')
+        // console.log('sortBy  ')
         function findInSorting(sorting) {
           for (var i = 0, l = sorting.length; i < l; ++i) {
             if (sorting[i].name === column.name) {
