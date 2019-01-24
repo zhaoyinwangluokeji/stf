@@ -173,7 +173,7 @@
                         th.header.sortable(ng-repeat='(k,v) in tableParamsPermission.data[0] track by $index' ng-if="k!='userslist' && k!= 'id' && k!='PermissionId' && k!='permissionlist'")
                             div(ng-bind='k | translate' ng-style="{width: HeadWidth(k)}")
                     tr.rowhover(ng-repeat="row in tableParamsPermission.data" ng-click="SelectRow(row)")
-                        td(ng-repeat="(kk,vv) in row" ng-if="kk!='userslist' && kk!= 'id' ")
+                        td(ng-repeat="(kk,vv) in row" ng-if="kk!='userslist' && kk!= 'id' && kk != 'PermissionId'")
                             span(ng-if="kk != 'selected'") {{vv}}    
                             input(type="checkbox" ng-if="kk == 'selected'" disabled ng-model="vv")    
                     tr  
