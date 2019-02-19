@@ -113,7 +113,8 @@ module.exports =
                                 owner: {
                                     email: AppState.user.email,
                                     group: AppState.user.group,
-                                    name: AppState.user.name
+                                    name: AppState.user.name,
+                                    NameCN:AppState.user.NameCN
                                 },
                                 project: {
                                     ProjectName: proName,
