@@ -37,7 +37,8 @@ module.exports = function UsersInfoDirective(
 
             $scope.activeTabs = {
                 users: true,
-                permission: false
+                permission: false,
+                filterGroupUserslist:""
             }
 
             $scope.IsArray = Array.isArray || function (obj) {
@@ -121,16 +122,33 @@ module.exports = function UsersInfoDirective(
                 }
             }
 
+            $scope.filterGroupUserslist = ""
+
             $scope.Query3 = function (params) {
                 if ($scope.CurGroup && $scope.CurGroup.userslist) {
                     var count = params.parameters().count
                     var page = params.parameters().page
                     console.log("count:" + count)
                     console.log("page:" + page)
-                    params.total($scope.CurGroup.userslist.length)
+                    var filter = $scope.activeTabs.filterGroupUserslist
+                    console.log("filter:" + filter)
+                    var userslist = []
+                    if (!filter || filter == "") {
+                        userslist = $scope.CurGroup.userslist
+                    } else {
+                        $scope.CurGroup.userslist.forEach(element => {
+                            if (element["email"].indexOf(filter) != -1 ||
+                                element["NameCN"].indexOf(filter) != -1 ||
+                                element["name"].indexOf(filter) != -1) {
+                                userslist.push(element)
+                            }
+
+                        });
+                    }
+                    params.total(userslist.length)
                     $scope.pagesCustomCount = Math.ceil($scope.tableParamsUsersOfGroup.total() / $scope.tableParamsUsersOfGroup.parameters().count)
 
-                    return $scope.CurGroup.userslist.slice((page - 1) * count, page * count)
+                    return userslist.slice((page - 1) * count, page * count)
 
                 } else {
                     return []
@@ -146,12 +164,21 @@ module.exports = function UsersInfoDirective(
                 }
             );
 
+            $scope.FreshGroupUsersList = function () {
+                try {
+                    $scope.tableParamsUsersOfGroup.reload()
+                 
+                } catch (e) {
+                    console.log("[Error] $scope.tableParamsUser.reload()");
+                }
+            }
 
             $scope.pagesCustomCount = Math.ceil($scope.tableParamsUsersOfGroup.total() / $scope.tableParamsUsersOfGroup.parameters().count)
 
             $scope.QueryUsersOfGroup = function () {
                 try {
                     $scope.tableParamsUsersOfGroup.reload()
+                    $scope.tableParamsUsersOfGroup.page(1)
                 } catch (e) {
                     console.log("[Error] $scope.tableParamsDate.reload()");
                 }
