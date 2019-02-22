@@ -1,4 +1,4 @@
-.widget-container.fluid-height.stf-upload(ng-controller='InstallCtrl')
+.widget-container.fluid-height.stf-upload(ng-controller='CompatInstallCtrl')
   .heading
     stacked-icon(icon='fa-upload', color='color-red')
     span(translate) App Upload
@@ -23,7 +23,7 @@
             span(translate) Processing...
             span  ({{installation.progress}}%)
           strong(ng-switch-when='uploaded')
-            span(translate) 上传已完成： {{installation.manifest.package}}
+            span(translate) 上传已完成： {{installation.manifest.package}}/{{installation.manifest.application.launcherActivities[0].name}}
             span  ({{installation.progress}}%)
 
       alert(type='danger', close='clear()', ng-if='installation.error')

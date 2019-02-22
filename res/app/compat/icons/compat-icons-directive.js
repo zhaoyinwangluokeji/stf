@@ -1,7 +1,8 @@
 var patchArray = require('../util/patch-array')
 
 module.exports = function CompatIconsDirective(
-  $filter
+  $http
+  , $filter
   , GroupService
   , DeviceRentService
   , $location
@@ -243,6 +244,14 @@ module.exports = function CompatIconsDirective(
       // var prefix = 'd' + Math.floor(Math.random() * 1000000) + '-'
       var mapping = Object.create(null)
       var builder = DeviceItem()
+      scope.uninstall = false
+
+      scope.changeUninstall = function(){
+        console.log('uninstall state: ' + scope.uninstall)
+      }
+      scope.change = function(){
+        scope.uninstall = !scope.uninstall
+      }
 
       //过滤功能
       var filter_list = {
@@ -259,7 +268,39 @@ module.exports = function CompatIconsDirective(
       scope.installation = null
       scope.$on('installation', function(e, installation) {
         scope.installation = installation.apply(scope)
+        
       })
+
+      scope.submit = function(){
+        var user = AppState.user
+        if(scope.installation == null){
+          alert('请上传apk')
+          return
+        }else if(selected_serials.length == 0){
+          alert('请选择设备')
+          return
+        }
+        var submitTime = new Date()
+        var data = {
+          id: scope.installation.id,
+          serials: selected_serials,
+          package: scope.installation.manifest.package,
+          activity: scope.installation.manifest.application.launcherActivities[0].name,
+          version: scope.installation.manifest.versionName,
+          uninstall: scope.uninstall,
+          time: submitTime,
+          user: user.name,
+        }
+        $http.post('/c/compat/install', data)
+          .success(function (response) {
+           console.log("success: " + JSON.stringify(response))
+           alert('提测成功，请切换到结果测试页面查看进度')
+          })
+          .error(function (response) {
+            console.log("fail: " + JSON.stringify(response))
+          })
+
+      }
 
       function addToData(tag, device, targetData) {
         var value = ""
@@ -281,10 +322,11 @@ module.exports = function CompatIconsDirective(
         }
         targetData.push(value)
         console.log("adding Data: " + JSON.stringify(targetData))
+        
       }
 
       scope.clickFilter = function(tag,manu,myevent){
-        console.log("tag: " + tag)
+        // console.log("tag: " + tag)
         var target = myevent.target
         if(target.className == 'filterOn'){
           target.className = 'filterOff'
@@ -300,7 +342,7 @@ module.exports = function CompatIconsDirective(
       }
 
       filterDeviceShow = function(){
-        console.log("current_device_serials: " + JSON.stringify(current_device_serials))
+        // console.log("current_device_serials: " + JSON.stringify(current_device_serials))
         filtered_serials = current_device_serials.slice(0)
         var tmp = {} 
         for(var k in filter_list){
@@ -312,7 +354,7 @@ module.exports = function CompatIconsDirective(
             current_device_serials.forEach(d => {
               filter_list[k].forEach(ele => {
                 var value=''
-                console.log("d: " + d)
+                // console.log("d: " + d)
                 if(k == 'display'){
                   value = tracker.get(d).display.width + "x" + tracker.get(d).display.height
                 }else{
@@ -325,8 +367,8 @@ module.exports = function CompatIconsDirective(
             });
           }
         }
-        console.log("tmp: " + JSON.stringify(tmp))
-        console.log("filtered_serials: " + JSON.stringify(filtered_serials))
+        // console.log("tmp: " + JSON.stringify(tmp))
+        // console.log("filtered_serials: " + JSON.stringify(filtered_serials))
         current_device_serials.forEach(ele => {
           var i = filtered_serials.indexOf(ele)
           if(i > -1){
@@ -493,6 +535,7 @@ module.exports = function CompatIconsDirective(
         addToData("version", device, scope.CompatVersionData)
         addToData("manufacturer", device, scope.CompatManufacturerData)
         addToData("platform", device, scope.CompatPlatformData)
+        scope.$apply();
       }
 
       // Triggers when the tracker notices that a device changed.
@@ -517,6 +560,7 @@ module.exports = function CompatIconsDirective(
         addToData("version", device, scope.CompatVersionData)
         addToData("manufacturer", device, scope.CompatManufacturerData)
         addToData("platform", device, scope.CompatPlatformData)
+        scope.$apply();
       }
 
       // Triggers when a device is removed entirely from the tracker.

@@ -1,4 +1,4 @@
-module.exports = function InstallCtrl(
+module.exports = function CompatInstallCtrl(
   $scope
 , InstallService
 ) {
@@ -23,7 +23,9 @@ module.exports = function InstallCtrl(
     if ($files.length) {
       return InstallService.uploadFileNotInstall($files)
       .then(function(){
-        console.log("installation href: " + JSON.stringify($scope.installation.href))
+        console.log("installation id: " + $scope.installation.id)
+        console.log("installation href: " + $scope.installation.href)
+        console.log("installation activity: " + $scope.installation.manifest.package + $scope.installation.manifest.application.launcherActivities[0].name)
       })
     }
   }

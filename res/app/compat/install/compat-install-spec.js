@@ -1,6 +1,6 @@
-describe('InstallCtrl', function() {
+describe('CompatInstallCtrl', function() {
 
-  beforeEach(angular.mock.module(require('./').name))
+  beforeEach(angular.mock.module(require('.').name))
 
   var scope, ctrl
 

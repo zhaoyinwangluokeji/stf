@@ -1,0 +1,72 @@
+.task-list {
+    margin: 0 auto;
+    width: 80%;
+    display:block;
+    background-color: #fff;
+}
+
+.taskv thead th {
+    height: 48px;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #fff;
+    margin: 0 auto;
+    padding: 0 auto;
+}
+
+.report-td {
+    cursor: pointer;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #4f79df;
+}
+
+tbody tr td {
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 15px;
+}
+
+.background {
+    background-color: #eee;
+}
+
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 0 auto;
+    padding: 0 auto;
+    width: 90%;
+    background-color: #fff;
+}
+
+.taskv thead {
+    background-color: #26cb8f;
+}
+th {
+    font-weight: bold;
+    display:flex;
+    text-align: -internal-center;
+}
+
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+    width: 14%;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+.back-to-result {
+    float: right;
+    font-size: 25px;
+}

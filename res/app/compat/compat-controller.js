@@ -24,11 +24,18 @@ module.exports = function CompatCtrl(
 
   $scope.filter = []
 
-  $scope.activeTabs = true
+  $scope.activeCompatTabs = {
+    commit: true,
+    result: false
+  }
+
+  $scope.focusSearch =  function(){
+    console.log("activieTabs: " + JSON.stringify($scope.activeCompatTabs))
+  }
 
   SettingsService.bind($scope, {
-    target: 'activeTabs'
-    , source: 'deviceListActiveTabs'
+    target: 'activeCompatTabs'
+    , source: 'deviceListactiveCompatTabs'
   })
 
 }

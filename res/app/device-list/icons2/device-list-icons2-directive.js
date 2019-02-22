@@ -163,8 +163,8 @@ module.exports = function DeviceListicons2Directive(
         function getStateClasses2(state) {
           var stateClasses = {
             absent: 'devFree',
-            using: 'devFree',
-            busy: 'devFree',
+            using: 'devIsOutline',
+            busy: 'devIsOutline',
             available: 'devFree',
             ready: 'devFree',
             present: 'devFree',

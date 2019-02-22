@@ -1,18 +1,17 @@
-require('./install.css')
+require('./compat-install.css')
 
 require('ng-file-upload')
 
-module.exports = angular.module('stf.install', [
+module.exports = angular.module('stf.compat-install', [
   'angularFileUpload',
-  require('./activities').name,
   require('stf/settings').name,
   require('stf/storage').name,
   require('stf/install').name,
   require('stf/upload').name
 ])
   .run(['$templateCache', function($templateCache) {
-    $templateCache.put('compat/install/install.pug',
-      require('./install.pug')
+    $templateCache.put('compat/install/compat-install.pug',
+      require('./compat-install.pug')
     )
   }])
-  .controller('InstallCtrl', require('./install-controller'))
+  .controller('CompatInstallCtrl', require('./compat-install-controller'))
