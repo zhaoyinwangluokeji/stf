@@ -5,16 +5,6 @@ module.exports =
         var DeviceRentService = {}
         var rent_time = [
             {
-                time: 1,
-                title: "1分钟",
-                selected: false
-            },
-            {
-                time: 10,
-                title: "10分钟",
-                selected: false
-            },
-            {
                 time: 30,
                 title: "30分钟",
                 selected: false
@@ -30,25 +20,8 @@ module.exports =
                 selected: true
             },
             {
-                time: 240,
-                title: "4小时",
-                selected: false
-            },
-            {
-                time: 480,
-                title: "8小时",
-                selected: false
-            }
-            ,
-            {
-                time: 720,
-                title: "12小时",
-                selected: false
-            }
-            ,
-            {
-                time: 1440,
-                title: "24小时",
+                time: 210,
+                title: "3.5小时",
                 selected: false
             }
         ]

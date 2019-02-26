@@ -271,3 +271,10 @@ ul.devices-icon-view .devices-icon-rent-info{
 .compat-item{
   cursor: pointer!important;
 }
+.compat-checkbox {
+  zoom: 2;
+}
+
+.compat-info{
+  font-size: 25px;
+}

@@ -19,6 +19,7 @@ module.exports = function InstallService(
     this.href = null
     this.manifest = null
     this.launch = true
+    this.id = ''
   }
 
   Installation.prototype = Object.create(EventEmitter.prototype)
@@ -26,7 +27,7 @@ module.exports = function InstallService(
 
   Installation.prototype.apply = function($scope) {
     function changeListener() {
-      $scope.safeApply()
+      $scope.$apply()
     }
 
     this.on('change', changeListener)
@@ -145,6 +146,7 @@ module.exports = function InstallService(
       })
       .then(function(res) {
         installation.href = res.data.resources.file.href
+        installation.id = res.data.resources.file.id
         return $http.get(installation.href + '/manifest')
           .then(function(res) {
             if (res.data.success) {
@@ -159,6 +161,7 @@ module.exports = function InstallService(
         installation.okay('uploaded')
       })
       .catch(function(err) {
+        console.log('Error:  ' + err.message)
         installation.fail(err.code || err.message)
       })
   }

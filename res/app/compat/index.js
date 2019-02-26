@@ -10,6 +10,8 @@ module.exports = angular.module('compat', [
   require('stf/settings').name,
   require('./empty').name,
   require('./icons').name,
+  require('./report').name,
+  require('./result').name,
   require('./customize').name,
   require('ui-bootstrap').name,
   require('./install/index').name,

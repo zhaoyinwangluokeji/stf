@@ -17,3 +17,10 @@ ul.devices-icon-view
 device-list-empty(tracker='tracker()')
 .clear-fix
 .line
+.widget-container.device-statics.filter
+  .hr-line-dashed.filter-line
+  input.compat-checkbox(type="checkbox" ng-model="uninstall" ng-change="changeUninstall()")
+  span.compat-info(ng-click='change()') 勾选卸载原有App
+.widget-container.device-statics.filter
+  .hr-line-dashed.filter-line
+  button.devFree.compat-info(ng-click='submit()') 提交
