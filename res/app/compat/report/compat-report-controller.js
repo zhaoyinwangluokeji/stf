@@ -8,6 +8,7 @@ module.exports = function CompatReportCtrl(
 
   $scope.compat_report_brief = {}
   $scope.compat_report_detail = null
+  $scope.compat_defalt_list_value = '-'
   $scope.report_id = null
   $scope.success_rate = '0%'
   $scope.if_uninstall = '否'
@@ -195,7 +196,7 @@ module.exports = function CompatReportCtrl(
     }]
     $scope.summaryData.data.labels = []
     $scope.summaryData.data.datasets[0].data.push($scope.compat_report_detail.passed)
-    $scope.summaryData.data.datasets[0].backgroundColor.push('#46BFBD')
+    $scope.summaryData.data.datasets[0].backgroundColor.push('#21f505')
     $scope.summaryData.data.labels.push('测试通过')
 
     $scope.summaryData.data.datasets[0].data.push($scope.compat_report_detail.finished - $scope.compat_report_detail.passed)

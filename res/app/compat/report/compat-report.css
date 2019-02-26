@@ -158,3 +158,11 @@ tr {
 .detail-list-head {
     cursor: pointer;
 }
+
+.finished {
+    color: rgb(16, 223, 44);
+}
+
+.failed {
+    color: rgba(240, 14, 14, 0.829);
+}
