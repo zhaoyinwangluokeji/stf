@@ -9,6 +9,9 @@
                             p 应用包名：
                                 span {{compat_report_detail.packageName}}
                         .app-info
+                            p 入口Activity：
+                                span {{compat_report_detail.activity}}
+                        .app-info
                             p 版本：
                                 span {{compat_report_detail.appVersion}}
                         .app-info
@@ -71,5 +74,29 @@
                             td {{x.launchTime}}
                             td {{x.hotLuanchTime}}
                             td(class='{{x.currentState}}') {{x.currentState}}
+
+        p.problem-distribution 错误记录
+        .errors
+            .task-box
+                table
+                    thead
+                        th.detail-list-head(ng-click="selectOrder('manufacturer')") 品牌
+                            img(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAJBJREFUOBFjYBjU4P///4wgjM+RTLgkgRo5gXK7QBjKxqUUUxykAYh3AzEMgNggAwkDkEIgRtZMmiFA1QthOrDQC9GdgBFAQE0yQEXi6Aqh/JeMjIxPcMiRJ4zNBXOBRnngMG4H0AXJOOQgwkAvaAHxCyz+B4lp4dUMk8RiCPGasRhCumYkQ5SArlGC8QcnDQCbdbHzbq5axQAAAABJRU5ErkJggg==")
+                        th.detail-list-head(ng-click="selectOrder('model')") 型号
+                            img(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAJBJREFUOBFjYBjU4P///4wgjM+RTLgkgRo5gXK7QBjKxqUUUxykAYh3AzEMgNggAwkDkEIgRtZMmiFA1QthOrDQC9GdgBFAQE0yQEXi6Aqh/JeMjIxPcMiRJ4zNBXOBRnngMG4H0AXJOOQgwkAvaAHxCyz+B4lp4dUMk8RiCPGasRhCumYkQ5SArlGC8QcnDQCbdbHzbq5axQAAAABJRU5ErkJggg==")
+                        th.detail-list-head(ng-click="selectOrder('platformVersion')") 系统版本
+                            img(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAJBJREFUOBFjYBjU4P///4wgjM+RTLgkgRo5gXK7QBjKxqUUUxykAYh3AzEMgNggAwkDkEIgRtZMmiFA1QthOrDQC9GdgBFAQE0yQEXi6Aqh/JeMjIxPcMiRJ4zNBXOBRnngMG4H0AXJOOQgwkAvaAHxCyz+B4lp4dUMk8RiCPGasRhCumYkQ5SArlGC8QcnDQCbdbHzbq5axQAAAABJRU5ErkJggg==")
+                        th.detail-list-head(ng-click="selectOrder('installTime')") 错误信息
+                            img(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAJBJREFUOBFjYBjU4P///4wgjM+RTLgkgRo5gXK7QBjKxqUUUxykAYh3AzEMgNggAwkDkEIgRtZMmiFA1QthOrDQC9GdgBFAQE0yQEXi6Aqh/JeMjIxPcMiRJ4zNBXOBRnngMG4H0AXJOOQgwkAvaAHxCyz+B4lp4dUMk8RiCPGasRhCumYkQ5SArlGC8QcnDQCbdbHzbq5axQAAAABJRU5ErkJggg==")
+                        th.detail-list-head(ng-click="selectOrder('currentState')") 执行结果
+                            img(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAJBJREFUOBFjYBjU4P///4wgjM+RTLgkgRo5gXK7QBjKxqUUUxykAYh3AzEMgNggAwkDkEIgRtZMmiFA1QthOrDQC9GdgBFAQE0yQEXi6Aqh/JeMjIxPcMiRJ4zNBXOBRnngMG4H0AXJOOQgwkAvaAHxCyz+B4lp4dUMk8RiCPGasRhCumYkQ5SArlGC8QcnDQCbdbHzbq5axQAAAABJRU5ErkJggg==")
+
+                    tbody
+                        tr(ng-repeat='x in compat_report_detail.data | orderBy:order track by $index')
+                            td(ng-show='x.currentState=="failed"') {{x.manufacturer}}
+                            td(ng-show='x.currentState=="failed"') {{x.model}}
+                            td(ng-show='x.currentState=="failed"') {{x.platformVersion}}
+                            td(ng-show='x.currentState=="failed"') {{x.installErrorMsg}} {{x.launchErrorMsg}}
+                            td(class='{{x.currentState}}' ng-show='x.currentState=="failed"') {{x.currentState}}
 
 

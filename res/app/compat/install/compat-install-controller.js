@@ -1,10 +1,14 @@
 module.exports = function CompatInstallCtrl(
   $scope
+, $rootScope
 , InstallService
 ) {
   $scope.accordionOpen = true
   $scope.installation = null
   $scope.selected_serials = []
+  $scope.activityFound = true
+  
+
   
   $scope.$on('installation', function(e, installation) {
     $scope.installation = installation.apply($scope)
@@ -24,10 +28,8 @@ module.exports = function CompatInstallCtrl(
       return InstallService.uploadFileNotInstall($files)
       .then(function(){
         console.log('installation manifest: ' + JSON.stringify($scope.installation.manifest))
-        console.log("installation id: " + $scope.installation.id)
-        console.log("installation href: " + $scope.installation.href)
-        console.log("installation activity: " + $scope.installation.manifest.package + $scope.installation.manifest.application.launcherActivities[0].name)
       })
     }
   }
+  
 }

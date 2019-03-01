@@ -67,10 +67,10 @@ module.exports = function DeviceListicons2Directive(
         display.appendChild(document.createTextNode(''))
         divInfo.appendChild(display)
 
-        var state = document.createElement('div')
-        state.className = "phoneInfo"
-        state.appendChild(document.createTextNode(''))
-        divInfo.appendChild(state)
+        var location = document.createElement('div')
+        location.className = "phoneInfo"
+        location.appendChild(document.createTextNode(''))
+        divInfo.appendChild(location)
 
         var divFoot = document.createElement('div')
         //  divFoot.appendChild(document.createTextNode(''))
@@ -111,7 +111,7 @@ module.exports = function DeviceListicons2Directive(
         var model = divInfo.children[0]
         var platform = divInfo.children[1]
         var display = divInfo.children[2]
-        // var state = divInfo.children[3]
+        var location = divInfo.children[3]
         var rent_button = divfoot.children[0].children[0]
         var rent_buttona = divfoot.children[0]
         var stop_rent_button = divfoot.children[1]
@@ -127,6 +127,7 @@ module.exports = function DeviceListicons2Directive(
 
         manufacturer.nodeValue = device.manufacturer
         model.firstChild.nodeValue = "型号：" + device.enhancedName
+        location.firstChild.nodeValue = "所在地：" + device.deviceLocation
         platform.firstChild.nodeValue = "系统：" + device.platform + "" + device.version
         if (device.display) {
           display.firstChild.nodeValue = "分辨率:" + device.display.width + "X" + device.display.height
@@ -142,24 +143,7 @@ module.exports = function DeviceListicons2Directive(
 
         rent_button.firstChild.nodeValue = device.enhancedRentStateMsg
 
-        // function getStateClasses(state) {
-        //   var stateClasses = {
-        //     using: 'state-using btn-primary',
-        //     busy: 'state-busy btn-warning',
-        //     available: 'state-available btn-primary-outline',
-        //     ready: 'state-ready btn-primary-outline',
-        //     present: 'state-present btn-primary-outline',
-        //     preparing: 'state-preparing btn-primary-outline btn-success-outline',
-        //     unauthorized: 'state-unauthorized btn-danger-outline',
-        //     offline: 'state-offline btn-warning-outline',
-        //     automation: 'state-automation btn-info'
-        //   }[state]
-        //   if (typeof stateClasses === 'undefined') {
-        //     stateClasses = 'btn-default-outline'
-        //   }
-        //   return stateClasses
-        // }
-        // state.className = getStateClasses(device.state) + " phoneInfo"
+
         function getStateClasses2(state) {
           var stateClasses = {
             absent: 'devFree',

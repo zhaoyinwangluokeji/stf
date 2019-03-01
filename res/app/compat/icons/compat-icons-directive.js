@@ -268,24 +268,38 @@ module.exports = function CompatIconsDirective(
       scope.installation = null
       scope.$on('installation', function(e, installation) {
         scope.installation = installation.apply(scope)
-        
       })
+      scope.ctrlScope = scope
+      scope.appAct = {value:''}
+      scope.saveAct = function(){
+        console.log('scope.appAct:' + scope.appAct.value)
+        scope.$apply()
+      }
 
       scope.submit = function(){
         var user = AppState.user
         if(scope.installation == null){
           alert('请上传apk')
           return
+        }else if(!scope.installation.manifest.application.launcherActivities && scope.appAct.value == ''){
+          alert('请手动设置入口Activity，并且不能为空')
+          console.log('scope.appAct:' + scope.appAct.value)
+          // scope.activityFound = false
+          return
         }else if(selected_serials.length == 0){
           alert('请选择设备')
           return
         }
         var submitTime = new Date()
+        if(scope.appAct.value == ''){
+          scope.appAct.value = scope.installation.manifest.application.launcherActivities[0].name
+        }
         var data = {
+          href: scope.installation.href,
           id: scope.installation.id,
           serials: selected_serials,
           package: scope.installation.manifest.package,
-          activity: scope.installation.manifest.application.launcherActivities[0].name,
+          activity: scope.appAct.value,
           version: scope.installation.manifest.versionName,
           uninstall: scope.uninstall,
           time: submitTime,

@@ -166,3 +166,10 @@ tr {
 .failed {
     color: rgba(240, 14, 14, 0.829);
 }
+
+.problem-distribution {
+    font-family: PingFangSC-Medium;
+    font-size: 24px;
+    color: #333;
+    padding: 20px 0;
+}
