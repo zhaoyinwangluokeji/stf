@@ -1,0 +1,294 @@
+ul.devices-icon-view {
+  margin: 0;
+  display: inline-block;
+  list-style-type: none;
+  font-family: 'HelveticaNeue-UltraLight', Helvetica, Arial, sans-serif;
+}
+
+ul.devices-icon-view li {
+  width: 205px;
+  height: 210px;
+  background: white;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  border: 1px solid #e9e9e9;
+  float: left;
+  clear: none;
+  margin: 6px;
+  text-align: left;
+}
+.floatleft{
+  float: left;
+}
+.floatright{
+  float: right;
+}
+.headerbtn{
+  width: 30px;
+   
+}
+
+.compat-phoneInfoHeader {
+  background-position: left top;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  line-height: 30px;
+  color:black;
+  padding: 0px;
+  background: rgb(147, 101, 223);
+  height: 32px;
+  border-bottom: 0 solid #e5e5e5;
+  margin-top: 0;
+  font-family: 微软雅黑;
+}
+
+.phoneInfoBody {
+  height: 125px;
+  padding-top: 5px;
+  padding-left: 1px;
+  margin-bottom: 5px;
+}
+.phoneInfoFoot {
+  margin: 0px;
+}
+.devRentStatus {
+  text-align: center;
+  display: block;
+  padding: 0;
+  line-height: 30px;
+  border-radius: 6px;
+  width: 180px;
+  height: 32px;
+  margin: auto;
+}
+
+.devRentStatus2 {
+  text-align: center;
+  display: block;
+  padding: 0;
+  line-height: 30px;
+  border-radius: 6px;
+  width: 140px;
+  height: 32px;
+  margin: auto;
+  float: left;
+}
+
+
+.devStopBtn {
+  text-align: center;
+  display: block;
+  padding: 0;
+  line-height: 30px;
+  border-radius: 6px;
+  width: 40px;
+  height: 32px;
+  margin: auto;
+  float: right;
+  margin-top: 4px;
+}
+
+.devStopBtn {
+  cursor: pointer;
+  color: black;
+  background: red;
+}
+
+.devFree {
+  cursor: pointer;
+  color: #fff;
+  background: #00A55A;
+}
+.devIsBusy {
+  cursor: pointer;
+  color:black;
+  background: #FFB40C
+}
+.devIspreparing {
+  cursor: pointer;
+  color:black;
+  background:Khaki
+}
+.devIsOutline {
+  cursor: pointer;
+  color:black;
+  background: Gainsboro
+}
+
+.phoneInfo{
+  margin-left: 5px;
+  word-break: break-all;
+  color: #333333;
+  padding-bottom: 8px;
+  font-size: 12px;
+  font-family: 微软雅黑;
+}
+
+.phoneInfoList {
+  width: 120px;
+  float: right;
+  margin: 0;
+  padding: 0;
+}
+/*
+.phoneImg {
+  width: 68px;
+  height: 100px;
+  background-position: left top;
+  float: left;
+}*/
+
+.phoneImgDiv {
+  width: 65px;
+  height: 100px;
+  background-position: left top;
+  float: left;
+  padding-top: 5px
+}
+
+.phoneImg{ 
+  width:auto;
+  height:auto;
+  max-width:100%;
+  max-height:100%;
+  margin: 0px;
+}
+
+.phone {
+  border-radius: 8px;
+  border: 1px solid #e6e6e6;
+  width: 200px;
+  height: 220px;
+  float: left;
+  padding: 0;
+  overflow: hidden;
+  margin-bottom: 30px;
+  border-top-style: hidden;
+}
+
+.display{
+  display: inline;
+}
+.nonedisplay{
+  display: none;
+}
+
+ul.devices-icon-view li:active {
+  -webkit-filter: brightness(95%);
+  filter: brightness(95%);
+}
+
+
+ul.devices-icon-view li:hover {
+  background-color: #fcfcfc;
+}
+
+ul.devices-icon-view li:hover .device-photo-small img {
+  -webkit-filter: brightness(120%);
+  filter: brightness(120%);
+}
+
+ul.devices-icon-view .device-photo-small {
+  margin-top: 8px;
+  margin-bottom: 10px;
+}
+
+ul.devices-icon-view .device-photo-small img {
+  width: auto;
+  height: 90px;
+  max-width: 95%; /* TODO: Fix this with a new container */
+}
+
+ul.devices-icon-view .device-name-bigtext {
+  display: inline-block;
+  width: 80%;
+}
+
+ul.devices-icon-view .device-name {
+  color: #3FA9F5;
+  font-size: 16px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+ul.devices-icon-view .device-product {
+  font-size: 16px;
+  color: #555;
+}
+
+
+
+.compat-select {
+  cursor: pointer!important;
+}
+
+
+ul.devices-icon-view .device-status.state-available {
+  /* display: none; */
+  max-height: 45px;
+}
+
+ul.devices-icon-view .device-name.state-available {
+  white-space: normal;
+  max-height: 45px;
+}
+
+ul.devices-icon-view .devices-icon-rent-info.state-available {
+  white-space: normal;
+  max-height: 45px;
+}
+
+ul.devices-icon-view .devices-icon-rent-info{
+  display: block;
+}
+
+.filter-out {
+  display: none;
+}
+
+.compat-selected {
+  border: 1px solid #26cb8f!important;
+}
+
+.checkImg {
+  float: right;
+  max-width: 100%;
+  height: auto;
+  list-style: none;
+  outline: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.input-act {
+  width: 100px;
+}
+
+.manual-act {
+  color: rgba(240, 8, 8, 0.568)
+}
+
+.act-saved {
+  color: rgb(74, 2, 207)
+}
+
+.isChecked {
+  display: block!important;
+}
+
+.isUnChecked {
+  display: none!important;
+}
+
+.compat-item{
+  cursor: pointer!important;
+}
+.compat-checkbox {
+  zoom: 2;
+}
+
+.compat-info{
+  font-size: 25px;
+}

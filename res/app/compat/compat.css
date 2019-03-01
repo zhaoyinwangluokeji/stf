@@ -1,0 +1,106 @@
+.compat {
+  color: deepskyblue;
+}
+
+.stf-compat .filtering-buttons {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+.stf-compat .device-not-usable {
+  color: #bbb
+}
+
+.stf-compat .device-not-usable img {
+  /* opacity: 0.8; */
+}
+
+.stf-compat .device-not-usable .btn {
+  /* cursor: not-allowed; */
+}
+
+.stf-compat .devices-not-available {
+  background: #f6f6f6;
+}
+
+.stf-compat .line {
+  height: 1px;
+  width: 100%;
+  border-bottom: 1px solid #e2e2e2;
+  margin: 0;
+}
+
+.stf-compat .device-status {
+  margin-top: 4px;
+}
+
+img.device-icon-smallest {
+  width: 12px;
+  margin-right: 6px;
+}
+
+.stf-compat .device-small-image {
+  margin-right: 8px;
+  width: 13px;
+  display: inline-block;
+}
+
+.stf-compat .device-small-image img {
+  height: 20px;
+  min-width: 10px;
+  max-width: 100%;
+}
+
+.stf-compat .device-browser-list img {
+  width: 18px;
+  height: 18px;
+  margin-right: 3px;
+}
+
+.compat-active-tabs.ng-enter {
+  -webkit-transition: 250ms;
+  transition: 250ms;
+  opacity: 0;
+}
+
+.compat-active-tabs.ng-enter-active {
+  opacity: 1;
+}
+
+.stf-compat .device-product-name-unusable {
+  color: inherit;
+}
+
+.stf-compat .device-product-name-using {
+  border-bottom: 1px solid; /* leaving out the color inherits text color */
+}
+
+.stf-compat .device-note {
+}
+
+.stf-compat .device-note-edit {
+  margin-left: 15px;
+  visibility: hidden;
+}
+
+.stf-compat .device-note:hover .device-note-edit {
+  visibility: visible;
+}
+
+.full button span {
+  background-color: limegreen;
+  border-radius: 32px;
+  color: black;
+}
+.partially button span {
+  background-color: orange;
+  border-radius: 32px;
+  color: black;
+}
+.DatepickerWidth{
+  width: 200px;
+}
+.DateAlignRight{
+  float:right;
+}

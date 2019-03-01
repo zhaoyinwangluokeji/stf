@@ -1,0 +1,16 @@
+.widget-container.background(ng-controller='CompatResultCtrl')
+    button.back-to-result(ng-click='backToResult()' ng-show='!show_list') 返回结果列表
+    .task-list(ng-show='show_list')
+        table.taskv
+            thead
+                th 任务状态
+                th 包名
+                th 测试台数
+                th 提交时间
+                th 更新时间
+                th 通过率
+                th 操作
+                th 提交人
+            tbody#result-body
+    .report-detail(ng-show='!show_list')
+        div(ng-include='"compat/report/compat-report.pug"')

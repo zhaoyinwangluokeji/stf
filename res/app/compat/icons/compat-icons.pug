@@ -1,0 +1,31 @@
+.widget-container.device-statics.filter
+  .hr-line-dashed.filter-line
+  div(ng-if='installation != null && !installation.manifest.application.launcherActivities')
+    span.manual-act 未成功解析出入口Activity，请手动设置：
+    span.input-act
+      input(ng-model='appAct.value')
+  .hr-line-dashed.filter-line
+  dl.clearfix
+    dt 手机品牌： 
+    dd.filterOff(ng-repeat="ii in CompatManufacturerData", ng-click='clickFilter("manufacturer",ii,$event)') {{ii}}
+  dl.clearfix
+    dt 系统版本： 
+    dd.filterOff(ng-repeat="jj in CompatVersionData", ng-click='clickFilter("version",jj,$event)') {{jj}}
+  dl.clearfix
+    dt 分辨率： 
+    dd.filterOff(ng-repeat="kk in CompatScreensizeData", ng-click='clickFilter("display",kk,$event)') {{kk}}
+  dl.clearfix
+    dt 平台类型： 
+    dd.filterOff(ng-repeat="ll in CompatPlatformData", ng-click='clickFilter("platform",ll,$event)') {{ll}}
+
+ul.devices-icon-view
+device-list-empty(tracker='tracker()')
+.clear-fix
+.line
+.widget-container.device-statics.filter
+  .hr-line-dashed.filter-line
+  input.compat-checkbox(type="checkbox" ng-model="uninstall" ng-change="changeUninstall()")
+  span.compat-info(ng-click='change()') 勾选卸载原有App
+.widget-container.device-statics.filter
+  .hr-line-dashed.filter-line
+  button.devFree.compat-info(ng-click='submit()') 提交

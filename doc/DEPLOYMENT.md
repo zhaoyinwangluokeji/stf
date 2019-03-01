@@ -52,6 +52,7 @@ The app role can contain any of the following units. You may distribute them as 
 * [stf-storage-plugin-apk@.service](#stf-storage-plugin-apkservice)
 * [stf-storage-plugin-image@.service](#stf-storage-plugin-imageservice)
 * [stf-storage-temp@.service](#stf-storage-tempservice)
+* [stf-compat@.service](#stf-compatservice)
 * [stf-triproxy-app.service](#stf-triproxy-appservice)
 * [stf-triproxy-dev.service](#stf-triproxy-devservice)
 * [stf-websocket@.service](#stf-websocketservice)
@@ -558,6 +559,35 @@ ExecStart=/usr/bin/docker run --rm \
   -p %i:3000 \
   openstf/stf:latest \
   stf storage-temp --port 3000 \
+    --save-dir /data
+ExecStop=-/usr/bin/docker stop -t 10 %p-%i
+```
+
+### `stf-compat@.service`
+
+This is a template unit, meaning that you'll need to start it with an instance identifier. In this example configuration the identifier is used to specify the exposed port number (i.e. `stf-compat@3500.service` runs on port 3500). Currently, **you cannot have more than one instance of this unit**, as both temporary files and an in-memory mapping is used. Using a template unit makes it easy to set the port.
+
+```ini
+[Unit]
+Description=STF compat
+After=docker.service
+Requires=docker.service
+
+[Service]
+EnvironmentFile=/etc/environment
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=/usr/bin/docker pull openstf/stf:latest
+ExecStartPre=-/usr/bin/docker kill %p-%i
+ExecStartPre=-/usr/bin/docker rm %p-%i
+ExecStartPre=/bin/mkdir -p /mnt/compat
+ExecStartPre=/bin/chmod 777 /mnt/compat
+ExecStart=/usr/bin/docker run --rm \
+  --name %p-%i \
+  -v /mnt/compat:/data \
+  -p %i:3000 \
+  openstf/stf:latest \
+  stf compat --port 3000 \
     --save-dir /data
 ExecStop=-/usr/bin/docker stop -t 10 %p-%i
 ```

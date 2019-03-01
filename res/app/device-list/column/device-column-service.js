@@ -32,7 +32,7 @@ module.exports = function DeviceColumnService(
   // Definitions for all possible values.
   return {
     state: DeviceStatusCell({
-      title: gettext('Status')
+      title: gettext('状态')
       , value: function (device) {
         return $filter('translate')(device.enhancedStateAction)
       }
@@ -806,7 +806,10 @@ function DeviceRentCell(options, DeviceRentService, $location, AppState, GroupSe
       if (device.device_rent_conf && device.device_rent_conf.rent && !stateClasses[device.state]) {
         a.className = 'btn btn-xs device-rent-status btn-outline-rent rowhover '
 
-      } else {
+      } else if(device.deviceType == '现场测试'){
+        a.className = 'btn btn-xs device-rent-status state-available btn-primary-outline'
+      }
+      else{
         a.className = 'btn btn-xs device-rent-status ' +
           (stateClasses[device.state] || 'btn-default-outline')
       }

@@ -37,7 +37,8 @@ module.exports = function UsersInfoDirective(
 
             $scope.activeTabs = {
                 users: true,
-                permission: false
+                permission: false,
+                filterGroupUserslist:""
             }
 
             $scope.IsArray = Array.isArray || function (obj) {
@@ -121,28 +122,63 @@ module.exports = function UsersInfoDirective(
                 }
             }
 
+            $scope.filterGroupUserslist = ""
+
             $scope.Query3 = function (params) {
                 if ($scope.CurGroup && $scope.CurGroup.userslist) {
-                    return $scope.CurGroup.userslist
+                    var count = params.parameters().count
+                    var page = params.parameters().page
+                    console.log("count:" + count)
+                    console.log("page:" + page)
+                    var filter = $scope.activeTabs.filterGroupUserslist
+                    console.log("filter:" + filter)
+                    var userslist = []
+                    if (!filter || filter == "") {
+                        userslist = $scope.CurGroup.userslist
+                    } else {
+                        $scope.CurGroup.userslist.forEach(element => {
+                            if (element["email"].indexOf(filter) != -1 ||
+                                element["NameCN"].indexOf(filter) != -1 ||
+                                element["name"].indexOf(filter) != -1) {
+                                userslist.push(element)
+                            }
+
+                        });
+                    }
+                    params.total(userslist.length)
+                    $scope.pagesCustomCount = Math.ceil($scope.tableParamsUsersOfGroup.total() / $scope.tableParamsUsersOfGroup.parameters().count)
+
+                    return userslist.slice((page - 1) * count, page * count)
+
                 } else {
                     return []
                 }
             }
 
             $scope.tableParamsUsersOfGroup = new NgTableParams(
-                { count: 5 },
+                { count: 10 },
                 {
-                    counts: [5, 10, 15, 30, 50],
+                    counts: [10, 15, 30, 50],
                     getData: $scope.Query3
 
                 }
             );
+
+            $scope.FreshGroupUsersList = function () {
+                try {
+                    $scope.tableParamsUsersOfGroup.reload()
+                 
+                } catch (e) {
+                    console.log("[Error] $scope.tableParamsUser.reload()");
+                }
+            }
 
             $scope.pagesCustomCount = Math.ceil($scope.tableParamsUsersOfGroup.total() / $scope.tableParamsUsersOfGroup.parameters().count)
 
             $scope.QueryUsersOfGroup = function () {
                 try {
                     $scope.tableParamsUsersOfGroup.reload()
+                    $scope.tableParamsUsersOfGroup.page(1)
                 } catch (e) {
                     console.log("[Error] $scope.tableParamsDate.reload()");
                 }
@@ -165,7 +201,6 @@ module.exports = function UsersInfoDirective(
                 }
             );
 
-            $scope.pagesCustomCount = Math.ceil($scope.tableParamsPermissionOfGroup.total() / $scope.tableParamsPermissionOfGroup.parameters().count)
 
             $scope.QueryPermissionOfGroup = function () {
                 try {
@@ -415,7 +450,7 @@ module.exports = function UsersInfoDirective(
                         })
                         return PermissionService.AddPermissionToGroup($scope.CurGroup.GroupName, list).then(function (data) {
                             alert(JSON.stringify(data))
-                            $scope.QueryGroup ()
+                            $scope.QueryGroup()
                         }).catch(function (err) {
                             console.log("err:" + JSON.stringify(err))
                         })

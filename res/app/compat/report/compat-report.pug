@@ -1,0 +1,102 @@
+.widget-container.background(ng-controller='CompatReportCtrl')
+    div.report-tab
+        .report-info
+            dl.infomation
+                dt
+                dd
+                    .infos
+                        .app-info
+                            p 应用包名：
+                                span {{compat_report_detail.packageName}}
+                        .app-info
+                            p 入口Activity：
+                                span {{compat_report_detail.activity}}
+                        .app-info
+                            p 版本：
+                                span {{compat_report_detail.appVersion}}
+                        .app-info
+                            p 提测时间：
+                                span {{compat_report_detail.submitTime}}
+                        .app-info            
+                            p 完成时间：
+                                span {{compat_report_detail.lastUpdate}}
+                        .app-info
+                            p 设备台数：
+                                span {{compat_report_detail.taskNum}}
+                        .app-info
+                            p 成功率：
+                                span {{success_rate}}
+                        .app-info
+                            p 安装前卸载：
+                                span {{if_uninstall}}
+        
+            
+        .report-detail
+            .report-tit
+                a.show#reportInfoPane(ng-click='showInfo()')
+                    span 测试概况
+                a#reportListPane(ng-click='showList()')
+                    span 设备列表
+            .report-info(ng-show='show_info')
+                .pass-info
+                    canvas#summaryChart
+                .install-time
+                    canvas#installChart
+            .report-info2(ng-show='show_info')
+                .cold-start-time
+                    canvas#coldStartChart
+                .hot-start-time
+                    canvas#hotStartChart
+            .task-box(ng-show='show_list')
+                table
+                    thead
+                        th.detail-list-head(ng-click="selectOrder('manufacturer')") 品牌
+                            img(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAJBJREFUOBFjYBjU4P///4wgjM+RTLgkgRo5gXK7QBjKxqUUUxykAYh3AzEMgNggAwkDkEIgRtZMmiFA1QthOrDQC9GdgBFAQE0yQEXi6Aqh/JeMjIxPcMiRJ4zNBXOBRnngMG4H0AXJOOQgwkAvaAHxCyz+B4lp4dUMk8RiCPGasRhCumYkQ5SArlGC8QcnDQCbdbHzbq5axQAAAABJRU5ErkJggg==")
+                        th.detail-list-head(ng-click="selectOrder('model')") 型号
+                            img(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAJBJREFUOBFjYBjU4P///4wgjM+RTLgkgRo5gXK7QBjKxqUUUxykAYh3AzEMgNggAwkDkEIgRtZMmiFA1QthOrDQC9GdgBFAQE0yQEXi6Aqh/JeMjIxPcMiRJ4zNBXOBRnngMG4H0AXJOOQgwkAvaAHxCyz+B4lp4dUMk8RiCPGasRhCumYkQ5SArlGC8QcnDQCbdbHzbq5axQAAAABJRU5ErkJggg==")
+                        th.detail-list-head(ng-click="selectOrder('platformVersion')") 系统版本
+                            img(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAJBJREFUOBFjYBjU4P///4wgjM+RTLgkgRo5gXK7QBjKxqUUUxykAYh3AzEMgNggAwkDkEIgRtZMmiFA1QthOrDQC9GdgBFAQE0yQEXi6Aqh/JeMjIxPcMiRJ4zNBXOBRnngMG4H0AXJOOQgwkAvaAHxCyz+B4lp4dUMk8RiCPGasRhCumYkQ5SArlGC8QcnDQCbdbHzbq5axQAAAABJRU5ErkJggg==")
+                        th.detail-list-head(ng-click="selectOrder('installTime')") 安装时间（s）
+                            img(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAJBJREFUOBFjYBjU4P///4wgjM+RTLgkgRo5gXK7QBjKxqUUUxykAYh3AzEMgNggAwkDkEIgRtZMmiFA1QthOrDQC9GdgBFAQE0yQEXi6Aqh/JeMjIxPcMiRJ4zNBXOBRnngMG4H0AXJOOQgwkAvaAHxCyz+B4lp4dUMk8RiCPGasRhCumYkQ5SArlGC8QcnDQCbdbHzbq5axQAAAABJRU5ErkJggg==")
+                        th.detail-list-head(ng-click="selectOrder('launchTime')") 冷启动时间（ms）
+                            img(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAJBJREFUOBFjYBjU4P///4wgjM+RTLgkgRo5gXK7QBjKxqUUUxykAYh3AzEMgNggAwkDkEIgRtZMmiFA1QthOrDQC9GdgBFAQE0yQEXi6Aqh/JeMjIxPcMiRJ4zNBXOBRnngMG4H0AXJOOQgwkAvaAHxCyz+B4lp4dUMk8RiCPGasRhCumYkQ5SArlGC8QcnDQCbdbHzbq5axQAAAABJRU5ErkJggg==")
+                        th.detail-list-head(ng-click="selectOrder('hotLuanchTime')") 热启动时间（ms）
+                            img(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAJBJREFUOBFjYBjU4P///4wgjM+RTLgkgRo5gXK7QBjKxqUUUxykAYh3AzEMgNggAwkDkEIgRtZMmiFA1QthOrDQC9GdgBFAQE0yQEXi6Aqh/JeMjIxPcMiRJ4zNBXOBRnngMG4H0AXJOOQgwkAvaAHxCyz+B4lp4dUMk8RiCPGasRhCumYkQ5SArlGC8QcnDQCbdbHzbq5axQAAAABJRU5ErkJggg==")
+                        th.detail-list-head(ng-click="selectOrder('currentState')") 执行结果
+                            img(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAJBJREFUOBFjYBjU4P///4wgjM+RTLgkgRo5gXK7QBjKxqUUUxykAYh3AzEMgNggAwkDkEIgRtZMmiFA1QthOrDQC9GdgBFAQE0yQEXi6Aqh/JeMjIxPcMiRJ4zNBXOBRnngMG4H0AXJOOQgwkAvaAHxCyz+B4lp4dUMk8RiCPGasRhCumYkQ5SArlGC8QcnDQCbdbHzbq5axQAAAABJRU5ErkJggg==")
+
+                    tbody
+                        tr(ng-repeat='x in compat_report_detail.data | orderBy:order track by $index')
+                            td {{x.manufacturer}}
+                            td {{x.model}}
+                            td {{x.platformVersion}}
+                            td {{x.installTime}}
+                            td {{x.launchTime}}
+                            td {{x.hotLuanchTime}}
+                            td(class='{{x.currentState}}') {{x.currentState}}
+
+        p.problem-distribution 错误记录
+        .errors
+            .task-box
+                table
+                    thead
+                        th.detail-list-head(ng-click="selectOrder('manufacturer')") 品牌
+                            img(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAJBJREFUOBFjYBjU4P///4wgjM+RTLgkgRo5gXK7QBjKxqUUUxykAYh3AzEMgNggAwkDkEIgRtZMmiFA1QthOrDQC9GdgBFAQE0yQEXi6Aqh/JeMjIxPcMiRJ4zNBXOBRnngMG4H0AXJOOQgwkAvaAHxCyz+B4lp4dUMk8RiCPGasRhCumYkQ5SArlGC8QcnDQCbdbHzbq5axQAAAABJRU5ErkJggg==")
+                        th.detail-list-head(ng-click="selectOrder('model')") 型号
+                            img(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAJBJREFUOBFjYBjU4P///4wgjM+RTLgkgRo5gXK7QBjKxqUUUxykAYh3AzEMgNggAwkDkEIgRtZMmiFA1QthOrDQC9GdgBFAQE0yQEXi6Aqh/JeMjIxPcMiRJ4zNBXOBRnngMG4H0AXJOOQgwkAvaAHxCyz+B4lp4dUMk8RiCPGasRhCumYkQ5SArlGC8QcnDQCbdbHzbq5axQAAAABJRU5ErkJggg==")
+                        th.detail-list-head(ng-click="selectOrder('platformVersion')") 系统版本
+                            img(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAJBJREFUOBFjYBjU4P///4wgjM+RTLgkgRo5gXK7QBjKxqUUUxykAYh3AzEMgNggAwkDkEIgRtZMmiFA1QthOrDQC9GdgBFAQE0yQEXi6Aqh/JeMjIxPcMiRJ4zNBXOBRnngMG4H0AXJOOQgwkAvaAHxCyz+B4lp4dUMk8RiCPGasRhCumYkQ5SArlGC8QcnDQCbdbHzbq5axQAAAABJRU5ErkJggg==")
+                        th.detail-list-head(ng-click="selectOrder('installTime')") 错误信息
+                            img(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAJBJREFUOBFjYBjU4P///4wgjM+RTLgkgRo5gXK7QBjKxqUUUxykAYh3AzEMgNggAwkDkEIgRtZMmiFA1QthOrDQC9GdgBFAQE0yQEXi6Aqh/JeMjIxPcMiRJ4zNBXOBRnngMG4H0AXJOOQgwkAvaAHxCyz+B4lp4dUMk8RiCPGasRhCumYkQ5SArlGC8QcnDQCbdbHzbq5axQAAAABJRU5ErkJggg==")
+                        th.detail-list-head(ng-click="selectOrder('currentState')") 执行结果
+                            img(src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAJBJREFUOBFjYBjU4P///4wgjM+RTLgkgRo5gXK7QBjKxqUUUxykAYh3AzEMgNggAwkDkEIgRtZMmiFA1QthOrDQC9GdgBFAQE0yQEXi6Aqh/JeMjIxPcMiRJ4zNBXOBRnngMG4H0AXJOOQgwkAvaAHxCyz+B4lp4dUMk8RiCPGasRhCumYkQ5SArlGC8QcnDQCbdbHzbq5axQAAAABJRU5ErkJggg==")
+
+                    tbody
+                        tr(ng-repeat='x in compat_report_detail.data | orderBy:order track by $index')
+                            td(ng-show='x.currentState=="failed"') {{x.manufacturer}}
+                            td(ng-show='x.currentState=="failed"') {{x.model}}
+                            td(ng-show='x.currentState=="failed"') {{x.platformVersion}}
+                            td(ng-show='x.currentState=="failed"') {{x.installErrorMsg}} {{x.launchErrorMsg}}
+                            td(class='{{x.currentState}}' ng-show='x.currentState=="failed"') {{x.currentState}}
+
+

@@ -18,7 +18,12 @@
 }
 
 .widget-content .packery-item {
-  clear:both;
+  clear:both!important;
+  overflow:hidden;
+}
+
+canvas {
+  clear:both!important;
 }
 
 .stf-info .progress {

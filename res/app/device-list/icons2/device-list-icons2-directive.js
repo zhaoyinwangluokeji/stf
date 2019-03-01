@@ -67,10 +67,10 @@ module.exports = function DeviceListicons2Directive(
         display.appendChild(document.createTextNode(''))
         divInfo.appendChild(display)
 
-        var state = document.createElement('div')
-        state.className = "phoneInfo"
-        state.appendChild(document.createTextNode(''))
-        divInfo.appendChild(state)
+        var location = document.createElement('div')
+        location.className = "phoneInfo"
+        location.appendChild(document.createTextNode(''))
+        divInfo.appendChild(location)
 
         var divFoot = document.createElement('div')
         //  divFoot.appendChild(document.createTextNode(''))
@@ -111,7 +111,7 @@ module.exports = function DeviceListicons2Directive(
         var model = divInfo.children[0]
         var platform = divInfo.children[1]
         var display = divInfo.children[2]
-        var state = divInfo.children[3]
+        var location = divInfo.children[3]
         var rent_button = divfoot.children[0].children[0]
         var rent_buttona = divfoot.children[0]
         var stop_rent_button = divfoot.children[1]
@@ -127,6 +127,7 @@ module.exports = function DeviceListicons2Directive(
 
         manufacturer.nodeValue = device.manufacturer
         model.firstChild.nodeValue = "型号：" + device.enhancedName
+        location.firstChild.nodeValue = "所在地：" + device.deviceLocation
         platform.firstChild.nodeValue = "系统：" + device.platform + "" + device.version
         if (device.display) {
           display.firstChild.nodeValue = "分辨率:" + device.display.width + "X" + device.display.height
@@ -138,45 +139,31 @@ module.exports = function DeviceListicons2Directive(
         //  nt.nodeValue = device.enhancedName
 
         // button
-        state.firstChild.nodeValue = "状态：" + $filter('translate')(device.enhancedStateAction)
+        // state.firstChild.nodeValue = "状态：" + $filter('translate')(device.enhancedStateAction)
 
         rent_button.firstChild.nodeValue = device.enhancedRentStateMsg
 
-        function getStateClasses(state) {
-          var stateClasses = {
-            using: 'state-using btn-primary',
-            busy: 'state-busy btn-warning',
-            available: 'state-available btn-primary-outline',
-            ready: 'state-ready btn-primary-outline',
-            present: 'state-present btn-primary-outline',
-            preparing: 'state-preparing btn-primary-outline btn-success-outline',
-            unauthorized: 'state-unauthorized btn-danger-outline',
-            offline: 'state-offline btn-warning-outline',
-            automation: 'state-automation btn-info'
-          }[state]
-          if (typeof stateClasses === 'undefined') {
-            stateClasses = 'btn-default-outline'
-          }
-          return stateClasses
-        }
-        state.className = getStateClasses(device.state) + " phoneInfo"
+
         function getStateClasses2(state) {
           var stateClasses = {
-            using: 'devIsBusy',
-            busy: 'devIsBusy',
+            absent: 'devFree',
+            using: 'devIsOutline',
+            busy: 'devIsOutline',
             available: 'devFree',
             ready: 'devFree',
-            present: 'devIsBusy',
-            preparing: 'devIspreparing',
-            unauthorized: 'devIsOutline',
-            offline: 'devIsOutline',
-            automation: 'devIsOutline'
+            present: 'devFree',
+            preparing: 'devFree',
+            unauthorized: 'devFree',
+            offline: 'devFree',
+            automation: 'devFree',
+            maintain: 'devIsOutline'
           }[state]
           if (typeof stateClasses === 'undefined') {
             stateClasses = 'devIsOutline'
           }
           return stateClasses
         }
+        // console.log('rent button device status: ' + device.state)
         var classes = 'btn btn-xs device-status devRentStatus '
         rent_button.className = classes + getStateClasses2(device.state)
 
@@ -250,7 +237,7 @@ module.exports = function DeviceListicons2Directive(
         console.log('kickDevice  ')
         return GroupService.kick(device, force).catch(function (e) {
           //  alert($filter('translate')(gettext('Device cannot get kicked from the group')))
-          throw new Error(e)
+        //  throw new Error(e)
         })
       }
 
@@ -264,7 +251,7 @@ module.exports = function DeviceListicons2Directive(
       element.on('click', function (e) {
         var user = AppState.user
         var id
-        console.log('click  ')
+        // console.log('click  ')
         var click_target = ""
 
         if (e.target.classList.contains("devRentStatus")) {
@@ -334,7 +321,7 @@ module.exports = function DeviceListicons2Directive(
                   e.preventDefault()
                 }
               }
-              else //if (device.state === 'available') 
+              else //if (device.state === 'available')
               {
                 if (device.device_rent_conf &&
                   device.device_rent_conf.rent) {
@@ -403,7 +390,7 @@ module.exports = function DeviceListicons2Directive(
 
       // Sorting
       scope.sortBy = function (column, multiple) {
-        console.log('sortBy  ')
+        // console.log('sortBy  ')
         function findInSorting(sorting) {
           for (var i = 0, l = sorting.length; i < l; ++i) {
             if (sorting[i].name === column.name) {
@@ -796,7 +783,7 @@ module.exports = function DeviceListicons2Directive(
       });
       // tracker.devices.forEach(addListener)
       tracker.emit('emptyFilter')
-      
+
       scope.$on('$destroy', function () {
         tracker.removeListener('add', addListener)
         tracker.removeListener('change', changeListener)

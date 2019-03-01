@@ -1,0 +1,23 @@
+.stf-compat
+  .row.unselectable
+    .col-md-12
+      .widget-container.fluid-height.stf-compatt-tabs
+        .widget-content.padded
+          .filtering-buttons
+          uib-tabset.overflow-auto.compat-active-tabs
+            uib-tab.compat-commit-tab(active='activeCompatTabs.commit', select='focusSearch()')
+              uib-tab-heading
+                i.fa.fa-th-large
+                span(translate) 提交测试
+              div(ng-include='"compat/install/compat-install.pug"')
+              div.compat-devices-content.selectable
+                compat-icons(tracker='tracker', columns='columns', sort='sort', filter='filter')
+            uib-tab.compat-result-tab(active='activeCompatTabs.result', select='focusSearch()')
+              uib-tab-heading
+                i.fa.fa-th-large
+                span(translate) 测试结果
+              div(ng-include='"compat/result/compat-result.pug"')
+              
+
+                
+                

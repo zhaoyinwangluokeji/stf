@@ -1,0 +1,175 @@
+.report-detail .report-info {
+    background: #ffffff;
+    padding-top: 10px;
+    clear: both;
+    padding: 0 30px 20px;
+    overflow: hidden;
+}
+
+.report-info2 {
+    background: #ffffff;
+    padding-top: 10px;
+    clear: both;
+    padding: 0 30px 20px;
+    overflow: hidden;
+}
+
+.report-tab {
+    margin: 0 auto;
+    width: 80%;
+    background-color: #eee;
+}
+
+.app-info {
+    width: 33%!important;
+    font-family: PingFangSC-Regular;
+    font-size: 20px;
+    color: #999;
+}
+
+.widget-content {
+    clear:both!important;
+    overflow:hidden;
+}
+
+.pass-info {
+    float: left;
+    width: 40%;
+    height: 334px;
+    border: 1px solid #eee;
+    margin: 30px;
+}
+
+.install-time {
+    float: right;
+    width: 40%;
+    height: 334px;
+    border: 1px solid #eee;
+    margin: 30px;
+}
+
+.cold-start-time {
+    float: left;
+    width: 40%;
+    height: 334px;
+    border: 1px solid #eee;
+    margin: 30px;
+}
+
+.hot-start-time {
+    float: right;
+    width: 40%;
+    height: 334px;
+    border: 1px solid #eee;
+    margin: 30px;
+}
+
+
+
+.information  {
+    display: -ms-flexbox;
+    display: flex;
+    padding: 10px;
+}
+
+.infos {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.report-tit{
+    display: flex;
+    background: rgb(247, 247, 247);
+}
+
+.report-tit {
+    width: 174px;
+    height: 55px;
+    text-align: center;
+    line-height: 55px;
+    background: #f7f7f7;
+    border: 1px solid #ddd;
+    border-right: none;
+    font-family: PingFangSC-Medium;
+    font-size: 16px;
+    color: #666;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.report-tit a{
+    width: 174px;
+    height: 55px;
+    text-align: center;
+    line-height: 55px;
+    font-family: PingFangSC-Medium;
+    font-size: 16px;
+    color: rgb(102, 102, 102);
+    cursor: pointer;
+    background: rgb(247, 247, 247);
+    border-width: 1px 1px 1px;
+    border-style: solid none solid solid;
+    border-color: rgb(221, 221, 221) rgb(221, 221, 221) rgb(221, 221, 221);
+    border-image: initial;
+    border-right: none;
+    text-decoration: none;
+}
+
+.report-tit a.show {
+    font-family: PingFangSC-Medium;
+    font-size: 16px;
+    color: #333;
+    border-bottom: 0;
+    background: #fff;
+}
+
+.task-box {
+    width: 100%;
+    padding: 20px;
+}
+
+.task-box table thead th {
+    height: 48px;
+    background: #26cb8f;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #fff;
+}
+
+thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+.detail-list-head {
+    cursor: pointer;
+}
+
+.finished {
+    color: rgb(16, 223, 44);
+}
+
+.failed {
+    color: rgba(240, 14, 14, 0.829);
+}
+
+.problem-distribution {
+    font-family: PingFangSC-Medium;
+    font-size: 24px;
+    color: #333;
+    padding: 20px 0;
+}

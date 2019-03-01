@@ -55,8 +55,15 @@ module.exports = angular.module('stf.device-status', [])
         var second = Math.floor((time % (1000 * 60)) / (1000));
         if (time >= 0) {
           var tip = "剩" + hour + "时" + minute + "分" + second + "秒";
+          var name 
+          if(device.device_rent_conf.owner.NameCN){
+            name = device.device_rent_conf.owner.NameCN
+          }
+          else{
+            name = device.device_rent_conf.owner.name
+          } 
           if (device.device_rent_conf.owner) {
-            tip = device.device_rent_conf.owner.name + ':' + tip;
+            tip = name + ':' + tip;
           }
           return (tip)
         }
