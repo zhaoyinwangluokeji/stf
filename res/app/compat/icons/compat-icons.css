@@ -239,6 +239,7 @@ ul.devices-icon-view .devices-icon-rent-info.state-available {
   white-space: normal;
   max-height: 45px;
 }
+
 ul.devices-icon-view .devices-icon-rent-info{
   display: block;
 }
@@ -261,9 +262,22 @@ ul.devices-icon-view .devices-icon-rent-info{
   box-sizing: border-box;
 }
 
+.input-act {
+  width: 100px;
+}
+
+.manual-act {
+  color: rgba(240, 8, 8, 0.568)
+}
+
+.act-saved {
+  color: rgb(74, 2, 207)
+}
+
 .isChecked {
   display: block!important;
 }
+
 .isUnChecked {
   display: none!important;
 }

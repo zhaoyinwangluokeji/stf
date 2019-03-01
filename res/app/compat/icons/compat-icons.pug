@@ -1,5 +1,10 @@
 .widget-container.device-statics.filter
   .hr-line-dashed.filter-line
+  div(ng-if='installation != null && !installation.manifest.application.launcherActivities')
+    span.manual-act 未成功解析出入口Activity，请手动设置：
+    span.input-act
+      input(ng-model='appAct.value')
+  .hr-line-dashed.filter-line
   dl.clearfix
     dt 手机品牌： 
     dd.filterOff(ng-repeat="ii in CompatManufacturerData", ng-click='clickFilter("manufacturer",ii,$event)') {{ii}}
