@@ -250,7 +250,7 @@ module.exports = function DeviceListIconsDirective(
         console.log('kickDevice  ')
         return GroupService.kick(device, force).catch(function (e) {
           //  alert($filter('translate')(gettext('Device cannot get kicked from the group')))
-          throw new Error(e)
+        //  throw new Error(e)
         })
       }
 
@@ -814,7 +814,7 @@ module.exports = function DeviceListIconsDirective(
       // tracker.devices.forEach(addListener)
 
       tracker.emit('emptyFilter')
-      
+
       scope.$on('$destroy', function () {
         tracker.removeListener('add', addListener)
         tracker.removeListener('change', changeListener)
