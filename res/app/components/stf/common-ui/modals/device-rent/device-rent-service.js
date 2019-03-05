@@ -386,5 +386,31 @@ module.exports =
 
     }
 
+    DeviceRentService.admin_free_rent = function (device, socket) {
+      console.log("admin_free_rent")
+      return new Promise(function (resolve, reject) {
+        if (device.device_rent_conf) {
+          device.device_rent_conf.rent = false;
+        } else {
+          device.device_rent_conf = {}
+          device.device_rent_conf.rent = false
+        }
+        resolve(socket.emit('device.admin_rent_conf.set', device))
+      })
+    }
+
+    DeviceRentService.user_free_rent = function (device, socket) {
+      console.log("user_free_rent")
+      return new Promise(function (resolve, reject) {
+        if (device.device_rent_conf) {
+          device.device_rent_conf.rent = false;
+        } else {
+          device.device_rent_conf = {}
+          device.device_rent_conf.rent = false
+        }
+        resolve(socket.emit('device.user_rent_conf.set', device))
+      })
+    }
+
     return DeviceRentService
   }

@@ -68,7 +68,14 @@ module.exports = angular.module('stf.device-status', [])
           return (tip)
         }
         else {
-          return gettext('租用过期')
+          if(device.back == "0")
+          {
+            return gettext('租用过期，未归还')
+          }
+          else
+          {
+            return gettext('租用过期，已归还')
+          }
         }
       }
       else {

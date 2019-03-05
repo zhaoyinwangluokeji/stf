@@ -67,7 +67,7 @@ module.exports = function DeviceListDetailsDirective(
                 e.preventDefault()
                 if (device.state == "maintain") {
                   alert("warnning:设备处于报修状态中，不能租用!")
-                }  else {
+                } else {
                   return DeviceRentService.open(device)
                 }
               })).then(function (result) {
@@ -92,7 +92,16 @@ module.exports = function DeviceListDetailsDirective(
                 user.email == device.device_rent_conf.owner.email) || is_adminstrtor) {
                 if (confirm('你确定需要停止租用吗？')) {
                   GroupService.kick(device, true)
-                  DeviceRentService.free_rent(device, socket)
+                  if(tracker.getIfAdmin())
+                  {
+                    //管理员释放要改变归还状态
+                    DeviceRentService.admin_free_rent(device, socket)
+                  }
+                  else
+                  {
+                    //DeviceRentService.free_rent(device, socket)
+                    DeviceRentService.user_free_rent(device, socket)
+                  }
                   e.preventDefault()
                 }
               }
@@ -100,6 +109,18 @@ module.exports = function DeviceListDetailsDirective(
                 alert("设备已经被" + device.device_rent_conf.owner.name + " " + device.device_rent_conf.owner.email + " 租用")
               }
             }
+          }
+        } else if (e.target.classList.contains('device-back-status')) {
+          if (tracker.getIfAdmin()) {
+            if (confirm('确定归还该设备？')) {
+              DeviceRentService.admin_free_rent(device, socket)
+              e.preventDefault()
+              alert('归还成功！')
+            }
+          }
+          else
+          {
+            alert("只有管理员才能归还设备！")
           }
         }
       }
