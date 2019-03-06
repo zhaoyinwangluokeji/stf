@@ -184,6 +184,10 @@ module.exports = function DeviceListCtrl(
       name: 'maintain'
       , selected: false
     }
+    ,{
+      name: 'back'
+      , selected: true
+    }
   ]
 
   $scope.columns = defaultColumns

@@ -355,6 +355,12 @@ module.exports = function DeviceColumnService(
         return device.owner ? device.enhancedUserProfileUrl : ''
       }
     })
+    , back: DeviceBackCell({
+      title: ('操作')
+      , value: function (device) {
+        return device.back
+      }
+    })
   }
 }
 
@@ -777,6 +783,66 @@ function DeviceRentReleaseCell(options, DeviceRentService, $location, AppState, 
   })
 }
 
+function DeviceBackCell(options) {
+  var stateClasses = {
+    using: 'state-using btn-primary'
+    , busy: 'state-busy btn-warning'
+    , available: 'state-available btn-primary-outline'
+    , ready: 'state-ready btn-primary-outline'
+    , present: 'state-present btn-primary-outline'
+    , preparing: 'state-preparing btn-primary-outline btn-success-outline'
+    , unauthorized: 'state-unauthorized btn-danger-outline'
+    , offline: 'state-offline btn-warning-outline'
+    , automation: 'state-automation btn-info'
+  }
+
+  return _.defaults(options, {
+    title: options.title
+    , defaultOrder: 'asc'
+    , build: function () {
+      var td = document.createElement('td')
+      var a = document.createElement('a')
+      a.appendChild(document.createTextNode(''))
+
+      td.appendChild(a)
+      return td
+    }
+    , update: function (td, device) {
+      var a = td.firstChild
+      var t = a.firstChild
+
+      if (device.deviceType.trim() == '现场测试') {
+        //只对现场设备进行归还
+        if (!device.back || (device.back && device.back == '0')) {
+          //back为0：显示归还
+          //无back字段，不管是否借出，统一显示归还，兼容旧数据可作归还操作
+          a.className = 'btn btn-xs rowhover device-back-status'
+          t.nodeValue = '归还'
+        }
+        else {
+          //back为1：显示已归还
+          //back为null：显示已归还
+          a.className = 'btn btn-xs a-disabled'
+          t.nodeValue = '已归还'
+        }
+      }
+      else {
+        a.className = 'btn btn-xs a-disabled'
+        t.nodeValue = '归还'
+      }
+
+      a.removeAttribute('href')
+      return td
+    }
+    , compare: function (a, b) {
+      return compareIgnoreCase(options.value(a), options.value(b))
+    }
+    , filter: function (device, filter) {
+      return filterIgnoreCase(options.value(device), filter.query)
+    }
+  })
+}
+
 function DeviceRentCell(options, DeviceRentService, $location, AppState, GroupService, socket) {
   var stateClasses = {
     using: 'state-using btn-primary'
@@ -806,10 +872,10 @@ function DeviceRentCell(options, DeviceRentService, $location, AppState, GroupSe
       if (device.device_rent_conf && device.device_rent_conf.rent && !stateClasses[device.state]) {
         a.className = 'btn btn-xs device-rent-status btn-outline-rent rowhover '
 
-      } else if(device.deviceType == '现场测试'){
+      } else if (device.deviceType == '现场测试') {
         a.className = 'btn btn-xs device-rent-status state-available btn-primary-outline'
       }
-      else{
+      else {
         a.className = 'btn btn-xs device-rent-status ' +
           (stateClasses[device.state] || 'btn-default-outline')
       }
@@ -827,7 +893,7 @@ function DeviceRentCell(options, DeviceRentService, $location, AppState, GroupSe
     }
     , compare: function (a, b) {
       return compareIgnoreCase(options.value(a), options.value(b))
-   }
+    }
     , filter: function (device, filter) {
       return filterIgnoreCase(options.value(device), filter.query)
     }
@@ -873,7 +939,7 @@ function DeviceRentProjectCell(options) {
       return td
     }
     , compare: function (a, b) {
-       return compareIgnoreCase(options.value(a), options.value(b))
+      return compareIgnoreCase(options.value(a), options.value(b))
     }
     , filter: function (device, filter) {
       return options.value(device).apps.some(function (app) {
@@ -910,7 +976,7 @@ function DeviceStatusCell(options) {
     , update: function (td, device) {
       var a = td.firstChild
       var t = a.firstChild
-       
+
       a.className = 'btn btn-xs device-status ' +
         (stateClasses[device.state] || 'btn-default-outline')
 
@@ -980,7 +1046,7 @@ function DeviceMaintainCell(options) {
       var span = document.createElement('span')
 
       button.className = 'device-maintain-edit device-maintain-button'
-      td.className ='device-maintain'
+      td.className = 'device-maintain'
       span.className = 'device-maintain-edit device-maintain-text'
       span.appendChild(document.createTextNode(''))
       i.className = 'fa fa-wrench device-maintain-edit'
@@ -993,9 +1059,9 @@ function DeviceMaintainCell(options) {
       var span = td.firstChild.firstChild
       var t = span.firstChild
       console.log("coloum 更新报修状态：" + options.value(item))
-      if(options.value(item)){
+      if (options.value(item)) {
         t.nodeValue = '取消报修'
-      } else{
+      } else {
         t.nodeValue = '报修'
       }
       // t.nodeValue = options.value(item)
