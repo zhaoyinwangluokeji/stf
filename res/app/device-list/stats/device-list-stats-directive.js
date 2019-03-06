@@ -16,11 +16,11 @@ module.exports = function DeviceListStatsDirective(
 
       // 默认隐藏原来的统计
       scope.showStats = false
-      scope.hideShowStats = function(){
+      scope.hideShowStats = function () {
         scope.showStats = !scope.showStats
       }
 
- 
+
       unhandled_serials = []
       scope.manufacturerData = {
         type: 'doughnut',
@@ -140,26 +140,26 @@ module.exports = function DeviceListStatsDirective(
       scope.screensizeChart = drawChart("screensize", scope.screensizeData)
       scope.platformChart = drawChart("platform", scope.platformData)
 
-      
+
       var filter_list = {
-        manufacturer : [],
+        manufacturer: [],
         version: [],
         display: [],
         platform: []
       }
 
-      function emptyFilter(){
+      function emptyFilter() {
         var tmpEles = document.getElementsByClassName('filterOn')
         console.log("tmpEles:  " + JSON.stringify(tmpEles))
-        while(tmpEles.length > 0){
-          for(i in tmpEles){
+        while (tmpEles.length > 0) {
+          for (i in tmpEles) {
             tmpEles[i].className = 'filterOff'
           }
           tmpEles = document.getElementsByClassName('filterOn')
         }
-        
+
         filter_list = {
-          manufacturer : [],
+          manufacturer: [],
           version: [],
           display: [],
           platform: []
@@ -167,26 +167,26 @@ module.exports = function DeviceListStatsDirective(
       }
 
       var filtered_serials = current_device_serials.slice(0)
-      filterDeviceShow = function(){
+      filterDeviceShow = function () {
         console.log("current_device_serials: " + JSON.stringify(current_device_serials))
         filtered_serials = current_device_serials.slice(0)
-        var tmp = {} 
-        for(var k in filter_list){
-          if(filter_list[k].length == 0){
+        var tmp = {}
+        for (var k in filter_list) {
+          if (filter_list[k].length == 0) {
             tmp[k] = current_device_serials.slice(0)
             continue
-          }else{
-            tmp[k] =  []
+          } else {
+            tmp[k] = []
             current_device_serials.forEach(d => {
               filter_list[k].forEach(ele => {
-                var value=''
+                var value = ''
                 console.log("d: " + d)
-                if(k == 'display'){
+                if (k == 'display') {
                   value = tracker.get(d).display.width + "x" + tracker.get(d).display.height
-                }else{
+                } else {
                   value = tracker.get(d)[k]
                 }
-                if(value == ele){
+                if (value == ele) {
                   tmp[k].push(tracker.get(d).serial)
                 }
               });
@@ -197,53 +197,53 @@ module.exports = function DeviceListStatsDirective(
         console.log("filtered_serials: " + JSON.stringify(filtered_serials))
         current_device_serials.forEach(ele => {
           var i = filtered_serials.indexOf(ele)
-          if(i > -1){
-            for(var kk in tmp){
-              if(tmp[kk].indexOf(ele) == -1){
-                if(filtered_serials.indexOf(ele) > -1){
+          if (i > -1) {
+            for (var kk in tmp) {
+              if (tmp[kk].indexOf(ele) == -1) {
+                if (filtered_serials.indexOf(ele) > -1) {
                   console.log("deleting serial: " + ele)
-                  filtered_serials.splice(i,1)
+                  filtered_serials.splice(i, 1)
                 }
-                
+
               }
             }
           }
         });
         console.log("filtered_serials: " + JSON.stringify(filtered_serials))
         current_device_serials.forEach(ele => {
-          if(filtered_serials.indexOf(ele) > -1){
-            setDeviceShow(ele,true)
-          }else{
-            setDeviceShow(ele,false)
+          if (filtered_serials.indexOf(ele) > -1) {
+            setDeviceShow(ele, true)
+          } else {
+            setDeviceShow(ele, false)
           }
         });
       }
 
-      function setDeviceShow(serial,show){
+      function setDeviceShow(serial, show) {
         var target = document.getElementById(serial)
-            if(target){
-              if(show){
-                if(target.className.indexOf('filter-out') > -1){
-                  target.classList.remove('filter-out')
-                }
-              }else{
-                if(target.className.indexOf('filter-out') == -1){
-                  target.classList.add('filter-out')
-                }
-              }
+        if (target) {
+          if (show) {
+            if (target.className.indexOf('filter-out') > -1) {
+              target.classList.remove('filter-out')
             }
+          } else {
+            if (target.className.indexOf('filter-out') == -1) {
+              target.classList.add('filter-out')
+            }
+          }
+        }
       }
 
-      scope.clickFilter = function(tag,manu,myevent){
+      scope.clickFilter = function (tag, manu, myevent) {
         console.log("tag: " + tag)
         var target = myevent.target
-        if(target.className == 'filterOn'){
+        if (target.className == 'filterOn') {
           target.className = 'filterOff'
           var i = filter_list[tag].indexOf(manu)
-          if(i != -1){
-            filter_list[tag].splice(i,1)
+          if (i != -1) {
+            filter_list[tag].splice(i, 1)
           }
-        }else{
+        } else {
           target.className = 'filterOn'
           filter_list[tag].push(manu)
         }
@@ -307,12 +307,12 @@ module.exports = function DeviceListStatsDirective(
       function addToData(tag, device, targetData, chart) {
         var value = ""
         if (tag == "display") {
-          if(device.display){
+          if (device.display) {
             value = device.display.width + "x" + device.display.height
-          }else{
+          } else {
             value = undefined
           }
-          
+
         } else {
           value = device[tag]
         }
@@ -334,9 +334,9 @@ module.exports = function DeviceListStatsDirective(
       function delFromData(tag, device, targetData, chart) {
         var value = ""
         if (tag == "display") {
-          if(device.display){
+          if (device.display) {
             value = device.display.width + "x" + device.display.height
-          }else{
+          } else {
             value = "null"
           }
         } else {
@@ -369,8 +369,8 @@ module.exports = function DeviceListStatsDirective(
         scope.counter.busy += stats.busy
         scope.counter.using += stats.using
 
-        if(!device.display){
-          console.log("unhandled serial: "+device.serial)
+        if (!device.display) {
+          console.log("unhandled serial: " + device.serial)
           unhandled_serials.push(device.serial)
           return
         }
@@ -387,10 +387,10 @@ module.exports = function DeviceListStatsDirective(
 
       function changeListener(device) {
 
-      //  console.log('stats-changeListener ' + device.serial)
+        //  console.log('stats-changeListener ' + device.serial)
         var tmp = unhandled_serials.indexOf(device.serial)
-        if(tmp != -1 && device.display){
-          console.log("handling serial: "+device.serial)
+        if (tmp != -1 && device.display) {
+          console.log("handling serial: " + device.serial)
           addToData("display", device, scope.screensizeData)
           scope.screensizeChart.update()
           addToData("version", device, scope.versionData)
@@ -399,9 +399,9 @@ module.exports = function DeviceListStatsDirective(
           scope.manufacturerChart.update()
           addToData("platform", device, scope.platformData)
           scope.platformChart.update()
-          unhandled_serials.splice(tmp,1)
+          unhandled_serials.splice(tmp, 1)
         }
-        
+
         var oldStats = mapping[device.serial]
         var newStats = updateStats(device)
         var diffs = Object.create(null)
@@ -451,6 +451,6 @@ module.exports = function DeviceListStatsDirective(
         tracker.removeListener('change', changeListener)
         tracker.removeListener('remove', removeListener)
       })
-    } 
+    }
   }
 }

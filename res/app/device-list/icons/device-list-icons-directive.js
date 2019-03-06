@@ -250,7 +250,7 @@ module.exports = function DeviceListIconsDirective(
         console.log('kickDevice  ')
         return GroupService.kick(device, force).catch(function (e) {
           //  alert($filter('translate')(gettext('Device cannot get kicked from the group')))
-        //  throw new Error(e)
+          //  throw new Error(e)
         })
       }
 
@@ -374,6 +374,9 @@ module.exports = function DeviceListIconsDirective(
                       //  console.log("result:" + JSON.stringify(result))
                       if (result[0].result == true) {
                         $location.path('/control/' + result[0].device.serial);
+                      } else {
+                        device.using = true
+                        tracker.emit('change',device)
                       }
                     })
                       .catch(function (err) {
@@ -611,7 +614,7 @@ module.exports = function DeviceListIconsDirective(
         var item = builder.build()
 
         item.id = id
-        item.setAttribute('ng-show',true)
+        item.setAttribute('ng-show', true)
         builder.update(item, device)
         mapping[id] = device
 
@@ -755,7 +758,7 @@ module.exports = function DeviceListIconsDirective(
         if (device.deviceType == '现场测试') {
           return
         }
-        //  console.log('device-list-changeListener ')
+        console.log('device-list-changeListener :'+device.state)
         var id = calculateId(device)
         //  console.log('device-list-changeListener :' + id)
         var item = list.children[id]
