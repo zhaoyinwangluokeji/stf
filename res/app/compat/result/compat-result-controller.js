@@ -41,31 +41,37 @@ module.exports = function CompatResultCtrl(
     tr.className = 'compat-result-row'
     tr.id = result.id
     var td1 = document.createElement('td')
+    td1.className = 'compat-result'
     td1.innerHTML = result.state
     tr.appendChild(td1)
 
     var td2 = document.createElement('td')
+    td2.className = 'compat-result'
     td2.innerHTML = result.packageName
     tr.appendChild(td2)
 
     var td3 = document.createElement('td')
+    td3.className = 'compat-result'
     td3.innerHTML = result.finished + '/' + result.taskNum
     tr.appendChild(td3)
 
     var td4 = document.createElement('td')
+    td4.className = 'compat-result'
     td4.innerHTML = result.submitTime
     tr.appendChild(td4)
 
     var td5 = document.createElement('td')
+    td5.className = 'compat-result'
     td5.innerHTML = result.lastUpdate
     tr.appendChild(td5)
 
     var td6 = document.createElement('td')
+    td6.className = 'compat-result'
     td6.innerHTML = result.passed + '/' + result.taskNum
     tr.appendChild(td6)
 
     var td7 = document.createElement('td')
-    td7.className = 'report-td'
+    td7.className = 'report-td compat-result'
     td7.id = result.id
     var b = document.createElement('b')
     var img = document.createElement('img')
