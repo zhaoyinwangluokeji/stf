@@ -4,36 +4,35 @@ table.table.table-hover.dataTable.ng-table
       th.header.sortable(ng-repeat='column in columns track by column.name', ng-if='column.selected', ng-class='["sort-" + (sortedColumns[column.name].order || "none")]', ng-click='sortBy(column, $event.shiftKey)')
         div(ng-bind='columnDefinitions[column.name].title | translate')
   tfoot
-    tr  
-      td(colspan="100") 
-          table.fill-parent-width(ng-init="sel=5")
-              tr
-                  td
-                      div.floatleft
-                          button.btnwidth(ng-disabled="page<=1" ng-click="page=1") <<
-                      div.floatleft
-                          button.btnwidth(ng-disabled="page<=1" ng-click="page=page-1") <
-                      div.floatleft
-                          button.btnwidth(ng-disabled=" pagesCount <= page " ng-click="page = page +1") >
-                      div.floatleft
-                          button.btnwidth(ng-disabled=" pagesCount <= page " ng-click="page = pagesCount") >>
-                  td
-                      span.msgwidth 
-                      | Totals: {{total}}  
-                  td
-                      span.msgwidth  
-                      | Pages: {{page}} / {{pagesCount}}
-                  td(colspan="0")
-                      div.btn-group(uib-dropdown).floatright
-                          button.btn.btn-sm.btn-primary-outline(type='button', uib-dropdown-toggle)
-                              span {{count}}
-                              span(ng-bind='">>"|translate')
-                          ul.uib-dropdown-menu(role='menu' z-index="1")
-                              li(ng-repeat='ceil in counts track by $index',
-                              ng-hide='!adminMode && columnDefinitions[column.name].admin')
-                                  button(ng-click='showMessage(ceil)').btn.btn-xs
-                                      i.fa.fa-circle-thin
-                                      span(ng-bind='ceil | translate') 
+    tr
+      td(colspan="100")
+
+        div.floatleft
+            button.btnwidth(ng-disabled="page<=1" ng-click="page=1") <<
+        div.floatleft
+            button.btnwidth(ng-disabled="page<=1" ng-click="page=page-1") <
+        div.floatleft
+            button.btnwidth(ng-disabled=" pagesCount <= page " ng-click="page = page +1") >
+        div.floatleft
+            button.btnwidth(ng-disabled=" pagesCount <= page " ng-click="page = pagesCount") >>
+
+        span.msgwidth.floatleft
+        | Totals: {{total}}
+        span.msgwidth.floatleft
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        span.msgwidth.floatleft
+        | Pages: {{page}} / {{pagesCount}}
+
+        div.btn-group(uib-dropdown).floatright
+            button.btn.btn-sm.btn-primary-outline(type='button', uib-dropdown-toggle)
+                span {{count}}
+                span(ng-bind='">>"|translate')
+            ul.uib-dropdown-menu(role='menu' z-index="1")
+                li(ng-repeat='ceil in counts track by $index',
+                ng-hide='!adminMode && columnDefinitions[column.name].admin')
+                    button(ng-click='showMessage(ceil)').btn.btn-xs
+                        i.fa.fa-circle-thin
+                        span(ng-bind='ceil | translate')
 
 
 device-list-empty(tracker='tracker()')
