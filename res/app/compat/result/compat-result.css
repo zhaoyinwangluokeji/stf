@@ -21,7 +21,7 @@
     color: #4f79df;
 }
 
-tbody tr td {
+.compat-result {
     font-family: PingFangSC-Regular;
     font-size: 14px;
     color: #333;
