@@ -104,19 +104,26 @@ module.exports = function LogColumnService(
         return $filter('translate')(log_row.ProjectName)
       }
     })
-
     , real_rent_time: TextCell({
-      title: gettext('使用时间')
+      title: gettext('实际租用时间')
       , value: function (log_row) {
         return $filter('translate')(log_row.real_rent_time)
       }
     })
-    , rent_time: TextCell({
+    , rent_time: TimeMinuteCell({
       title: gettext('申请时长')
       , value: function (log_row) {
         return $filter('translate')(log_row.rent_time)
       }
     })
+    , using_time: TimeMinuteCell({
+      title: gettext('使用时间')
+      , value: function (log_row) {
+        return $filter('translate')(log_row.using_time)
+      }
+    })
+
+
     // , start_time: NumberCell({
     //   title: gettext('开始时间')
     //   , value: function (log_row) {
@@ -195,6 +202,42 @@ function TextCell(options) {
     }
     , compare: function (a, b) {
       return compareIgnoreCase(options.value(a), options.value(b))
+    }
+    , filter: function (item, filter) {
+      return filterIgnoreCase(options.value(item), filter.query)
+    }
+  })
+}
+
+function TimeMinuteCell(options) {
+  return _.defaults(options, {
+    title: options.title
+    , defaultOrder: 'asc'
+    , build: function () {
+      var td = document.createElement('td')
+      td.appendChild(document.createTextNode(''))
+      return td
+    }
+    , update: function (td, item) {
+      var t = td.firstChild
+      var minute_all = options.value(item)
+      console.log("minute_all:" + minute_all)
+      var hour = parseInt((minute_all / 60))
+      console.log("hour:" + hour)
+      var minute = minute_all % 60
+      if (hour && hour != 0) {
+        t.nodeValue = hour + "小时"
+      }
+      if (minute && minute != 0) {
+        t.nodeValue += minute + "分钟"
+      }
+      if (!t.nodeValue) {
+        t.nodeValue = 0
+      }
+      return td
+    }
+    , compare: function (a, b) {
+      return compareIgnoreCase(a, b)
     }
     , filter: function (item, filter) {
       return filterIgnoreCase(options.value(item), filter.query)
