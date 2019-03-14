@@ -811,7 +811,7 @@ function DeviceBackCell(options) {
       var a = td.firstChild
       var t = a.firstChild
 
-      if (device.deviceType.trim() == '现场测试') {
+      if (device.deviceType && device.deviceType == '现场测试') {
         //只对现场设备进行归还
         if (!device.back || (device.back && device.back == '0')) {
           //back为0：显示归还
