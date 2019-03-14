@@ -56,10 +56,10 @@ module.exports = function DeviceListCtrl(
       name: 'RentRlease'
       , selected: true
     },
-     {
+    {
       name: 'owner'
       , selected: true
-    }, 
+    },
     {
       name: 'manufacturer'
       , selected: true
@@ -183,6 +183,10 @@ module.exports = function DeviceListCtrl(
     , {
       name: 'maintain'
       , selected: false
+    }
+    , {
+      name: 'back'
+      , selected: true
     }
   ]
 
@@ -320,11 +324,15 @@ module.exports = function DeviceListCtrl(
       }
       , {
         name: 'real_rent_time'
-        , selected: true
+        , selected: false
       }
       , {
         name: 'rent_time'
         , selected: false
+      }
+      , {
+        name: 'using_time'
+        , selected: true
       }
       , {
         name: 'start_time'

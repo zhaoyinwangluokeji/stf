@@ -28,7 +28,6 @@ tbody tr td {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    padding: 15px;
 }
 
 .background {

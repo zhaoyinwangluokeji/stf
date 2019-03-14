@@ -44,3 +44,12 @@
 .maintaincolor{
   background-color: #ffcc33
 }
+
+.a-disabled{
+  pointer-events: none;
+  color:gray;
+}
+
+.device-back-status{
+  color: blue
+}

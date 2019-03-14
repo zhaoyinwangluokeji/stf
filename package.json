@@ -70,6 +70,7 @@
     "minitouch-prebuilt": "^1.2.0",
     "my-local-ip": "^1.0.0",
     "ng-table": "^1.0.0",
+    "node-rest-client": "^3.1.0",
     "openid": "^2.0.1",
     "passport": "^0.3.2",
     "passport-oauth2": "^1.1.2",
