@@ -304,9 +304,10 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
     return $scope.getPageXml().then(function (result) {
       var nodeLists = $scope.xmlDom.querySelectorAll('node')
       for (var node of nodeLists) {
-        if (node.getAttribute('text').trim() != ''
+        if ((node.getAttribute('text').trim() != ''
           || node.getAttribute('resource-id').trim() != ''
-          || node.getAttribute('content-desc').trim() != '') {
+          || node.getAttribute('content-desc').trim() != '')
+          && node.getAttribute('clickable') == 'true') {
           var searchBounds = node.getAttribute('bounds');
           if (searchBounds == null) {
             console.log("node has no bounds，please search other xpath !");
@@ -361,9 +362,21 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
       + "' or @content-desc='" + $scope.main_page_ele
       + "']", 2).then(function () {
         if ($scope.findEle == null) {
-          console.log("pressing back...")
-          return $scope.control.shell("input keyevent 4").then(function () {
-            return $scope.sleep(3000)
+
+          return $scope.findElementByXpath("//*[@text='确认']", 1).then(function (resolve) {
+            if ($scope.findEle != null) {
+              return $scope.clickElement().then(function(){
+                console.log("pressing back...")
+                return $scope.control.shell("input keyevent 4").then(function () {
+                  return $scope.sleep(3000)
+                })
+              })
+            }else{
+              console.log("pressing back...")
+                return $scope.control.shell("input keyevent 4").then(function () {
+                  return $scope.sleep(3000)
+                })
+            }
           })
         }
       })
@@ -412,6 +425,7 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
 
   $scope.clear = function () {
     $scope.screenshots = []
+    $scope.error_screen_indexs = []
   }
 
   $scope.shotSizeParameter = function (maxSize, multiplier) {
@@ -438,10 +452,12 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
       .then(function (ret) {
         // console.log("Activity Result: " + JSON.stringify(ret.data[0].split('\n')[0].split(' ')))
         var act = ""
+        // console.log("got activity result: " + ret.data[0])
         var tmp = ret.data[0].split('\n')[0].split(' ')
         var len = tmp.length
+        
         for (var i = 0; i < len; i++) {
-          if (tmp[i].indexOf("com") != -1) {
+          if (tmp[i].indexOf("/") != -1) {
             console.log("got act: " + tmp[i])
             act = tmp[i]
             break
@@ -548,13 +564,13 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
         var ele_node = node.slice(0, 4)
         $scope.clicked_list.push(ele_node.toString())
         console.log("push into click list: " + $scope.clicked_list)
-        if (level < $scope.max_level) {
+        // if (level < $scope.max_level) {
           console.log("crawing in sub tree!")
           return $scope.craw(level + 1, sub_tree)
             .then(function () {
               return $scope.handleResultList(tmp, ptree, level, go_back)
             })
-        }
+        // }
       } else {
         return $scope.getPageMd5().then(function () {
           if ($scope.page_stack.indexOf($scope.page_md5) == -1) {
@@ -580,6 +596,12 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
     })
   }
 
+  $scope.showConf = false
+
+  $scope.hideShowConf = function(){
+    $scope.showConf = !$scope.showConf
+  }
+
   $scope.craw = function (level, page_tree, go_back = true) {
     console.log("craw level is " + level)
     if ($scope.endCraw) {
@@ -597,8 +619,11 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
         return Promise.resolve()
       } else if (level > $scope.max_level) {
         console.log("max level! go back")
-        $scope.back()
-        return Promise.resolve()
+        if (go_back) {
+          return $scope.back()
+        }else{
+          return Promise.resolve()
+        }
       } else {
         $scope.page_stack.push($scope.page_md5)
       }
@@ -609,7 +634,7 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
           if ($scope.page_stack.indexOf($scope.page_md5) > -1 && $scope.page_stack[$scope.page_stack.length - 1] != $scope.page_md5) {
             console.log("element not found, page is not the last page, pop and return: " + $scope.page_stack.toString())
             return Promise.resolve()
-          } else if (!$scope.endCraw) {
+          } else if (!$scope.endCraw && level <= $scope.max_level) {
             return $scope.findElementByXpath("//*[@scrollable='true']", 1).then(function () {
               if ($scope.findEle != null) {
                 return $scope.getPageMd5().then(function () {
@@ -675,6 +700,7 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
   $scope.clearCraw = function () {
     $scope.click_num = 1
     $scope.screenshots = []
+    $scope.error_screen_indexs = []
     $scope.endCraw = true;
     $scope.root_node = null;
     $scope.page_json = null;
@@ -723,6 +749,20 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
     }
   }
 
+  function genFailCaps(){
+    text = " '<h2 >失败页面步骤及截图</h2>'"
+    var len = $scope.error_screen_indexs.length
+    for (var k = 0; k < len; k++) {
+      text += "<h6>"
+      text += k + ": " + $scope.pic_click_path_list[$scope.error_screen_indexs[k]]
+      text += "</h6>"
+      text += '<a traget="_blank">'
+      text += '<img src="'+ $scope.screenshots[$scope.error_screen_indexs[k]] + '" style="width: 140px;"></a>'
+    }
+    return text
+    
+  }
+
   function genReport() {
     if ($scope.startTime == null) {
       alert("请先开始遍历！")
@@ -754,13 +794,22 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
     }
     var activityTable = genTableFromDict(actHead)
     reportText += activityTable
-
     var activityTable = genTableFromDict($scope.operateActivities)
     reportText += activityTable
+
+    reportText += genFailCaps()
+
     reportText += '</body></html>'
     $scope.zip.file("report.html", reportText)
   }
   $scope.crash_log_num = 0
+
+  function Appendzero(obj)
+  {
+      if(obj<10) return "0" +""+ obj;
+      else return obj;
+  }
+   
 
   function getCrashLog() {
     $scope.crash_log_num = 0
@@ -775,16 +824,17 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
           alert("深度遍历未开始！")
           return
         }
-        startDate = "" + $scope.startTime.getFullYear() + $scope.startTime.getMonth() + $scope.startTime.getDate()
-
+        startDate = "" + $scope.startTime.getFullYear() + Appendzero($scope.startTime.getMonth()) + Appendzero($scope.startTime.getDate())
+        console.log("startDate: " + startDate)
         var names = logNames.split('  ')
         var len = names.length
         var newLogs = []
 
         for (var i = 0; i < len; i++) {
           var name = names[i].replace("_log.txt", '')
-          console.log("log: " + name)
+          
           if (parseInt(name) >= parseInt(startDate)) {
+            console.log("log: " + name)
             $scope.crash_log_num += 1
             newLogs.push(names[i])
           }
@@ -795,7 +845,7 @@ module.exports = function CrawlerCtrl($scope, $http, LightboxImageService) {
 
   function getCrashFile(list) {
     if (list.length == 0) {
-      return new Promise()
+      return new Promise(function (resolve) { return resolve("") })
     }
     var logName = list.shift()
     return $scope.control.shell('cat ' + $scope.crash_log_path + '/' + logName)
