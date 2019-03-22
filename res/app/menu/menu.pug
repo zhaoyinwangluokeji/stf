@@ -1,11 +1,13 @@
 .navbar.stf-menu(ng-controller='MenuCtrl')
   .container-fluid.stf-top-bar
-    a.stf-logo(ng-href="/#!/devices") STF 
-    span.stf-user    
-    
+    a.stf-logo(ng-href="/#!/devices") STF
+    span.stf-user
+
+    notice(ng-if="notice.open" duration="5000" close="notice.open=false") 警告：密码还是原始密码，建议尽快修改！
+
     ul.nav.stf-nav(nav-menu='current').unselectable
       li(ng-cloak)
-        a(ng-href='/#!/control/{{lastUsedDevice}}', ng-show='lastUsedDevice') 
+        a(ng-href='/#!/control/{{lastUsedDevice}}', ng-show='lastUsedDevice')
           span.fa.fa-mobile
           span(ng-if='!$root.basicMode', translate) Control
         a(ng-href='/#!/devices', accesskey='1')
@@ -17,7 +19,7 @@
         a(ng-href='/#!/compat')
           span.fa.fa-cloud
           span(ng-if='!$root.basicMode', translate) 兼容性测试
-    
+
     ul.nav.stf-nav.stf-feedback.pull-right(ng-cloak, nav-menu='current').unselectable
       li.stf-nav-web-native-button(ng-if='!$root.basicMode && isControlRoute')
         .btn-group
@@ -34,11 +36,11 @@
                 {{user.email}}/{{user.name}}
           li.nonedot
             span(ng-click="ModifyPassword()")
-              i.fa.fa-wrench 
+              i.fa.fa-wrench
               span.mouse-background
-                U 修改密码  
+                U 修改密码
             a(href="/auth/mock/")
               i.fa.fa-power-off
               span.mouse-background
-                U 注销  
-          
+                U 注销
+
