@@ -2,6 +2,7 @@ module.exports = function DeviceRentWebControlService($filter,
     DeviceRentService, GroupService, socket) {
     var DeviceRentWebControl = {}
     var device_list = {}
+    var events_list = {}
     var Timer = null
     var scope
 
@@ -16,8 +17,9 @@ module.exports = function DeviceRentWebControlService($filter,
             }
         })
     }
-    DeviceRentWebControl.open = function (device, changeEvent, getEvent) {
+    DeviceRentWebControl.open = function (device, event, getEvent) {
         device_list[device.serial] = device
+        events_list[device.serial] = event
         //    device_list[device.serial] = device
     //    console.log("device.serial==" + device.serial)
     //    console.log("open==" + (device_list[device.serial] == device))
@@ -28,6 +30,7 @@ module.exports = function DeviceRentWebControlService($filter,
                 for (serial in device_list) {
                     try {
 
+                        var changeEvent = events_list[device.serial]
                         var device_o = angular.copy(device_list[serial])
                         // console.log("device_o===" + (device_o === device_list[device.serial]))
                         if (//device_o.present &&
