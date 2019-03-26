@@ -813,17 +813,14 @@ function DeviceBackCell(options) {
 
       if (device.deviceType && device.deviceType == '现场测试') {
         //只对现场设备进行归还
-        if (!device.back || (device.back && device.back == '0')) {
-          //back为0：显示归还
-          //无back字段，不管是否借出，统一显示归还，兼容旧数据可作归还操作
-          a.className = 'btn btn-xs rowhover device-back-status'
-          t.nodeValue = '归还'
-        }
-        else {
-          //back为1：显示已归还
-          //back为null：显示已归还
+        if (device.back && device.back == '1') {
+          //只有back字段存在且值为1，才算设备已经归还
           a.className = 'btn btn-xs a-disabled'
           t.nodeValue = '已归还'
+        }
+        else {
+          a.className = 'btn btn-xs rowhover device-back-status'
+          t.nodeValue = '归还'
         }
       }
       else {
@@ -873,7 +870,14 @@ function DeviceRentCell(options, DeviceRentService, $location, AppState, GroupSe
         a.className = 'btn btn-xs device-rent-status btn-outline-rent rowhover '
 
       } else if (device.deviceType == '现场测试') {
-        a.className = 'btn btn-xs device-rent-status state-available btn-primary-outline'
+        if(device.back == "0")
+        {
+          a.className = 'btn btn-xs a-disabled'
+        }
+        else
+        {
+          a.className = 'btn btn-xs device-rent-status state-available btn-primary-outline'
+        }
       }
       else {
         a.className = 'btn btn-xs device-rent-status ' +
