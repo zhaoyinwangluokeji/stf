@@ -256,7 +256,7 @@ module.exports =
                     })
                 }
                 $scope.tableParamsCustom = new NgTableParams(
-                    { count: 5 },
+                    { count: 10 },
                     {
                         counts: [5, 10, 15, 30, 50],
                         getData: $scope.Query3

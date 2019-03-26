@@ -23,7 +23,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
         $http.post('/auth/api/v1/mock/get-all-device-groups', data)
           .success(function (response) {
             $scope.device_groups = response.data
-          //  console.log("success: " + JSON.stringify(response.data))
+            //  console.log("success: " + JSON.stringify(response.data))
             return resolve(response.data)
           })
           .error(function (response) {
@@ -39,7 +39,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
         $http.post('/auth/api/v1/mock/get-all-user-groups', data)
           .success(function (response) {
             $scope.user_groups = response.data
-          //  console.log("success: " + JSON.stringify(response.data))
+            //  console.log("success: " + JSON.stringify(response.data))
             return resolve(response.data)
           })
           .error(function (response) {
@@ -129,7 +129,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
       })
 
       sync(data)
-      //  console.log("emit change :"+JSON.stringify(data.device_rent_conf))
+      console.log("emit change :"+data.serial)
       this.emit('change', data)
     }.bind(this)
 
@@ -182,12 +182,12 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
         console.log("loading all user groups ...")
         return getAllUserGroups()
       }).then(function () {
-      //  console.log("Got User Groups: " + JSON.stringify($scope.user_groups))
+        //  console.log("Got User Groups: " + JSON.stringify($scope.user_groups))
         $scope.user_groups.forEach(ele => {
           if (ele.userslist) {
             ele.userslist.forEach(element => {
               if (element.email == email) {
-                if(ele.GroupName == "administrator"){
+                if (ele.GroupName == "administrator") {
                   console.log("user is Admin!!")
                   $scope.is_admin = true
                 }
@@ -259,7 +259,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
             return
           } else {
             // console.log("device is ready for user, usable devices:  " + JSON.stringify(usable_devices_lists))
-            handleAddListener(event,isNew,device)
+            handleAddListener(event, isNew, device)
           }
         })
       } else {
@@ -268,7 +268,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
       }
     }
 
-    var changeListener = function(event) {
+    var changeListener = function (event) {
       var device = get(event.data)
 
       if (device) {
@@ -313,13 +313,13 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     }
     this.devices = devices
     this.show_device_serials = show_device_serials
-    this.getUsableList = function(){
+    this.getUsableList = function () {
       return usable_devices_lists
     }
-    this.get = function(serial){
+    this.get = function (serial) {
       return devices[devicesBySerial[serial]]
     }
-    this.getIfAdmin = function(){
+    this.getIfAdmin = function () {
       return $scope.is_admin
     }
   }
