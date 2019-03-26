@@ -1,7 +1,7 @@
 .widget-content.padded
     .row
         .col-md-10
-            input.floatleft.QueryHeight.form-control(type="text" ng-model="queryFilter" ng-keypress="QueryMessage()")
+            input.floatleft.QueryHeight.form-control(type="text" ng-model="queryFilter" ng-keyup="QueryMessage()")
             table.table.blackbackground.dataTable.ng-table(ng-table="tableParamsCustom")
                 thead
                     th.header.sortable(ng-repeat='(k,v) in tableParamsCustom.data[0] track by $index')

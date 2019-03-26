@@ -27,7 +27,14 @@ module.exports = angular.module('stf.device-status', [])
           if (device.state == "maintain") {
             return gettext('不可用(报修状态)');
           } else {
-            return gettext('可租用');
+            if(device.back == "0")
+            {
+              return gettext('未归还');
+            }
+            else
+            {
+              return gettext('可租用');
+            }
           }
           
         } else {
