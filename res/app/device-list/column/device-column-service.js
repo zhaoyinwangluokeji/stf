@@ -345,14 +345,10 @@ module.exports = function DeviceColumnService(
         return device.maintain || false
       }
     })
-    , owner: LinkCell({
+    ,owner: TextCell({
       title: gettext('User')
-      , target: '_blank'
       , value: function (device) {
-        return device.owner ? device.owner.name : ''
-      }
-      , link: function (device) {
-        return device.owner ? device.enhancedUserProfileUrl : ''
+        return device.device_rent_conf && device.device_rent_conf.owner && device.device_rent_conf.owner.NameCN ? device.device_rent_conf.owner.NameCN : ''
       }
     })
     , back: DeviceBackCell({

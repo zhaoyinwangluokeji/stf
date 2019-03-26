@@ -25,6 +25,16 @@
       .form-group
         .input-group
           span.input-group-addon
+            i.fa.fa-user
+          input.form-control(ng-model='create_account.NameCN', name='NameCN', required, type='text', placeholder='NameCN',
+          autocorrect='off', autocapitalize='off', spellcheck='false',
+         autocomplete='section-login NameCN')
+        .alert.alert-warning(ng-show='create_account.NameCN.$dirty && create_account.NameCN.$invalid')
+          span(translate) Please enter your Chinese Name
+
+      .form-group
+        .input-group
+          span.input-group-addon
             i.fa.fa-envelope
           input.form-control(ng-model='create_account.email', name='email', required, type='email', placeholder='E-mail',
           autocorrect='off', autocapitalize='off', spellcheck='false', autocomplete='section-login email')

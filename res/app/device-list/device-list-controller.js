@@ -15,6 +15,7 @@ module.exports = function DeviceListCtrl(
   , LogColumnService
   , DeviceRentLogService
   , DevUsingStatisticsFactory
+  , AppState
 ) {
   console.log('DeviceListCtrl  ')
   $scope.tracker = DeviceService.trackAll($scope)
@@ -22,7 +23,6 @@ module.exports = function DeviceListCtrl(
 
   $scope.columnDefinitions = DeviceColumnService
   $scope.LogscolumnDefinitions = LogColumnService
-
 
   var MenusDefault = [
     {
@@ -193,81 +193,153 @@ module.exports = function DeviceListCtrl(
   $scope.columns = defaultColumns
   var defaultLogsColumns = (function () {
     var cols =
-      [
-        {
-          name: 'manufacturer'
-          , selected: true
-        }
-        , {
-          name: 'CurrentTime'
-          , selected: true
-        }
-        , {
-          name: 'serial'
-          , selected: true
-        }
-        ,
-        {
-          name: 'model'
-          , selected: false
-        }
-        ,
-        {
-          name: 'platform'
-          , selected: false
-        }
-        , {
-          name: 'version'
-          , selected: false
-        }
-
-        ,
-        {
-          name: 'owner_email'
-          , selected: true
-        }
-        , {
-          name: 'owner_group'
-          , selected: false
-        }
-        , {
-          name: 'owner_name'
-          , selected: false
-        }
-
-        , {
-          name: 'ProjectCode'
-          , selected: false
-        }
-        , {
-          name: 'ProjectName'
-          , selected: false
-        }
-        , {
-          name: 'real_rent_time'
-          , selected: true
-        }
-        , {
-          name: 'rent_time'
-          , selected: false
-        }
-        , {
-          name: 'start_time'
-          , selected: false
-        }
-        , {
-          name: 'test_centerCode'
-          , selected: false
-        }, {
-          name: 'device_type'
-          , selected: false
-        }
-        , {
-          name: 'mac_address'
-          , selected: false
-        }
-
-      ]
+    [
+      {
+        name: 'state'
+        , selected: true
+      },
+      {
+        name: 'rent'
+        , selected: true
+      }
+      ,
+      {
+        name: 'RentRlease'
+        , selected: true
+      },
+      {
+        name: 'owner'
+        , selected: true
+      },
+      {
+        name: 'manufacturer'
+        , selected: true
+      }
+      , {
+        name: 'model'
+        , selected: true
+      }
+      , {
+        name: 'name'
+        , selected: false
+      }
+      , {
+        name: 'serial'
+        , selected: true
+      }
+      , {
+        name: 'createdAt'
+        , selected: false
+      }
+      , {
+        name: 'deviceType'
+        , selected: true
+      }
+      , {
+        name: 'operator'
+        , selected: false
+      }
+      , {
+        name: 'releasedAt'
+        , selected: false
+      }
+      , {
+        name: 'version'
+        , selected: true
+      }
+      , {
+        name: 'network'
+        , selected: false
+      }
+      , {
+        name: 'display'
+        , selected: true
+      },
+      {
+        name: 'rentProject'
+        , selected: true
+      }
+      , {
+        name: 'sdk'
+        , selected: false
+      }
+      , {
+        name: 'productNo'
+        , selected: false
+      }
+      , {
+        name: 'deviceLocation'
+        , selected: false
+      }
+      , {
+        name: 'abi'
+        , selected: false
+      }
+      , {
+        name: 'cpuPlatform'
+        , selected: false
+      }
+      , {
+        name: 'openGLESVersion'
+        , selected: false
+      }
+      , {
+        name: 'browser'
+        , selected: false
+      }
+      , {
+        name: 'phone'
+        , selected: false
+      }
+      , {
+        name: 'imei'
+        , selected: false
+      }
+      , {
+        name: 'imsi'
+        , selected: false
+      }
+      , {
+        name: 'iccid'
+        , selected: false
+      }
+      , {
+        name: 'batteryHealth'
+        , selected: false
+      }
+      , {
+        name: 'batterySource'
+        , selected: false
+      }
+      , {
+        name: 'batteryStatus'
+        , selected: false
+      }
+      , {
+        name: 'batteryLevel'
+        , selected: false
+      }
+      , {
+        name: 'batteryTemp'
+        , selected: false
+      }
+      // , {
+      //   name: 'provider'
+      //   , selected: false
+      // }
+      , {
+        name: 'notes'
+        , selected: false
+      }
+      , {
+        name: 'maintain'
+        , selected: false
+      }
+      , {
+        name: 'back'
+        , selected: true
+      }
+    ]
     return cols;
 
   })
@@ -303,7 +375,7 @@ module.exports = function DeviceListCtrl(
       ,
       {
         name: 'owner_email'
-        , selected: true
+        , selected: false
       }
       , {
         name: 'owner_group'
@@ -311,7 +383,7 @@ module.exports = function DeviceListCtrl(
       }
       , {
         name: 'owner_name'
-        , selected: false
+        , selected: true
       }
 
       , {

@@ -172,7 +172,7 @@ module.exports = function DeviceGroupsController($scope, $http, NgTableParams) {
         try {
             $scope.tableParamsCustom.reload()
         } catch (e) {
-            console.log("[Error] $scope.tableParamsDate.reload()");
+            console.log("[Error] $scope.tableParamsCustom.reload()");
         }
         try {
             $scope.tableParamsCustomDevices.reload()
@@ -220,7 +220,7 @@ module.exports = function DeviceGroupsController($scope, $http, NgTableParams) {
         console.log("total filtered device groups:  " + $scope.filtered_device_groups.total)
         params.total($scope.filtered_device_groups.total)
         var returnList = []
-            
+
         $scope.filtered_device_groups.data.forEach(ele => {
             if ($scope.CurGroup && ele.name == $scope.CurGroup.name) {
                 // ele.selected = true
@@ -251,7 +251,7 @@ module.exports = function DeviceGroupsController($scope, $http, NgTableParams) {
         }
     );
     $scope.AddNewDeviceGroup = function () {
-        var name = prompt("输入新的设备组名称", ""); //将输入的内容赋给变量 name ，   
+        var name = prompt("输入新的设备组名称", ""); //将输入的内容赋给变量 name ，
         if (name) {
             return $scope.addDeviceGroup(name).then(function (data) {
                 console.log("成功添加设备组: " + JSON.stringify(data))
@@ -290,7 +290,7 @@ module.exports = function DeviceGroupsController($scope, $http, NgTableParams) {
 
     $scope.ModifyDeviceGroup = function () {
         if ($scope.CurGroup) {
-            var name = prompt("修改为新的设备组", ""); //将输入的内容赋给变量 name ，   
+            var name = prompt("修改为新的设备组", ""); //将输入的内容赋给变量 name ，
             if (name) {
                 return $scope.ModifyGroup($scope.CurGroup.name, name).then(function (data) {
                     console.log("修改设备组成功：" + JSON.stringify(data))
@@ -326,7 +326,7 @@ module.exports = function DeviceGroupsController($scope, $http, NgTableParams) {
         }
     }
 
-    $scope.AddUserToGroup = function (name, usergroups) {
+    $scope.AddUserGToDGroup = function (name, usergroups) {
         var data = {
             name: name,
             usergroups: usergroups
@@ -353,7 +353,7 @@ module.exports = function DeviceGroupsController($scope, $http, NgTableParams) {
                     list.push(element.GroupName)
                 }
             })
-            return $scope.AddUserToGroup($scope.CurGroup.name, list).then(function (data) {
+            return $scope.AddUserGToDGroup($scope.CurGroup.name, list).then(function (data) {
                 console.log(JSON.stringify(data))
                 $scope.refreshAll()
             }).catch(function (err) {

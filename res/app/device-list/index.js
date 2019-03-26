@@ -19,8 +19,9 @@ module.exports = angular.module('device-list', [
   require('./customize').name,
   require('./search').name,
   require('ui-bootstrap').name,
-  require('./devuslogstatistics').name
-  
+  require('./devuslogstatistics').name,
+  require('stf/app-state').name
+
 ])
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider

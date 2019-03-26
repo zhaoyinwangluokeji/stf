@@ -137,12 +137,14 @@ module.exports = function UsersInfoDirective(
             userslist = $scope.CurGroup.userslist
           } else {
             $scope.CurGroup.userslist.forEach(element => {
-              if (element["email"].indexOf(filter) != -1 ||
-                element["NameCN"].indexOf(filter) != -1 ||
-                element["name"].indexOf(filter) != -1) {
+              if ((element["email"] && element["email"].indexOf(filter) != -1) ||
+                (element["NameCN"] && element["NameCN"].indexOf(filter) != -1) ||
+                (element["name"] && element["name"].indexOf(filter) != -1)) {
+                if (!element["NameCN"]) element["NameCN"] = ""
+                if (!element["email"]) element["email"] = ""
+                if (!element["name"]) element["name"] = ""
                 userslist.push(element)
               }
-
             });
           }
           params.total(userslist.length)
@@ -180,7 +182,7 @@ module.exports = function UsersInfoDirective(
           $scope.tableParamsUsersOfGroup.reload()
           $scope.tableParamsUsersOfGroup.page(1)
         } catch (e) {
-          console.log("[Error] $scope.tableParamsDate.reload()");
+          console.log("[Error] $scope.tableParamsUsersOfGroup.reload()");
         }
       };
 
@@ -206,7 +208,7 @@ module.exports = function UsersInfoDirective(
         try {
           $scope.tableParamsPermissionOfGroup.reload()
         } catch (e) {
-          console.log("[Error] $scope.tableParamsDate.reload()");
+          console.log("[Error] $scope.tableParamsPermissionOfGroup.reload()");
         }
       };
 
@@ -274,10 +276,10 @@ module.exports = function UsersInfoDirective(
           console.log("[Error] $scope.tableParamsDate.reload()");
         }
       }
-  // 'tester'
-  // 'developer'
-  // '自动化测试组'
-  // '项目占用组'
+      // 'tester'
+      // 'developer'
+      // '自动化测试组'
+      // '项目占用组'
 
       $scope.ModifyGroup = function () {
         if ($scope.CurGroup) {
@@ -291,7 +293,7 @@ module.exports = function UsersInfoDirective(
             alert(gettext("wranning:自动化测试组 usergroup cann't modify!"))
           } else if ($scope.CurGroup.GroupName == "项目占用组") {
             alert(gettext("wranning:项目占用组 usergroup cann't modify!"))
-          }else {
+          } else {
             var group = prompt("修改为新的用户组", ""); //将输入的内容赋给变量 name ，
             if (group) {
               return UsersGroupService.ModifyGroup($scope.CurGroup.GroupName, group).then(function (data) {
@@ -322,7 +324,7 @@ module.exports = function UsersInfoDirective(
           } else if ($scope.CurGroup.GroupName == "项目占用组") {
             alert(gettext("wranning:项目占用组 usergroup cann't delete!"))
           }
-           else {
+          else {
             return UsersGroupService.DeleteGroup($scope.CurGroup.GroupName).then(function (data) {
               alert(JSON.stringify(data))
               $scope.QueryGroup()

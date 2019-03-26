@@ -38,6 +38,7 @@
     "adbkit-apkreader": "^3.0.1",
     "adbkit-monkey": "^1.0.1",
     "angular": "^1.7.5",
+    "angular-popups": "0.0.2",
     "aws-sdk": "^2.4.13",
     "basic-auth": "^1.0.3",
     "bluebird": "^2.10.1",
