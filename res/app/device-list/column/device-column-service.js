@@ -43,6 +43,13 @@ module.exports = function DeviceColumnService(
         return $filter('translate')(device.enhancedRentStateMsg)
       }
     }, DeviceRentService, $location, AppState, GroupService, socket)
+    , back: DeviceBackCell({
+      title: ('操作')
+      , value: function (device) {
+        //return device.back
+        return $filter('translate')(device.enhancedBack)
+      }
+    })
     , RentRlease: DeviceRentReleaseCell({
       title: ('释放')
       , value: function (device) {
@@ -349,12 +356,6 @@ module.exports = function DeviceColumnService(
       title: gettext('User')
       , value: function (device) {
         return device.device_rent_conf && device.device_rent_conf.owner && device.device_rent_conf.owner.NameCN ? device.device_rent_conf.owner.NameCN : ''
-      }
-    })
-    , back: DeviceBackCell({
-      title: ('操作')
-      , value: function (device) {
-        return device.back
       }
     })
   }
@@ -813,19 +814,19 @@ function DeviceBackCell(options) {
         if (device.back && device.back == '1') {
           //只有back字段存在且值为1，才算设备已经归还
           a.className = 'btn btn-xs a-disabled'
-          t.nodeValue = '已归还'
         }
         else {
           a.className = 'btn btn-xs rowhover device-back-status'
-          t.nodeValue = '归还'
         }
       }
-      else {
+      else
+      {
         a.className = 'btn btn-xs a-disabled'
-        t.nodeValue = '归还'
       }
 
       a.removeAttribute('href')
+      t.nodeValue = options.value(device)
+
       return td
     }
     , compare: function (a, b) {
