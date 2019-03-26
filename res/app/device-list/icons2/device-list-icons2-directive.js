@@ -277,7 +277,17 @@ module.exports = function DeviceListicons2Directive(
           if (click_target == "stop") {
             if (confirm('设备处于使用状态，你确定需要停止租用吗？')) {
               kickDevice(device)
-              DeviceRentService.free_rent(device, socket)
+
+              if(tracker.getIfAdmin())
+              {
+                //管理员释放要改变归还状态
+                DeviceRentService.admin_free_rent(device, socket)
+              }
+              else
+              {
+                DeviceRentService.user_free_rent(device, socket)
+              }
+              //DeviceRentService.free_rent(device, socket)
               e.preventDefault()
             }
           } else if (click_target == "use") {
@@ -345,17 +355,24 @@ module.exports = function DeviceListicons2Directive(
                   if (device.state == "maintain") {
                     alert("warnning:设备处于报修状态中，不能租用!")
                   } else {
-                    return Promise.all([device].map(function (device) {
-                      return DeviceRentService.open(device)
-                    })).then(function (result) {
-                      //  console.log("result:" + JSON.stringify(result))
-                      if (result[0].result == true) {
-                        $location.path('/control/' + result[0].device.serial);
-                      }
-                    })
-                      .catch(function (err) {
-                        console.log('err: ', err)
+                    if(device.back == "0")
+                    {
+                      alert("warnning:设备未归还，不能租用!")
+                    }
+                    else
+                    {
+                      return Promise.all([device].map(function (device) {
+                        return DeviceRentService.open(device)
+                      })).then(function (result) {
+                        //  console.log("result:" + JSON.stringify(result))
+                        if (result[0].result == true) {
+                          $location.path('/control/' + result[0].device.serial);
+                        }
                       })
+                        .catch(function (err) {
+                          console.log('err: ', err)
+                        })
+                    }
                   }
 
                 }

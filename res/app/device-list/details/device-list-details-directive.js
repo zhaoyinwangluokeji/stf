@@ -88,11 +88,13 @@ module.exports = function DeviceListDetailsDirective(
               device.device_rent_conf.owner.email &&
               device.device_rent_conf.owner.name &&
               user) {
-              if ((user.name == device.device_rent_conf.owner.name &&
-                user.email == device.device_rent_conf.owner.email) || is_adminstrtor) {
+                var isAdmin=tracker.getIfAdmin();
+              if (isAdmin || (user.name == device.device_rent_conf.owner.name &&
+                user.email == device.device_rent_conf.owner.email)) {
+                  //管理员或者用户自己可以释放设备
                 if (confirm('你确定需要停止租用吗？')) {
                   GroupService.kick(device, true)
-                  if(tracker.getIfAdmin())
+                  if(isAdmin)
                   {
                     //管理员释放要改变归还状态
                     DeviceRentService.admin_free_rent(device, socket)
