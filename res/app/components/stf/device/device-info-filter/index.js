@@ -212,3 +212,21 @@ module.exports = angular.module('stf.device-status', [])
       }
     }
   })
+  .filter('BackOrNot', function (gettext) {
+    return function (device) {   
+        if (device.deviceType && device.deviceType == "现场测试") {
+          //只对现场设备进行归还
+          if (device.back && device.back == '1') {
+            //只有back字段存在且值为1，才算设备已经归还
+            return gettext('已归还');
+          }
+          else {
+            return gettext('归还');
+          }
+        }
+        else
+        {
+          return ('不可用')
+        }
+    }
+  })
