@@ -195,82 +195,150 @@ module.exports = function DeviceListCtrl(
     var cols =
     [
       {
+        name: 'state'
+        , selected: true
+      },
+      {
+        name: 'rent'
+        , selected: true
+      }
+      ,
+      {
+        name: 'RentRlease'
+        , selected: true
+      },
+      {
+        name: 'owner'
+        , selected: true
+      },
+      {
         name: 'manufacturer'
         , selected: true
       }
       , {
-        name: 'CurrentTime'
+        name: 'model'
         , selected: true
+      }
+      , {
+        name: 'name'
+        , selected: false
       }
       , {
         name: 'serial'
         , selected: true
       }
-      ,
-      {
-        name: 'model'
+      , {
+        name: 'createdAt'
         , selected: false
       }
-      ,
-      {
-        name: 'platform'
+      , {
+        name: 'deviceType'
+        , selected: true
+      }
+      , {
+        name: 'operator'
+        , selected: false
+      }
+      , {
+        name: 'releasedAt'
         , selected: false
       }
       , {
         name: 'version'
+        , selected: true
+      }
+      , {
+        name: 'network'
         , selected: false
       }
-
-      ,
+      , {
+        name: 'display'
+        , selected: true
+      },
       {
-        name: 'owner_email'
-        , selected: false
-      }
-      , {
-        name: 'owner_group'
-        , selected: false
-      }
-      , {
-        name: 'owner_name'
-        , selected: true
-      }
-
-      , {
-        name: 'ProjectCode'
-        , selected: false
-      }
-      , {
-        name: 'ProjectName'
+        name: 'rentProject'
         , selected: true
       }
       , {
-        name: 'real_rent_time'
+        name: 'sdk'
         , selected: false
       }
       , {
-        name: 'rent_time'
+        name: 'productNo'
         , selected: false
       }
       , {
-        name: 'using_time'
+        name: 'deviceLocation'
+        , selected: false
+      }
+      , {
+        name: 'abi'
+        , selected: false
+      }
+      , {
+        name: 'cpuPlatform'
+        , selected: false
+      }
+      , {
+        name: 'openGLESVersion'
+        , selected: false
+      }
+      , {
+        name: 'browser'
+        , selected: false
+      }
+      , {
+        name: 'phone'
+        , selected: false
+      }
+      , {
+        name: 'imei'
+        , selected: false
+      }
+      , {
+        name: 'imsi'
+        , selected: false
+      }
+      , {
+        name: 'iccid'
+        , selected: false
+      }
+      , {
+        name: 'batteryHealth'
+        , selected: false
+      }
+      , {
+        name: 'batterySource'
+        , selected: false
+      }
+      , {
+        name: 'batteryStatus'
+        , selected: false
+      }
+      , {
+        name: 'batteryLevel'
+        , selected: false
+      }
+      , {
+        name: 'batteryTemp'
+        , selected: false
+      }
+      // , {
+      //   name: 'provider'
+      //   , selected: false
+      // }
+      , {
+        name: 'notes'
+        , selected: false
+      }
+      , {
+        name: 'maintain'
+        , selected: false
+      }
+      , {
+        name: 'back'
         , selected: true
       }
-      , {
-        name: 'start_time'
-        , selected: false
-      }
-      , {
-        name: 'test_centerCode'
-        , selected: false
-      }, {
-        name: 'device_type'
-        , selected: false
-      }
-      , {
-        name: 'mac_address'
-        , selected: false
-      }
-
     ]
     return cols;
 
