@@ -15,6 +15,7 @@ module.exports = function DeviceListCtrl(
   , LogColumnService
   , DeviceRentLogService
   , DevUsingStatisticsFactory
+  , AppState
 ) {
   console.log('DeviceListCtrl  ')
   $scope.tracker = DeviceService.trackAll($scope)
@@ -22,7 +23,6 @@ module.exports = function DeviceListCtrl(
 
   $scope.columnDefinitions = DeviceColumnService
   $scope.LogscolumnDefinitions = LogColumnService
-
 
   var MenusDefault = [
     {
@@ -193,81 +193,85 @@ module.exports = function DeviceListCtrl(
   $scope.columns = defaultColumns
   var defaultLogsColumns = (function () {
     var cols =
-      [
-        {
-          name: 'manufacturer'
-          , selected: true
-        }
-        , {
-          name: 'CurrentTime'
-          , selected: true
-        }
-        , {
-          name: 'serial'
-          , selected: true
-        }
-        ,
-        {
-          name: 'model'
-          , selected: false
-        }
-        ,
-        {
-          name: 'platform'
-          , selected: false
-        }
-        , {
-          name: 'version'
-          , selected: false
-        }
+    [
+      {
+        name: 'manufacturer'
+        , selected: true
+      }
+      , {
+        name: 'CurrentTime'
+        , selected: true
+      }
+      , {
+        name: 'serial'
+        , selected: true
+      }
+      ,
+      {
+        name: 'model'
+        , selected: false
+      }
+      ,
+      {
+        name: 'platform'
+        , selected: false
+      }
+      , {
+        name: 'version'
+        , selected: false
+      }
 
-        ,
-        {
-          name: 'owner_email'
-          , selected: true
-        }
-        , {
-          name: 'owner_group'
-          , selected: false
-        }
-        , {
-          name: 'owner_name'
-          , selected: false
-        }
+      ,
+      {
+        name: 'owner_email'
+        , selected: false
+      }
+      , {
+        name: 'owner_group'
+        , selected: false
+      }
+      , {
+        name: 'owner_name'
+        , selected: true
+      }
 
-        , {
-          name: 'ProjectCode'
-          , selected: false
-        }
-        , {
-          name: 'ProjectName'
-          , selected: false
-        }
-        , {
-          name: 'real_rent_time'
-          , selected: true
-        }
-        , {
-          name: 'rent_time'
-          , selected: false
-        }
-        , {
-          name: 'start_time'
-          , selected: false
-        }
-        , {
-          name: 'test_centerCode'
-          , selected: false
-        }, {
-          name: 'device_type'
-          , selected: false
-        }
-        , {
-          name: 'mac_address'
-          , selected: false
-        }
+      , {
+        name: 'ProjectCode'
+        , selected: false
+      }
+      , {
+        name: 'ProjectName'
+        , selected: true
+      }
+      , {
+        name: 'real_rent_time'
+        , selected: false
+      }
+      , {
+        name: 'rent_time'
+        , selected: false
+      }
+      , {
+        name: 'using_time'
+        , selected: true
+      }
+      , {
+        name: 'start_time'
+        , selected: false
+      }
+      , {
+        name: 'test_centerCode'
+        , selected: false
+      }, {
+        name: 'device_type'
+        , selected: false
+      }
+      , {
+        name: 'mac_address'
+        , selected: false
+      }
 
-      ]
+    ]
     return cols;
 
   })
@@ -303,7 +307,7 @@ module.exports = function DeviceListCtrl(
       ,
       {
         name: 'owner_email'
-        , selected: true
+        , selected: false
       }
       , {
         name: 'owner_group'
@@ -311,7 +315,7 @@ module.exports = function DeviceListCtrl(
       }
       , {
         name: 'owner_name'
-        , selected: false
+        , selected: true
       }
 
       , {

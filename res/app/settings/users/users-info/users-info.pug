@@ -1,5 +1,5 @@
 .widget-content.padded
-    .row                                                         
+    .row
         .col-md-10
             input.floatleft.QueryHeight.form-control(type="text" ng-model="queryFilter" ng-keypress="QueryMessage()")
             table.table.blackbackground.dataTable.ng-table(ng-table="tableParamsCustom")
@@ -8,11 +8,11 @@
                         div(ng-bind='k | translate' ng-style="{width: HeadWidth(k)}")
                 tr.rowhover(ng-repeat="row in tableParamsCustom.data")
                     td(ng-repeat="(kk,vv) in row" ng-click="RowClick(row)" )
-                        span(ng-if="kk != 'selected'") {{vv}}  
-                        input(type="checkbox" ng-model="vv" disabled  ng-if="kk == 'selected'" )                      
-                tr  
-                    td(colspan="100") 
-                        table.fill-parent-width(ng-init="sel=5") 
+                        span(ng-if="kk != 'selected'") {{vv}}
+                        input(type="checkbox" ng-model="vv" disabled  ng-if="kk == 'selected'" )
+                tr
+                    td(colspan="100")
+                        table.fill-parent-width(ng-init="sel=5")
                             tr
                                 td
                                     div.floatleft
@@ -24,10 +24,10 @@
                                     div.floatleft
                                         button.btnwidth(ng-disabled=" pagesCustomCount <= (params.parameters().page )" ng-click="params.page(pagesCustomCount)") >>
                                 td
-                                    span.msgwidth 
-                                    | Totals: {{params.total()}}  
+                                    span.msgwidth
+                                    | Totals: {{params.total()}}
                                 td
-                                    span.msgwidth  
+                                    span.msgwidth
                                     | Pages: {{params.parameters().page}} / {{pagesCustomCount}}
                                 td(colspan="0")
                                     div.btn-group(uib-dropdown).floatright
@@ -39,24 +39,23 @@
                                             ng-hide='!adminMode && columnDefinitions[column.name].admin')
                                                 button(ng-click='params.count(ceil);sel=ceil').btn.btn-xs
                                                     i.fa.fa-circle-thin
-                                                    span(ng-bind='ceil | translate') 
-                                                
+                                                    span(ng-bind='ceil | translate')
+
         .col-md-2
             div.name-title-info
                 strong Name Info
-            table.name-info 
+            table.name-info
                 tr(ng-repeat="(k,v) in CurRow ")
                     td
                         div.name-width {{k}}
-                    td 
+                    td
                         div {{v}}
-            div            
+            div
                 button.btn-width(ng-click="ResetPassword()") 密码重置
             div
                 button.btn-width(ng-click="ModifyPassword()") 密码设置
-            div            
-                button.btn-width(ng-click="AddNewUser()") 增加用户
-            
+
+
 
 
 

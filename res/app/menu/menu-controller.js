@@ -1,6 +1,7 @@
-module.exports = function MenuCtrl($scope, $rootScope,$http,$location, SettingsService, UsersService,
+module.exports = function MenuCtrl($scope, $rootScope, $http, $location, SettingsService, UsersService,
   $location, AppState) {
 
+  $scope.notice = { open: !AppState.password_modified || AppState.password_modified == false ? true : false }
   SettingsService.bind($scope, {
     target: 'lastUsedDevice'
   })
@@ -18,7 +19,7 @@ module.exports = function MenuCtrl($scope, $rootScope,$http,$location, SettingsS
     if (!AppState.user) {
       alert('没有选择用户')
     } else {
-      var password = prompt("请输入新的密码", ""); //将输入的内容赋给变量 name ，   
+      var password = prompt("请输入新的密码", ""); //将输入的内容赋给变量 name ，
       if (password) {
         return UsersService.ModifyPassword(AppState.user, password).then(function (data) {
           alert(data.msg)
@@ -30,14 +31,14 @@ module.exports = function MenuCtrl($scope, $rootScope,$http,$location, SettingsS
   }
   $scope.Logout = function () {
     return UsersService.Logout(AppState.user).then(function (data) {
-      console.log("url:"+data.url)
+      console.log("url:" + data.url)
       $location.path(data.url)
       $state.go(data.url)
     }).catch(function (err) {
       console.log("Logout err:" + JSON.stringify(err))
     })
   }
-  
+
 
   var MenusDefault = [
     {
