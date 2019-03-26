@@ -715,6 +715,7 @@ function DeviceRentReleaseCell(options, DeviceRentService, $location, AppState, 
 
       user = AppState.user
       var para = arguments
+      var is_adminstrator = AppState.is_adminstrator
 
       if (device.device_rent_conf &&
         device.device_rent_conf.rent &&
@@ -722,8 +723,8 @@ function DeviceRentReleaseCell(options, DeviceRentService, $location, AppState, 
         device.device_rent_conf.owner.email &&
         device.device_rent_conf.owner.name &&
         user) {
-        if (user.name == device.device_rent_conf.owner.name &&
-          user.email == device.device_rent_conf.owner.email) {
+        if (is_adminstrator || (user.name == device.device_rent_conf.owner.name &&
+          user.email == device.device_rent_conf.owner.email)) {
           a.className = 'pointer btn btn-xs device-rent-release-status btn-outline-rent rowhover'
         } else {
           a.className = 'pointer-not-allowed btn btn-xs device-rent-release-status black-font-color'
