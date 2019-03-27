@@ -809,7 +809,6 @@ function DeviceBackCell(options) {
     , update: function (td, device) {
       var a = td.firstChild
       var t = a.firstChild
-      console.log("options:"+JSON.stringify(options))
       if (device.deviceType && device.deviceType == '现场测试') {
         //只对现场设备进行归还
         if (device.back && device.back == '1') {
