@@ -216,6 +216,7 @@ module.exports =
                   ProjectCode: proCode
                 }
               }
+              device.back = 0
               socket.emit('device.rent_conf.set', $scope.device)
               $uibModalInstance.close(true)
             }
@@ -395,6 +396,7 @@ module.exports =
           device.device_rent_conf = {}
           device.device_rent_conf.rent = false
         }
+        device.back = 1
         resolve(socket.emit('device.admin_rent_conf.set', device))
       })
     }
@@ -408,6 +410,7 @@ module.exports =
           device.device_rent_conf = {}
           device.device_rent_conf.rent = false
         }
+        device.back = 0
         resolve(socket.emit('device.user_rent_conf.set', device))
       })
     }

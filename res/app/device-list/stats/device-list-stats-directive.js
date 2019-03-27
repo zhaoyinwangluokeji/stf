@@ -406,8 +406,8 @@ module.exports = function DeviceListStatsDirective(
         var newStats = updateStats(device)
         var diffs = Object.create(null)
 
-        scope.counter.usable += diffs.usable = newStats.usable - oldStats.usable
-        scope.counter.busy += diffs.busy = newStats.busy - oldStats.busy
+        scope.counter.usable += diffs.usable = newStats.usable - oldStats && oldStats.usable ? oldStats.usable :0
+        scope.counter.busy += diffs.busy = newStats.busy -  oldStats && oldStats.busy ? oldStats.busy : 0
         scope.counter.using += diffs.using = newStats.using - oldStats.using
 
         if (diffs.usable || diffs.busy || diffs.using) {

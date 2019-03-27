@@ -54,6 +54,7 @@ module.exports = function EnhanceDeviceServiceFactory($filter, AppState) {
     device.enhancedStatePassive = $filter('statusNamePassive')(device.state)
     device.enhancedRentStateMsg = $filter('statusNameActionFromDevice')(device)
     device.enhancedRentReleaseMsg = $filter('RentReleaseMsg')(device)
+    device.enhancedBack = $filter('BackOrNot')(device)
     
     device.enhancedRentProject = (function(){
       if(device && device.device_rent_conf && device.device_rent_conf.rent && device.device_rent_conf.project) {

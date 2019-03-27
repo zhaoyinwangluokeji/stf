@@ -27,16 +27,14 @@ module.exports = angular.module('stf.device-status', [])
           if (device.state == "maintain") {
             return gettext('不可用(报修状态)');
           } else {
-            if(device.back == "0")
-            {
+            if (device.back == "0") {
               return gettext('未归还');
             }
-            else
-            {
+            else {
               return gettext('可租用');
             }
           }
-          
+
         } else {
           if (device.state == "available") {
             return gettext('可租用');
@@ -44,6 +42,7 @@ module.exports = angular.module('stf.device-status', [])
             if (device.state == "maintain") {
               return gettext('不可用(报修状态)');
             } else {
+              console.log("state:" + device.state)
               return gettext('不可用(离线)');
             }
 
@@ -62,25 +61,23 @@ module.exports = angular.module('stf.device-status', [])
         var second = Math.floor((time % (1000 * 60)) / (1000));
         if (time >= 0) {
           var tip = "剩" + hour + "时" + minute + "分" + second + "秒";
-          var name 
-          if(device.device_rent_conf.owner.NameCN){
+          var name
+          if (device.device_rent_conf.owner.NameCN) {
             name = device.device_rent_conf.owner.NameCN
           }
-          else{
+          else {
             name = device.device_rent_conf.owner.name
-          } 
+          }
           if (device.device_rent_conf.owner) {
             tip = name + ':' + tip;
           }
           return (tip)
         }
         else {
-          if(device.back == "0")
-          {
+          if (device.back == "0") {
             return gettext('租用过期，未归还')
           }
-          else
-          {
+          else {
             return gettext('租用过期，已归还')
           }
         }
@@ -209,6 +206,23 @@ module.exports = angular.module('stf.device-status', [])
           return gettext('No')
         default:
           return gettext('-')
+      }
+    }
+  })
+  .filter('BackOrNot', function (gettext) {
+    return function (device) {
+      if (device.deviceType && device.deviceType == "现场测试") {
+        //只对现场设备进行归还
+        if (device.back && device.back == '1') {
+          //只有back字段存在且值为1，才算设备已经归还
+          return gettext('已归还');
+        }
+        else {
+          return gettext('归还');
+        }
+      }
+      else {
+        return ('不可用')
       }
     }
   })
