@@ -36,7 +36,7 @@ module.exports = angular.module('stf.device-status', [])
               return gettext('可租用');
             }
           }
-          
+
         } else {
           if (device.state == "available") {
             return gettext('可租用');
@@ -62,13 +62,13 @@ module.exports = angular.module('stf.device-status', [])
         var second = Math.floor((time % (1000 * 60)) / (1000));
         if (time >= 0) {
           var tip = "剩" + hour + "时" + minute + "分" + second + "秒";
-          var name 
+          var name
           if(device.device_rent_conf.owner.NameCN){
             name = device.device_rent_conf.owner.NameCN
           }
           else{
             name = device.device_rent_conf.owner.name
-          } 
+          }
           if (device.device_rent_conf.owner) {
             tip = name + ':' + tip;
           }
@@ -213,7 +213,7 @@ module.exports = angular.module('stf.device-status', [])
     }
   })
   .filter('BackOrNot', function (gettext) {
-    return function (device) {   
+    return function (device) {
         if (device.deviceType && device.deviceType == "现场测试") {
           //只对现场设备进行归还
           if (device.back && device.back == '1') {

@@ -68,7 +68,10 @@ module.exports = function DeviceListDetailsDirective(
                 if (device.state == "maintain") {
                   alert("warnning:设备处于报修状态中，不能租用!")
                 } else {
-                  return DeviceRentService.open(device)
+                  return DeviceRentService.open(device).then(function(result){
+                    console.log("rent result:"+JSON.stringify(result))
+                    return result
+                  })
                 }
               })).then(function (result) {
                 if (result[0].result == true) {
@@ -105,6 +108,7 @@ module.exports = function DeviceListDetailsDirective(
                     DeviceRentService.user_free_rent(device, socket)
                   }
                   e.preventDefault()
+                  tracker.emit("change",device)
                 }
               }
               else {
@@ -118,6 +122,7 @@ module.exports = function DeviceListDetailsDirective(
               DeviceRentService.admin_free_rent(device, socket)
               e.preventDefault()
               alert('归还成功！')
+              tracker.emit("change",device)
             }
           }
           else
