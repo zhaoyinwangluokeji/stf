@@ -285,7 +285,7 @@ module.exports =
                         try {
                             $scope.tableParamsCustom.reload()
                         } catch (e) {
-                            console.log("[Error] $scope.tableParamsDate.reload()");
+                            console.log("[Error] $scope.tableParamsCustom.reload()");
                         }
                     }
                 };

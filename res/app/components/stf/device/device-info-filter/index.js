@@ -27,7 +27,14 @@ module.exports = angular.module('stf.device-status', [])
           if (device.state == "maintain") {
             return gettext('不可用(报修状态)');
           } else {
-            return gettext('可租用');
+            if(device.back == "0")
+            {
+              return gettext('未归还');
+            }
+            else
+            {
+              return gettext('可租用');
+            }
           }
           
         } else {
@@ -203,5 +210,23 @@ module.exports = angular.module('stf.device-status', [])
         default:
           return gettext('-')
       }
+    }
+  })
+  .filter('BackOrNot', function (gettext) {
+    return function (device) {   
+        if (device.deviceType && device.deviceType == "现场测试") {
+          //只对现场设备进行归还
+          if (device.back && device.back == '1') {
+            //只有back字段存在且值为1，才算设备已经归还
+            return gettext('已归还');
+          }
+          else {
+            return gettext('归还');
+          }
+        }
+        else
+        {
+          return ('不可用')
+        }
     }
   })

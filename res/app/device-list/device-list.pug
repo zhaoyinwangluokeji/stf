@@ -28,7 +28,7 @@
               select(name='searchFields')
                 option(ng-repeat='column in columns', ng-value='column.name + ": "',ng-if='column.selected'
                 ng-bind='columnDefinitions[column.name].title | translate')
-            input(type='search', autosave='deviceFilter',ng-if='activeTabs.details || activeTabs.icons|| activeTabs.icons2' 
+            input(type='search', autosave='deviceFilter',ng-if='activeTabs.details || activeTabs.icons|| activeTabs.icons2'
               name='deviceFilter', ng-model='search.deviceFilter', ng-change='applyFilter(search.deviceFilter)',
               ng-model-options='{debounce: 150}'
               autocorrect='off', autocapitalize='off', spellcheck='false',
@@ -39,13 +39,13 @@
               select(name='searchFieldsLog')
                 option(ng-repeat='column in logsColumns', ng-value='column.name + ": "',ng-if='column.selected'
                 ng-bind='LogscolumnDefinitions[column.name].title | translate')
-            input(type='search', autosave='deviceFilter',ng-if='activeTabs.deviceusinglog' 
+            input(type='search', autosave='deviceFilter',ng-if='activeTabs.deviceusinglog'
               name='deviceFilter', ng-model='search.deviceFilter', ng-change='applyFilter(search.deviceFilter)',
               ng-model-options='{debounce: 150}'
-              autocorrect='off', autocapitalize='off', spellcheck='false',ng-keypress="enterSomething($event)"
+              autocorrect='off', autocapitalize='off', spellcheck='false',ng-keyup="enterSomething($event)"
               list='searchFieldsLog', multiple, focus-element='search.focusElement',
               text-focus-select, accesskey='4').form-control.input-sm.device-search.pull-right
-            
+
             input(type="text" ng-show='false' ng-model='condi',ng-required="true" ,ng-if='activeTabs.deviceusinglog')
 
             span.pull-right(ng-if='activeTabs.deviceusinglog')
@@ -83,13 +83,12 @@
                     button(ng-click='reset()').btn.btn-xs.btn-danger-outline
                       i.fa.fa-trash-o
                       span(ng-bind='"Reset"|translate')
-   
+
             .input-group.DatepickerWidth.DateAlignRight(ng-show='activeTabs.deviceusinglog')
-              input.form-control(type="text", uib-datepicker-popup="{{format}}", 
+              input.form-control(type="text", uib-datepicker-popup="{{format}}",
               ng-model="dat", is-open="popup1.opened", ng-required="true",
-              close-text="关闭", clear-text="清空", current-text="今天", 
+              close-text="关闭", clear-text="清空", current-text="今天",
               alt-input-formats="altInputFormats", datepicker-options="dateOptions")
-              |             
               span.input-group-btn
                 button.btn.btn-default(type="button", ng-click="open1()")
                   i.glyphicon.glyphicon-calendar
@@ -115,7 +114,7 @@
                 span(translate) Details
               div.device-list-details-content(ng-if='activeTabs.details').selectable
                 device-list-details(tracker='tracker', columns='columns', sort='sort', filter='filter').selectable
-            
+
             uib-tab(active='activeTabs.deviceusinglog', select='focusSearch()', ng-if='!$root.basicMode')
               uib-tab-heading
                 i.fa.fa-list
@@ -124,6 +123,5 @@
                 device-rent-log(tracker='tracker', columns='logsColumns'
                 ,sort='Logssort',dat='dat', filter='filter',condi='condi').selectable
 
-            
-                
-                
+
+

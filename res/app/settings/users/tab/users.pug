@@ -4,17 +4,17 @@ div(ng-controller='UsersController')
     .widget-content.padded
         .row
             .col-md-3
-                input.floatleft.QueryHeight.form-control(type="text" ng-model="filterGroup" ng-keypress="QueryGroup()")
+                input.floatleft.QueryHeight.form-control(type="text" ng-model="filterGroup" ng-keyup="QueryGroup()")
                 table.table.dataTable.ng-table(ng-table="tableParamsGroup")
                     thead
                         th.header.sortable(ng-repeat='(k,v) in tableParamsGroup.data[0] track by $index')
                             div(ng-bind='k | translate' ng-style="{width: HeadWidth(k)}")
                     tr.rowhover(ng-repeat="row in tableParamsGroup.data")
                         td(ng-repeat="vv in row" ng-click="SelectGroup(row)")
-                            span {{vv}}     
-                    tr  
-                        td(colspan="100") 
-                            table.fill-parent-width(ng-init="sel=5") 
+                            span {{vv}}
+                    tr
+                        td(colspan="100")
+                            table.fill-parent-width(ng-init="sel=5")
                                 tr
                                     td
                                         div.floatleft
@@ -26,10 +26,10 @@ div(ng-controller='UsersController')
                                         div.floatleft
                                             button.btnwidth(ng-disabled=" pagesGroupCount <= (params.parameters().page )" ng-click="params.page(pagesGroupCount)") >>
                                     td
-                                        span.msgwidth 
-                                        | Totals: {{params.total()}}  
+                                        span.msgwidth
+                                        | Totals: {{params.total()}}
                                     td
-                                        span.msgwidth  
+                                        span.msgwidth
                                         | Pages: {{params.parameters().page}} / {{pagesGroupCount}}
                                     td(colspan="0")
                                         div.btn-group(uib-dropdown).floatright
@@ -41,7 +41,7 @@ div(ng-controller='UsersController')
                                                 ng-hide='!adminMode && columnDefinitions[column.name].admin')
                                                     button(ng-click='params.count(ceil);sel=ceil').btn.btn-xs
                                                         i.fa.fa-circle-thin
-                                                        span(ng-bind='ceil | translate') 
+                                                        span(ng-bind='ceil | translate')
             .col-md-2
                 div.name-title-info
                     strong Group Info
@@ -49,23 +49,23 @@ div(ng-controller='UsersController')
                 div
                     button.btn-width(ng-click="AddNewGroup()") 增加
                 div
-                    button.btn-width(ng-click="ModifyGroup()") 修改  
+                    button.btn-width(ng-click="ModifyGroup()") 修改
                 div
-                    button.btn-width(ng-click="DeleteGroup()") 删除  
-                                                                      
+                    button.btn-width(ng-click="DeleteGroup()") 删除
+
             .col-md-4
-                input.floatleft.QueryHeight.form-control(type="text" ng-model="queryFilter" ng-keypress="QueryMessage()")
+                input.floatleft.QueryHeight.form-control(type="text" ng-model="queryFilter" ng-keyup="QueryMessage()")
                 table.table.dataTable.ng-table(ng-table="tableParamsCustom")
                     thead
                         th.header.sortable(ng-repeat='(k,v) in tableParamsCustom.data[0] track by $index')
                             div(ng-bind='k | translate' ng-style="{width: HeadWidth(k)}")
                     tr.rowhover(ng-repeat="row in tableParamsCustom.data")
                         td(ng-repeat="vv in row" ng-click="RowClick(row)")
-                            span {{vv}} 
-                            
-                    tr  
-                        td(colspan="100") 
-                            table.fill-parent-width(ng-init="sel=5") 
+                            span {{vv}}
+
+                    tr
+                        td(colspan="100")
+                            table.fill-parent-width(ng-init="sel=5")
                                 tr
                                     td
                                         div.floatleft
@@ -77,10 +77,10 @@ div(ng-controller='UsersController')
                                         div.floatleft
                                             button.btnwidth(ng-disabled=" pagesCustomCount <= (params.parameters().page )" ng-click="params.page(pagesCustomCount)") >>
                                     td
-                                        span.msgwidth 
-                                        | Totals: {{params.total()}}  
+                                        span.msgwidth
+                                        | Totals: {{params.total()}}
                                     td
-                                        span.msgwidth  
+                                        span.msgwidth
                                         | Pages: {{params.parameters().page}} / {{pagesCustomCount}}
                                     td(colspan="0")
                                         div.btn-group(uib-dropdown).floatright
@@ -92,22 +92,22 @@ div(ng-controller='UsersController')
                                                 ng-hide='!adminMode && columnDefinitions[column.name].admin')
                                                     button(ng-click='params.count(ceil);sel=ceil').btn.btn-xs
                                                         i.fa.fa-circle-thin
-                                                        span(ng-bind='ceil | translate') 
-                                                   
+                                                        span(ng-bind='ceil | translate')
+
             .col-md-2
                 Div.name-title-info
                     strong Name Info
-                table.name-info 
+                table.name-info
                     tr(ng-repeat="(k,v) in CurRow ")
                         td
                             div.name-width {{k}}
-                        td 
+                        td
                             div {{v}}
-                div            
+                div
                     button.btn-width(ng-click="ResetPassword()") 密码重置
                 div
                     button.btn-width(ng-click="ModifyPassword()") 密码设置
-            
+
 
 
 

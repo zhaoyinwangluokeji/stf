@@ -42,14 +42,14 @@
 .widget-container.device-statics.filter
   .hr-line-dashed.filter-line
   dl.clearfix
-    dt 手机品牌： 
+    dt 手机品牌：
     dd.filterOff(ng-repeat="ii in manufacturerData.data.labels", ng-click='clickFilter("manufacturer",ii,$event)') {{ii}}
   dl.clearfix
-    dt 系统版本： 
+    dt 系统版本：
     dd.filterOff(ng-repeat="jj in versionData.data.labels", ng-click='clickFilter("version",jj,$event)') {{jj}}
   dl.clearfix
-    dt 分辨率： 
+    dt 分辨率：
     dd.filterOff(ng-repeat="kk in screensizeData.data.labels", ng-click='clickFilter("display",kk,$event)') {{kk}}
   dl.clearfix
-    dt 平台类型： 
+    dt 平台类型：
     dd.filterOff(ng-repeat="ll in platformData.data.labels", ng-click='clickFilter("platform",ll,$event)') {{ll}}

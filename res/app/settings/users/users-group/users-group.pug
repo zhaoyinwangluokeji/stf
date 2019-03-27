@@ -1,19 +1,19 @@
 .widget-content.padded
     .row
         .col-md-3
-            input.floatleft.QueryHeight.form-control(type="text" ng-model="filterGroup" ng-keypress="QueryGroup()")
+            input.floatleft.QueryHeight.form-control(type="text" ng-model="filterGroup" ng-keyup="QueryGroup()")
             table.blackbackground.table.dataTable.ng-table(ng-table="tableParamsGroup")
                 thead
                     th.header.sortable(ng-repeat='(k,v) in tableParamsGroup.data[0] track by $index' ng-if="k!='userslist' && k!= 'id' && k!='PermissionId' && k!='permissionlist'")
                         div(ng-bind='k | translate' ng-style="{width: HeadWidth(k)}")
                 tr.rowhover(ng-repeat="row in tableParamsGroup.data" ng-click="SelectGroup(row)")
                     td(ng-repeat="(kk,vv) in row" ng-if="kk!='userslist' && kk!= 'id' && kk!='PermissionId' && kk!='permissionlist' ")
-                        span(ng-if="kk != 'selected'") {{vv}}    
-                        input(type="checkbox" ng-if="kk == 'selected'" disabled ng-model="vv")    
-                tr  
-                    td(colspan="100") 
-                        table.fill-parent-width(ng-init="sel=10") 
-                            tr 
+                        span(ng-if="kk != 'selected'") {{vv}}
+                        input(type="checkbox" ng-if="kk == 'selected'" disabled ng-model="vv")
+                tr
+                    td(colspan="100")
+                        table.fill-parent-width(ng-init="sel=10")
+                            tr
                                 td
                                     div.floatleft
                                         button.wid30px(ng-disabled="params.parameters().page<=1" ng-click="params.page(1)") <<
@@ -24,10 +24,10 @@
                                     div.floatleft
                                         button.wid30px(ng-disabled=" pagesGroupCount <= (params.parameters().page )" ng-click="params.page(pagesGroupCount)") >>
                                 td
-                                    span.msgwidth 
+                                    span.msgwidth
                                     |  {{params.total()}}  / &nbsp;&nbsp;
                                 td
-                                    span.msgwidth  
+                                    span.msgwidth
                                     |  {{params.parameters().page}} / {{pagesGroupCount}}
                                 td(colspan="0")
                                     div.btn-group(uib-dropdown).floatright
@@ -39,31 +39,31 @@
                                             ng-hide='!adminMode && columnDefinitions[column.name].admin')
                                                 button(ng-click='params.count(ceil);sel=ceil').btn.btn-xs
                                                     i.fa.fa-circle-thin
-                                                    span(ng-bind='ceil | translate') 
-            button.btn-width(ng-click="AddNewGroup()") 
+                                                    span(ng-bind='ceil | translate')
+            button.btn-width(ng-click="AddNewGroup()")
                 i.fa.fa-user-plus
                 span +
-            button.btn-width(ng-click="ModifyGroup()") 
+            button.btn-width(ng-click="ModifyGroup()")
                 i.fa.fa-wrench
                 span M
-            button.btn-width(ng-click="DeleteGroup()") 
+            button.btn-width(ng-click="DeleteGroup()")
                 i.fa.fa-user-times
                 span x
-                                                        
+
         .col-md-5
             .filtering-buttons
                 button.align-right.btn-width.headerbtn(ng-if="activeTabs.users" ng-click="AddUserToGroup()")
                     i.fa.fa-user-plus
-                    span 
+                    span
                 button.align-right.btn-width.headerbtn(ng-if="activeTabs.users" ng-click="RemoveUserOfGroup()")
                     i.fa.fa-user-times
-                    span 
+                    span
                 button.align-right.btn-width.headerbtn(ng-if="activeTabs.permission" ng-click="AddPermissiionToGroup()")
                     i.fa.fa-user-plus
-                    span 
+                    span
                 button.align-right.btn-width.headerbtn(ng-if="activeTabs.permission" ng-click="RemovePermissionOfGroup()")
                     i.fa.fa-user-times
-                    span 
+                    span
             uib-tabset.overflow-auto.device-list-active-tabs(ng-if='activeTabs' )
                 uib-tab(active='activeTabs.users', select='QueryUsersOfGroup()')
                     uib-tab-heading
@@ -77,12 +77,12 @@
                                     div(ng-bind='k | translate' ng-style="{width: HeadWidth(k)}")
                             tr.rowhover(ng-repeat="row in tableParamsUsersOfGroup.data")
                                 td(ng-repeat="(kk,vv) in row" ng-click="RowClick(row)")
-                                    span(ng-if="kk != 'selected'") {{vv}}    
-                                    input(type="checkbox" ng-if="kk == 'selected'"  disabled  ng-model="vv") 
-                            tr  
-                                td(colspan="100") 
-                                    table.fill-parent-width(ng-init="sel=10") 
-                                        tr 
+                                    span(ng-if="kk != 'selected'") {{vv}}
+                                    input(type="checkbox" ng-if="kk == 'selected'"  disabled  ng-model="vv")
+                            tr
+                                td(colspan="100")
+                                    table.fill-parent-width(ng-init="sel=10")
+                                        tr
                                             td
                                                 div.floatleft
                                                     button.wid30px(ng-disabled="params.parameters().page<=1" ng-click="params.page(1)") <<
@@ -93,10 +93,10 @@
                                                 div.floatleft
                                                     button.wid30px(ng-disabled=" pagesCustomCount <= (params.parameters().page )" ng-click="params.page(pagesCustomCount)") >>
                                             td
-                                                span.msgwidth 
-                                                | Totals: {{params.total()}}  
+                                                span.msgwidth
+                                                | Totals: {{params.total()}}
                                             td
-                                                span.msgwidth  
+                                                span.msgwidth
                                                 | Pages: {{params.parameters().page}} / {{pagesCustomCount}}
                                             td(colspan="0")
                                                 div.btn-group(uib-dropdown).floatright
@@ -108,7 +108,7 @@
                                                         ng-hide='!adminMode && columnDefinitions[column.name].admin')
                                                             button(ng-click='params.count(ceil);sel=ceil').btn.btn-xs
                                                                 i.fa.fa-circle-thin
-                                                                span(ng-bind='ceil | translate') 
+                                                                span(ng-bind='ceil | translate')
 
 
                 uib-tab(active='activeTabs.permission', select='QueryPermissionOfGroup()')
@@ -122,10 +122,10 @@
                                     div(ng-bind='k | translate' ng-style="{width: HeadWidth(k)}")
                             tr.rowhover(ng-repeat="row in tableParamsPermissionOfGroup.data")
                                 td(ng-repeat="(kk,vv) in row" ng-click="RowClick(row)" ng-if="kk!='userslist' && kk!= 'id' && kk != 'PermissionId'")
-                                    span(ng-if="kk != 'selected'") {{vv}}    
-                                    input(type="checkbox" ng-if="kk == 'selected'"  disabled  ng-model="vv") 
-                    
-        .col-md-4   
+                                    span(ng-if="kk != 'selected'") {{vv}}
+                                    input(type="checkbox" ng-if="kk == 'selected'"  disabled  ng-model="vv")
+
+        .col-md-4
             div(ng-if="activeTabs.users")
                 input.floatleft.QueryHeight.form-control(type="text" ng-model="$parent.filterUser" ng-keyup="FreshUser()")
                 table.blackbackground.table.dataTable.ng-table(ng-table="tableParamsUser")
@@ -134,12 +134,12 @@
                             div(ng-bind='k | translate' ng-style="{width: HeadWidth(k)}")
                     tr.rowhover(ng-repeat="row in tableParamsUser.data" ng-click="SelectRow(row)")
                         td(ng-repeat="(kk,vv) in row" ng-if="kk!='userslist' && kk!= 'id' ")
-                            span(ng-if="kk != 'selected'") {{vv}}    
-                            input(type="checkbox" ng-if="kk == 'selected'" disabled ng-model="vv")    
-                    tr  
+                            span(ng-if="kk != 'selected'") {{vv}}
+                            input(type="checkbox" ng-if="kk == 'selected'" disabled ng-model="vv")
+                    tr
                         td(colspan="100")
-                            table.fill-parent-width(ng-init="sel2=15") 
-                                tr 
+                            table.fill-parent-width(ng-init="sel2=15")
+                                tr
                                     td
                                         div.floatleft
                                             button.wid30px(ng-disabled="params.parameters().page<=1" ng-click="params.page(1)") <<
@@ -150,10 +150,10 @@
                                         div.floatleft
                                             button.wid30px(ng-disabled=" pagesUserCount <= (params.parameters().page )" ng-click="params.page(pagesGroupCount)") >>
                                     td
-                                        span.msgwidth 
-                                        | Totals: {{params.total()}}  
+                                        span.msgwidth
+                                        | Totals: {{params.total()}}
                                     td
-                                        span.msgwidth  
+                                        span.msgwidth
                                         | Pages: {{params.parameters().page}} / {{pagesUserCount}}
                                     td(colspan="0")
                                         div.btn-group(uib-dropdown).floatright
@@ -165,7 +165,7 @@
                                                 ng-hide='!adminMode && columnDefinitions[column.name].admin')
                                                     button(ng-click='params.count(ceil);sel2=ceil').btn.btn-xs
                                                         i.fa.fa-circle-thin
-                                                        span(ng-bind='ceil | translate') 
+                                                        span(ng-bind='ceil | translate')
             div(ng-if="activeTabs.permission")
                 input.floatleft.QueryHeight.form-control(type="text" ng-model="$parent.filterPermission" ng-keyup="FreshAllPermission()")
                 table.blackbackground.table.dataTable.ng-table(ng-table="tableParamsPermission")
@@ -174,12 +174,12 @@
                             div(ng-bind='k | translate' ng-style="{width: HeadWidth(k)}")
                     tr.rowhover(ng-repeat="row in tableParamsPermission.data" ng-click="SelectRow(row)")
                         td(ng-repeat="(kk,vv) in row" ng-if="kk!='userslist' && kk!= 'id' && kk != 'PermissionId'")
-                            span(ng-if="kk != 'selected'") {{vv}}    
-                            input(type="checkbox" ng-if="kk == 'selected'" disabled ng-model="vv")    
-                    tr  
+                            span(ng-if="kk != 'selected'") {{vv}}
+                            input(type="checkbox" ng-if="kk == 'selected'" disabled ng-model="vv")
+                    tr
                         td(colspan="100")
-                            table.fill-parent-width(ng-init="sel2=15") 
-                                tr 
+                            table.fill-parent-width(ng-init="sel2=15")
+                                tr
                                     td
                                         div.floatleft
                                             button.wid30px(ng-disabled="params.parameters().page<=1" ng-click="params.page(1)") <<
@@ -190,10 +190,10 @@
                                         div.floatleft
                                             button.wid30px(ng-disabled=" pagesUserCount <= (params.parameters().page )" ng-click="params.page(pagesGroupCount)") >>
                                     td
-                                        span.msgwidth 
-                                        | Totals: {{params.total()}}  
+                                        span.msgwidth
+                                        | Totals: {{params.total()}}
                                     td
-                                        span.msgwidth  
+                                        span.msgwidth
                                         | Pages: {{params.parameters().page}} / {{pagesUserCount}}
                                     td(colspan="0")
                                         div.btn-group(uib-dropdown).floatright
@@ -205,10 +205,10 @@
                                                 ng-hide='!adminMode && columnDefinitions[column.name].admin')
                                                     button(ng-click='params.count(ceil);sel2=ceil').btn.btn-xs
                                                         i.fa.fa-circle-thin
-                                                        span(ng-bind='ceil | translate') 
-                                                        
+                                                        span(ng-bind='ceil | translate')
 
-                                                        
+
+
 
 
 

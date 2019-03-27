@@ -5,6 +5,7 @@ module.exports = function CreateAccountController($scope, $http) {
   $scope.submit = function () {
     var data = {
       name: $scope.create_account.username
+      , NameCN: $scope.create_account.NameCN
       , email: $scope.create_account.email
       , password: $scope.create_account.password
     }
