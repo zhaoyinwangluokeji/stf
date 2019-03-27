@@ -1,4 +1,5 @@
 var _ = require('lodash')
+var CircularJSON = require('circular-json');
 
 var filterOps = {
   '<': function (a, filterValue) {
@@ -808,7 +809,7 @@ function DeviceBackCell(options) {
     , update: function (td, device) {
       var a = td.firstChild
       var t = a.firstChild
-
+      console.log("options:"+JSON.stringify(options))
       if (device.deviceType && device.deviceType == '现场测试') {
         //只对现场设备进行归还
         if (device.back && device.back == '1') {
@@ -819,8 +820,7 @@ function DeviceBackCell(options) {
           a.className = 'btn btn-xs rowhover device-back-status'
         }
       }
-      else
-      {
+      else{
         a.className = 'btn btn-xs a-disabled'
       }
 
