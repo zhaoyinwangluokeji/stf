@@ -42,7 +42,7 @@ module.exports = function SettingsCtrl($scope, gettext, PermissionService) {
     return PermissionService.getAllPermissionByUser().then(function (data) {
       var ret = data
       var permissions = ret.datasets
-      console.log("permissions:" + JSON.stringify(permissions))
+    //  console.log("permissions:" + JSON.stringify(permissions))
       settings.forEach(element => {
         if (!element.PermissionId) {
           array.push(element)
@@ -60,7 +60,7 @@ module.exports = function SettingsCtrl($scope, gettext, PermissionService) {
           }
         }
       });
-      console.log("settings:" + JSON.stringify(array))
+    //  console.log("settings:" + JSON.stringify(array))
       $scope.settingTabs = array
       $scope.$digest()
       return resolve(array)
@@ -70,6 +70,6 @@ module.exports = function SettingsCtrl($scope, gettext, PermissionService) {
     })
   }
   Init()
-   
+
 
 }
