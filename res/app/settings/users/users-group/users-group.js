@@ -128,10 +128,10 @@ module.exports = function UsersInfoDirective(
         if ($scope.CurGroup && $scope.CurGroup.userslist) {
           var count = params.parameters().count
           var page = params.parameters().page
-          console.log("count:" + count)
-          console.log("page:" + page)
+        //  console.log("count:" + count)
+        //  console.log("page:" + page)
           var filter = $scope.activeTabs.filterGroupUserslist
-          console.log("filter:" + filter)
+        //  console.log("filter:" + filter)
           var userslist = []
           if (!filter || filter == "") {
             userslist = $scope.CurGroup.userslist
@@ -220,15 +220,15 @@ module.exports = function UsersInfoDirective(
         var filter = $scope.filterGroup
         var count = params.parameters().count
         var page = params.parameters().page
-        console.log("count:" + count)
-        console.log("page:" + page)
+      //  console.log("count:" + count)
+      //  console.log("page:" + page)
         return UsersGroupService.GetGroups(page, count, filter).then(function (data) {
           var ret = data
           params.total(ret.total)
-          console.log("all page count:" + ret.total)
-          console.log("recv count:" + ret.datasets.length)
+        //  console.log("all page count:" + ret.total)
+        //  console.log("recv count:" + ret.datasets.length)
           if ($scope.CurGroup) {
-            console.log("cur group exists")
+          //  console.log("cur group exists")
             ret.datasets.forEach(ele => {
               if (ele.GroupName == $scope.CurGroup.GroupName) {
                 ele.selected = true
@@ -420,14 +420,14 @@ module.exports = function UsersInfoDirective(
         var filter = $scope.filterUser
         var count = params.parameters().count
         var page = params.parameters().page
-        console.log("count:" + count)
-        console.log("page:" + page)
-        console.log("filter:" + filter)
+      //  console.log("count:" + count)
+      //  console.log("page:" + page)
+      //  console.log("filter:" + filter)
         return UsersService.GetUsers(page, count, filter).then(function (data) {
           var ret = data
           params.total(ret.total)
-          console.log("all page count:" + ret.total)
-          console.log("recv count:" + ret.datasets.length)
+        //  console.log("all page count:" + ret.total)
+        //  console.log("recv count:" + ret.datasets.length)
           $scope.pagesUserCount = Math.ceil($scope.tableParamsUser.total() / $scope.tableParamsUser.parameters().count)
           return ret.datasets
         }).catch(function (err) {
@@ -517,14 +517,14 @@ module.exports = function UsersInfoDirective(
         var filter = $scope.filterPermission
         var count = params.parameters().count
         var page = params.parameters().page
-        console.log("count:" + count)
-        console.log("page:" + page)
-        console.log("filter:" + filter)
+      //  console.log("count:" + count)
+      //  console.log("page:" + page)
+      //  console.log("filter:" + filter)
         return PermissionService.GetAllPermission(page, count, filter).then(function (data) {
           var ret = data
           params.total(ret.total)
-          console.log("all page count:" + ret.total)
-          console.log("recv count:" + ret.datasets.length)
+        //  console.log("all page count:" + ret.total)
+        //  console.log("recv count:" + ret.datasets.length)
           $scope.pagesUserCount = Math.ceil($scope.tableParamsPermission.total() / $scope.tableParamsPermission.parameters().count)
           return ret.datasets
         }).catch(function (err) {
