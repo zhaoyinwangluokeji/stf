@@ -138,11 +138,11 @@ module.exports = function DeviceManagerController($scope, $http, NgTableParams) 
             alert("屏幕高不能为空且只能为数字")
             return
         }
-        if($scope.addWidth.trim() == "" || isNaN($scope.addHeight)){
+        if($scope.addWidth.trim() == "" || isNaN($scope.addWidth)){
             alert("屏幕宽不能为空且只能为数字！")
             return
         }
-        if($scope.addProductNo.trim() == "" || isNaN($scope.addHeight)){
+        if($scope.addProductNo.trim() == ""){
             alert("测试中心设备编号不能为空！")
             return
         }
@@ -211,16 +211,37 @@ module.exports = function DeviceManagerController($scope, $http, NgTableParams) 
             console.log("recv count:" + ret.datasets.length)
             $scope.pagesDeviceCount = Math.ceil($scope.tableParamsDevices.total() / $scope.tableParamsDevices.parameters().count)
             ret.datasets.forEach(ele => {
+                if(!ele.productNo){
+                    ele.productNo = "NULL"
+                } else{
+                    var tmp = ele.productNo
+                    delete ele.productNo
+                    ele.productNo = tmp
+                }
                 var width = ele.display.width
                 var height = ele.display.height
                 ele.display = "" + height + "X" + width
             });
-            
             return ret.datasets
         })
         // .catch(function (err) {
         //     console.log("err:" + JSON.stringify(err))
         // })
+    }
+
+    function jsonSort(jsonObj) {
+        let arr = [];
+        for (var key in jsonObj) {
+            arr.push(key)
+        }
+        arr.sort();
+        let str = '';
+        for (var i in arr) {
+            var tmp = jsonObj[i]
+            delete jsonObj[i]
+            jsonObj[i] = tmp
+        }
+        return jsonObj
     }
 
     $scope.tableParamsDevices = new NgTableParams(
