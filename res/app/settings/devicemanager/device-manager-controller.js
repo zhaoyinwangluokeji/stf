@@ -199,16 +199,16 @@ module.exports = function DeviceManagerController($scope, $http, NgTableParams) 
 
     $scope.QueryDevices = function (params) {
         var filter = $scope.deviceFilter
-        console.log("device filter:" + $scope.deviceFilter)
+      //  console.log("device filter:" + $scope.deviceFilter)
         var count = params.parameters().count
         var page = params.parameters().page
-        console.log("count:" + count)
-        console.log("page:" + page)
+      //  console.log("count:" + count)
+      //  console.log("page:" + page)
         return $scope.getFilteredDevices(page, count, filter).then(function (data) {
             var ret = data
             params.total(ret.total)
-            console.log("all page count:" + ret.total)
-            console.log("recv count:" + ret.datasets.length)
+        //    console.log("all page count:" + ret.total)
+        //    console.log("recv count:" + ret.datasets.length)
             $scope.pagesDeviceCount = Math.ceil($scope.tableParamsDevices.total() / $scope.tableParamsDevices.parameters().count)
             ret.datasets.forEach(ele => {
                 if(!ele.productNo){
@@ -222,6 +222,10 @@ module.exports = function DeviceManagerController($scope, $http, NgTableParams) 
                 var height = ele.display.height
                 ele.display = "" + height + "X" + width
             });
+<<<<<<< HEAD
+=======
+
+>>>>>>> 79ef271f2de0c5efad2cfd863b963e86deeaab40
             return ret.datasets
         })
         // .catch(function (err) {

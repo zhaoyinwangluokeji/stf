@@ -3,7 +3,7 @@ module.exports = function UsersInfoDirective(
     UsersService, NgTableParams
 
 ) {
-    //  
+    //
     return {
         restrict: 'E'
         , template: require('./users-info.pug')
@@ -43,7 +43,7 @@ module.exports = function UsersInfoDirective(
                 if (!scope.CurRow) {
                     alert('没有选择用户')
                 } else {
-                    var password = prompt("请输入新的密码", ""); //将输入的内容赋给变量 name ，   
+                    var password = prompt("请输入新的密码", ""); //将输入的内容赋给变量 name ，
                     if (password) {
                         return UsersService.ModifyPassword(scope.CurRow, password).then(function (data) {
                             alert(data.msg)
@@ -57,7 +57,7 @@ module.exports = function UsersInfoDirective(
             scope.AddNewUser = function () {
                 window.open("/auth/mock/create-account", "_blank", "scrollbars=yes,resizable=1,modal=true,alwaysRaised=yes,width=600,height=400");
             }
-            scope.SelectRowColor = function (row) { 
+            scope.SelectRowColor = function (row) {
                 if (row.selected == true) {
                     return '#C0C0C0'
                 } else {
@@ -68,14 +68,14 @@ module.exports = function UsersInfoDirective(
                 var filter = scope.queryFilter
                 var count = params.parameters().count
                 var page = params.parameters().page
-                console.log("count:" + count)
-                console.log("page:" + page)
-                console.log("filter:" + filter)
+              //  console.log("count:" + count)
+              //  console.log("page:" + page)
+              //  console.log("filter:" + filter)
                 return UsersService.GetUsers(page, count, filter).then(function (data) {
                     var ret = data
                     params.total(ret.total)
-                    console.log("all page count:" + ret.total)
-                    console.log("recv count:" + ret.datasets.length)
+                //    console.log("all page count:" + ret.total)
+                //    console.log("recv count:" + ret.datasets.length)
                     scope.pagesCustomCount = Math.ceil(scope.tableParamsCustom.total() / scope.tableParamsCustom.parameters().count)
                     return ret.datasets
                 }).catch(function (err) {
