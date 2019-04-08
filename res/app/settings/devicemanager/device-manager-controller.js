@@ -222,10 +222,6 @@ module.exports = function DeviceManagerController($scope, $http, NgTableParams) 
                 var height = ele.display.height
                 ele.display = "" + height + "X" + width
             });
-<<<<<<< HEAD
-=======
-
->>>>>>> 79ef271f2de0c5efad2cfd863b963e86deeaab40
             return ret.datasets
         })
         // .catch(function (err) {
