@@ -268,7 +268,7 @@ message OwnerMessage {
   required string email = 1;
   required string name = 2;
   required string group = 3;
-  optional string NameCN = 4;
+  required string NameCN = 4;
 
 }
 
