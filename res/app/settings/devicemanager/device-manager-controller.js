@@ -186,7 +186,7 @@ module.exports = function DeviceManagerController($scope, $http, NgTableParams) 
         return new Promise(function (resolve, reject) {
             $http.post('/auth/api/v1/mock/get-filtered-devices-2', data)
                 .success(function (response) {
-                    console.log("success")
+                    console.log("success"+JSON.stringify(response.data))
                     return resolve(response.data)
                 })
                 .error(function (response) {
