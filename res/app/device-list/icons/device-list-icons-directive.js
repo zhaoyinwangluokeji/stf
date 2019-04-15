@@ -758,7 +758,7 @@ module.exports = function DeviceListIconsDirective(
         if (device.deviceType == '现场测试') {
           return
         }
-        console.log('device-list-changeListener :'+device.state)
+      //  console.log('device-list-changeListener :'+device.state)
         var id = calculateId(device)
         //  console.log('device-list-changeListener :' + id)
         var item = list.children[id]
