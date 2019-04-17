@@ -107,12 +107,12 @@ module.exports = function UiautomatorviewerCtrl($scope) {
         if (newDist <= dist) {
           resultNode = node;
           dist = newDist;
-          if (node.children.length) {
-            var child = searchSelectNode(node.children, point, dist);
-            if (child.node1 != null) {
-              resultNode = child.node1;
-              dist = child.dist1;
-            }
+        }
+        if (node.children.length) {
+          var child = searchSelectNode(node.children, point, dist);
+          if (child.node1 != null) {
+            resultNode = child.node1;
+            dist = child.dist1;
           }
         }
       }
