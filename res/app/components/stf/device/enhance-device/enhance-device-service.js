@@ -1,13 +1,14 @@
+var path = require("path");
 module.exports = function EnhanceDeviceServiceFactory($filter, AppState) {
   var service = {}
 
   function setState(data) {
     // For convenience, formulate an aggregate state property that covers
     // every possible state.
-    
-    if(data.maintain){
+
+    if (data.maintain) {
       data.state = 'maintain'
-    } else{
+    } else {
       data.state = 'absent'
     }
     if (data.present) {
@@ -48,17 +49,31 @@ module.exports = function EnhanceDeviceServiceFactory($filter, AppState) {
   function enhanceDevice(device) {
     device.enhancedName = device.name || device.model || device.serial || 'Unknown'
     device.enhancedModel = device.model || 'Unknown'
-    device.enhancedImage120 = '/static/app/devices/icon/x120/' + (device.image || '_default.jpg')
+
+    console.log("device:"+device.model)
+    if (device.image) {
+      console.log("indexOf:" + device.image.indexOf('mobile-images'))
+    } else {
+      console.log("image null")
+    }
+
+    if (device.image && device.image.indexOf('mobile-images') != -1) {
+      device.enhancedImage120 = '/static/app/' + device.image
+    } else {
+      device.enhancedImage120 = '/static/app/devices/icon/x120/' + (device.image || '_default.jpg')
+    }
+    console.log("Image120:" + device.enhancedImage120)
+
     device.enhancedImage24 = '/static/app/devices/icon/x24/' + (device.image || '_default.jpg')
     device.enhancedStateAction = $filter('statusNameAction')(device.state)
     device.enhancedStatePassive = $filter('statusNamePassive')(device.state)
     device.enhancedRentStateMsg = $filter('statusNameActionFromDevice')(device)
     device.enhancedRentReleaseMsg = $filter('RentReleaseMsg')(device)
     device.enhancedBack = $filter('BackOrNot')(device)
-    
-    device.enhancedRentProject = (function(){
-      if(device && device.device_rent_conf && device.device_rent_conf.rent && device.device_rent_conf.project) {
-        return device.device_rent_conf.project.ProjectName+':'+device.device_rent_conf.project.ProjectCode;
+
+    device.enhancedRentProject = (function () {
+      if (device && device.device_rent_conf && device.device_rent_conf.rent && device.device_rent_conf.project) {
+        return device.device_rent_conf.project.ProjectName + ':' + device.device_rent_conf.project.ProjectCode;
       }
       return "-----";
     })()
@@ -81,7 +96,7 @@ module.exports = function EnhanceDeviceServiceFactory($filter, AppState) {
 
   function enhanceUserProfileUrl(email) {
     var url
-    var userProfileUrl = (function() {
+    var userProfileUrl = (function () {
       if (AppState && AppState.config && AppState.config.userProfileUrl) {
         return AppState.config.userProfileUrl
       }
@@ -103,7 +118,7 @@ module.exports = function EnhanceDeviceServiceFactory($filter, AppState) {
     return url
   }
 
-  service.enhance = function(device) {
+  service.enhance = function (device) {
     setState(device)
     enhanceDevice(device)
     enhanceDeviceDetails(device)
