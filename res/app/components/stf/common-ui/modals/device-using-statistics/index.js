@@ -12,4 +12,3 @@ module.exports = angular.module('stf.device-using-statistics', [
   'ngTable'
 ])
   .factory('DevUsingStatisticsFactory', require('./dev-using-statistics'))
- 
