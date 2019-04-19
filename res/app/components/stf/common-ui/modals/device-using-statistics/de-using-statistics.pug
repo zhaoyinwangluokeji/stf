@@ -42,10 +42,13 @@
                     .widget-content.padded
                         .tabright-buttons
                             span.pull-right(ng-if='activeTabs.custom')
+                                input(type='checkbox', ng-model='activeTabs.export_default' tip='输出默认表格')
+                                button.btn.btn-sm.btn-primary-outline(type='button' ng-click="ExportExcel()")
+                                    span(ng-bind='"ExportExcel"|translate')
                                 .btn-group(uib-dropdown).pull-right
                                     button.btn.btn-sm.btn-primary-outline(type='button', uib-dropdown-toggle)
                                         i.fa.fa-columns
-                                        span(ng-bind='"CusColumns"|translate')
+                                        span(ng-bind='"CustomCols"|translate')
 
                                     ul.uib-dropdown-menu(role='menu').pointer.stf-device-details-customize
                                         li(ng-repeat='column in columns track by column.name',
@@ -55,6 +58,9 @@
                                             label.checkbox.pointer
                                                 input(type='checkbox', ng-model='column.selected')
                                                 span(ng-bind='column.name | translate')
+
+
+
 
                         uib-tabset.overflow-auto.device-list-active-tabs(ng-if='activeTabs')
                             uib-tab(active='activeTabs.project', select='focusSearch()')
@@ -145,7 +151,7 @@
                                     i.fa.fa-th-large
                                     span(translate) Custom
                                 div.device-list-devices-content(ng-if='activeTabs.custom').selectable
-                                    table.table.dataTable.ng-table(ng-table="tableParamsCustom")
+                                    table.table.dataTable.ng-table(ng-table="tableParamsCustom" id="customTable")
                                         thead
                                             th.header.sortable(ng-repeat='(k,v) in tableParamsCustom.data[0] track by $index')
                                                 div(ng-bind='k | translate' ng-style="{width: HeadWidth(k)}")
