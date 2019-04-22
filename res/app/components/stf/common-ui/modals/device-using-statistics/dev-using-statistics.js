@@ -258,9 +258,9 @@ module.exports =
           })
         }
         $scope.tableParamsCustom = new NgTableParams(
-          { count: 10 },
+          { count: 15 },
           {
-            counts: [5, 10, 15, 30, 50],
+            counts: [5, 10, 15, 30, 50, 100],
             getData: $scope.Query3
 
           }
@@ -389,18 +389,18 @@ module.exports =
 
             return DeviceRentLogService.getStatisticsPerCustom(datestart.format('yyyy-MM-dd'), dateend.format('yyyy-MM-dd'), group_by, page, count).then(function (data) {
               var ret = data
-
+              console.log("data:" + JSON.stringify(ret.data))
               var arrdata = [];
               var totalDevices = {}
               var totalTimer = 0
               ret.data.forEach(element => {
                 var ele = {}
                 ele.index = element.index
-                var pergroup=""
-                element.pergroup.forEach(e=>{
+                var pergroup = ""
+                element.pergroup.forEach(e => {
                   pergroup += JSON.stringify(e) + '\r\n'
                 })
-                console.log("pergroup:"+pergroup)
+
                 ele.pergroup = pergroup
                 ele.SumRealRentTimer = element.SumRealRentTimer
                 ele.SumRentTimer = element.SumRentTimer
@@ -412,10 +412,11 @@ module.exports =
                 ele.owner_name = JSON.stringify(element.owner_name)
                 ele.platform = JSON.stringify(element.platform)
                 ele.version = JSON.stringify(element.version)
-              //  ele.platform = !!element.platform[0].Android ? "Android" : "IOS"
+                ele.mobile_serail = JSON.stringify(element.serial)
+                //  ele.platform = !!element.platform[0].Android ? "Android" : "IOS"
                 arrdata.push(ele)
-                if (!totalDevices[ele.pergroup]) {
-                  totalDevices[ele.pergroup] = element
+                if (!totalDevices[ele.index]) {
+                  totalDevices[ele.index] = element.serial
                 }
                 totalTimer += ele.SumUseTimer
               })
@@ -424,8 +425,19 @@ module.exports =
               var e = {}
 
               var device_count = 0;
+              var device_list = {}
               for (var itname in totalDevices) {
-                device_count++;
+                var dev = totalDevices[itname]
+                for (var s in dev) {
+                  var ser = dev[s]
+                  for (n in ser) {
+                    if (!device_list[n]) {
+                      device_count++;
+                      device_list[n] = n
+                    }
+                  }
+
+                }
               }
 
               e.pergroup = '设备数量'
@@ -445,8 +457,8 @@ module.exports =
                 {
                   sheetData: arrdata,
                   sheetName: 'sheet',
-                  sheetFilter: ['index', 'pergroup', 'SumRealRentTimer', 'SumUseTimer', 'count', 'email','manufacturer','owner_name','platform','version'],
-                  sheetHeader: ['序号', '分组', '实际租用时间', '使用时间(分钟)', '租用次数', 'email','manufacturer','用户','平台','版本']
+                  sheetFilter: ['index', 'pergroup', 'SumRealRentTimer', 'SumUseTimer', 'count', 'email', 'manufacturer', 'owner_name', 'platform', 'version'],
+                  sheetHeader: ['序号', '分组', '实际租用时间', '使用时间(分钟)', '租用次数', 'email', 'manufacturer', '用户', '平台', '版本']
                 }
               ]
               var toExcel = new ExportJsonExcel(option); //new

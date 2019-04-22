@@ -237,7 +237,7 @@ module.exports = function DeviceListicons2Directive(
         console.log('kickDevice  ')
         return GroupService.kick(device, force).catch(function (e) {
           //  alert($filter('translate')(gettext('Device cannot get kicked from the group')))
-        //  throw new Error(e)
+          //  throw new Error(e)
         })
       }
 
@@ -278,13 +278,11 @@ module.exports = function DeviceListicons2Directive(
             if (confirm('设备处于使用状态，你确定需要停止租用吗？')) {
               kickDevice(device)
 
-              if(tracker.getIfAdmin())
-              {
+              if (tracker.getIfAdmin()) {
                 //管理员释放要改变归还状态
                 DeviceRentService.admin_free_rent(device, socket)
               }
-              else
-              {
+              else {
                 DeviceRentService.user_free_rent(device, socket)
               }
               //DeviceRentService.free_rent(device, socket)
@@ -355,14 +353,18 @@ module.exports = function DeviceListicons2Directive(
                   if (device.state == "maintain") {
                     alert("warnning:设备处于报修状态中，不能租用!")
                   } else {
-                    if(device.back == "0")
-                    {
+                    if (device.back == "0") {
                       alert("warnning:设备未归还，不能租用!")
                     }
-                    else
-                    {
+                    else {
                       return Promise.all([device].map(function (device) {
-                        return DeviceRentService.open(device)
+                        var dev_cp = JSON.stringify(device)
+                        return DeviceRentService.open(device).then(function (result) {
+                          if (result.result == false && result.message == "cancel") {
+                            device = JSON.parse(dev_cp)
+                          }
+                          return result
+                        })
                       })).then(function (result) {
                         //  console.log("result:" + JSON.stringify(result))
                         if (result[0].result == true) {
@@ -601,7 +603,7 @@ module.exports = function DeviceListicons2Directive(
         var item = builder.build()
 
         item.id = id
-        item.setAttribute('ng-show',true)
+        item.setAttribute('ng-show', true)
         builder.update(item, device)
         mapping[id] = device
 

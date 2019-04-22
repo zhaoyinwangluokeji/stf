@@ -47,11 +47,6 @@ module.exports = function MenuCtrl($scope, $rootScope, $http, $location, Setting
       , admin: false
       //      , click: DeviceUsingStatistics
       , parameter: 'Msg'
-    },
-    {
-      name: '设备统计'
-      , selected: true
-      , admin: false
     }
   ]
   $scope.Menus = MenusDefault
