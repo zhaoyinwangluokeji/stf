@@ -44,7 +44,7 @@ ul.devices-icon-view li {
 }
 
 .phoneInfoBody {
-  height: 125px;
+  height: 145px;
   padding-top: 5px;
   padding-left: 1px;
   margin-bottom: 5px;
@@ -123,6 +123,7 @@ ul.devices-icon-view li {
   padding-bottom: 8px;
   font-size: 12px;
   font-family: 微软雅黑;
+  user-select: text;
 }
 
 .phoneInfoList {
@@ -141,7 +142,7 @@ ul.devices-icon-view li {
 
 .phoneImgDiv {
   width: 65px;
-  height: 100px;
+  height: 120px;
   background-position: left top;
   float: left;
   padding-top: 5px
