@@ -127,6 +127,9 @@ tbody {
     width: 100%;
     cursor: e-resize;
 }
+.dataTable {
+  user-select: text;
+}
 td, th {
     display: table-cell;
     vertical-align: inherit;

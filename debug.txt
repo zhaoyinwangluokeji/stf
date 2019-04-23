@@ -26,3 +26,6 @@ Starting reaper!
 image:SM-C7000.jpg
 image:MHA-AL00.jpg
 image:MI_9_Transparent_Edition.jpg
+image:MHA-AL00.jpg
+image:SM-C7000.jpg
+image:MI_9_Transparent_Edition.jpg

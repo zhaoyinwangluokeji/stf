@@ -72,6 +72,12 @@ module.exports = function DeviceListIconsDirective(
         state.appendChild(document.createTextNode(''))
         divInfo.appendChild(state)
 
+        var dSerial = document.createElement('div')
+        dSerial.className = "phoneInfo"
+        dSerial.appendChild(document.createTextNode(''))
+        divInfo.appendChild(dSerial)
+
+
         var divFoot = document.createElement('div')
         //  divFoot.appendChild(document.createTextNode(''))
         //  divFoot.className = "devRentStatus devFree"
@@ -112,6 +118,7 @@ module.exports = function DeviceListIconsDirective(
         var platform = divInfo.children[1]
         var display = divInfo.children[2]
         var state = divInfo.children[3]
+        var dSerial = divInfo.children[4]
         var rent_button = divfoot.children[0].children[0]
         var rent_buttona = divfoot.children[0]
         var stop_rent_button = divfoot.children[1]
@@ -133,6 +140,7 @@ module.exports = function DeviceListIconsDirective(
         } else {
           display.firstChild.nodeValue = "分辨率：----"
         }
+        dSerial.firstChild.nodeValue = "序列号：" + device.serial
         //  state.nodeValue = device.enhancedName
         // .device-name
         //  nt.nodeValue = device.enhancedName

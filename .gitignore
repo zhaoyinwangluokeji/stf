@@ -1,3 +1,4 @@
+*.zip
 *.mo
 .DS_Store
 .eslintcache
