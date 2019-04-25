@@ -1,0 +1,89 @@
+.widget-content.padded(ng-controller='AnnounceController')
+    .row
+        .col-md-5
+            div.alignleft 当前公告内容
+            h2.selectable(align="center") {{publish.title}}
+            div.selectable(name="announce")
+              textarea.readtextarea(name="newannounce" cols="60", rows="20" ng-model="publish.content" style="width:100%;")
+        .col-md-7
+            div.alignleft 公告发布历史
+            dialog(ng-if="dialog.newannounce" close="dialog.newannounce=false")
+              div(dialog-title) 新公告信息
+              div(dialog-content)
+                div
+                  label.alignleft 输入标题：
+                  input.alignleft(name="newtitile" ng-model="new_announce.title" size="50" )
+                div
+                  textarea(name="newannounce", cols="60", rows="20"  ng-model="new_announce.content")
+              div(dialog-buttons)
+                button(autofocus ng-click="savenewannounce()") 发布新公告
+                button(ng-click="$close()") 取消
+
+            dialog(ng-if="dialog.modifyanncounce" close="dialog.modifyanncounce=false")
+              div(dialog-title) 公告信息
+              div(dialog-content)
+                div
+                  label.alignleft 输入新标题：
+                  input.alignleft(name="newtitile" ng-model="CurRow.title"  size="50" )
+                div
+                  textarea(name="modifyannounce", cols="60", rows="20" ng-model="CurRow.content")
+              div(dialog-buttons)
+                button(autofocus ng-click="savemodifyannounce()") 重新发布公告
+                button(ng-click="$close()") 取消
+            div.floatleft
+              input.QueryHeight.form-control(type="text" ng-model="queryFilter" size="50" ng-keyup="queryannounce()")
+            div.alignright
+              button.alignright.btn-width(ng-click="NewAnnouncement()")
+                i.fa.fa-user-plus
+                span +
+              button.alignright.btn-width(ng-click="ModifyAnnouncement()")
+                i.fa.fa-wrench
+                span M
+            table.table.blackbackground.dataTable.ng-table(ng-table="tableHisAnnounce")
+                thead
+                    th.header.sortable(ng-repeat='(k,v) in tableHisAnnounce.data[0] track by $index' ng-if="k != 'content' && k != 'id' ")
+                      div(ng-if="k != 'content' && k != 'id' && k != 'date'") {{k}}
+                      div(ng-if="k == 'date'" style='width:80px') {{k}}
+                tr.rowhover(ng-repeat="row in tableHisAnnounce.data" ng-dblclick="ModifyAnnouncement()")
+                    td(ng-repeat="(kk,vv) in row" ng-click="RowClick(row)" ng-if="kk != 'content' && kk != 'id' " )
+                        span(ng-if="kk != 'content' && kk != 'id' && kk !='selected'" ) {{vv}}
+                        input(type="checkbox" ng-model="vv" disabled  ng-if="kk == 'selected'" )
+                tr
+                    td(colspan="100")
+                        table.fill-parent-width(ng-init="sel=5")
+                            tr
+                                td
+                                    div.floatleft
+                                        button.btnwidth(ng-disabled="params.parameters().page<=1" ng-click="params.page(1)") <<
+                                    div.floatleft
+                                        button.btnwidth(ng-disabled="params.parameters().page<=1" ng-click="params.page(params.parameters().page-1)") <
+                                    div.floatleft
+                                        button.btnwidth(ng-disabled=" pagesCustomCount <= (params.parameters().page )" ng-click="params.page(params.parameters().page+1)") >
+                                    div.floatleft
+                                        button.btnwidth(ng-disabled=" pagesCustomCount <= (params.parameters().page )" ng-click="params.page(pagesCustomCount)") >>
+                                td
+                                    span.msgwidth
+                                    | Totals: {{params.total()}}
+                                td
+                                    span.msgwidth
+                                    | Pages: {{params.parameters().page}} / {{pagesCustomCount}}
+                                td(colspan="0")
+                                    div.btn-group(uib-dropdown).floatright
+                                        button.btn.btn-sm.btn-primary-outline(type='button', uib-dropdown-toggle)
+                                            span {{params.parameters().count}}
+                                            span(ng-bind='">>"|translate')
+                                        ul.uib-dropdown-menu(role='menu')
+                                            li(ng-repeat='ceil in params.settings().counts track by $index')
+                                                button(ng-click='sel=ceil;params.count(sel);').btn.btn-xs
+                                                    i.fa.fa-circle-thin
+                                                    span(ng-bind='ceil | translate')
+
+
+
+
+
+
+
+
+
+

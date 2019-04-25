@@ -1,0 +1,22 @@
+.selectable {
+  -webkit-touch-callout: default;
+  -webkit-user-select: auto;
+  -khtml-user-select: auto;
+  -moz-user-select: text;
+  -ms-user-select: auto;
+  user-select: text;
+}
+.alignleft{
+  text-align: left;
+}
+
+.readtextarea{
+  BORDER-BOTTOM:   0px   solid;
+  BORDER-LEFT:   0px   solid;
+  BORDER-RIGHT:   0px   solid;
+  BORDER-TOP:   0px   solid;
+  overflow-y:hidden;
+  overflow-x:hidden;
+  border:0;
+  resize:none
+}
