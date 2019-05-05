@@ -112,7 +112,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     }
 
     var insert = function insert(data) {
-      console.log("insert ")
+      // console.log("insert ")
       // devicesBySerial[data.serial] = devices.push(data) - 1
       // sync(data)
       // console.log("pushing device serial:  " + data.serial)
@@ -177,9 +177,9 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
 
     function getAllUsableDevices(serial) {
       var email = AppState.user.email
-      console.log("loading all device groups ...")
+      // console.log("loading all device groups ...")
       return getAllDeviceGroups().then(function () {
-        console.log("loading all user groups ...")
+        // console.log("loading all user groups ...")
         return getAllUserGroups()
       }).then(function () {
         //  console.log("Got User Groups: " + JSON.stringify($scope.user_groups))
@@ -188,7 +188,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
             ele.userslist.forEach(element => {
               if (element.email == email) {
                 if (ele.GroupName == "administrator") {
-                  console.log("user is Admin!!")
+                  // console.log("user is Admin!!")
                   $scope.is_admin = true
                 }
                 $scope.in_groups.push(ele.GroupName)
@@ -248,7 +248,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
       if (event.checkPermition) {
         return (new Promise(function (resolve) {
           if ($scope.device_groups == null || $scope.user_groups == null) {
-            console.log("initializing device group and user group...")
+            // console.log("initializing device group and user group...")
             return resolve(getAllUsableDevices())
           } else {
             return resolve()
