@@ -177,7 +177,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
 
     function getAllUsableDevices(serial) {
       var email = AppState.user.email
-      console.log("loading all device groups ...")
+      console.log("loading all device groups ...:"+serial)
       return getAllDeviceGroups().then(function () {
         console.log("loading all user groups ...")
         return getAllUserGroups()

@@ -1,0 +1,31 @@
+insert data step1:{"email":"admin@cmbchina.com","name":"admin","NameCN":"管理员","ip":"::ffff:127.0.0.1","group":"nwftPRZiTaiHbPu4LoX1Lg==","forwards":[],"settings":{}}
+insert data step1:{"id":"f833de2f-526e-4dbd-b09c-6a24d6bdfe73","GroupName":"administrator","userslist":[{"NameCN":"管理员","email":"admin@cmbchina.com","name":"admin"}]}
+insert data step1:{"id":"f08a3e8a-6014-4beb-86d2-25c719eb482f","GroupName":"tester","userslist":[]}
+insert data step1:{"id":"789600ad-6ebf-4d7d-af23-469326948ed2","GroupName":"developer","userslist":[]}
+insert data step1:{"id":"11a59d35-0d2e-4017-a8ae-670143fbd949","GroupName":"自动化测试组","userslist":[]}
+insert data step1:{"id":"76fc41b7-f696-4b77-a1be-3d2bf61487a0","GroupName":"项目占用组","userslist":[]}
+insert data step1:{"PermissionId":"335e7c9c-3819-4fd5-b989-65e0a682970e","desc":"data synchronization permission","name":"数据同步"}
+insert data step1:{"PermissionId":"551281ad-d3ed-41d5-a2d7-9a18bb891c6f","desc":"user group management","name":"用户管理"}
+insert data step1:{"PermissionId":"8e1d13b6-48f2-413c-aae1-03c244b11210","desc":"equipment group management","name":"设备组管理"}
+insert data step1:{"PermissionId":"88ca3d8d-d989-4a6e-be8d-dc8d358bfa99","desc":"manual addition of equipment","name":"设备添加删除"}
+insert defaultdata:users
+insert data:{"email":"admin@cmbchina.com","name":"admin","NameCN":"管理员","ip":"::ffff:127.0.0.1","group":"nwftPRZiTaiHbPu4LoX1Lg==","forwards":[],"settings":{}}
+insert defaultdata:UserGroup
+insert data:{"id":"f833de2f-526e-4dbd-b09c-6a24d6bdfe73","GroupName":"administrator","userslist":[{"NameCN":"管理员","email":"admin@cmbchina.com","name":"admin"}]}
+insert data:{"id":"f08a3e8a-6014-4beb-86d2-25c719eb482f","GroupName":"tester","userslist":[]}
+insert data:{"id":"789600ad-6ebf-4d7d-af23-469326948ed2","GroupName":"developer","userslist":[]}
+insert data:{"id":"11a59d35-0d2e-4017-a8ae-670143fbd949","GroupName":"自动化测试组","userslist":[]}
+insert data:{"id":"76fc41b7-f696-4b77-a1be-3d2bf61487a0","GroupName":"项目占用组","userslist":[]}
+insert defaultdata:PermissionTable
+insert data:{"PermissionId":"335e7c9c-3819-4fd5-b989-65e0a682970e","desc":"data synchronization permission","name":"数据同步"}
+insert data:{"PermissionId":"551281ad-d3ed-41d5-a2d7-9a18bb891c6f","desc":"user group management","name":"用户管理"}
+insert data:{"PermissionId":"8e1d13b6-48f2-413c-aae1-03c244b11210","desc":"equipment group management","name":"设备组管理"}
+insert data:{"PermissionId":"88ca3d8d-d989-4a6e-be8d-dc8d358bfa99","desc":"manual addition of equipment","name":"设备添加删除"}
+.....................getting Compat...........
+Starting reaper!
+image:SM-C7000.jpg
+image:MHA-AL00.jpg
+image:MI_9_Transparent_Edition.jpg
+image:MHA-AL00.jpg
+image:SM-C7000.jpg
+image:MI_9_Transparent_Edition.jpg

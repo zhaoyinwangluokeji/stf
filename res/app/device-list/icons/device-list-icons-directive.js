@@ -377,7 +377,13 @@ module.exports = function DeviceListIconsDirective(
                     alert("warnning:设备处于报修状态中，不能租用!")
                   } else {
                     return Promise.all([device].map(function (device) {
-                      return DeviceRentService.open(device)
+                      var dev_cp = JSON.stringify(device)
+                      return DeviceRentService.open(device).then(function (result) {
+                        if (result.result == false && result.message == "cancel") {
+                          device = JSON.parse(dev_cp)
+                        }
+                        return result
+                      })
                     })).then(function (result) {
                       //  console.log("result:" + JSON.stringify(result))
                       if (result[0].result == true) {

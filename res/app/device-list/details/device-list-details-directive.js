@@ -68,8 +68,12 @@ module.exports = function DeviceListDetailsDirective(
                 if (device.state == "maintain") {
                   alert("warnning:设备处于报修状态中，不能租用!")
                 } else {
-                  return DeviceRentService.open(device).then(function(result){
-                    console.log("rent result:"+JSON.stringify(result))
+                  var dev_cp = JSON.stringify(device)
+
+                  return DeviceRentService.open(device).then(function (result) {
+                    if (result.result == false && result.message == "cancel") {
+                      device = JSON.parse(dev_cp)
+                    }
                     return result
                   })
                 }
@@ -91,24 +95,22 @@ module.exports = function DeviceListDetailsDirective(
               device.device_rent_conf.owner.email &&
               device.device_rent_conf.owner.name &&
               user) {
-                var isAdmin=tracker.getIfAdmin();
+              var isAdmin = tracker.getIfAdmin();
               if (isAdmin || (user.name == device.device_rent_conf.owner.name &&
                 user.email == device.device_rent_conf.owner.email)) {
-                  //管理员或者用户自己可以释放设备
+                //管理员或者用户自己可以释放设备
                 if (confirm('你确定需要停止租用吗？')) {
                   GroupService.kick(device, true)
-                  if(isAdmin)
-                  {
+                  if (isAdmin) {
                     //管理员释放要改变归还状态
                     DeviceRentService.admin_free_rent(device, socket)
                   }
-                  else
-                  {
+                  else {
                     //DeviceRentService.free_rent(device, socket)
                     DeviceRentService.user_free_rent(device, socket)
                   }
                   e.preventDefault()
-                  tracker.emit("change",device)
+                  tracker.emit("change", device)
                 }
               }
               else {
@@ -122,11 +124,10 @@ module.exports = function DeviceListDetailsDirective(
               DeviceRentService.admin_free_rent(device, socket)
               e.preventDefault()
               alert('归还成功！')
-              tracker.emit("change",device)
+              tracker.emit("change", device)
             }
           }
-          else
-          {
+          else {
             alert("只有管理员才能归还设备！")
           }
         }
