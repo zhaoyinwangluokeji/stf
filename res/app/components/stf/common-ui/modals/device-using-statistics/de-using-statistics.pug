@@ -42,9 +42,9 @@
                     .widget-content.padded
                         .tabright-buttons
                             span.pull-right(ng-if='activeTabs.custom')
-                                input(type='checkbox', ng-model='activeTabs.export_default' tip='输出默认表格')
+                                input(type='checkbox', ng-model='activeTabs.export_default' title='默认维度表格')
                                 button.btn.btn-sm.btn-primary-outline(type='button' ng-click="ExportExcel()")
-                                    span(ng-bind='"ExportExcel"|translate')
+                                    span(ng-bind='"导出Excel"|translate')
                                 .btn-group(uib-dropdown).pull-right
                                     button.btn.btn-sm.btn-primary-outline(type='button', uib-dropdown-toggle)
                                         i.fa.fa-columns
@@ -54,13 +54,10 @@
                                         li(ng-repeat='column in columns track by column.name',
                                         ng-hide='!adminMode && LogscolumnDefinitions[column.name].admin',
                                         ng-if="column.name !='using_time' && column.name !='start_time' && column.name !='rent_time' && column.name !='mac_address'"
-                                        ng-click='$event.stopPropagation()')
+                                        ng-click='QueryMessage()')
                                             label.checkbox.pointer
                                                 input(type='checkbox', ng-model='column.selected')
                                                 span(ng-bind='column.name | translate')
-
-
-
 
                         uib-tabset.overflow-auto.device-list-active-tabs(ng-if='activeTabs')
                             uib-tab(active='activeTabs.project', select='focusSearch()')

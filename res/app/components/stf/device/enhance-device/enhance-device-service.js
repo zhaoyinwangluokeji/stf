@@ -50,7 +50,7 @@ module.exports = function EnhanceDeviceServiceFactory($filter, AppState) {
     device.enhancedName = device.name || device.model || device.serial || 'Unknown'
     device.enhancedModel = device.model || 'Unknown'
 
-    console.log("device:"+device.model)
+  //  console.log("device:"+device.model)
     if (device.image) {
       console.log("indexOf:" + device.image.indexOf('mobile-images'))
     } else {
@@ -62,7 +62,7 @@ module.exports = function EnhanceDeviceServiceFactory($filter, AppState) {
     } else {
       device.enhancedImage120 = '/static/app/devices/icon/x120/' + (device.image || '_default.jpg')
     }
-    console.log("Image120:" + device.enhancedImage120)
+  //  console.log("Image120:" + device.enhancedImage120)
 
     device.enhancedImage24 = '/static/app/devices/icon/x24/' + (device.image || '_default.jpg')
     device.enhancedStateAction = $filter('statusNameAction')(device.state)

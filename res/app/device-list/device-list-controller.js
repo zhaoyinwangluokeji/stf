@@ -31,11 +31,6 @@ module.exports = function DeviceListCtrl(
       , admin: false
       , click: DeviceUsingStatistics
       , parameter: 'Msg'
-    },
-    {
-      name: '设备统计'
-      , selected: true
-      , admin: false
     }
   ]
 
@@ -195,150 +190,81 @@ module.exports = function DeviceListCtrl(
     var cols =
     [
       {
-        name: 'state'
-        , selected: true
-      },
-      {
-        name: 'rent'
-        , selected: true
-      }
-      ,
-      {
-        name: 'RentRlease'
-        , selected: true
-      },
-      {
-        name: 'owner'
-        , selected: true
-      },
-      {
         name: 'manufacturer'
         , selected: true
       }
       , {
-        name: 'model'
+        name: 'CurrentTime'
         , selected: true
-      }
-      , {
-        name: 'name'
-        , selected: false
       }
       , {
         name: 'serial'
         , selected: true
       }
-      , {
-        name: 'createdAt'
+      ,
+      {
+        name: 'model'
         , selected: false
       }
-      , {
-        name: 'deviceType'
-        , selected: true
-      }
-      , {
-        name: 'operator'
-        , selected: false
-      }
-      , {
-        name: 'releasedAt'
+      ,
+      {
+        name: 'platform'
         , selected: false
       }
       , {
         name: 'version'
-        , selected: true
-      }
-      , {
-        name: 'network'
         , selected: false
       }
-      , {
-        name: 'display'
-        , selected: true
-      },
+      ,
       {
-        name: 'rentProject'
+        name: 'owner_email'
+        , selected: false
+      }
+      , {
+        name: 'owner_group'
+        , selected: false
+      }
+      , {
+        name: 'owner_name'
+        , selected: true
+      }
+
+      , {
+        name: 'ProjectCode'
+        , selected: false
+      }
+      , {
+        name: 'ProjectName'
         , selected: true
       }
       , {
-        name: 'sdk'
+        name: 'real_rent_time'
         , selected: false
       }
       , {
-        name: 'productNo'
+        name: 'rent_time'
         , selected: false
       }
       , {
-        name: 'deviceLocation'
-        , selected: false
-      }
-      , {
-        name: 'abi'
-        , selected: false
-      }
-      , {
-        name: 'cpuPlatform'
-        , selected: false
-      }
-      , {
-        name: 'openGLESVersion'
-        , selected: false
-      }
-      , {
-        name: 'browser'
-        , selected: false
-      }
-      , {
-        name: 'phone'
-        , selected: false
-      }
-      , {
-        name: 'imei'
-        , selected: false
-      }
-      , {
-        name: 'imsi'
-        , selected: false
-      }
-      , {
-        name: 'iccid'
-        , selected: false
-      }
-      , {
-        name: 'batteryHealth'
-        , selected: false
-      }
-      , {
-        name: 'batterySource'
-        , selected: false
-      }
-      , {
-        name: 'batteryStatus'
-        , selected: false
-      }
-      , {
-        name: 'batteryLevel'
-        , selected: false
-      }
-      , {
-        name: 'batteryTemp'
-        , selected: false
-      }
-      // , {
-      //   name: 'provider'
-      //   , selected: false
-      // }
-      , {
-        name: 'notes'
-        , selected: false
-      }
-      , {
-        name: 'maintain'
-        , selected: false
-      }
-      , {
-        name: 'back'
+        name: 'using_time'
         , selected: true
       }
+      , {
+        name: 'start_time'
+        , selected: false
+      }
+      , {
+        name: 'test_centerCode'
+        , selected: false
+      }, {
+        name: 'device_type'
+        , selected: false
+      }
+      , {
+        name: 'mac_address'
+        , selected: false
+      }
+
     ]
     return cols;
 

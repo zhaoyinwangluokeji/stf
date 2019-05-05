@@ -218,7 +218,7 @@ module.exports =
               }
               device.back = 0
               socket.emit('device.rent_conf.set', $scope.device)
-              $uibModalInstance.close(true)
+              $uibModalInstance.close('true')
             }
 
           }
@@ -341,26 +341,35 @@ module.exports =
       })
 
       return modalInstance.result.then(function (result) {
-        if (device.platform == "Android" && device.state == 'available') {
-          if (confirm("需要直接打开手机的远程控制吗？")) {
-            return {
-              result: true,
-              device: device,
-              message: "open"
+        console.log("result:" + result)
+        if (result=='true') {
+          if (device.platform == "Android" && device.state == 'available') {
+            if (confirm("需要直接打开手机的远程控制吗？")) {
+              return {
+                result: result,
+                device: device,
+                message: "open"
+              }
             }
-          }
-          else {
+            else {
+              return {
+                result: false,
+                device: device,
+                message: "not open"
+              }
+            }
+          } else {
             return {
               result: false,
               device: device,
-              message: "not open"
+              message: "not available"
             }
           }
         } else {
           return {
             result: false,
             device: device,
-            message: "not available"
+            message: "cancel"
           }
         }
       }, function (reason) {
@@ -370,6 +379,7 @@ module.exports =
           message: reason
         }
       })
+
 
     }
 
