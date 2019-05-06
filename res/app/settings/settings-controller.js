@@ -37,6 +37,14 @@ module.exports = function SettingsCtrl($scope, gettext, PermissionService) {
         templateUrl: 'settings/devicemanager/devicemanager.pug',
         PermissionId: "88ca3d8d-d989-4a6e-be8d-dc8d358bfa99"
       }
+      ,
+      {
+        title: gettext('公告栏管理'),
+        icon: 'fa fa-mobile',
+        templateUrl: 'settings/announcement/announcement.pug',
+        PermissionId: "abb19a6d-b711-4488-80d0-2a27363a3fd3"
+      }
+
     ]
     var array = []
     return PermissionService.getAllPermissionByUser().then(function (data) {

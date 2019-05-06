@@ -11,12 +11,12 @@ div(ng-controller='DeviceGroupsController')
                             div(ng-bind='k | translate' ng-style="{width: HeadWidth(k)}")
                     tr.rowhover(ng-repeat="row in tableParamsGroup.data" ng-click="SelectGroup(row)")
                         td(ng-repeat="(kk,vv) in row")
-                            span(ng-if="kk != 'selected'") {{vv}}    
-                            input(type="checkbox" ng-if="kk == 'selected'" disabled ng-model="vv")    
-                    tr  
-                        td(colspan="100") 
-                            table.fill-parent-width(ng-init="sel=10") 
-                                tr 
+                            span(ng-if="kk != 'selected'") {{vv}}
+                            input(type="checkbox" ng-if="kk == 'selected'" disabled ng-model="vv")
+                    tr
+                        td(colspan="100")
+                            table.fill-parent-width(ng-init="sel=10")
+                                tr
                                     td
                                         div.floatleft
                                             button.wid30px(ng-disabled="params.parameters().page<=1" ng-click="params.page(1)") <<
@@ -27,10 +27,10 @@ div(ng-controller='DeviceGroupsController')
                                         div.floatleft
                                             button.wid30px(ng-disabled=" pagesGroupCount <= (params.parameters().page )" ng-click="params.page(pagesGroupCount)") >>
                                     td
-                                        span.msgwidth 
-                                        | Totals: {{params.total()}}  
+                                        span.msgwidth
+                                        | Totals: {{params.total()}}
                                     td
-                                        span.msgwidth  
+                                        span.msgwidth
                                         | Pages: {{params.parameters().page}} / {{pagesGroupCount}}
                                     td(colspan="0")
                                         div.btn-group(uib-dropdown).floatright
@@ -42,17 +42,17 @@ div(ng-controller='DeviceGroupsController')
                                                 ng-hide='!adminMode && columnDefinitions[column.name].admin')
                                                     button(ng-click='params.count(ceil);sel=ceil').btn.btn-xs
                                                         i.fa.fa-circle-thin
-                                                        span(ng-bind='ceil | translate') 
-                button.btn-width(ng-click="AddNewDeviceGroup()") 
+                                                        span(ng-bind='ceil | translate')
+                button.btn-width(ng-click="AddNewDeviceGroup()")
                     i.fa.fa-user-plus
                     span 增加
-                //- button.btn-width(ng-click="ModifyDeviceGroup()") 
+                //- button.btn-width(ng-click="ModifyDeviceGroup()")
                 //-     i.fa.fa-wrench
                 //-     span 修改
-                button.btn-width(ng-click="DeleteDeviceGroup()") 
+                button.btn-width(ng-click="DeleteDeviceGroup()")
                     i.fa.fa-user-times
                     span 删除
-                                                            
+
             .col-md-4(ng-show="showUserGroup")
                 Div.device-group-title-info
                     button.align-left.btn-width(ng-click="switchShow()")
@@ -71,8 +71,8 @@ div(ng-controller='DeviceGroupsController')
                             div(ng-bind='k | translate' ng-style="{width: HeadWidth(k)}")
                     tr.rowhover(ng-repeat="row in tableParamsCustom.data")
                         td(ng-repeat="(kk,vv) in row" ng-click="RowClick(row)")
-                            span(ng-if="kk != 'selected'") {{vv}}    
-                            input(type="checkbox" ng-if="kk == 'selected'"  disabled  ng-model="vv") 
+                            span(ng-if="kk != 'selected'") {{vv}}
+                            input(type="checkbox" ng-if="kk == 'selected'"  disabled  ng-model="vv")
             .col-md-4(ng-show="showUserGroup")
                 input.floatleft.QueryHeight.form-control(type="text" ng-model="userGroupFilter" ng-keyup="FreshUser()")
                 table.blackbackground.table.dataTable.ng-table(ng-table="tableParamsUserGroups")
@@ -81,12 +81,12 @@ div(ng-controller='DeviceGroupsController')
                             div(ng-bind='k | translate' ng-style="{width: HeadWidth(k)}")
                     tr.rowhover(ng-repeat="row in tableParamsUserGroups.data" ng-click="SelectUser(row)")
                         td(ng-repeat="(kk,vv) in row" ng-if="kk!='userslist' && kk!= 'id' ")
-                            span(ng-if="kk != 'selected'") {{vv}}    
-                            input(type="checkbox" ng-if="kk == 'selected'" disabled ng-model="vv")    
-                    tr  
-                        td(colspan="100") 
-                            table.fill-parent-width(ng-init="sel2=15") 
-                                tr 
+                            span(ng-if="kk != 'selected'") {{vv}}
+                            input(type="checkbox" ng-if="kk == 'selected'" disabled ng-model="vv")
+                    tr
+                        td(colspan="100")
+                            table.fill-parent-width(ng-init="sel2=15")
+                                tr
                                     td
                                         div.floatleft
                                             button.wid30px(ng-disabled="params.parameters().page<=1" ng-click="params.page(1)") <<
@@ -97,10 +97,10 @@ div(ng-controller='DeviceGroupsController')
                                         div.floatleft
                                             button.wid30px(ng-disabled=" pagesUserCount <= (params.parameters().page )" ng-click="params.page(pagesUserCount)") >>
                                     td
-                                        span.msgwidth 
-                                        | Totals: {{params.total()}}  
+                                        span.msgwidth
+                                        | Totals: {{params.total()}}
                                     td
-                                        span.msgwidth  
+                                        span.msgwidth
                                         | Pages: {{params.parameters().page}} / {{pagesUserCount}}
                                     td(colspan="0")
                                         div.btn-group(uib-dropdown).floatright
@@ -112,8 +112,8 @@ div(ng-controller='DeviceGroupsController')
                                                 ng-hide='!adminMode && columnDefinitions[column.name].admin')
                                                     button(ng-click='params.count(ceil);sel2=ceil').btn.btn-xs
                                                         i.fa.fa-circle-thin
-                                                        span(ng-bind='ceil | translate') 
-            
+                                                        span(ng-bind='ceil | translate')
+
             .col-md-4(ng-show="!showUserGroup")
                 Div.device-group-title-info
                     button.align-left.btn-width(ng-click="switchShow()")
@@ -132,8 +132,8 @@ div(ng-controller='DeviceGroupsController')
                             div(ng-bind='k | translate' ng-style="{width: HeadWidth(k)}")
                     tr.rowhover(ng-repeat="row in tableParamsCustomDevices.data")
                         td(ng-repeat="(kk,vv) in row" ng-click="RowClick(row)")
-                            span(ng-if="kk != 'selected'") {{vv}}    
-                            input(type="checkbox" ng-if="kk == 'selected'"  disabled  ng-model="vv") 
+                            span(ng-if="kk != 'selected'") {{vv}}
+                            input(type="checkbox" ng-if="kk == 'selected'"  disabled  ng-model="vv")
             .col-md-4(ng-show="!showUserGroup")
                 input.floatleft.QueryHeight.form-control(type="text" ng-model="deviceFilter" ng-keyup="FreshDevice()")
                 table.blackbackground.table.dataTable.ng-table(ng-table="tableParamsDevices")
@@ -142,12 +142,12 @@ div(ng-controller='DeviceGroupsController')
                             div(ng-bind='k | translate' ng-style="{width: HeadWidth(k)}")
                     tr.rowhover(ng-repeat="row in tableParamsDevices.data" ng-click="SelectUser(row)")
                         td(ng-repeat="(kk,vv) in row" ng-if="kk!='userslist' && kk!= 'id' ")
-                            span(ng-if="kk != 'selected'") {{vv}}    
-                            input(type="checkbox" ng-if="kk == 'selected'" disabled ng-model="vv")    
-                    tr  
-                        td(colspan="100") 
-                            table.fill-parent-width(ng-init="sel2=15") 
-                                tr 
+                            span(ng-if="kk != 'selected'") {{vv}}
+                            input(type="checkbox" ng-if="kk == 'selected'" disabled ng-model="vv")
+                    tr
+                        td(colspan="100")
+                            table.fill-parent-width(ng-init="sel2=15")
+                                tr
                                     td
                                         div.floatleft
                                             button.wid30px(ng-disabled="params.parameters().page<=1" ng-click="params.page(1)") <<
@@ -158,10 +158,10 @@ div(ng-controller='DeviceGroupsController')
                                         div.floatleft
                                             button.wid30px(ng-disabled=" pagesDeviceCount <= (params.parameters().page )" ng-click="params.page(pagesDeviceCount)") >>
                                     td
-                                        span.msgwidth 
-                                        | Totals: {{params.total()}}  
+                                        span.msgwidth
+                                        | Totals: {{params.total()}}
                                     td
-                                        span.msgwidth  
+                                        span.msgwidth
                                         | Pages: {{params.parameters().page}} / {{pagesDeviceCount}}
                                     td(colspan="0")
                                         div.btn-group(uib-dropdown).floatright
@@ -173,7 +173,7 @@ div(ng-controller='DeviceGroupsController')
                                                 ng-hide='!adminMode && columnDefinitions[column.name].admin')
                                                     button(ng-click='params.count(ceil);sel2=ceil').btn.btn-xs
                                                         i.fa.fa-circle-thin
-                                                        span(ng-bind='ceil | translate') 
+                                                        span(ng-bind='ceil | translate')
 
 
 

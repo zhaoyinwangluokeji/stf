@@ -64,7 +64,7 @@ module.exports = function EnhanceDeviceServiceFactory($filter, AppState) {
     }
   //  console.log("Image120:" + device.enhancedImage120)
 
-    device.enhancedImage24 = '/static/app/devices/icon/x24/' + (device.image || '_default.jpg')
+    device.enhancedImage24 = '/static/app/devices/icon/x24/' + '_default.jpg'
     device.enhancedStateAction = $filter('statusNameAction')(device.state)
     device.enhancedStatePassive = $filter('statusNamePassive')(device.state)
     device.enhancedRentStateMsg = $filter('statusNameActionFromDevice')(device)
