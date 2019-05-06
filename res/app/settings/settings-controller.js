@@ -40,7 +40,7 @@ module.exports = function SettingsCtrl($scope, gettext, PermissionService) {
       ,
       {
         title: gettext('公告栏管理'),
-        icon: 'fa fa-mobile',
+        icon: 'fa fa-newspaper-o',
         templateUrl: 'settings/announcement/announcement.pug',
         PermissionId: "abb19a6d-b711-4488-80d0-2a27363a3fd3"
       }
