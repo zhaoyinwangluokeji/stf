@@ -324,7 +324,7 @@ module.exports = function DeviceListStatsDirective(
           }
         }
         var rColor1 = randomHexColor()
-        console.log("color: " + rColor1)
+        // console.log("color: " + rColor1)
         targetData.data.datasets[0].data.push(1)
         targetData.data.datasets[0].backgroundColor.push(rColor1)
         targetData.data.labels.push(value)
@@ -406,10 +406,9 @@ module.exports = function DeviceListStatsDirective(
         var newStats = updateStats(device)
         var diffs = Object.create(null)
 
-        scope.counter.usable += diffs.usable = newStats.usable - oldStats && oldStats.usable ? oldStats.usable : 0
-        scope.counter.busy += diffs.busy = newStats.busy - oldStats && oldStats.busy ? oldStats.busy : 0
-
-        scope.counter.using += diffs.using = newStats.using - oldStats.using ? oldStats.using : 0
+        scope.counter.usable += diffs.usable = newStats.usable - oldStats && oldStats.usable ? oldStats.usable :0
+        scope.counter.busy += diffs.busy = newStats.busy -  oldStats && oldStats.busy ? oldStats.busy : 0
+        scope.counter.using += diffs.using = newStats.using - oldStats && oldStats.using ? oldStats.using : 0
 
         if (diffs.usable || diffs.busy || diffs.using) {
           notify()
