@@ -103,4 +103,12 @@ img.device-icon-smallest {
 }
 .DateAlignRight{
   float:right;
+
+}
+.titleFont{
+  line-height: 32px;
+  vertical-align:middle
+}
+.DatepickerWidth150{
+  width: 150px;
 }

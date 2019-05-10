@@ -42,7 +42,7 @@ module.exports = angular.module('stf.device-status', [])
             if (device.state == "maintain") {
               return gettext('不可用(报修状态)');
             } else {
-              console.log("state:" + device.state)
+              // console.log("state:" + device.state)
               return gettext('不可用(离线)');
             }
 
