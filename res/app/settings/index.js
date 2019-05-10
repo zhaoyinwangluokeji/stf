@@ -6,6 +6,7 @@ module.exports = angular.module('ui-settings', [
   require('./users').name,
   require('./devicegroups').name,
   require('./devicemanager').name,
+  require('./announcement').name,
   require('stf/app-state').name
 ])
   .config(['$routeProvider', function($routeProvider) {
@@ -14,4 +15,3 @@ module.exports = angular.module('ui-settings', [
     })
   }])
   .controller('SettingsCtrl', require('./settings-controller'))
- 

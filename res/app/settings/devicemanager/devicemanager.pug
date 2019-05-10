@@ -11,7 +11,7 @@ div(ng-controller='DeviceManagerController')
                         span 删除
                     button.align-right.btn-width(ng-click="addDevice()")
                         i.fa.fa-plus
-                        span 增加
+                        span 增加/修改
                 table.blackbackground.table.dataTable
                     thead
                         th.header
@@ -66,21 +66,21 @@ div(ng-controller='DeviceManagerController')
                             div 标注
                         td
                             input(ng-model='addNotes')
-                    
+
             .col-md-8
                 input.floatleft.QueryHeight.form-control(type="text" ng-model="deviceFilter" ng-keyup="freshDevice()")
                 table.blackbackground.table.dataTable.ng-table(ng-table="tableParamsDevices")
                     thead
-                        th.header.sortable(ng-repeat='(k,v) in tableParamsDevices.data[0] track by $index' ng-if="k!='userslist' && k!= 'id'")
+                        th.header.sortable(ng-repeat='(k,v) in tableParamsDevices.data[0] track by $index' ng-if="k!='deviceLocation' && k!= 'platform' && k != 'notes'")
                             div(ng-bind='k | translate' ng-style="{width: HeadWidth(k)}")
                     tr.rowhover(ng-repeat="row in tableParamsDevices.data" ng-click="SelectDevice(row)")
-                        td(ng-repeat="(kk,vv) in row  track by $index" ng-if="kk!= 'id' ")
-                            span(ng-if="kk != 'selected'") {{vv}}    
-                            input(type="checkbox" ng-if="kk == 'selected'" disabled ng-model="vv")    
-                    tr  
-                        td(colspan="100") 
-                            table.fill-parent-width(ng-init="sel2=15") 
-                                tr 
+                        td(ng-repeat="(kk,vv) in row  track by $index" ng-if="kk!= 'deviceLocation' && kk != 'platform' && kk != 'notes'")
+                            span(ng-if="kk != 'selected'") {{vv}}
+                            input(type="checkbox" ng-if="kk == 'selected'" disabled ng-model="vv")
+                    tr
+                        td(colspan="100")
+                            table.fill-parent-width(ng-init="sel2=15")
+                                tr
                                     td
                                         div.floatleft
                                             button.wid30px(ng-disabled="params.parameters().page<=1" ng-click="params.page(1)") <<
@@ -91,10 +91,10 @@ div(ng-controller='DeviceManagerController')
                                         div.floatleft
                                             button.wid30px(ng-disabled=" pagesDeviceCount <= (params.parameters().page )" ng-click="params.page(pagesGroupCount)") >>
                                     td
-                                        span.msgwidth 
-                                        | Totals: {{params.total()}}  
+                                        span.msgwidth
+                                        | Totals: {{params.total()}}
                                     td
-                                        span.msgwidth  
+                                        span.msgwidth
                                         | Pages: {{params.parameters().page}} / {{pagesDeviceCount}}
                                     td(colspan="0")
                                         div.btn-group(uib-dropdown).floatright
@@ -106,7 +106,7 @@ div(ng-controller='DeviceManagerController')
                                                 ng-hide='!adminMode && columnDefinitions[column.name].admin')
                                                     button(ng-click='params.count(ceil);sel2=ceil').btn.btn-xs
                                                         i.fa.fa-circle-thin
-                                                        span(ng-bind='ceil | translate') 
+                                                        span(ng-bind='ceil | translate')
 
 
 
