@@ -4,7 +4,8 @@
             div.alignleft 当前公告内容
             h2.selectable(align="center") {{publish.title}}
             div.selectable(name="announce")
-              textarea.readtextarea(name="newannounce" cols="60", rows="20" ng-model="publish.content" style="width:100%;")
+              textarea.readtextarea(name="newannounce" cols="60", rows="20" disabled="disabled" ng-model="publish.content" style="width:100%;")
+
         .col-md-7
             div.alignleft 公告发布历史
             dialog(ng-if="dialog.newannounce" close="dialog.newannounce=false")
