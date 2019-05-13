@@ -94,6 +94,28 @@ module.exports =
         $scope.popup1 = {
           opened: false
         };
+        $scope.$watch(function () {
+          return $scope.dat1
+        }, function (newValue, oldValue) {
+          if (newValue > $scope.dat2) {
+            alert("开始必须小于结束时间")
+            $scope.dat1 = oldValue;
+            return
+          }
+          $scope.QueryMessage()
+        }, true);
+
+        $scope.$watch(function () {
+          return $scope.dat2
+        }, function (newValue, oldValue) {
+          if (newValue < $scope.dat1) {
+            alert("结束时间必须大于开始时间")
+            $scope.dat2 = oldValue;
+            return
+          }
+          $scope.QueryMessage()
+        }, true);
+
         $scope.open1 = function () {
           $scope.popup1.opened = true;
         };
@@ -228,7 +250,6 @@ module.exports =
           console.log("start Date:" + $scope.dat1)
           console.log("End Date:" + $scope.dat2)
 
-
           var datestart = $scope.dat1
           var dateend = $scope.dat2
           var group_by = "";
@@ -290,6 +311,46 @@ module.exports =
               console.log("[Error] $scope.tableParamsCustom.reload()");
             }
           }
+        };
+        $scope.ColChange = function (column) {
+          try {
+            return (new Promise(function (resolve) {
+              if (column.name == "CurrentTime") {
+                for (var i = 0; i < $scope.columns.length; i++) {
+                  var element = $scope.columns[i]
+                  if (element.name == 'CurrentTime Month' || element.name == 'CurrentTime Year') {
+                    element.selected = false
+                  }
+                };
+              }
+              else if (column.name == "CurrentTime Month") {
+
+                for (var i = 0; i < $scope.columns.length; i++) {
+                  var element = $scope.columns[i]
+                  if (element.name == 'CurrentTime' || element.name == 'CurrentTime Year') {
+                    element.selected = false
+                  }
+                };
+              }
+              else if (column.name == "CurrentTime Year") {
+                for (var i = 0; i < $scope.columns.length; i++) {
+                  var element = $scope.columns[i]
+                  if (element.name == 'CurrentTime' || element.name == 'CurrentTime Month') {
+                    element.selected = false
+                  }
+                };
+              }
+              console.log("end ")
+              resolve(true)
+            })).then(function (ret) {
+              console.log("reload")
+              $scope.tableParamsCustom.reload()
+            })
+
+          } catch (e) {
+            console.log("[Error] $scope.tableParamsCustom.reload()");
+          }
+
         };
         $scope.ExportExcel = function () {
           console.log("export_default:" + $scope.activeTabs.export_default)

@@ -19,10 +19,7 @@
                     button(ng-click='menu.click()').btn.btn-xs.btn-default-outline
                       i.fa.fa-genderless
                       span(ng-bind='menu.name')
-                  li
-                    button(ng-click='CloseReportWnd()').btn.btn-xs.btn-danger-outline
-                      i.fa.fa-trash-o
-                      span(ng-bind='"CLOSE"|translate')
+
 
             datalist(id='searchFields')
               select(name='searchFields')
@@ -39,14 +36,12 @@
               select(name='searchFieldsLog')
                 option(ng-repeat='column in logsColumns', ng-value='column.name + ": "',ng-if='column.selected'
                 ng-bind='LogscolumnDefinitions[column.name].title | translate')
-            input(type='search', autosave='deviceFilter',ng-if='activeTabs.deviceusinglog'
-              name='deviceFilter', ng-model='search.deviceFilter', ng-change='applyFilter(search.deviceFilter)',
+            input(type='search', autosave='deviceFilter1',ng-if='activeTabs.deviceusinglog'
+              name='deviceFilter1', ng-model='search.deviceFilter1', ng-change='applyFilter(search.deviceFilter1)',
               ng-model-options='{debounce: 150}'
               autocorrect='off', autocapitalize='off', spellcheck='false',ng-keyup="enterSomething($event)"
               list='searchFieldsLog', multiple, focus-element='search.focusElement',
               text-focus-select, accesskey='4').form-control.input-sm.device-search.pull-right
-
-            input(type="text" ng-show='false' ng-model='condi',ng-required="true" ,ng-if='activeTabs.deviceusinglog')
 
             span.pull-right(ng-if='activeTabs.deviceusinglog')
               .btn-group(uib-dropdown).pull-right
@@ -56,7 +51,7 @@
 
                 ul.uib-dropdown-menu(role='menu').pointer.stf-device-details-customize
                   li(ng-repeat='column in logsColumns track by column.name',
-                  ng-hide='!adminMode && LogscolumnDefinitions[column.name].admin',
+                  ng-show='LogscolumnDefinitions[column.name]',
                   ng-click='$event.stopPropagation()')
                     label.checkbox.pointer
                       input(type='checkbox', ng-model='column.selected')
@@ -84,8 +79,17 @@
                       i.fa.fa-trash-o
                       span(ng-bind='"Reset"|translate')
 
-            .input-group.DatepickerWidth.DateAlignRight(ng-show='activeTabs.deviceusinglog')
-              input.form-control(type="text", uib-datepicker-popup="{{format}}",
+            .input-group.DatepickerWidth150.DateAlignRight(ng-show='activeTabs.deviceusinglog')
+              input.form-control(type="text", uib-datepicker-popup="{{format}}",size=10
+              ng-model="datend", is-open="popup2.opened", ng-required="true",
+              close-text="关闭", clear-text="清空", current-text="今天",
+              alt-input-formats="altInputFormats", datepicker-options="dateOptions")
+              span.input-group-btn
+                button.btn.btn-default(type="button", ng-click="open2()")
+                  i.glyphicon.glyphicon-calendar
+            .DateAlignRight.titleFont &nbsp;-&nbsp;
+            .input-group.DatepickerWidth150.DateAlignRight(ng-show='activeTabs.deviceusinglog')
+              input.form-control(type="text", uib-datepicker-popup="{{format}}",size=10
               ng-model="dat", is-open="popup1.opened", ng-required="true",
               close-text="关闭", clear-text="清空", current-text="今天",
               alt-input-formats="altInputFormats", datepicker-options="dateOptions")
@@ -120,8 +124,7 @@
                 i.fa.fa-list
                 span(translate) 租用日志
               div.device-list-details-content(ng-if='activeTabs.deviceusinglog').selectable
-                device-rent-log(tracker='tracker', columns='logsColumns'
-                ,sort='Logssort',dat='dat', filter='filter',condi='condi').selectable
+                device-rent-log(tracker='tracker', columns='logsColumns' dat='$parent.dat' datend='$parent.datend' sort='Logssort' filter='filter' condi='condi').selectable
 
 
 

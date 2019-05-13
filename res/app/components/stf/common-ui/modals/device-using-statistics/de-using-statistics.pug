@@ -18,7 +18,7 @@
                           input.form-control(type="text", uib-datepicker-popup="{{format}}",
                           ng-model="dat1", is-open="popup1.opened", ng-required="true",
                           close-text="关闭", clear-text="清空", current-text="今天",
-                          alt-input-formats="altInputFormats", datepicker-options="dateOptions")
+                          alt-input-formats="altInputFormats", datepicker-options="dateOptions" )
                           span.input-group-btn
                               button.btn.btn-default(type="button", ng-click="open1()")
                                   i.glyphicon.glyphicon-calendar
@@ -29,7 +29,7 @@
                           input.form-control(type="text", uib-datepicker-popup="{{format}}",
                           ng-model="dat2", is-open="popup2.opened", ng-required="true",
                           close-text="关闭", clear-text="清空", current-text="今天",
-                          alt-input-formats="altInputFormats", datepicker-options="dateOptions")
+                          alt-input-formats="altInputFormats", datepicker-options="dateOptions" )
                           span.input-group-btn
                               button.btn.btn-default(type="button", ng-click="open2()")
                                   i.glyphicon.glyphicon-calendar
@@ -53,10 +53,9 @@
                                     ul.uib-dropdown-menu(role='menu').pointer.stf-device-details-customize
                                         li(ng-repeat='column in columns track by column.name',
                                         ng-hide='!adminMode && LogscolumnDefinitions[column.name].admin',
-                                        ng-if="column.name !='using_time' && column.name !='start_time' && column.name !='rent_time' && column.name !='mac_address'"
-                                        ng-click='QueryMessage()')
+                                        ng-if="column.name !='using_time' && column.name !='start_time' && column.name !='rent_time' && column.name !='mac_address'")
                                             label.checkbox.pointer
-                                                input(type='checkbox', ng-model='column.selected')
+                                                input(type='checkbox', ng-model='column.selected' ng-change='ColChange(column)')
                                                 span(ng-bind='column.name | translate')
 
                         uib-tabset.overflow-auto.device-list-active-tabs(ng-if='activeTabs')

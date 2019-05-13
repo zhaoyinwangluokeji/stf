@@ -104,7 +104,7 @@ module.exports = function LogColumnService(
         return $filter('translate')(log_row.ProjectName)
       }
     })
-    , real_rent_time: TextCell({
+    , real_rent_time: TimeMinuteCell({
       title: gettext('实际租用时间')
       , value: function (log_row) {
         return $filter('translate')(log_row.real_rent_time)
@@ -221,9 +221,7 @@ function TimeMinuteCell(options) {
     , update: function (td, item) {
       var t = td.firstChild
       var minute_all = options.value(item)
-      console.log("minute_all:" + minute_all)
       var hour = parseInt((minute_all / 60))
-      console.log("hour:" + hour)
       var minute = minute_all % 60
       if (hour && hour != 0) {
         t.nodeValue = hour + "小时"
@@ -237,7 +235,9 @@ function TimeMinuteCell(options) {
       return td
     }
     , compare: function (a, b) {
-      return compareIgnoreCase(a, b)
+      var va = options.value(a) || 0
+      var vb = options.value(b) || 0
+      return va - vb
     }
     , filter: function (item, filter) {
       return filterIgnoreCase(options.value(item), filter.query)
