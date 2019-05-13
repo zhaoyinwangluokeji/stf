@@ -5,7 +5,6 @@ module.exports = function DeviceRentLogService($filter, AppState, GroupService) 
 
 
     DeviceRentLog.getLogs = function (startdate, enddate, page, count, field, filter) {
-        console.log("service getlog:page:" + page)
         return new Promise((resolve, reject) => {
             oboe('/api/v1/devicelog/getlogs?startdate='
                 + startdate + '&enddate=' + enddate
@@ -20,7 +19,7 @@ module.exports = function DeviceRentLogService($filter, AppState, GroupService) 
                     else {
                         reject('[Error]oboe return fail');
                     }
-                }) 
+                })
                 .fail(function (error) {
                     console.log(error);
                     reject('[Error]oboe fail:' + error);

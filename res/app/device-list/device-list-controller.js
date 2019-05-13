@@ -377,6 +377,11 @@ module.exports = function DeviceListCtrl(
   }
   var defaultLogsSort = {
     fixed: [
+
+      {
+        name: 'CurrentTime'
+        , order: 'asc'
+      },
       {
         name: 'serial'
         , order: 'desc'
@@ -384,11 +389,6 @@ module.exports = function DeviceListCtrl(
 
     ]
     , user: [
-      {
-        name: 'desc'
-        , order: 'asc'
-      }
-      ,
       {
         name: 'ProjectCode'
         , order: 'asc'
@@ -398,11 +398,8 @@ module.exports = function DeviceListCtrl(
         name: 'ProjectName'
         , order: 'asc'
       }
+
       ,
-      {
-        name: 'CurrentTime'
-        , order: 'asc'
-      },
       {
         name: 'platform'
         , order: 'asc'
@@ -444,7 +441,6 @@ module.exports = function DeviceListCtrl(
   })
 
   $scope.toggle = function (device) {
-    console.log('toggle  ')
     if (device.using) {
       $scope.kick(device)
     } else {
@@ -453,21 +449,19 @@ module.exports = function DeviceListCtrl(
   }
 
   $scope.invite = function (device) {
-    console.log('invite  ')
     return GroupService.invite(device).then(function () {
       $scope.$digest()
     })
   }
 
   $scope.applyFilter = function (query) {
-    console.log('applyFilter : ' + query)
     $scope.filter = QueryParser.parse(query)
-    console.log('applyFilter result : ' + JSON.stringify($scope.filter))
   }
 
 
   $scope.search = {
     deviceFilter: '',
+    deviceFilter1: '',
     focusElement: false
   }
 
@@ -478,7 +472,6 @@ module.exports = function DeviceListCtrl(
   }
 
   $scope.reset = function () {
-    console.log('reset  ')
     $scope.search.deviceFilter = ''
     $scope.filter = []
     $scope.sort = defaultSort
@@ -486,7 +479,6 @@ module.exports = function DeviceListCtrl(
   }
 
   $scope.LogReset = function () {
-    console.log('reset2  ')
     $scope.search.deviceFilter = ''
     $scope.filter = []
     $scope.Logssort = defaultLogsSort
@@ -494,6 +486,7 @@ module.exports = function DeviceListCtrl(
   }
 
   $scope.dat = new Date();
+  $scope.datend = new Date();
   /*
     $scope.format=['dd-MMMM-yyyy','yyyy-MM-dd', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate']
     $scope.altInputFormats=['yyyy-M!-d!','yyyy/M!/d!','yyyy.M!.d!','yyyy M! d!'];
@@ -507,11 +500,20 @@ module.exports = function DeviceListCtrl(
   $scope.open1 = function () {
     $scope.popup1.opened = true;
   };
+  $scope.popup2 = {
+    opened: false
+  };
+  $scope.open2 = function () {
+    $scope.popup2.opened = true;
+  };
   $scope.dateOptions = {
     //  customClass: getdayclass,//自定义类名
     //  dateDisabled: false//是否禁用
   }
-
+  $scope.dateOptions2 = {
+    //  customClass: getdayclass,//自定义类名
+    //  dateDisabled: true//是否禁用
+  }
 
   var tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -554,39 +556,45 @@ module.exports = function DeviceListCtrl(
   function getLogs() {
     DeviceRentLogService.getLogs('', '', '', 50, '', '').then(function (data) {
       $scope.Logs = data;
-      console.log("load to:" + JSON.stringify(data))
     })
   }
 
   $scope.condi = ""
   $scope.enterSomething = function ($event) {
     if ($event.keyCode == 13) {//回车
-      console.log('enterSomething:' + $scope.search.deviceFilter)
       $scope.condi = $scope.search.deviceFilter
     }
   }
+  /*
   SettingsService.bind($scope, {
     target: 'dat'
     , source: 'deviceListdat'
   })
   SettingsService.bind($scope, {
+    target: 'datend'
+    , source: 'deviceListdat_end'
+  })*/
+  SettingsService.bind($scope, {
     target: 'condi'
     , source: 'deviceListcondi'
   })
-
   $scope.$watch('dat', function (newValue, oldValue) {
-    console.log("dat:" + $scope.dat)
-    console.log("Newdat:" + newValue)
-    $scope.LogsCondition = newValue;
-    // getLogs();
+    if (newValue > $scope.datend) {
+      alert("开始必须小于结束时间")
+      $scope.dat = oldValue;
+    }
   });
-
+  $scope.$watch('datend', function (newValue, oldValue) {
+    if (newValue < $scope.dat) {
+      alert("结束时间必须大于开始时间")
+      $scope.datend = oldValue;
+    }
+  });
+  $scope.$watch('logsColumns', function (newValue, oldValue) {
+  }, true);
   $scope.$watch('condi', function (newValue, oldValue) {
     console.log("condi:" + $scope.condi)
     console.log("Newcondi:" + newValue)
-
   });
-
-
 
 }
