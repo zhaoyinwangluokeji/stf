@@ -18,10 +18,11 @@
   BORDER-LEFT:   0px   solid;
   BORDER-RIGHT:   0px   solid;
   BORDER-TOP:   0px   solid;
-  overflow-y:hidden;
-  overflow-x:hidden;
+  overflow-y:scroll;
+  overflow-x:scroll;
   border:0;
-  resize:none
+  resize:none;
+  width: 100%;
 
 }
 .btnwidth{

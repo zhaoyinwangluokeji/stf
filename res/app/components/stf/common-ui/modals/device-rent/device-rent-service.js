@@ -346,7 +346,7 @@ module.exports =
           if (device.platform == "Android" && device.state == 'available') {
             if (confirm("需要直接打开手机的远程控制吗？")) {
               return {
-                result: result,
+                result: true,
                 device: device,
                 message: "open"
               }
