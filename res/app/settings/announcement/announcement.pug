@@ -2,12 +2,13 @@
     .row
         .col-md-5
             div.alignleft 当前公告内容
-            h4.selectable(align="center") {{publish.title}}
-            div.selectable(name="announce")
-              textarea.readtextarea(name="newannounce" cols="60", rows="20" disabled="disabled" ng-model="publish.content" style="width:100%;")
+            div.announcebackground
+              h4.selectable(align="center") {{publish.title}}
+              div.selectable(name="announce")
+                textarea.readtextarea(name="newannounce" cols="60", rows="20" disabled="disabled" ng-model="publish.content" style="width:100%;")
 
         .col-md-7
-            div.alignleft 公告发布历史
+            div.aligncenter 公告发布历史
             dialog(ng-if="dialog.newannounce" close="dialog.newannounce=false")
               div(dialog-title) 新公告信息
               div(dialog-content)
@@ -32,14 +33,17 @@
                 button(autofocus ng-click="savemodifyannounce()") 重新发布公告
                 button(ng-click="$close()") 取消
             div.floatleft
-              input.QueryHeight.form-control(type="text" ng-model="queryFilter" size="50" ng-keyup="queryannounce()")
+              input.QueryHeight.form-control.floatleft(type="text" ng-model="queryFilter" size="50" ng-keyup="queryannounce()")
+            div.floatleft
+              button.noneboder.alignleft.searchBtn(ng-click="queryannounce()")
+                i.fa.fa-search
             div.alignright
               button.alignright.btn-width(ng-click="NewAnnouncement()")
-                i.fa.fa-user-plus
-                span +
+                i.fa.fa-plus
+                span 新公告
               button.alignright.btn-width(ng-click="ModifyAnnouncement()")
                 i.fa.fa-wrench
-                span M
+                span 编辑
             table.table.blackbackground.dataTable.ng-table(ng-table="tableHisAnnounce")
                 thead
                     th.header.sortable(ng-repeat='(k,v) in tableHisAnnounce.data[0] track by $index' ng-if="k != 'content' && k != 'id' ")

@@ -1,6 +1,9 @@
 .alignleft{
   text-align: left;
 }
+.aligncenter{
+  text-align: center;
+}
 .alignright{
   text-align: right;
 }
@@ -28,4 +31,13 @@
 .btnwidth{
   width: 40px
 }
-
+.noneboder{
+  border:none
+}
+.searchBtn{
+  opacity: 0.5;
+  height: 30px;
+}
+.announcebackground{
+  background-color: rgb(255,255,255);
+}
