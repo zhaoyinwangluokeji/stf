@@ -385,12 +385,13 @@ module.exports = function DeviceListIconsDirective(
                         return result
                       })
                     })).then(function (result) {
-                      //  console.log("result:" + JSON.stringify(result))
+                    //  console.log("result:" + JSON.stringify(result))
                       if (result[0].result == true) {
+                    //    console.log('redirect: ' + result[0].device.serial)
                         $location.path('/control/' + result[0].device.serial);
                       } else {
                         device.using = true
-                        tracker.emit('change',device)
+                        tracker.emit('change', device)
                       }
                     })
                       .catch(function (err) {
@@ -772,7 +773,7 @@ module.exports = function DeviceListIconsDirective(
         if (device.deviceType == '现场测试') {
           return
         }
-      //  console.log('device-list-changeListener :'+device.state)
+        //  console.log('device-list-changeListener :'+device.state)
         var id = calculateId(device)
         //  console.log('device-list-changeListener :' + id)
         var item = list.children[id]
