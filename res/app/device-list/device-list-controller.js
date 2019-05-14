@@ -479,7 +479,7 @@ module.exports = function DeviceListCtrl(
   }
 
   $scope.LogReset = function () {
-    $scope.search.deviceFilter = ''
+    $scope.search.deviceFilter1 = ''
     $scope.filter = []
     $scope.Logssort = defaultLogsSort
     $scope.logsColumns = defaultLogsColumns()
@@ -560,9 +560,10 @@ module.exports = function DeviceListCtrl(
   }
 
   $scope.condi = ""
-  $scope.enterSomething = function ($event) {
+  $scope.enterSomething = function ($event, value) {
     if ($event.keyCode == 13) {//回车
-      $scope.condi = $scope.search.deviceFilter
+      console.log("enterSomething:" + value)
+      $scope.condi = value
     }
   }
   /*
@@ -595,6 +596,6 @@ module.exports = function DeviceListCtrl(
   $scope.$watch('condi', function (newValue, oldValue) {
     console.log("condi:" + $scope.condi)
     console.log("Newcondi:" + newValue)
-  });
+  }, true);
 
 }
