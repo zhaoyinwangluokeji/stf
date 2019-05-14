@@ -145,8 +145,12 @@ module.exports = function AnnounceController($scope, $http, NgTableParams) {
         $scope.tableHisAnnounce.total(total)
         $scope.pagesCustomCount = Math.ceil(total / $scope.tableHisAnnounce.parameters().count)
         datasets.forEach(element => {
-          element.content_show = element.content.substr(0, 60) + '.....',
-            element.date = (new Date(element.date)).format("yyyy/MM/dd hh:mm")
+          if (element.content.length > 60) {
+            element.content_show = element.content.substr(0, 60) + '.....'
+          }else{
+            element.content_show = element.content
+          }
+          element.date = (new Date(element.date)).format("yyyy/MM/dd hh:mm")
         });
         return resolve(datasets)
       }).error(function (response) {
@@ -171,7 +175,7 @@ module.exports = function AnnounceController($scope, $http, NgTableParams) {
   $scope.tableHisAnnounce = new NgTableParams(
     { count: 10 },
     {
-      counts: [10, 15, 30, 50],
+      counts: [10, 15, 30, 50, 100],
       getData: $scope.QueryHisAnnounce
     }
   );
