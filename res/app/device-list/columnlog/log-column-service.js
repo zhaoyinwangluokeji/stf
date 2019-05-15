@@ -240,7 +240,17 @@ function TimeMinuteCell(options) {
       return va - vb
     }
     , filter: function (item, filter) {
-      return filterIgnoreCase(options.value(item), filter.query)
+      console.log("query:" + JSON.stringify(filter))
+      console.log("Number:" + Number(filter.query) + ",value=" + options.value(item) + ",isnumber:" + !!Number(filter.query))
+      if (filter.query == '') {
+        return true
+      } else if (filter.query == '0') {
+        return Number(options.value(item)) == 0
+      }
+      else {
+        return Number(filter.query) == Number(options.value(item))
+      }
+
     }
   })
 }

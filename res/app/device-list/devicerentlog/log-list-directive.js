@@ -490,10 +490,11 @@ module.exports = function DeviceListDetailsDirective(
             var filter = filters[0]
             if (filter.field && filter.field != "") {
               LoadLogsFilter(scope.dat, scope.datend, filters)
-            }else{
+            } else {
               alert("请选择正确定搜索区域")
             }
-
+          } else {
+            LoadData(scope.LogsCondition, scope.datend);
           }
         }
         , true

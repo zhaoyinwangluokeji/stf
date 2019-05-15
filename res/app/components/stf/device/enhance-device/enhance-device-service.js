@@ -54,7 +54,7 @@ module.exports = function EnhanceDeviceServiceFactory($filter, AppState) {
     if (device.image) {
     //  console.log("indexOf:" + device.image.indexOf('mobile-images'))
     } else {
-      console.log("image null")
+      console.log("image null:"+device.model)
     }
 
     if (device.image && device.image.indexOf('mobile-images') != -1) {
