@@ -36,10 +36,10 @@
               select(name='searchFieldsLog')
                 option(ng-repeat='column in logsColumns', ng-value='column.name + ": "',ng-if='column.selected'
                 ng-bind='LogscolumnDefinitions[column.name].title | translate')
-            input(type='search', autosave='deviceFilter1',ng-if='activeTabs.deviceusinglog'
+            input(type='search', autosave='deviceFilter1',ng-if='activeTabs.deviceusinglog',title="按enter将搜索后台"
               name='deviceFilter1', ng-model='search.deviceFilter1', ng-change='applyFilter(search.deviceFilter1)',
               ng-model-options='{debounce: 150}'
-              autocorrect='off', autocapitalize='off', spellcheck='false',ng-keyup="enterSomething($event)"
+              autocorrect='off', autocapitalize='off', spellcheck='false',ng-keyup="enterSomething($event,search.deviceFilter1)"
               list='searchFieldsLog', multiple, focus-element='search.focusElement',
               text-focus-select, accesskey='4').form-control.input-sm.device-search.pull-right
 
