@@ -108,6 +108,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
     }
 
     function get(data) {
+      if (!data || !data.serial) return null
       return devices[devicesBySerial[data.serial]]
     }
 
@@ -129,7 +130,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
       })
 
       sync(data)
-    //  console.log("emit change :"+data.serial)
+      //  console.log("emit change :"+data.serial)
       this.emit('change', data)
     }.bind(this)
 
@@ -368,7 +369,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
   deviceService.get = function (serial, $scope) {
     var tracker = new Tracker($scope, {
       filter: function (device) {
-        return device.serial === serial
+        return (device && device.serial === serial)
       }
       , digest: true
     })
