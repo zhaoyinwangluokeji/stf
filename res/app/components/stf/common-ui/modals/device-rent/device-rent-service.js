@@ -1,6 +1,7 @@
 var oboe = require('oboe')
+var uuid = require('uuid')
 module.exports =
-  function DeviceRentServiceFactory($uibModal, $location, $route, $interval, socket, AppState
+  function DeviceRentServiceFactory($uibModal, $location, $route, $interval, socket, AppState, ControlService
   ) {
     var DeviceRentService = {}
     var rent_time = [
@@ -143,8 +144,10 @@ module.exports =
       }
     ]
 
-    var DeviceRentControll = ["$scope", "$uibModalInstance", "device", function ($scope, $uibModalInstance, device) {
+    var DeviceRentControll = ["$scope", "$uibModalInstance", "device", function ($scope, $uibModalInstance, device, sendTwoWay) {
       $scope.device = device;
+
+      $scope.control = ControlService.create(device, device.channel || uuid.v4(null, new Buffer(16)).toString('base64'))
       $scope.rent_times = rent_time
       if (AppState.is_adminstrator && AppState.is_adminstrator == true) {
         $scope.rent_times = rent_time_admin
@@ -217,8 +220,25 @@ module.exports =
                 }
               }
               device.back = 0
-              socket.emit('device.rent_conf.set', $scope.device)
-              $uibModalInstance.close('true')
+              return $scope.control.sendMessageSyn('device.rent_conf.set', $scope.device).then(function (result) {
+                //  console.log("sendTwoWay rent_conf result:"+JSON.stringify(result))
+                if (result.success == true) {
+                  return $uibModalInstance.close('true')
+                } else {
+                  alert(result.data)
+                  return $uibModalInstance.close('false')
+                }
+
+              }).catch(function (err) {
+                console.log("sendMessageSyn Error:" + err)
+                alert(err)
+                log.error(
+                  'Client had an error'
+                  , err.stack
+                )
+                return $uibModalInstance.close('false')
+              })
+
             }
 
           }
@@ -328,58 +348,65 @@ module.exports =
       // $scope.selected = { value: $scope.itemArray[0] };
     }]
     DeviceRentService.open = function (device) {
-      var modalInstance = $uibModal.open({
-        template: require('./device-rent-dialog.pug'),
-        controller: DeviceRentControll,
-        resolve: {
-          device: function () {
-            return device
-          }
-        },
-        backdrop: 'static',
-        size: 'sm'
-      })
 
-      return modalInstance.result.then(function (result) {
-        console.log("result:" + result)
-        if (result=='true') {
-          if (device.platform == "Android" && device.state == 'available') {
-            if (confirm("需要直接打开手机的远程控制吗？")) {
-              return {
-                result: true,
-                device: device,
-                message: "open"
-              }
+      return new Promise(function (resolve, reject) {
+        var modalInstance = $uibModal.open({
+          template: require('./device-rent-dialog.pug'),
+          controller: DeviceRentControll,
+          resolve: {
+            device: function () {
+              return device
             }
-            else {
-              return {
+          },
+          backdrop: 'static',
+          size: 'sm'
+        })
+
+        return modalInstance.result.then(function (result) {
+          console.log("result:" + result)
+          if (result == 'true') {
+            if (device.platform == "Android" &&
+              (device.state == 'available' ||
+                device.state == 'busy' ||
+                device.state == 'using')
+            ) {
+              if (confirm("需要直接打开手机的远程控制吗？")) {
+                resolve({
+                  result: true,
+                  device: device,
+                  message: "open"
+                })
+              }
+              else {
+                resolve({
+                  result: false,
+                  device: device,
+                  message: "not open"
+                })
+              }
+            } else {
+              resolve({
                 result: false,
                 device: device,
-                message: "not open"
-              }
+                message: "not available"
+              })
             }
           } else {
-            return {
+            resolve({
               result: false,
               device: device,
-              message: "not available"
-            }
+              message: "cancel"
+            })
           }
-        } else {
-          return {
+        }, function (reason) {
+          resolve({
             result: false,
             device: device,
-            message: "cancel"
-          }
-        }
-      }, function (reason) {
-        return {
-          result: false,
-          device: device,
-          message: reason
-        }
-      })
+            message: reason
+          })
+        })
 
+      })
 
     }
 
@@ -392,7 +419,7 @@ module.exports =
           device.device_rent_conf = {}
           device.device_rent_conf.rent = false
         }
-        resolve(socket.emit('device.rent_conf.set', device))
+        resolve(socket.emit('device.user_rent_conf.set', device))
       })
 
     }

@@ -385,10 +385,12 @@ module.exports = function DeviceListIconsDirective(
                         return result
                       })
                     })).then(function (result) {
-                    //  console.log("result:" + JSON.stringify(result))
+                      //  console.log("result:" + JSON.stringify(result))
                       if (result[0].result == true) {
-                    //    console.log('redirect: ' + result[0].device.serial)
+                        //    console.log('redirect: ' + result[0].device.serial)
                         $location.path('/control/' + result[0].device.serial);
+                      } else if (result[0] && result[0].message && result[0].message == "cancel") {
+                        //取消了租用按钮
                       } else {
                         device.using = true
                         tracker.emit('change', device)

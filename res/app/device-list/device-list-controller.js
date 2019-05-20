@@ -427,7 +427,7 @@ module.exports = function DeviceListCtrl(
   })
 
   $scope.filter = []
-
+  $scope.filter1 = []
   $scope.activeTabs = {
     icons: true
     , details: false
@@ -457,6 +457,9 @@ module.exports = function DeviceListCtrl(
   $scope.applyFilter = function (query) {
     $scope.filter = QueryParser.parse(query)
   }
+  $scope.applyFilter1 = function (query) {
+    $scope.filter1 = QueryParser.parse(query)
+  }
 
 
   $scope.search = {
@@ -479,8 +482,8 @@ module.exports = function DeviceListCtrl(
   }
 
   $scope.LogReset = function () {
-    $scope.search.deviceFilter = ''
-    $scope.filter = []
+    $scope.search.deviceFilter1 = ''
+    $scope.filter1 = []
     $scope.Logssort = defaultLogsSort
     $scope.logsColumns = defaultLogsColumns()
   }
@@ -560,9 +563,10 @@ module.exports = function DeviceListCtrl(
   }
 
   $scope.condi = ""
-  $scope.enterSomething = function ($event) {
+  $scope.enterSomething = function ($event, value) {
     if ($event.keyCode == 13) {//回车
-      $scope.condi = $scope.search.deviceFilter
+      console.log("enterSomething:" + value)
+      $scope.condi = value
     }
   }
   /*
@@ -595,6 +599,6 @@ module.exports = function DeviceListCtrl(
   $scope.$watch('condi', function (newValue, oldValue) {
     console.log("condi:" + $scope.condi)
     console.log("Newcondi:" + newValue)
-  });
+  }, true);
 
 }

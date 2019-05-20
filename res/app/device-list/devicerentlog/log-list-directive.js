@@ -66,7 +66,7 @@ module.exports = function DeviceListDetailsDirective(
           }
         }
         else {
-          if (!multiple || !scope.sort.user ) {
+          if (!multiple || !scope.sort.user) {
             scope.sort.user = []
           }
           scope.sort.user.push({
@@ -396,14 +396,16 @@ module.exports = function DeviceListDetailsDirective(
       scope.total = 0;
       scope.page = 1
       scope.count = 30
-      scope.counts = [15, 30, 50,100,200]
+      scope.counts = [15, 30, 50, 100, 200]
 
       scope.$watch(
         function () {
           return scope.page
         }
         , function (newValue) {
-          LoadData(scope.dat, scope.datend);
+          //  LoadData(scope.dat, scope.datend);
+          var filters = scope.filter()
+          LoadLogsFilter(scope.dat, scope.datend, filters)
         }
         , true
       )
@@ -412,7 +414,9 @@ module.exports = function DeviceListDetailsDirective(
           return scope.count
         }
         , function (newValue) {
-          LoadData(scope.dat, scope.datend);
+          //  LoadData(scope.dat, scope.datend);
+          var filters = scope.filter()
+          LoadLogsFilter(scope.dat, scope.datend, filters)
         }
         , true
       )
@@ -451,7 +455,8 @@ module.exports = function DeviceListDetailsDirective(
           return scope.dat
         }
         , function (newValue) {
-          LoadData(scope.dat, scope.datend);
+          var filters = scope.filter()
+          LoadLogsFilter(scope.dat, scope.datend, filters)
         }
         , true
       )
@@ -460,7 +465,8 @@ module.exports = function DeviceListDetailsDirective(
           return scope.datend
         }
         , function (newValue) {
-          LoadData(scope.dat, scope.datend);
+          var filters = scope.filter()
+          LoadLogsFilter(scope.dat, scope.datend, filters)
         }
         , true
       )
@@ -470,7 +476,7 @@ module.exports = function DeviceListDetailsDirective(
           scope.count = count
           scope.page = 1
           scope.pagesCount = Math.ceil(scope.total / scope.count)
-          LoadData(scope.LogsCondition, scope.datend);
+          LoadData(scope.dat, scope.datend);
         }
       }
       scope.$watch(
@@ -478,23 +484,17 @@ module.exports = function DeviceListDetailsDirective(
           return scope.condi
         }
         , function (newValue) {
-          if (newValue != "") {
-            var filter = scope.filter()
-            var column
-            if (filter.field && scope.columnDefinitions[filter.field]) {
-              column = scope.columnDefinitions[filter.field]
-              if (column) {
-                var query = filter.query ? filter.query : ''
-                LoadDataFilter(scope.dat, filter.field, query)
-                return
-              }
+          console.log("condi change:" + newValue)
+          var filters = scope.filter()
+          if (filters && filters.length > 0) {
+            var filter = filters[0]
+            if (filter.field && filter.field != "") {
+              LoadLogsFilter(scope.dat, scope.datend, filters)
             } else {
-              var filter = scope.filter()
-              var found = false
-              var field = "ProjectName"
-              var query = filter.query ? filter.query : ''
-              LoadDataFilter(scope.dat, field, query)
+              alert("请选择正确定搜索区域")
             }
+          } else {
+            LoadData(scope.dat, scope.datend);
           }
         }
         , true
@@ -531,18 +531,46 @@ module.exports = function DeviceListDetailsDirective(
           if (scope.Logs && scope.Logs.length > 0) {
             scope.Logs.forEach(addLogRow)
           }
+          scope.$digest()
         })
       }
-      function LoadDataFilter(startdate, field, Filter) {
+
+      function LoadLogsFilter(startdate, enddate, filters) {
+        var filter = (filters && filters.length > 0) ? filters[0] : null
+        if (filter) {
+          if (filter.field && scope.columnDefinitions[filter.field]) {
+            var column = scope.columnDefinitions[filter.field]
+            if (column) {
+              var query = filter.query ? filter.query : ''
+              LoadDataFilter(scope.dat, scope.datend, filter.field, query)
+              return
+            }
+          } else {
+            var found = false
+            var field = ""
+            var query = filter.query ? filter.query : ''
+            LoadDataFilter(scope.dat, scope.datend, field, query)
+          }
+        } else {
+          LoadData(scope.dat, scope.datend);
+        }
+      }
+
+      function LoadDataFilter(startdate, enddate, field, Filter) {
         var date = new Date(startdate)
         var condi = date.format("yyyy-MM-dd")
-        DeviceRentLogService.getLogs(condi, '', scope.page, scope.count, field, Filter).then(function (result) {
+        var condi2 = ""
+        if (enddate && enddate != "") {
+          var date1 = new Date(enddate)
+          condi2 = date1.format("yyyy-MM-dd")
+        }
+
+        DeviceRentLogService.getLogs(condi, condi2, scope.page, scope.count, field, Filter).then(function (result) {
           scope.Logs = result.data
           scope.total = result.total
           scope.pagesCount = Math.ceil(scope.total / scope.count)
           console.log("totalFilter:" + result.total + ",count:"
             + scope.count + ",pagesCount:" + scope.pagesCount + ",cur:" + scope.Logs.length)
-
           var len = rows.length
           for (var i = 0; i < len; i++) {
             var row = rows[0];
@@ -551,9 +579,10 @@ module.exports = function DeviceListDetailsDirective(
           if (scope.Logs && scope.Logs.length > 0) {
             scope.Logs.forEach(addLogRow)
           }
+          scope.$digest()
         })
       }
-      LoadData(scope.LogsCondition);
+      LoadData(scope.dat, scope.datend);
       // Maybe we're already late
     }
   }
