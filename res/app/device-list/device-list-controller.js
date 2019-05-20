@@ -427,7 +427,7 @@ module.exports = function DeviceListCtrl(
   })
 
   $scope.filter = []
-
+  $scope.filter1 = []
   $scope.activeTabs = {
     icons: true
     , details: false
@@ -457,6 +457,9 @@ module.exports = function DeviceListCtrl(
   $scope.applyFilter = function (query) {
     $scope.filter = QueryParser.parse(query)
   }
+  $scope.applyFilter1 = function (query) {
+    $scope.filter1 = QueryParser.parse(query)
+  }
 
 
   $scope.search = {
@@ -480,7 +483,7 @@ module.exports = function DeviceListCtrl(
 
   $scope.LogReset = function () {
     $scope.search.deviceFilter1 = ''
-    $scope.filter = []
+    $scope.filter1 = []
     $scope.Logssort = defaultLogsSort
     $scope.logsColumns = defaultLogsColumns()
   }

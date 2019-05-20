@@ -1,7 +1,7 @@
 module.exports =
   function ControlPanesController($scope, $http, gettext, $routeParams,
     $timeout, $location, DeviceService, GroupService, ControlService,
-    StorageService, FatalMessageService, SettingsService,AppState) {
+    StorageService, FatalMessageService, SettingsService, AppState) {
 
 
 
@@ -74,39 +74,43 @@ module.exports =
     // TODO: Move this out to Ctrl.resolve
     function getDevice(serial) {
       DeviceService.get(serial, $scope)
-        .then(function(device) {
+        .then(function (device) {
+          if (device.device_rent_conf &&
+            device.device_rent_conf.rent) {
+            if (device.device_rent_conf.owner &&
+              AppState.user.email == device.device_rent_conf.owner.email &&
+              AppState.user.name == device.device_rent_conf.owner.name) {
+              $scope.device = device
+              $scope.control = ControlService.create(device, device.channel)
+              return device
+            } else {
+
+              alert('设备已经被其他人申请使用，请租用其他设备')
+            //  $location.path('/')
+              Promise.reject(false)
+            }
+
+          }
+          else {
+
+            alert('设备没有租用，请进入租用界面进行租用')
+          //  $location.path('/')
+            Promise.reject(false)
+          }
+        })
+        .then(function (device) {
           return GroupService.invite(device)
         })
-        .then(function(device) {
-          
+        .then(function (device) {
+
           // TODO: Change title, flickers too much on Chrome
           // $rootScope.pageTitle = device.name
 
           SettingsService.set('lastUsedDevice', serial)
-          if(device.device_rent_conf && 
-            device.device_rent_conf.rent ){
 
-            if( device.device_rent_conf.owner && 
-              AppState.user.email == device.device_rent_conf.owner.email && 
-              AppState.user.name == device.device_rent_conf.owner.name ){
-                $scope.device = device
-                $scope.control = ControlService.create(device, device.channel)
-                return device
-            }else{
-              GroupService.kick(device,true)
-              alert('设备已经被其他人申请使用，请租用其他设备')
-              $location.path('/')
-            }
-            
-        }
-          else{
-            GroupService.kick(device,true)
-            alert('设备没有租用，请进入租用界面进行租用')
-            $location.path('/')
-          }
         })
-        .catch(function() {
-          $timeout(function() {
+        .catch(function () {
+          $timeout(function () {
             $location.path('/')
           })
         })
@@ -114,7 +118,7 @@ module.exports =
 
     getDevice($routeParams.serial)
 
-    $scope.$watch('device.state', function(newValue, oldValue) {
+    $scope.$watch('device.state', function (newValue, oldValue) {
       if (newValue !== oldValue) {
         if (oldValue === 'using') {
           FatalMessageService.open($scope.device, false)

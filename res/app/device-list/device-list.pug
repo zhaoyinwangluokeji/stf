@@ -37,7 +37,7 @@
                 option(ng-repeat='column in logsColumns', ng-value='column.name + ": "',ng-if='column.selected'
                 ng-bind='LogscolumnDefinitions[column.name].title | translate')
             input(type='search', autosave='deviceFilter1',ng-if='activeTabs.deviceusinglog',title="按enter将搜索后台"
-              name='deviceFilter1', ng-model='search.deviceFilter1', ng-change='applyFilter(search.deviceFilter1)',
+              name='deviceFilter1', ng-model='search.deviceFilter1', ng-change='applyFilter1(search.deviceFilter1)',
               ng-model-options='{debounce: 150}'
               autocorrect='off', autocapitalize='off', spellcheck='false',ng-keyup="enterSomething($event,search.deviceFilter1)"
               list='searchFieldsLog', multiple, focus-element='search.focusElement',
@@ -87,7 +87,7 @@
               span.input-group-btn
                 button.btn.btn-default(type="button", ng-click="open2()")
                   i.glyphicon.glyphicon-calendar
-            .DateAlignRight.titleFont &nbsp;-&nbsp;
+            .DateAlignRight.titleFont(ng-show='activeTabs.deviceusinglog') &nbsp;-&nbsp;
             .input-group.DatepickerWidth150.DateAlignRight(ng-show='activeTabs.deviceusinglog')
               input.form-control(type="text", uib-datepicker-popup="{{format}}",size=10
               ng-model="dat", is-open="popup1.opened", ng-required="true",
@@ -124,7 +124,7 @@
                 i.fa.fa-list
                 span(translate) 租用日志
               div.device-list-details-content(ng-if='activeTabs.deviceusinglog').selectable
-                device-rent-log(tracker='tracker', columns='logsColumns' dat='$parent.dat' datend='$parent.datend' sort='Logssort' filter='filter' condi='condi').selectable
+                device-rent-log(tracker='tracker', columns='logsColumns' dat='$parent.dat' datend='$parent.datend' sort='Logssort' filter='filter1' condi='condi').selectable
 
 
 

@@ -476,7 +476,7 @@ module.exports = function DeviceListDetailsDirective(
           scope.count = count
           scope.page = 1
           scope.pagesCount = Math.ceil(scope.total / scope.count)
-          LoadData(scope.LogsCondition, scope.datend);
+          LoadData(scope.dat, scope.datend);
         }
       }
       scope.$watch(
@@ -494,7 +494,7 @@ module.exports = function DeviceListDetailsDirective(
               alert("请选择正确定搜索区域")
             }
           } else {
-            LoadData(scope.LogsCondition, scope.datend);
+            LoadData(scope.dat, scope.datend);
           }
         }
         , true

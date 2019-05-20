@@ -450,7 +450,7 @@ module.exports =
 
             return DeviceRentLogService.getStatisticsPerCustom(datestart.format('yyyy-MM-dd'), dateend.format('yyyy-MM-dd'), group_by, page, count).then(function (data) {
               var ret = data
-              console.log("data:" + JSON.stringify(ret.data))
+            //  console.log("data:" + JSON.stringify(ret.data))
               var arrdata = [];
               var totalDevices = {}
               var totalTimer = 0

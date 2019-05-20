@@ -86,9 +86,8 @@ module.exports = function DeviceRentWebControlService($filter,
                 device_o.device_rent_conf.rent = false
                 changeEvent(device_list[serial], device_o)
                 try {
-                  GroupService.kick(device_o, true)
+                //  GroupService.kick(device_o, true)
                   DeviceRentService.free_rent(device_o, socket).then(function () {
-                    //    getEvent(device_o)
                     device_o.device_rent_conf.rent = false
                   })
                 } catch (e) {

@@ -2,7 +2,7 @@ var oboe = require('oboe')
 
 module.exports = function PermissionService($http,AppState) {
     return {
-         
+
         GetAllPermission: function (page, count, filter) {
             var data = {
                 page: page
@@ -12,11 +12,11 @@ module.exports = function PermissionService($http,AppState) {
             return new Promise(function (resolve, reject) {
                 $http.post('/auth/api/v1/mock/GetAllPermission', data)
                     .success(function (response) {
-                        console.log("success")
+                      //  console.log("success")
                         return resolve(response.data)
                     })
                     .error(function (response) {
-                        console.log("fail")
+                      //  console.log("fail")
                         return reject(response.data)
                     })
             });
@@ -25,21 +25,21 @@ module.exports = function PermissionService($http,AppState) {
             var data = {
                 group: group
                 , permissionlist: permissionlist
-                 
+
             }
             return new Promise(function (resolve, reject) {
                 $http.post('/auth/api/v1/mock/AddPermissionToGroup', data)
                     .success(function (response) {
-                        console.log("success")
+                      //  console.log("success")
                         return resolve(response.data)
                     })
                     .error(function (response) {
-                        console.log("fail")
+                      //  console.log("fail")
                         return reject(response.data)
                     })
             });
         },
-        
+
         RemovePermissionOfGroup: function (group,permissionlist) {
             var data = {
                 group: group,
@@ -52,7 +52,7 @@ module.exports = function PermissionService($http,AppState) {
                         return resolve(response.data)
                     })
                     .error(function (response) {
-                        console.log("fail")
+                      //  console.log("fail")
                         return reject(response.error)
                     })
             });
@@ -65,16 +65,16 @@ module.exports = function PermissionService($http,AppState) {
             return new Promise(function (resolve, reject) {
                 $http.post('/auth/api/v1/mock/getAllPermissionByUser', data)
                     .success(function (response) {
-                        console.log("success")
+                      //  console.log("success")
                         return resolve(response.data)
                     })
                     .error(function (response) {
-                        console.log("fail")
+                      //  console.log("fail")
                         return reject(response.data)
                     })
             });
         },
-        
-        
+
+
     }
 }
