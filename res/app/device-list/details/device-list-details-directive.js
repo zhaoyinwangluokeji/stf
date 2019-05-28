@@ -641,11 +641,17 @@ module.exports = function DeviceListDetailsDirective(
           var diff = compareRow(tr, device)
 
           if (diff < 0) {
+            //bugfix，调整位置前删除原来的项
+            tbody.removeChild(tbody.children[id])
             // Should go higher in the list
+            // console.log("changeListener...move up")
             insertRowToSegment(tr, device, 0, tr.rowIndex - 1)
           }
           else if (diff > 0) {
+            //bugfix，调整位置前删除原来的项
+            tbody.removeChild(tbody.children[id])
             // Should go lower in the list
+            // console.log("changeListener...move down")
             insertRowToSegment(tr, device, tr.rowIndex + 1, rows.length - 1)
           }
         }
