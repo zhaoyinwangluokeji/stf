@@ -1,0 +1,439 @@
+2019-5-28 11:33:30 : [90m2019-5-28 11:33:30[39m [32mINF[39m/[1mutil:procutil[22m 9273 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli migrate"
+2019-5-28 11:33:30 : 2019-5-28 11:33:30: mkdir OK
+2019-5-28 11:33:30 : [90m2019-5-28 11:33:30[39m [32mINF[39m/[1mdb[22m 9274 [*] Connecting to 127.0.0.1:28015
+2019-5-28 11:33:30 : [90m2019-5-28 11:33:30[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Database "stf" already exists
+2019-5-28 11:33:30 : [90m2019-5-28 11:33:30[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Table "users" already exists
+2019-5-28 11:33:30 : insert data step1:{"email":"admin@cmbchina.com","name":"admin","NameCN":"管理员","ip":"::ffff:127.0.0.1","group":"cn2tNNlXSdu/dLAKWkge2A==","forwards":[],"settings":{}}
+2019-5-28 11:33:30 : [90m2019-5-28 11:33:30[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Table "accessTokens" already exists
+2019-5-28 11:33:30 : [90m2019-5-28 11:33:30[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Table "vncauth" already exists
+2019-5-28 11:33:30 : [90m2019-5-28 11:33:30[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Table "devices" already exists
+2019-5-28 11:33:30 : [90m2019-5-28 11:33:30[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Table "logs" already exists
+2019-5-28 11:33:30 : [90m2019-5-28 11:33:30[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Table "ProjectInfo" already exists
+2019-5-28 11:33:30 : [90m2019-5-28 11:33:30[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Table "DeviceUsingLog" already exists
+2019-5-28 11:33:30 : [90m2019-5-28 11:33:30[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Table "ProgressBar" already exists
+2019-5-28 11:33:30 : [90m2019-5-28 11:33:30[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Table "UserPasswords" already exists
+2019-5-28 11:33:30 : [90m2019-5-28 11:33:30[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Table "UserGroup" already exists
+2019-5-28 11:33:30 : insert data step1:{"id":"f833de2f-526e-4dbd-b09c-6a24d6bdfe73","GroupName":"administrator","userslist":[{"NameCN":"管理员","email":"admin@cmbchina.com","name":"admin"}]}
+2019-5-28 11:33:30 : insert data step1:{"id":"f08a3e8a-6014-4beb-86d2-25c719eb482f","GroupName":"tester","userslist":[]}
+2019-5-28 11:33:30 : insert data step1:{"id":"789600ad-6ebf-4d7d-af23-469326948ed2","GroupName":"developer","userslist":[]}
+2019-5-28 11:33:30 : insert data step1:{"id":"11a59d35-0d2e-4017-a8ae-670143fbd949","GroupName":"自动化测试组","userslist":[]}
+2019-5-28 11:33:30 : insert data step1:{"id":"76fc41b7-f696-4b77-a1be-3d2bf61487a0","GroupName":"项目占用组","userslist":[]}
+2019-5-28 11:33:30 : [90m2019-5-28 11:33:30[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Table "DeviceGroups" already exists
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Table "CompatResult" already exists
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Table "PermissionTable" already exists
+2019-5-28 11:33:31 : insert data step1:{"PermissionId":"335e7c9c-3819-4fd5-b989-65e0a682970e","desc":"data synchronization permission","name":"数据同步"}
+2019-5-28 11:33:31 : insert data step1:{"PermissionId":"551281ad-d3ed-41d5-a2d7-9a18bb891c6f","desc":"user group management","name":"用户管理"}
+2019-5-28 11:33:31 : insert data step1:{"PermissionId":"8e1d13b6-48f2-413c-aae1-03c244b11210","desc":"equipment group management","name":"设备组管理"}
+2019-5-28 11:33:31 : insert data step1:{"PermissionId":"88ca3d8d-d989-4a6e-be8d-dc8d358bfa99","desc":"manual addition of equipment","name":"设备添加删除"}
+2019-5-28 11:33:31 : insert data step1:{"PermissionId":"abb19a6d-b711-4488-80d0-2a27363a3fd3","desc":"manage announcement infomation","name":"公告栏管理"}
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Table "Announcement" already exists
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "users"."adbKeys" already exists
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "accessTokens"."email" already exists
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "vncauth"."response" already exists
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "vncauth"."responsePerDevice" already exists
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Waiting for index "users"."adbKeys"
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Waiting for index "accessTokens"."email"
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Waiting for index "vncauth"."response"
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Waiting for index "vncauth"."responsePerDevice"
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "UserGroup"."UserGroup" already exists
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "devices"."owner" already exists
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "devices"."present" already exists
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "devices"."providerChannel" already exists
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "PermissionTable"."PermissionName" already exists
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "DeviceUsingLog"."LogTime" already exists
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "DeviceUsingLog"."DeviceUser" already exists
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "DeviceUsingLog"."DeviceProjectCode" already exists
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "ProgressBar"."ProgressBarName" already exists
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "UserPasswords"."UserPasswordsName" already exists
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "DeviceGroups"."DeviceGroupsName" already exists
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "CompatResult"."DeviceGroupsName" already exists
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "users"."adbKeys" is ready
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "accessTokens"."email" is ready
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "vncauth"."response" is ready
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "vncauth"."responsePerDevice" is ready
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Waiting for index "UserGroup"."UserGroup"
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Waiting for index "devices"."owner"
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Waiting for index "devices"."present"
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Waiting for index "devices"."providerChannel"
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Waiting for index "PermissionTable"."PermissionName"
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Waiting for index "DeviceUsingLog"."LogTime"
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Waiting for index "DeviceUsingLog"."DeviceUser"
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Waiting for index "DeviceUsingLog"."DeviceProjectCode"
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Waiting for index "ProgressBar"."ProgressBarName"
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Waiting for index "UserPasswords"."UserPasswordsName"
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Waiting for index "DeviceGroups"."DeviceGroupsName"
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Waiting for index "CompatResult"."DeviceGroupsName"
+2019-5-28 11:33:31 : insert defaultdata:users
+2019-5-28 11:33:31 : insert data:{"email":"admin@cmbchina.com","name":"admin","NameCN":"管理员","ip":"::ffff:127.0.0.1","group":"cn2tNNlXSdu/dLAKWkge2A==","forwards":[],"settings":{}}
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "UserGroup"."UserGroup" is ready
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "devices"."owner" is ready
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "devices"."present" is ready
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "devices"."providerChannel" is ready
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "PermissionTable"."PermissionName" is ready
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "DeviceUsingLog"."LogTime" is ready
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "DeviceUsingLog"."DeviceUser" is ready
+2019-5-28 11:33:31 : [90m2019-5-28 11:33:31[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "DeviceUsingLog"."DeviceProjectCode" is ready
+2019-5-28 11:33:32 : [90m2019-5-28 11:33:32[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "ProgressBar"."ProgressBarName" is ready
+2019-5-28 11:33:32 : [90m2019-5-28 11:33:32[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "UserPasswords"."UserPasswordsName" is ready
+2019-5-28 11:33:32 : [90m2019-5-28 11:33:32[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "DeviceGroups"."DeviceGroupsName" is ready
+2019-5-28 11:33:32 : [90m2019-5-28 11:33:32[39m [32mINF[39m/[1mdb:setup[22m 9274 [*] Index "CompatResult"."DeviceGroupsName" is ready
+2019-5-28 11:33:32 : insert defaultdata:UserGroup
+2019-5-28 11:33:32 : insert data:{"id":"f833de2f-526e-4dbd-b09c-6a24d6bdfe73","GroupName":"administrator","userslist":[{"NameCN":"管理员","email":"admin@cmbchina.com","name":"admin"}]}
+2019-5-28 11:33:32 : insert data:{"id":"f08a3e8a-6014-4beb-86d2-25c719eb482f","GroupName":"tester","userslist":[]}
+2019-5-28 11:33:32 : insert data:{"id":"789600ad-6ebf-4d7d-af23-469326948ed2","GroupName":"developer","userslist":[]}
+2019-5-28 11:33:32 : insert data:{"id":"11a59d35-0d2e-4017-a8ae-670143fbd949","GroupName":"自动化测试组","userslist":[]}
+2019-5-28 11:33:32 : insert data:{"id":"76fc41b7-f696-4b77-a1be-3d2bf61487a0","GroupName":"项目占用组","userslist":[]}
+2019-5-28 11:33:32 : insert defaultdata:PermissionTable
+2019-5-28 11:33:32 : insert data:{"PermissionId":"335e7c9c-3819-4fd5-b989-65e0a682970e","desc":"data synchronization permission","name":"数据同步"}
+2019-5-28 11:33:32 : insert data:{"PermissionId":"551281ad-d3ed-41d5-a2d7-9a18bb891c6f","desc":"user group management","name":"用户管理"}
+2019-5-28 11:33:32 : insert data:{"PermissionId":"8e1d13b6-48f2-413c-aae1-03c244b11210","desc":"equipment group management","name":"设备组管理"}
+2019-5-28 11:33:32 : insert data:{"PermissionId":"88ca3d8d-d989-4a6e-be8d-dc8d358bfa99","desc":"manual addition of equipment","name":"设备添加删除"}
+2019-5-28 11:33:32 : insert data:{"PermissionId":"abb19a6d-b711-4488-80d0-2a27363a3fd3","desc":"manage announcement infomation","name":"公告栏管理"}
+2019-5-28 11:33:32 : [90m2019-5-28 11:33:32[39m [32mINF[39m/[1mutil:procutil[22m 9273 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli triproxy app001 --bind-pub tcp://127.0.0.1:7111 --bind-dealer tcp://127.0.0.1:7112 --bind-pull tcp://127.0.0.1:7113"
+2019-5-28 11:33:32 : [90m2019-5-28 11:33:32[39m [32mINF[39m/[1mutil:procutil[22m 9273 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli triproxy dev001 --bind-pub tcp://127.0.0.1:7114 --bind-dealer tcp://127.0.0.1:7115 --bind-pull tcp://127.0.0.1:7116"
+2019-5-28 11:33:32 : [90m2019-5-28 11:33:32[39m [32mINF[39m/[1mutil:procutil[22m 9273 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli processor proc001 --connect-app-dealer tcp://127.0.0.1:7112 --connect-dev-dealer tcp://127.0.0.1:7115"
+2019-5-28 11:33:32 : [90m2019-5-28 11:33:32[39m [32mINF[39m/[1mutil:procutil[22m 9273 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli processor proc002 --connect-app-dealer tcp://127.0.0.1:7112 --connect-dev-dealer tcp://127.0.0.1:7115"
+2019-5-28 11:33:32 : [90m2019-5-28 11:33:32[39m [32mINF[39m/[1mutil:procutil[22m 9273 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli reaper reaper001 --connect-push tcp://127.0.0.1:7116 --connect-sub tcp://127.0.0.1:7111"
+2019-5-28 11:33:32 : [90m2019-5-28 11:33:32[39m [32mINF[39m/[1mutil:procutil[22m 9273 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli provider --name 412admindeMac-mini-3.local --min-port 7400 --max-port 7700 --connect-sub tcp://127.0.0.1:7114 --connect-push tcp://127.0.0.1:7116 --group-timeout 900 --public-ip 99.6.67.191 --storage-url http://localhost:7100/ --adb-host 127.0.0.1 --adb-port 5037 --vnc-initial-size 600x800 --mute-master never --screen-jpeg-quality 100"
+2019-5-28 11:33:32 : [90m2019-5-28 11:33:32[39m [32mINF[39m/[1mutil:procutil[22m 9273 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli compat --port 7107 --storage-url http://localhost:7102/ --adb-host 127.0.0.1 --adb-port 5037"
+2019-5-28 11:33:32 : [90m2019-5-28 11:33:32[39m [32mINF[39m/[1mutil:procutil[22m 9273 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli auth-mock --port 7120 --secret kute kittykat --app-url http://99.6.67.191:7100/"
+2019-5-28 11:33:32 : [90m2019-5-28 11:33:32[39m [32mINF[39m/[1mutil:procutil[22m 9273 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli app --port 7105 --secret kute kittykat --auth-url http://99.6.67.191:7100/auth/mock/ --websocket-url http://99.6.67.191:7110/"
+2019-5-28 11:33:33 : [90m2019-5-28 11:33:33[39m [32mINF[39m/[1mutil:procutil[22m 9273 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli api --port 7106 --secret kute kittykat --connect-push tcp://127.0.0.1:7113 --connect-sub tcp://127.0.0.1:7111"
+2019-5-28 11:33:33 : [90m2019-5-28 11:33:33[39m [32mINF[39m/[1mtriproxy[22m 9280 [dev001] PUB socket bound on tcp://127.0.0.1:7114
+2019-5-28 11:33:33 : [90m2019-5-28 11:33:33[39m [32mINF[39m/[1mtriproxy[22m 9279 [app001] PUB socket bound on tcp://127.0.0.1:7111
+2019-5-28 11:33:33 : [90m2019-5-28 11:33:33[39m [32mINF[39m/[1mutil:procutil[22m 9273 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli websocket --port 7110 --secret kute kittykat --storage-url http://localhost:7100/ --connect-sub tcp://127.0.0.1:7111 --connect-push tcp://127.0.0.1:7113"
+2019-5-28 11:33:33 : [90m2019-5-28 11:33:33[39m [32mINF[39m/[1mtriproxy[22m 9279 [app001] DEALER socket bound on tcp://127.0.0.1:7112
+2019-5-28 11:33:33 : [90m2019-5-28 11:33:33[39m [32mINF[39m/[1mtriproxy[22m 9279 [app001] PULL socket bound on tcp://127.0.0.1:7113
+2019-5-28 11:33:33 : [90m2019-5-28 11:33:33[39m [32mINF[39m/[1mtriproxy[22m 9280 [dev001] DEALER socket bound on tcp://127.0.0.1:7115
+2019-5-28 11:33:33 : [90m2019-5-28 11:33:33[39m [32mINF[39m/[1mtriproxy[22m 9280 [dev001] PULL socket bound on tcp://127.0.0.1:7116
+2019-5-28 11:33:33 : [90m2019-5-28 11:33:33[39m [32mINF[39m/[1mutil:procutil[22m 9273 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli storage-temp --port 7102"
+2019-5-28 11:33:33 : [90m2019-5-28 11:33:33[39m [32mINF[39m/[1mutil:procutil[22m 9273 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli storage-plugin-image --port 7103 --storage-url http://localhost:7100/"
+2019-5-28 11:33:33 : [90m2019-5-28 11:33:33[39m [32mINF[39m/[1mutil:procutil[22m 9273 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli storage-plugin-apk --port 7104 --storage-url http://localhost:7100/"
+2019-5-28 11:33:33 : [90m2019-5-28 11:33:33[39m [32mINF[39m/[1mutil:procutil[22m 9273 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli poorxy --port 7100 --app-url http://localhost:7105/ --auth-url http://localhost:7120/ --api-url http://localhost:7106/ --websocket-url http://localhost:7110/ --compat-url http://localhost:7107/ --storage-url http://localhost:7102/ --storage-plugin-image-url http://localhost:7103/ --storage-plugin-apk-url http://localhost:7104/"
+2019-5-28 11:33:33 : [90m2019-5-28 11:33:33[39m [32mINF[39m/[1mdb[22m 9281 [*] Connecting to 127.0.0.1:28015
+2019-5-28 11:33:33 : [90m2019-5-28 11:33:33[39m [32mINF[39m/[1mprocessor[22m 9281 [proc001] App dealer connected to "tcp://127.0.0.1:7112"
+2019-5-28 11:33:33 : [90m2019-5-28 11:33:33[39m [32mINF[39m/[1mprocessor[22m 9281 [proc001] Device dealer connected to "tcp://127.0.0.1:7115"
+2019-5-28 11:33:33 : [90m2019-5-28 11:33:33[39m [32mINF[39m/[1mdb[22m 9282 [*] Connecting to 127.0.0.1:28015
+2019-5-28 11:33:33 : [90m2019-5-28 11:33:33[39m [32mINF[39m/[1mprocessor[22m 9282 [proc002] App dealer connected to "tcp://127.0.0.1:7112"
+2019-5-28 11:33:33 : [90m2019-5-28 11:33:33[39m [32mINF[39m/[1mprocessor[22m 9282 [proc002] Device dealer connected to "tcp://127.0.0.1:7115"
+2019-5-28 11:33:37 : [90m2019-5-28 11:33:37[39m [32mINF[39m/[1mpoorxy[22m 9293 [*] options: {"port":7100,"appUrl":"http://localhost:7105/","apiUrl":"http://localhost:7106/","authUrl":"http://localhost:7120/","websocketUrl":"http://localhost:7110/","compatUrl":"http://localhost:7107/","storageUrl":"http://localhost:7102/","storagePluginImageUrl":"http://localhost:7103/","storagePluginApkUrl":"http://localhost:7104/"}
+2019-5-28 11:33:37 : [90m2019-5-28 11:33:37[39m [32mINF[39m/[1mpoorxy[22m 9293 [*] compatURL: http://localhost:7107/
+2019-5-28 11:33:37 : [90m2019-5-28 11:33:37[39m [32mINF[39m/[1mpoorxy[22m 9293 [*] storageUrl: http://localhost:7102/
+2019-5-28 11:33:37 : [90m2019-5-28 11:33:37[39m [32mINF[39m/[1mpoorxy[22m 9293 [*] Proxy Listening on port 7100
+2019-5-28 11:33:37 : [90m2019-5-28 11:33:37[39m [32mINF[39m/[1mprovider[22m 9284 [*] Subscribing to permanent channel "MzfuBjd7QDKc0B/hHn0qIg=="
+2019-5-28 11:33:37 : [90m2019-5-28 11:33:37[39m [32mINF[39m/[1mprovider[22m 9284 [*] Sending output to "tcp://127.0.0.1:7116"
+2019-5-28 11:33:37 : [90m2019-5-28 11:33:37[39m [32mINF[39m/[1mprovider[22m 9284 [*] Receiving input from "tcp://127.0.0.1:7114"
+2019-5-28 11:33:38 : [90m2019-5-28 11:33:38[39m [32mINF[39m/[1mprovider[22m 9284 [*] Tracking devices
+2019-5-28 11:33:38 : [90m2019-5-28 11:33:38[39m [32mINF[39m/[1mprovider[22m 9284 [*] Found device "86431d5d" (device)
+2019-5-28 11:33:38 : [90m2019-5-28 11:33:38[39m [32mINF[39m/[1mprovider[22m 9284 [*] registering device...
+2019-5-28 11:33:40 : [90m2019-5-28 11:33:40[39m [32mINF[39m/[1mstorage:temp[22m 9290 [*] Listening on port 7102
+2019-5-28 11:33:40 : [90m2019-5-28 11:33:40[39m [32mINF[39m/[1mauth-mock[22m 9286 [*] Listening on port 7120
+2019-5-28 11:33:40 : [90m2019-5-28 11:33:40[39m [32mINF[39m/[1mprovider[22m 9284 [*] Registered device "86431d5d"
+2019-5-28 11:33:40 : [90m2019-5-28 11:33:40[39m [32mINF[39m/[1mdb[22m 9286 [*] Connecting to 127.0.0.1:28015
+2019-5-28 11:33:41 : Provider JPEG Quality: 100
+2019-5-28 11:33:41 : [90m2019-5-28 11:33:41[39m [32mINF[39m/[1mstorage:plugins:image[22m 9291 [*] Listening on port 7103
+2019-5-28 11:33:42 : [90m2019-5-28 11:33:42[39m [32mINF[39m/[1mstorage:plugins:apk[22m 9292 [*] Listening on port 7104
+2019-5-28 11:33:43 : Starting reaper!
+2019-5-28 11:33:43 : [90m2019-5-28 11:33:43[39m [32mINF[39m/[1mreaper[22m 9283 [*] Subscribing to permanent channel "*ALL"
+2019-5-28 11:33:43 : [90m2019-5-28 11:33:43[39m [32mINF[39m/[1mreaper[22m 9283 [*] Reaping devices with no heartbeat
+2019-5-28 11:33:43 : [90m2019-5-28 11:33:43[39m [32mINF[39m/[1mdb[22m 9283 [*] Connecting to 127.0.0.1:28015
+2019-5-28 11:33:43 : [90m2019-5-28 11:33:43[39m [32mINF[39m/[1mdevice:support:push[22m 9309 [86431d5d] Sending output to "tcp://127.0.0.1:7116"
+2019-5-28 11:33:43 : [90m2019-5-28 11:33:43[39m [32mINF[39m/[1mdevice[22m 9309 [86431d5d] Preparing device
+2019-5-28 11:33:43 : [90m2019-5-28 11:33:43[39m [32mINF[39m/[1mreaper[22m 9283 [*] Receiving input from "tcp://127.0.0.1:7111"
+2019-5-28 11:33:43 : [90m2019-5-28 11:33:43[39m [32mINF[39m/[1mreaper[22m 9283 [*] Sending output to "tcp://127.0.0.1:7116"
+2019-5-28 11:33:44 : [90m2019-5-28 11:33:44[39m [32mINF[39m/[1mcompat[22m 9285 [*] host:127.0.0.1, port: 5037
+2019-5-28 11:33:44 : [90m2019-5-28 11:33:44[39m [32mINF[39m/[1mcompat[22m 9285 [*] Compat Listening on port 7107
+2019-5-28 11:33:44 : [90m2019-5-28 11:33:44[39m [32mINF[39m/[1mdb[22m 9285 [*] Connecting to 127.0.0.1:28015
+2019-5-28 11:33:44 : [90m2019-5-28 11:33:44[39m [32mINF[39m/[1mcompat[22m 9285 [*] devices:[{"id":"86431d5d","type":"device"}]
+2019-5-28 11:33:44 : [90m2019-5-28 11:33:44[39m [32mINF[39m/[1mapp[22m 9287 [*] Using pre-built resources
+2019-5-28 11:33:44 : [90m2019-5-28 11:33:44[39m [32mINF[39m/[1mapp[22m 9287 [*] Listening on port 7105
+2019-5-28 11:33:44 : [90m2019-5-28 11:33:44[39m [32mINF[39m/[1mdb[22m 9287 [*] Connecting to 127.0.0.1:28015
+2019-5-28 11:33:44 : [90m2019-5-28 11:33:44[39m [32mINF[39m/[1mwebsocket[22m 9289 [*] Subscribing to permanent channel "*ALL"
+2019-5-28 11:33:44 : [90m2019-5-28 11:33:44[39m [32mINF[39m/[1mwebsocket[22m 9289 [*] Listening on port 7110
+2019-5-28 11:33:44 : [90m2019-5-28 11:33:44[39m [32mINF[39m/[1mdb[22m 9289 [*] Connecting to 127.0.0.1:28015
+2019-5-28 11:33:44 : [90m2019-5-28 11:33:44[39m [32mINF[39m/[1mwebsocket[22m 9289 [*] Sending output to "tcp://127.0.0.1:7113"
+2019-5-28 11:33:44 : [90m2019-5-28 11:33:44[39m [32mINF[39m/[1mwebsocket[22m 9289 [*] Receiving input from "tcp://127.0.0.1:7111"
+2019-5-28 11:33:45 : [90m2019-5-28 11:33:45[39m [32mINF[39m/[1mdb[22m 9309 [86431d5d] Connecting to 127.0.0.1:28015
+2019-5-28 11:33:45 : [90m2019-5-28 11:33:45[39m [32mINF[39m/[1mdevice:support:sub[22m 9309 [86431d5d] Receiving input from "tcp://127.0.0.1:7114"
+2019-5-28 11:33:45 : [90m2019-5-28 11:33:45[39m [32mINF[39m/[1mdevice:support:sub[22m 9309 [86431d5d] Subscribing to permanent channel "*ALL"
+2019-5-28 11:33:45 : [90m2019-5-28 11:33:45[39m [32mINF[39m/[1mdevice:support:properties[22m 9309 [86431d5d] Loading properties
+2019-5-28 11:33:45 : [90m2019-5-28 11:33:45[39m [32mINF[39m/[1mdevice:support:sdk[22m 9309 [86431d5d] Supports SDK 28
+2019-5-28 11:33:45 : [90m2019-5-28 11:33:45[39m [32mINF[39m/[1mdevice:support:abi[22m 9309 [86431d5d] Supports ABIs arm64-v8a, armeabi-v7a, armeabi
+2019-5-28 11:33:46 : [90m2019-5-28 11:33:46[39m [32mINF[39m/[1mdevice:resources:minicap[22m 9309 [86431d5d] Installing "/Users/temp_admin/workspace/stf_cdf/stf/node_modules/minicap-prebuilt/prebuilt/arm64-v8a/bin/minicap" as "/data/local/tmp/minicap"
+2019-5-28 11:33:46 : [90m2019-5-28 11:33:46[39m [32mINF[39m/[1mdevice:resources:minicap[22m 9309 [86431d5d] Installing "/Users/temp_admin/workspace/stf_cdf/stf/node_modules/minicap-prebuilt/prebuilt/arm64-v8a/lib/android-28/minicap.so" as "/data/local/tmp/minicap.so"
+2019-5-28 11:33:46 : [90m2019-5-28 11:33:46[39m [32mINF[39m/[1mdevice:resources:service[22m 9309 [86431d5d] Checking whether we need to install STFService
+2019-5-28 11:33:46 : [90m2019-5-28 11:33:46[39m [32mINF[39m/[1mdevice:resources:service[22m 9309 [86431d5d] Running version check
+2019-5-28 11:33:46 : [90m2019-5-28 11:33:46[39m [32mINF[39m/[1mdevice:resources:service[22m 9309 [86431d5d] STFService up to date
+2019-5-28 11:33:46 : [90m2019-5-28 11:33:46[39m [32mINF[39m/[1mdevice:plugins:service[22m 9309 [86431d5d] Launching agent
+2019-5-28 11:33:47 : [90m2019-5-28 11:33:47[39m [32mINF[39m/[1mdevice:plugins:service[22m 9309 [86431d5d] Agent says: "Listening on @stfagent"
+2019-5-28 11:33:47 : [90m2019-5-28 11:33:47[39m [32mINF[39m/[1mdevice:plugins:service[22m 9309 [86431d5d] Launching service
+2019-5-28 11:33:47 : [90m2019-5-28 11:33:47[39m [32mINF[39m/[1mdevice:plugins:service[22m 9309 [86431d5d] Agent says: "InputClient started"
+2019-5-28 11:33:47 : [90m2019-5-28 11:33:47[39m [32mINF[39m/[1mdevice:plugins:display[22m 9309 [86431d5d] Reading display info
+2019-5-28 11:33:47 : [90m2019-5-28 11:33:47[39m [32mINF[39m/[1mdevice:plugins:phone[22m 9309 [86431d5d] Fetching phone info
+2019-5-28 11:33:47 : [90m2019-5-28 11:33:47[39m [32mINF[39m/[1mdevice:plugins:identity[22m 9309 [86431d5d] Solving identity
+2019-5-28 11:33:47 : [90m2019-5-28 11:33:47[39m [32mINF[39m/[1mdevice:plugins:solo[22m 9309 [86431d5d] Subscribing to permanent channel "iVBX0RYQsj6YJIRhDt/BoFU8hhQ="
+2019-5-28 11:33:47 : [90m2019-5-28 11:33:47[39m [32mINF[39m/[1mdevice:plugins:screen:stream[22m 9309 [86431d5d] Starting WebSocket server on port 7400
+2019-5-28 11:33:47 : [90m2019-5-28 11:33:47[39m [32mINF[39m/[1mdevice:resources:minitouch[22m 9309 [86431d5d] Installing "/Users/temp_admin/workspace/stf_cdf/stf/node_modules/minitouch-prebuilt/prebuilt/arm64-v8a/bin/minitouch" as "/data/local/tmp/minitouch"
+2019-5-28 11:33:47 : [90m2019-5-28 11:33:47[39m [32mINF[39m/[1mdevice:plugins:touch[22m 9309 [86431d5d] Touch origin is top left
+2019-5-28 11:33:47 : [90m2019-5-28 11:33:47[39m [32mINF[39m/[1mdevice:plugins:touch[22m 9309 [86431d5d] Requesting touch consumer to start
+2019-5-28 11:33:47 : [90m2019-5-28 11:33:47[39m [32mINF[39m/[1mdevice:plugins:touch[22m 9309 [86431d5d] Launching touch service
+2019-5-28 11:33:47 : [90m2019-5-28 11:33:47[39m [32mINF[39m/[1mdevice:plugins:touch[22m 9309 [86431d5d] Connecting to minitouch service
+2019-5-28 11:33:47 : [90m2019-5-28 11:33:47[39m [32mINF[39m/[1mdevice:plugins:touch[22m 9309 [86431d5d] minitouch says: "Type B touch device fts (1079x2339 with 10 contacts) detected on /dev/input/event4 (score 22597)"
+2019-5-28 11:33:47 : [90m2019-5-28 11:33:47[39m [32mINF[39m/[1mdevice:plugins:touch[22m 9309 [86431d5d] Reading minitouch banner
+2019-5-28 11:33:47 : [90m2019-5-28 11:33:47[39m [32mINF[39m/[1mdevice:plugins:touch[22m 9309 [86431d5d] minitouch says: "Connection established"
+2019-5-28 11:33:47 : [90m2019-5-28 11:33:47[39m [32mINF[39m/[1mdevice:plugins:vnc[22m 9309 [86431d5d] Starting VNC server on port 7402
+2019-5-28 11:33:47 : [90m2019-5-28 11:33:47[39m [32mINF[39m/[1mdevice:plugins:browser[22m 9309 [86431d5d] Loading browser list
+2019-5-28 11:33:47 : [90m2019-5-28 11:33:47[39m [32mINF[39m/[1mdevice:plugins:browser[22m 9309 [86431d5d] Updating browser list
+2019-5-28 11:33:47 : [90m2019-5-28 11:33:47[39m [33mWRN[39m/[1mdevice:plugins:browser[22m 9309 [86431d5d] Unmapped browser "com.UCMobile"
+2019-5-28 11:33:48 : [90m2019-5-28 11:33:48[39m [33mWRN[39m/[1mdevice:plugins:browser[22m 9309 [86431d5d] Unmapped browser "com.baidu.searchbox"
+2019-5-28 11:33:48 : [90m2019-5-28 11:33:48[39m [33mWRN[39m/[1mdevice:plugins:browser[22m 9309 [86431d5d] Unmapped browser "com.sogou.activity.src"
+2019-5-28 11:33:48 : [90m2019-5-28 11:33:48[39m [32mINF[39m/[1mdevice:plugins:mute[22m 9309 [86431d5d] Will not mute master volume
+2019-5-28 11:33:48 : [90m2019-5-28 11:33:48[39m [32mINF[39m/[1mprovider[22m 9284 [*] Providing 0 of 1 device(s); waiting for "86431d5d"
+2019-5-28 11:33:48 : [90m2019-5-28 11:33:48[39m [32mINF[39m/[1mdevice:resources:minirev[22m 9309 [86431d5d] Installing "/Users/temp_admin/workspace/stf_cdf/stf/vendor/minirev/arm64-v8a/minirev" as "/data/local/tmp/minirev"
+2019-5-28 11:33:48 : [90m2019-5-28 11:33:48[39m [32mINF[39m/[1mdevice:plugins:forward[22m 9309 [86431d5d] Launching reverse port forwarding service
+2019-5-28 11:33:48 : [90m2019-5-28 11:33:48[39m [32mINF[39m/[1mdevice:plugins:forward[22m 9309 [86431d5d] Connecting to reverse port forwarding service
+2019-5-28 11:33:48 : urlformat:null
+2019-5-28 11:33:48 : 86431d5d CreteTimer
+2019-5-28 11:33:48 : [90m2019-5-28 11:33:48[39m [32mINF[39m/[1mdevice:plugins:connect[22m 9309 [86431d5d] Listening on port 7401
+2019-5-28 11:33:48 : [90m2019-5-28 11:33:48[39m [32mINF[39m/[1mdevice[22m 9309 [86431d5d] Fully operational
+2019-5-28 11:33:48 : 86431d5d CreteTimer2
+2019-5-28 11:33:48 : [90m2019-5-28 11:33:48[39m [32mINF[39m/[1mapi[22m 9288 [*] Subscribing to permanent channel "*ALL"
+2019-5-28 11:33:49 : [90m2019-5-28 11:33:49[39m [32mINF[39m/[1mapi[22m 9288 [*] Listening on port 7106
+2019-5-28 11:33:49 : [90m2019-5-28 11:33:49[39m [32mINF[39m/[1mapi[22m 9288 [*] Sending output to "tcp://127.0.0.1:7113"
+2019-5-28 11:33:49 : [90m2019-5-28 11:33:49[39m [32mINF[39m/[1mapi[22m 9288 [*] Receiving input from "tcp://127.0.0.1:7111"
+2019-5-28 11:33:49 : [90m2019-5-28 11:33:49[39m [32mINF[39m/[1mdb[22m 9288 [*] Connecting to 127.0.0.1:28015
+2019-5-28 11:33:55 : [90m2019-5-28 11:33:55[39m [32mINF[39m/[1mreaper[22m 9283 [*] Device "86431d5d" is present
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [32mINF[39m/[1mprovider[22m 9284 [*] Providing all 1 device(s)
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [32mINF[39m/[1mcli:local[22m 9273 [*] Received SIGINT, waiting for processes to terminate
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [32mINF[39m/[1mutil:lifecycle[22m 9289 [*] Winding down for graceful exit
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [32mINF[39m/[1mutil:lifecycle[22m 9288 [*] Winding down for graceful exit
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [32mINF[39m/[1mutil:lifecycle[22m 9286 [*] Winding down for graceful exit
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [32mINF[39m/[1mutil:lifecycle[22m 9284 [*] Winding down for graceful exit
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [32mINF[39m/[1mutil:lifecycle[22m 9285 [*] Winding down for graceful exit
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [32mINF[39m/[1mutil:lifecycle[22m 9309 [86431d5d] Winding down for graceful exit
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [32mINF[39m/[1mutil:lifecycle[22m 9282 [proc002] Winding down for graceful exit
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [32mINF[39m/[1mutil:lifecycle[22m 9283 [*] Winding down for graceful exit
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [32mINF[39m/[1mutil:lifecycle[22m 9281 [proc001] Winding down for graceful exit
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [32mINF[39m/[1mutil:lifecycle[22m 9279 [app001] Winding down for graceful exit
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [32mINF[39m/[1mutil:lifecycle[22m 9287 [*] Winding down for graceful exit
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [32mINF[39m/[1mutil:lifecycle[22m 9280 [dev001] Winding down for graceful exit
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [32mINF[39m/[1mauth-mock[22m 9286 [*] Waiting for client connections to end
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [32mINF[39m/[1mdevice:plugins:screen:stream[22m 9309 [86431d5d] Requesting frame producer to stop
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [32mINF[39m/[1mprovider[22m 9284 [*] Cleaning up device worker "86431d5d"
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [32mINF[39m/[1mprovider[22m 9284 [*] Gracefully killing device worker "86431d5d"
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [32mINF[39m/[1mutil:lifecycle[22m 9309 [86431d5d] Winding down for graceful exit
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [33mWRN[39m/[1mdb[22m 9281 [proc001] Connection closed
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [33mWRN[39m/[1mdb[22m 9283 [*] Connection closed
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [33mWRN[39m/[1mdb[22m 9288 [*] Connection closed
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [33mWRN[39m/[1mdb[22m 9286 [*] Connection closed
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [33mWRN[39m/[1mdb[22m 9282 [proc002] Connection closed
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [33mWRN[39m/[1mdb[22m 9287 [*] Connection closed
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [33mWRN[39m/[1mdb[22m 9289 [*] Connection closed
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [33mWRN[39m/[1mdb[22m 9285 [*] Connection closed
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [32mINF[39m/[1mdevice:plugins:screen:stream[22m 9309 [86431d5d] Requesting frame producer to stop
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [33mWRN[39m/[1mdb[22m 9309 [86431d5d] Connection closed
+2019-5-28 11:33:58 : [90m2019-5-28 11:33:58[39m [32mINF[39m/[1mprovider[22m 9284 [*] Device worker "86431d5d" has retired
+2019-5-28 11:33:59 : [90m2019-5-28 11:33:59[39m [32mINF[39m/[1mutil:procutil[22m 9333 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli migrate"
+2019-5-28 11:34:00 : [90m2019-5-28 11:34:00[39m [32mINF[39m/[1mdb[22m 9334 [*] Connecting to 127.0.0.1:28015
+2019-5-28 11:34:00 : [90m2019-5-28 11:34:00[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Database "stf" already exists
+2019-5-28 11:34:00 : [90m2019-5-28 11:34:00[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Table "users" already exists
+2019-5-28 11:34:00 : insert data step1:{"email":"admin@cmbchina.com","name":"admin","NameCN":"管理员","ip":"::ffff:127.0.0.1","group":"Gl0eJcZ1R52Z+BdjgmvoJw==","forwards":[],"settings":{}}
+2019-5-28 11:34:00 : [90m2019-5-28 11:34:00[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Table "accessTokens" already exists
+2019-5-28 11:34:00 : [90m2019-5-28 11:34:00[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Table "vncauth" already exists
+2019-5-28 11:34:00 : [90m2019-5-28 11:34:00[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Table "devices" already exists
+2019-5-28 11:34:00 : [90m2019-5-28 11:34:00[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Table "logs" already exists
+2019-5-28 11:34:00 : [90m2019-5-28 11:34:00[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Table "ProjectInfo" already exists
+2019-5-28 11:34:00 : [90m2019-5-28 11:34:00[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Table "DeviceUsingLog" already exists
+2019-5-28 11:34:00 : [90m2019-5-28 11:34:00[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Table "ProgressBar" already exists
+2019-5-28 11:34:00 : [90m2019-5-28 11:34:00[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Table "UserPasswords" already exists
+2019-5-28 11:34:00 : [90m2019-5-28 11:34:00[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Table "UserGroup" already exists
+2019-5-28 11:34:00 : insert data step1:{"id":"f833de2f-526e-4dbd-b09c-6a24d6bdfe73","GroupName":"administrator","userslist":[{"NameCN":"管理员","email":"admin@cmbchina.com","name":"admin"}]}
+2019-5-28 11:34:00 : insert data step1:{"id":"f08a3e8a-6014-4beb-86d2-25c719eb482f","GroupName":"tester","userslist":[]}
+2019-5-28 11:34:00 : insert data step1:{"id":"789600ad-6ebf-4d7d-af23-469326948ed2","GroupName":"developer","userslist":[]}
+2019-5-28 11:34:00 : insert data step1:{"id":"11a59d35-0d2e-4017-a8ae-670143fbd949","GroupName":"自动化测试组","userslist":[]}
+2019-5-28 11:34:00 : insert data step1:{"id":"76fc41b7-f696-4b77-a1be-3d2bf61487a0","GroupName":"项目占用组","userslist":[]}
+2019-5-28 11:34:00 : [90m2019-5-28 11:34:00[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Table "DeviceGroups" already exists
+2019-5-28 11:34:00 : [90m2019-5-28 11:34:00[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Table "CompatResult" already exists
+2019-5-28 11:34:00 : [90m2019-5-28 11:34:00[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Table "PermissionTable" already exists
+2019-5-28 11:34:00 : insert data step1:{"PermissionId":"335e7c9c-3819-4fd5-b989-65e0a682970e","desc":"data synchronization permission","name":"数据同步"}
+2019-5-28 11:34:00 : insert data step1:{"PermissionId":"551281ad-d3ed-41d5-a2d7-9a18bb891c6f","desc":"user group management","name":"用户管理"}
+2019-5-28 11:34:00 : insert data step1:{"PermissionId":"8e1d13b6-48f2-413c-aae1-03c244b11210","desc":"equipment group management","name":"设备组管理"}
+2019-5-28 11:34:00 : insert data step1:{"PermissionId":"88ca3d8d-d989-4a6e-be8d-dc8d358bfa99","desc":"manual addition of equipment","name":"设备添加删除"}
+2019-5-28 11:34:00 : insert data step1:{"PermissionId":"abb19a6d-b711-4488-80d0-2a27363a3fd3","desc":"manage announcement infomation","name":"公告栏管理"}
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Table "Announcement" already exists
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "users"."adbKeys" already exists
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "devices"."owner" already exists
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "devices"."present" already exists
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "devices"."providerChannel" already exists
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "accessTokens"."email" already exists
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "vncauth"."response" already exists
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "vncauth"."responsePerDevice" already exists
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "DeviceUsingLog"."LogTime" already exists
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "DeviceUsingLog"."DeviceUser" already exists
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "DeviceUsingLog"."DeviceProjectCode" already exists
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "UserGroup"."UserGroup" already exists
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "PermissionTable"."PermissionName" already exists
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "ProgressBar"."ProgressBarName" already exists
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "UserPasswords"."UserPasswordsName" already exists
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "DeviceGroups"."DeviceGroupsName" already exists
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "CompatResult"."DeviceGroupsName" already exists
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Waiting for index "users"."adbKeys"
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Waiting for index "devices"."owner"
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Waiting for index "devices"."present"
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Waiting for index "devices"."providerChannel"
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Waiting for index "accessTokens"."email"
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Waiting for index "vncauth"."response"
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Waiting for index "vncauth"."responsePerDevice"
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Waiting for index "DeviceUsingLog"."LogTime"
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Waiting for index "DeviceUsingLog"."DeviceUser"
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Waiting for index "DeviceUsingLog"."DeviceProjectCode"
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Waiting for index "UserGroup"."UserGroup"
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Waiting for index "PermissionTable"."PermissionName"
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Waiting for index "ProgressBar"."ProgressBarName"
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Waiting for index "UserPasswords"."UserPasswordsName"
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Waiting for index "DeviceGroups"."DeviceGroupsName"
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Waiting for index "CompatResult"."DeviceGroupsName"
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "users"."adbKeys" is ready
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "devices"."owner" is ready
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "devices"."present" is ready
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "devices"."providerChannel" is ready
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "accessTokens"."email" is ready
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "vncauth"."response" is ready
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "vncauth"."responsePerDevice" is ready
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "DeviceUsingLog"."LogTime" is ready
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "DeviceUsingLog"."DeviceUser" is ready
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "UserPasswords"."UserPasswordsName" is ready
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "DeviceGroups"."DeviceGroupsName" is ready
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "DeviceUsingLog"."DeviceProjectCode" is ready
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "UserGroup"."UserGroup" is ready
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "PermissionTable"."PermissionName" is ready
+2019-5-28 11:34:01 : [90m2019-5-28 11:34:01[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "ProgressBar"."ProgressBarName" is ready
+2019-5-28 11:34:01 : insert defaultdata:users
+2019-5-28 11:34:01 : insert data:{"email":"admin@cmbchina.com","name":"admin","NameCN":"管理员","ip":"::ffff:127.0.0.1","group":"Gl0eJcZ1R52Z+BdjgmvoJw==","forwards":[],"settings":{}}
+2019-5-28 11:34:01 : insert defaultdata:UserGroup
+2019-5-28 11:34:01 : insert data:{"id":"f833de2f-526e-4dbd-b09c-6a24d6bdfe73","GroupName":"administrator","userslist":[{"NameCN":"管理员","email":"admin@cmbchina.com","name":"admin"}]}
+2019-5-28 11:34:01 : insert data:{"id":"f08a3e8a-6014-4beb-86d2-25c719eb482f","GroupName":"tester","userslist":[]}
+2019-5-28 11:34:01 : insert data:{"id":"789600ad-6ebf-4d7d-af23-469326948ed2","GroupName":"developer","userslist":[]}
+2019-5-28 11:34:01 : insert data:{"id":"11a59d35-0d2e-4017-a8ae-670143fbd949","GroupName":"自动化测试组","userslist":[]}
+2019-5-28 11:34:01 : insert data:{"id":"76fc41b7-f696-4b77-a1be-3d2bf61487a0","GroupName":"项目占用组","userslist":[]}
+2019-5-28 11:34:02 : insert defaultdata:PermissionTable
+2019-5-28 11:34:02 : insert data:{"PermissionId":"335e7c9c-3819-4fd5-b989-65e0a682970e","desc":"data synchronization permission","name":"数据同步"}
+2019-5-28 11:34:02 : insert data:{"PermissionId":"551281ad-d3ed-41d5-a2d7-9a18bb891c6f","desc":"user group management","name":"用户管理"}
+2019-5-28 11:34:02 : insert data:{"PermissionId":"8e1d13b6-48f2-413c-aae1-03c244b11210","desc":"equipment group management","name":"设备组管理"}
+2019-5-28 11:34:02 : insert data:{"PermissionId":"88ca3d8d-d989-4a6e-be8d-dc8d358bfa99","desc":"manual addition of equipment","name":"设备添加删除"}
+2019-5-28 11:34:02 : insert data:{"PermissionId":"abb19a6d-b711-4488-80d0-2a27363a3fd3","desc":"manage announcement infomation","name":"公告栏管理"}
+2019-5-28 11:34:02 : [90m2019-5-28 11:34:02[39m [32mINF[39m/[1mdb:setup[22m 9334 [*] Index "CompatResult"."DeviceGroupsName" is ready
+2019-5-28 11:34:02 : [90m2019-5-28 11:34:02[39m [32mINF[39m/[1mutil:procutil[22m 9333 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli triproxy app001 --bind-pub tcp://127.0.0.1:7111 --bind-dealer tcp://127.0.0.1:7112 --bind-pull tcp://127.0.0.1:7113"
+2019-5-28 11:34:02 : [90m2019-5-28 11:34:02[39m [32mINF[39m/[1mutil:procutil[22m 9333 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli triproxy dev001 --bind-pub tcp://127.0.0.1:7114 --bind-dealer tcp://127.0.0.1:7115 --bind-pull tcp://127.0.0.1:7116"
+2019-5-28 11:34:02 : [90m2019-5-28 11:34:02[39m [32mINF[39m/[1mutil:procutil[22m 9333 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli processor proc001 --connect-app-dealer tcp://127.0.0.1:7112 --connect-dev-dealer tcp://127.0.0.1:7115"
+2019-5-28 11:34:02 : [90m2019-5-28 11:34:02[39m [32mINF[39m/[1mutil:procutil[22m 9333 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli processor proc002 --connect-app-dealer tcp://127.0.0.1:7112 --connect-dev-dealer tcp://127.0.0.1:7115"
+2019-5-28 11:34:02 : [90m2019-5-28 11:34:02[39m [32mINF[39m/[1mutil:procutil[22m 9333 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli reaper reaper001 --connect-push tcp://127.0.0.1:7116 --connect-sub tcp://127.0.0.1:7111"
+2019-5-28 11:34:02 : [90m2019-5-28 11:34:02[39m [32mINF[39m/[1mutil:procutil[22m 9333 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli provider --name 412admindeMac-mini-3.local --min-port 7400 --max-port 7700 --connect-sub tcp://127.0.0.1:7114 --connect-push tcp://127.0.0.1:7116 --group-timeout 900 --public-ip 99.6.67.191 --storage-url http://localhost:7100/ --adb-host 127.0.0.1 --adb-port 5037 --vnc-initial-size 600x800 --mute-master never --screen-jpeg-quality 100"
+2019-5-28 11:34:02 : [90m2019-5-28 11:34:02[39m [32mINF[39m/[1mutil:procutil[22m 9333 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli compat --port 7107 --storage-url http://localhost:7102/ --adb-host 127.0.0.1 --adb-port 5037"
+2019-5-28 11:34:02 : [90m2019-5-28 11:34:02[39m [32mINF[39m/[1mutil:procutil[22m 9333 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli auth-mock --port 7120 --secret kute kittykat --app-url http://99.6.67.191:7100/"
+2019-5-28 11:34:02 : [90m2019-5-28 11:34:02[39m [32mINF[39m/[1mutil:procutil[22m 9333 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli app --port 7105 --secret kute kittykat --auth-url http://99.6.67.191:7100/auth/mock/ --websocket-url http://99.6.67.191:7110/"
+2019-5-28 11:34:02 : [90m2019-5-28 11:34:02[39m [32mINF[39m/[1mutil:procutil[22m 9333 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli api --port 7106 --secret kute kittykat --connect-push tcp://127.0.0.1:7113 --connect-sub tcp://127.0.0.1:7111"
+2019-5-28 11:34:02 : [90m2019-5-28 11:34:02[39m [32mINF[39m/[1mutil:procutil[22m 9333 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli websocket --port 7110 --secret kute kittykat --storage-url http://localhost:7100/ --connect-sub tcp://127.0.0.1:7111 --connect-push tcp://127.0.0.1:7113"
+2019-5-28 11:34:02 : [90m2019-5-28 11:34:02[39m [32mINF[39m/[1mutil:procutil[22m 9333 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli storage-temp --port 7102"
+2019-5-28 11:34:02 : [90m2019-5-28 11:34:02[39m [32mINF[39m/[1mutil:procutil[22m 9333 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli storage-plugin-image --port 7103 --storage-url http://localhost:7100/"
+2019-5-28 11:34:02 : [90m2019-5-28 11:34:02[39m [32mINF[39m/[1mutil:procutil[22m 9333 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli storage-plugin-apk --port 7104 --storage-url http://localhost:7100/"
+2019-5-28 11:34:02 : [90m2019-5-28 11:34:02[39m [32mINF[39m/[1mutil:procutil[22m 9333 [*] Forking "/Users/temp_admin/workspace/stf_cdf/stf/lib/cli poorxy --port 7100 --app-url http://localhost:7105/ --auth-url http://localhost:7120/ --api-url http://localhost:7106/ --websocket-url http://localhost:7110/ --compat-url http://localhost:7107/ --storage-url http://localhost:7102/ --storage-plugin-image-url http://localhost:7103/ --storage-plugin-apk-url http://localhost:7104/"
+2019-5-28 11:34:03 : [90m2019-5-28 11:34:03[39m [32mINF[39m/[1mtriproxy[22m 9347 [dev001] PUB socket bound on tcp://127.0.0.1:7114
+2019-5-28 11:34:03 : [90m2019-5-28 11:34:03[39m [32mINF[39m/[1mtriproxy[22m 9347 [dev001] DEALER socket bound on tcp://127.0.0.1:7115
+2019-5-28 11:34:03 : [90m2019-5-28 11:34:03[39m [32mINF[39m/[1mtriproxy[22m 9347 [dev001] PULL socket bound on tcp://127.0.0.1:7116
+2019-5-28 11:34:03 : [90m2019-5-28 11:34:03[39m [32mINF[39m/[1mtriproxy[22m 9346 [app001] PUB socket bound on tcp://127.0.0.1:7111
+2019-5-28 11:34:03 : [90m2019-5-28 11:34:03[39m [32mINF[39m/[1mtriproxy[22m 9346 [app001] DEALER socket bound on tcp://127.0.0.1:7112
+2019-5-28 11:34:03 : [90m2019-5-28 11:34:03[39m [32mINF[39m/[1mtriproxy[22m 9346 [app001] PULL socket bound on tcp://127.0.0.1:7113
+2019-5-28 11:34:04 : [90m2019-5-28 11:34:04[39m [32mINF[39m/[1mdb[22m 9348 [*] Connecting to 127.0.0.1:28015
+2019-5-28 11:34:04 : [90m2019-5-28 11:34:04[39m [32mINF[39m/[1mdb[22m 9349 [*] Connecting to 127.0.0.1:28015
+2019-5-28 11:34:04 : [90m2019-5-28 11:34:04[39m [32mINF[39m/[1mprocessor[22m 9348 [proc001] App dealer connected to "tcp://127.0.0.1:7112"
+2019-5-28 11:34:04 : [90m2019-5-28 11:34:04[39m [32mINF[39m/[1mprocessor[22m 9348 [proc001] Device dealer connected to "tcp://127.0.0.1:7115"
+2019-5-28 11:34:04 : [90m2019-5-28 11:34:04[39m [32mINF[39m/[1mprocessor[22m 9349 [proc002] App dealer connected to "tcp://127.0.0.1:7112"
+2019-5-28 11:34:04 : [90m2019-5-28 11:34:04[39m [32mINF[39m/[1mprocessor[22m 9349 [proc002] Device dealer connected to "tcp://127.0.0.1:7115"
+2019-5-28 11:34:05 : [90m2019-5-28 11:34:04[39m [32mINF[39m/[1mpoorxy[22m 9360 [*] options: {"port":7100,"appUrl":"http://localhost:7105/","apiUrl":"http://localhost:7106/","authUrl":"http://localhost:7120/","websocketUrl":"http://localhost:7110/","compatUrl":"http://localhost:7107/","storageUrl":"http://localhost:7102/","storagePluginImageUrl":"http://localhost:7103/","storagePluginApkUrl":"http://localhost:7104/"}
+2019-5-28 11:34:05 : [90m2019-5-28 11:34:05[39m [32mINF[39m/[1mprovider[22m 9351 [*] Subscribing to permanent channel "m+MOTl2rQt+vhSvyTLLK/w=="
+2019-5-28 11:34:05 : [90m2019-5-28 11:34:05[39m [32mINF[39m/[1mpoorxy[22m 9360 [*] compatURL: http://localhost:7107/
+2019-5-28 11:34:05 : [90m2019-5-28 11:34:05[39m [32mINF[39m/[1mpoorxy[22m 9360 [*] storageUrl: http://localhost:7102/
+2019-5-28 11:34:05 : [90m2019-5-28 11:34:05[39m [32mINF[39m/[1mpoorxy[22m 9360 [*] Proxy Listening on port 7100
+2019-5-28 11:34:05 : [90m2019-5-28 11:34:05[39m [32mINF[39m/[1mstorage:plugins:image[22m 9358 [*] Listening on port 7103
+2019-5-28 11:34:05 : [90m2019-5-28 11:34:05[39m [32mINF[39m/[1mstorage:plugins:apk[22m 9359 [*] Listening on port 7104
+2019-5-28 11:34:05 : [90m2019-5-28 11:34:05[39m [32mINF[39m/[1mprovider[22m 9351 [*] Sending output to "tcp://127.0.0.1:7116"
+2019-5-28 11:34:05 : [90m2019-5-28 11:34:05[39m [32mINF[39m/[1mprovider[22m 9351 [*] Receiving input from "tcp://127.0.0.1:7114"
+2019-5-28 11:34:05 : [90m2019-5-28 11:34:05[39m [32mINF[39m/[1mprovider[22m 9351 [*] Tracking devices
+2019-5-28 11:34:05 : [90m2019-5-28 11:34:05[39m [32mINF[39m/[1mstorage:temp[22m 9357 [*] Listening on port 7102
+2019-5-28 11:34:05 : [90m2019-5-28 11:34:05[39m [32mINF[39m/[1mprovider[22m 9351 [*] Found device "86431d5d" (device)
+2019-5-28 11:34:05 : [90m2019-5-28 11:34:05[39m [32mINF[39m/[1mprovider[22m 9351 [*] registering device...
+2019-5-28 11:34:05 : [90m2019-5-28 11:34:05[39m [32mINF[39m/[1mauth-mock[22m 9353 [*] Listening on port 7120
+2019-5-28 11:34:05 : [90m2019-5-28 11:34:05[39m [32mINF[39m/[1mdb[22m 9353 [*] Connecting to 127.0.0.1:28015
+2019-5-28 11:34:06 : [90m2019-5-28 11:34:05[39m [32mINF[39m/[1mwebsocket[22m 9356 [*] Subscribing to permanent channel "*ALL"
+2019-5-28 11:34:06 : [90m2019-5-28 11:34:06[39m [32mINF[39m/[1mwebsocket[22m 9356 [*] Listening on port 7110
+2019-5-28 11:34:06 : [90m2019-5-28 11:34:06[39m [32mINF[39m/[1mcompat[22m 9352 [*] host:127.0.0.1, port: 5037
+2019-5-28 11:34:06 : [90m2019-5-28 11:34:06[39m [32mINF[39m/[1mdb[22m 9356 [*] Connecting to 127.0.0.1:28015
+2019-5-28 11:34:06 : [90m2019-5-28 11:34:06[39m [32mINF[39m/[1mcompat[22m 9352 [*] Compat Listening on port 7107
+2019-5-28 11:34:06 : [90m2019-5-28 11:34:06[39m [32mINF[39m/[1mwebsocket[22m 9356 [*] Sending output to "tcp://127.0.0.1:7113"
+2019-5-28 11:34:06 : Starting reaper!
+2019-5-28 11:34:06 : [90m2019-5-28 11:34:06[39m [32mINF[39m/[1mwebsocket[22m 9356 [*] Receiving input from "tcp://127.0.0.1:7111"
+2019-5-28 11:34:06 : [90m2019-5-28 11:34:06[39m [32mINF[39m/[1mprovider[22m 9351 [*] Registered device "86431d5d"
+2019-5-28 11:34:06 : [90m2019-5-28 11:34:06[39m [32mINF[39m/[1mreaper[22m 9350 [*] Subscribing to permanent channel "*ALL"
+2019-5-28 11:34:06 : [90m2019-5-28 11:34:06[39m [32mINF[39m/[1mdb[22m 9352 [*] Connecting to 127.0.0.1:28015
+2019-5-28 11:34:06 : [90m2019-5-28 11:34:06[39m [32mINF[39m/[1mreaper[22m 9350 [*] Reaping devices with no heartbeat
+2019-5-28 11:34:06 : [90m2019-5-28 11:34:06[39m [32mINF[39m/[1mdb[22m 9350 [*] Connecting to 127.0.0.1:28015
+2019-5-28 11:34:06 : [90m2019-5-28 11:34:06[39m [32mINF[39m/[1mreaper[22m 9350 [*] Receiving input from "tcp://127.0.0.1:7111"
+2019-5-28 11:34:06 : [90m2019-5-28 11:34:06[39m [32mINF[39m/[1mreaper[22m 9350 [*] Sending output to "tcp://127.0.0.1:7116"
+2019-5-28 11:34:06 : [90m2019-5-28 11:34:06[39m [32mINF[39m/[1mcompat[22m 9352 [*] devices:[{"id":"86431d5d","type":"device"}]
+2019-5-28 11:34:06 : Provider JPEG Quality: 100
+2019-5-28 11:34:06 : [90m2019-5-28 11:34:06[39m [32mINF[39m/[1mapp[22m 9354 [*] Using pre-built resources
+2019-5-28 11:34:06 : [90m2019-5-28 11:34:06[39m [32mINF[39m/[1mapp[22m 9354 [*] Listening on port 7105
+2019-5-28 11:34:06 : [90m2019-5-28 11:34:06[39m [32mINF[39m/[1mdb[22m 9354 [*] Connecting to 127.0.0.1:28015
+2019-5-28 11:34:07 : [90m2019-5-28 11:34:07[39m [32mINF[39m/[1mdevice:support:push[22m 9361 [86431d5d] Sending output to "tcp://127.0.0.1:7116"
+2019-5-28 11:34:07 : [90m2019-5-28 11:34:07[39m [32mINF[39m/[1mdevice[22m 9361 [86431d5d] Preparing device
+2019-5-28 11:34:07 : [90m2019-5-28 11:34:07[39m [32mINF[39m/[1mdb[22m 9361 [86431d5d] Connecting to 127.0.0.1:28015
+2019-5-28 11:34:07 : [90m2019-5-28 11:34:07[39m [32mINF[39m/[1mdevice:support:sub[22m 9361 [86431d5d] Receiving input from "tcp://127.0.0.1:7114"
+2019-5-28 11:34:07 : [90m2019-5-28 11:34:07[39m [32mINF[39m/[1mdevice:support:sub[22m 9361 [86431d5d] Subscribing to permanent channel "*ALL"
+2019-5-28 11:34:07 : [90m2019-5-28 11:34:07[39m [32mINF[39m/[1mdevice:support:properties[22m 9361 [86431d5d] Loading properties
+2019-5-28 11:34:07 : [90m2019-5-28 11:34:07[39m [32mINF[39m/[1mdevice:support:sdk[22m 9361 [86431d5d] Supports SDK 28
+2019-5-28 11:34:07 : [90m2019-5-28 11:34:07[39m [32mINF[39m/[1mdevice:support:abi[22m 9361 [86431d5d] Supports ABIs arm64-v8a, armeabi-v7a, armeabi
+2019-5-28 11:34:07 : [90m2019-5-28 11:34:07[39m [32mINF[39m/[1mapi[22m 9355 [*] Subscribing to permanent channel "*ALL"
+2019-5-28 11:34:07 : [90m2019-5-28 11:34:07[39m [32mINF[39m/[1mapi[22m 9355 [*] Listening on port 7106
+2019-5-28 11:34:07 : [90m2019-5-28 11:34:07[39m [32mINF[39m/[1mdevice:resources:minicap[22m 9361 [86431d5d] Installing "/Users/temp_admin/workspace/stf_cdf/stf/node_modules/minicap-prebuilt/prebuilt/arm64-v8a/bin/minicap" as "/data/local/tmp/minicap"
+2019-5-28 11:34:07 : [90m2019-5-28 11:34:07[39m [32mINF[39m/[1mdevice:resources:minicap[22m 9361 [86431d5d] Installing "/Users/temp_admin/workspace/stf_cdf/stf/node_modules/minicap-prebuilt/prebuilt/arm64-v8a/lib/android-28/minicap.so" as "/data/local/tmp/minicap.so"
+2019-5-28 11:34:07 : [90m2019-5-28 11:34:07[39m [32mINF[39m/[1mapi[22m 9355 [*] Sending output to "tcp://127.0.0.1:7113"
+2019-5-28 11:34:07 : [90m2019-5-28 11:34:07[39m [32mINF[39m/[1mapi[22m 9355 [*] Receiving input from "tcp://127.0.0.1:7111"
+2019-5-28 11:34:07 : [90m2019-5-28 11:34:07[39m [32mINF[39m/[1mdevice:resources:service[22m 9361 [86431d5d] Checking whether we need to install STFService
+2019-5-28 11:34:08 : [90m2019-5-28 11:34:08[39m [32mINF[39m/[1mdevice:resources:service[22m 9361 [86431d5d] Running version check
+2019-5-28 11:34:08 : [90m2019-5-28 11:34:08[39m [32mINF[39m/[1mdb[22m 9355 [*] Connecting to 127.0.0.1:28015
+2019-5-28 11:34:08 : [90m2019-5-28 11:34:08[39m [32mINF[39m/[1mdevice:resources:service[22m 9361 [86431d5d] STFService up to date
+2019-5-28 11:34:08 : [90m2019-5-28 11:34:08[39m [32mINF[39m/[1mdevice:plugins:service[22m 9361 [86431d5d] Launching agent
+2019-5-28 11:34:08 : [90m2019-5-28 11:34:08[39m [32mINF[39m/[1mdevice:plugins:service[22m 9361 [86431d5d] Agent says: "Listening on @stfagent"
+2019-5-28 11:34:08 : [90m2019-5-28 11:34:08[39m [32mINF[39m/[1mdevice:plugins:service[22m 9361 [86431d5d] Launching service
+2019-5-28 11:34:08 : [90m2019-5-28 11:34:08[39m [32mINF[39m/[1mdevice:plugins:service[22m 9361 [86431d5d] Agent says: "InputClient started"
+2019-5-28 11:34:08 : [90m2019-5-28 11:34:08[39m [32mINF[39m/[1mdevice:plugins:display[22m 9361 [86431d5d] Reading display info
+2019-5-28 11:34:08 : [90m2019-5-28 11:34:08[39m [32mINF[39m/[1mdevice:plugins:phone[22m 9361 [86431d5d] Fetching phone info
+2019-5-28 11:34:08 : [90m2019-5-28 11:34:08[39m [32mINF[39m/[1mdevice:plugins:identity[22m 9361 [86431d5d] Solving identity
+2019-5-28 11:34:08 : [90m2019-5-28 11:34:08[39m [32mINF[39m/[1mdevice:plugins:solo[22m 9361 [86431d5d] Subscribing to permanent channel "iVBX0RYQsj6YJIRhDt/BoFU8hhQ="
+2019-5-28 11:34:08 : [90m2019-5-28 11:34:08[39m [32mINF[39m/[1mdevice:plugins:screen:stream[22m 9361 [86431d5d] Starting WebSocket server on port 7400
+2019-5-28 11:34:09 : [90m2019-5-28 11:34:09[39m [32mINF[39m/[1mdevice:resources:minitouch[22m 9361 [86431d5d] Installing "/Users/temp_admin/workspace/stf_cdf/stf/node_modules/minitouch-prebuilt/prebuilt/arm64-v8a/bin/minitouch" as "/data/local/tmp/minitouch"
+2019-5-28 11:34:09 : [90m2019-5-28 11:34:09[39m [32mINF[39m/[1mdevice:plugins:touch[22m 9361 [86431d5d] Touch origin is top left
+2019-5-28 11:34:09 : [90m2019-5-28 11:34:09[39m [32mINF[39m/[1mdevice:plugins:touch[22m 9361 [86431d5d] Requesting touch consumer to start
+2019-5-28 11:34:09 : [90m2019-5-28 11:34:09[39m [32mINF[39m/[1mdevice:plugins:touch[22m 9361 [86431d5d] Launching touch service
+2019-5-28 11:34:09 : [90m2019-5-28 11:34:09[39m [32mINF[39m/[1mdevice:plugins:touch[22m 9361 [86431d5d] Connecting to minitouch service
+2019-5-28 11:34:09 : [90m2019-5-28 11:34:09[39m [32mINF[39m/[1mdevice:plugins:touch[22m 9361 [86431d5d] minitouch says: "Type B touch device fts (1079x2339 with 10 contacts) detected on /dev/input/event4 (score 22597)"
+2019-5-28 11:34:09 : [90m2019-5-28 11:34:09[39m [32mINF[39m/[1mdevice:plugins:touch[22m 9361 [86431d5d] Reading minitouch banner
+2019-5-28 11:34:09 : [90m2019-5-28 11:34:09[39m [32mINF[39m/[1mdevice:plugins:touch[22m 9361 [86431d5d] minitouch says: "Connection established"
+2019-5-28 11:34:09 : [90m2019-5-28 11:34:09[39m [32mINF[39m/[1mdevice:plugins:vnc[22m 9361 [86431d5d] Starting VNC server on port 7402
+2019-5-28 11:34:09 : [90m2019-5-28 11:34:09[39m [32mINF[39m/[1mdevice:plugins:browser[22m 9361 [86431d5d] Loading browser list
+2019-5-28 11:34:09 : [90m2019-5-28 11:34:09[39m [32mINF[39m/[1mdevice:plugins:browser[22m 9361 [86431d5d] Updating browser list
+2019-5-28 11:34:09 : [90m2019-5-28 11:34:09[39m [33mWRN[39m/[1mdevice:plugins:browser[22m 9361 [86431d5d] Unmapped browser "com.UCMobile"
+2019-5-28 11:34:09 : [90m2019-5-28 11:34:09[39m [33mWRN[39m/[1mdevice:plugins:browser[22m 9361 [86431d5d] Unmapped browser "com.baidu.searchbox"
+2019-5-28 11:34:09 : [90m2019-5-28 11:34:09[39m [33mWRN[39m/[1mdevice:plugins:browser[22m 9361 [86431d5d] Unmapped browser "com.sogou.activity.src"
+2019-5-28 11:34:09 : [90m2019-5-28 11:34:09[39m [32mINF[39m/[1mdevice:plugins:mute[22m 9361 [86431d5d] Will not mute master volume
+2019-5-28 11:34:09 : [90m2019-5-28 11:34:09[39m [32mINF[39m/[1mdevice:resources:minirev[22m 9361 [86431d5d] Installing "/Users/temp_admin/workspace/stf_cdf/stf/vendor/minirev/arm64-v8a/minirev" as "/data/local/tmp/minirev"
+2019-5-28 11:34:09 : [90m2019-5-28 11:34:09[39m [32mINF[39m/[1mdevice:plugins:forward[22m 9361 [86431d5d] Launching reverse port forwarding service
+2019-5-28 11:34:09 : [90m2019-5-28 11:34:09[39m [32mINF[39m/[1mdevice:plugins:forward[22m 9361 [86431d5d] Connecting to reverse port forwarding service
+2019-5-28 11:34:09 : urlformat:null
+2019-5-28 11:34:09 : 86431d5d CreteTimer
+2019-5-28 11:34:09 : [90m2019-5-28 11:34:09[39m [32mINF[39m/[1mdevice:plugins:connect[22m 9361 [86431d5d] Listening on port 7401
+2019-5-28 11:34:09 : [90m2019-5-28 11:34:09[39m [32mINF[39m/[1mdevice[22m 9361 [86431d5d] Fully operational
+2019-5-28 11:34:09 : 86431d5d CreteTimer2
+2019-5-28 11:34:15 : [90m2019-5-28 11:34:15[39m [32mINF[39m/[1mprovider[22m 9351 [*] Providing all 1 device(s)
+2019-5-28 11:34:17 : [90m2019-5-28 11:34:17[39m [32mINF[39m/[1mreaper[22m 9350 [*] Device "86431d5d" is present
