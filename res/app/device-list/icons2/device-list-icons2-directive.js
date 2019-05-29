@@ -140,7 +140,7 @@ module.exports = function DeviceListicons2Directive(
         } else {
           display.firstChild.nodeValue = "分辨率：----"
         }
-        pNumber.firstChild.nodeValue = "设备编号：" + device.productNo
+        pNumber.firstChild.nodeValue = "编号:" + device.productNo
         //  state.nodeValue = device.enhancedName
         // .device-name
         //  nt.nodeValue = device.enhancedName
@@ -287,6 +287,7 @@ module.exports = function DeviceListicons2Directive(
 
               if (tracker.getIfAdmin()) {
                 //管理员释放要改变归还状态
+                console.log("device1:"+JSON.stringify(device))
                 DeviceRentService.admin_free_rent(device, socket)
               }
               else {
