@@ -176,39 +176,6 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
       return _arr;
     }
 
-    function getAllUsableDevices(serial) {
-      var email = AppState.user.email
-      // console.log("loading all device groups ...")
-      return getAllDeviceGroups().then(function () {
-        // console.log("loading all user groups ...")
-        return getAllUserGroups()
-      }).then(function () {
-        //  console.log("Got User Groups: " + JSON.stringify($scope.user_groups))
-        $scope.user_groups.forEach(ele => {
-          if (ele.userslist) {
-            ele.userslist.forEach(element => {
-              if (element.email == email) {
-                if (ele.GroupName == "administrator") {
-                  // console.log("user is Admin!!")
-                  $scope.is_admin = true
-                }
-                $scope.in_groups.push(ele.GroupName)
-              }
-            });
-          }
-        });
-
-        $scope.device_groups.forEach(ele => {
-          $scope.in_groups.forEach(element => {
-            if (ele.usergroups.indexOf(element) > -1) {
-              usable_devices_lists = MergeArray(usable_devices_lists, ele.devices)
-              // console.log("usable device lists: " + JSON.stringify(usable_devices_lists))
-              return
-            }
-          });
-        });
-      })
-    }
 
     function ifDeviceUsable(serial) {
       if (usable_devices_lists.indexOf(serial) > -1) {
@@ -247,14 +214,14 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
       }
 
       if (event.checkPermition) {
-        return (new Promise(function (resolve) {
-          if ($scope.device_groups == null || $scope.user_groups == null) {
-            // console.log("initializing device group and user group...")
-            return resolve(getAllUsableDevices())
-          } else {
-            return resolve()
-          }
-        })).then(function () {
+        // return (new Promise(function (resolve) {
+        //   if ($scope.device_groups == null || $scope.user_groups == null) {
+        //     // console.log("initializing device group and user group...")
+        //     return resolve(getAllUsableDevices())
+        //   } else {
+        //     return resolve()
+        //   }
+        // })).then(function () {
           if (!$scope.is_admin && !ifDeviceUsable(event.data.serial)) {
             // console.log("device is not permitted for user, usable devices:  " + JSON.stringify(usable_devices_lists))
             return
@@ -262,7 +229,7 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
             // console.log("device is ready for user, usable devices:  " + JSON.stringify(usable_devices_lists))
             handleAddListener(event, isNew, device)
           }
-        })
+        // })
       } else {
         // console.log("Adding Device and not checking permition ")
         handleAddListener(event, isNew, device)
@@ -312,6 +279,41 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
         , checkPermition: checkPermition
       })
     }
+
+    this.getAllUsableDevices = function() {
+      var email = AppState.user.email
+      console.log("loading all device groups ...")
+      return getAllDeviceGroups().then(function () {
+        console.log("loading all user groups ...")
+        return getAllUserGroups()
+      }).then(function () {
+        //  console.log("Got User Groups: " + JSON.stringify($scope.user_groups))
+        $scope.user_groups.forEach(ele => {
+          if (ele.userslist) {
+            ele.userslist.forEach(element => {
+              if (element.email == email) {
+                if (ele.GroupName == "administrator") {
+                  // console.log("user is Admin!!")
+                  $scope.is_admin = true
+                }
+                $scope.in_groups.push(ele.GroupName)
+              }
+            });
+          }
+        });
+
+        $scope.device_groups.forEach(ele => {
+          $scope.in_groups.forEach(element => {
+            if (ele.usergroups.indexOf(element) > -1) {
+              usable_devices_lists = MergeArray(usable_devices_lists, ele.devices)
+              // console.log("usable device lists: " + JSON.stringify(usable_devices_lists))
+              return
+            }
+          });
+        });
+      })
+    }
+
     this.devices = devices
     this.show_device_serials = show_device_serials
     this.getUsableList = function () {
@@ -335,11 +337,13 @@ module.exports = function DeviceServiceFactory($http, socket, EnhanceDeviceServi
       , digest: false
     })
 
-    oboe('/api/v1/devices')
+    tracker.getAllUsableDevices()
+    .then(function(){
+      oboe('/api/v1/devices')
       .node('devices[*]', function (device) {
         tracker.add(device, true)
       })
-
+    })
     return tracker
   }
 
