@@ -248,6 +248,10 @@ ul.devices-icon-view .devices-icon-rent-info.state-available {
   white-space: normal;
   max-height: 45px;
 }
-ul.devices-icon-view .devices-icon-rent-info{
+ul.devices-icon-view .devices-icon-rent-info {
   display: block;
+}
+
+.device-is-offline {
+  display: none
 }
