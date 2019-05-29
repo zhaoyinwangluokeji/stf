@@ -342,6 +342,7 @@ module.exports = function DeviceListStatsDirective(
         } else {
           value = device[tag]
         }
+        var len = targetData.data.labels.length
         for (i = 0; i < len; i++) {
           if (value == targetData.data.labels[i]) {
             if (targetData.data.datasets[0].data[i] <= 1) {
