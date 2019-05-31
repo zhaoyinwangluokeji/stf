@@ -621,19 +621,30 @@ module.exports = function DeviceListDetailsDirective(
 
       // Triggers when the tracker sees a device for the first time.
       function addListener(device) {
+        var isAdmin = tracker.getIfAdmin()
         // console.log("device list add Listiner: " + device.serial)
         var row = createRow(device)
         filterRow(row, device)
+        if (!isAdmin && !device.present){
+          row.classList.add('device-is-offline')
+        }
         insertRow(row, device)
       }
 
       // Triggers when the tracker notices that a device changed.
       function changeListener(device) {
+        var isAdmin = tracker.getIfAdmin()
         // console.log('details-list-changeListener')
         var id = calculateId(device)
         var tr = tbody.children[id]
 
         if (tr) {
+          if (!isAdmin && !device.present){
+            tr.classList.add('device-is-offline')
+          } else if (!isAdmin && device.present){
+            // 如果设备上线，则增加显示
+            tr.classList.remove('device-is-offline')
+          }
           // First, update columns
           updateRow(tr, device)
 
