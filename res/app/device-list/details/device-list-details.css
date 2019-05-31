@@ -53,3 +53,7 @@
 .device-back-status{
   color: blue
 }
+
+.device-is-offline {
+  display: none
+}
