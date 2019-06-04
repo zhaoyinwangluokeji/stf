@@ -30,10 +30,10 @@
           i.fa.fa-question-circle.fa-fw
           | {{ "Help" | translate }}
       li(ng-show='!$root.basicMode')
-        ul(style="padding-inline-start: 10px;")
+        ul
           li.nonedot
               span
-                {{user.NameCN || user.email}}/{{user.name}}
+                {{user.email}}/{{user.name}}
           li.nonedot
             span(ng-click="ModifyPassword()")
               i.fa.fa-wrench

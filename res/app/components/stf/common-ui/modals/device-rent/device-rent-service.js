@@ -203,9 +203,7 @@ module.exports =
                 proCode = proC2
               }
 
-              var dev = JSON.parse(JSON.stringify($scope.device));
-
-              dev.device_rent_conf = {
+              $scope.device.device_rent_conf = {
                 rent: true,
                 rent_time: $scope.rent_time_selected,
                 start_time: Date.now(),
@@ -222,20 +220,22 @@ module.exports =
                 }
               }
               device.back = 0
-              return $scope.control.sendMessageSyn('device.rent_conf.set', dev).then(function (result) {
+              return $scope.control.sendMessageSyn('device.rent_conf.set', $scope.device).then(function (result) {
                 //  console.log("sendTwoWay rent_conf result:"+JSON.stringify(result))
                 if (result.success == true) {
-                  $scope.device = dev
                   return $uibModalInstance.close('true')
                 } else {
-                  console.log("false:" + JSON.stringify(result))
-                  alert(result)
+                  alert(result.data)
                   return $uibModalInstance.close('false')
                 }
 
               }).catch(function (err) {
                 console.log("sendMessageSyn Error:" + err)
                 alert(err)
+                log.error(
+                  'Client had an error'
+                  , err.stack
+                )
                 return $uibModalInstance.close('false')
               })
 
@@ -412,8 +412,6 @@ module.exports =
 
     DeviceRentService.free_rent = function (device, socket) {
       console.log("free_rent")
-      var control = ControlService.create(device, device.channel || uuid.v4(null, new Buffer(16)).toString('base64'))
-
       return new Promise(function (resolve, reject) {
         if (device.device_rent_conf) {
           device.device_rent_conf.rent = false;
@@ -421,11 +419,7 @@ module.exports =
           device.device_rent_conf = {}
           device.device_rent_conf.rent = false
         }
-        return control.sendMessageSyn('device.user_rent_conf.set', device).then(function (result) {
-
-        });
-
-        // resolve(socket.emit('device.user_rent_conf.set', device))
+        resolve(socket.emit('device.user_rent_conf.set', device))
       })
 
     }
@@ -446,8 +440,6 @@ module.exports =
 
     DeviceRentService.user_free_rent = function (device, socket) {
       console.log("user_free_rent")
-      var control = ControlService.create(device, device.channel || uuid.v4(null, new Buffer(16)).toString('base64'))
-
       return new Promise(function (resolve, reject) {
         if (device.device_rent_conf) {
           device.device_rent_conf.rent = false;
@@ -456,10 +448,7 @@ module.exports =
           device.device_rent_conf.rent = false
         }
         device.back = 0
-        return control.sendMessageSyn('device.user_rent_conf.set', device).then(function (result) {
-          resolve(result)
-        });
-        //  resolve(socket.emit('device.user_rent_conf.set', device))
+        resolve(socket.emit('device.user_rent_conf.set', device))
       })
     }
 
