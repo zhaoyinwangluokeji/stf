@@ -270,71 +270,56 @@ module.exports = function DeviceListIconsDirective(
       }
 
       element.on('click', function (e) {
-        var user = AppState.user
-        var id
-        console.log('click  ')
-        var click_target = ""
-        /*
-        if (e.target.classList.contains('thumbnail')) {
-          id = e.target.id
-        } else if (e.target.classList.contains('device-status') ||
-          e.target.classList.contains('device-photo-small') ||
-          e.target.classList.contains('device-name')) {
-          id = e.target.parentNode.parentNode.id
-        } else if (e.target.parentNode.classList.contains('device-photo-small')) {
-          id = e.target.parentNode.parentNode.parentNode.id
-        } else if (e.target.classList.contains('devices-icon-rent-info')) {
-          id = e.target.parentNode.parentNode.id
-        }else */
-        if (e.target.classList.contains("devRentStatus")) {
-          id = e.target.parentNode.parentNode.parentNode.id
-          click_target = "rent"
-        }
-        else if (e.target.classList.contains('headerbtn')) {
-          id = e.target.parentNode.parentNode.id
-          click_target = "stop"
-        } else if (e.target.classList.contains('fa-times')) {
-          id = e.target.parentNode.parentNode.parentNode.id
-          click_target = "stop"
-        } else if (e.target.classList.contains('src')) {
-          id = e.target.parentNode.parentNode.parentNode.id
-          click_target = "use"
-        } else if (e.target.classList.contains('devStopBtn')) {
-          id = e.target.parentNode.parentNode.id
-          click_target = "stop"
-        }
 
-        if (id) {
-          var device = mapping[id]
-          if (click_target == "stop") {
-            if (confirm('设备处于使用状态，你确定需要停止租用吗？')) {
-              kickDevice(device)
-              DeviceRentService.free_rent(device, socket)
-              e.preventDefault()
-            }
-          } else if (click_target == "use") {
-            $location.path('/control/' + device.serial);
-          } else {
-            if (device.using) {
-              if (device.owner &&
-                device.owner.email &&
-                device.owner.name &&
-                user &&
-                user.name == device.owner.name &&
-                user.email == device.owner.email) {
-                if (e.target.classList.contains('btn-xs')) {
-                  if (confirm('你确定需要停止租用吗？')) {
-                    kickDevice(device)
-                    DeviceRentService.free_rent(device, socket)
-                    e.preventDefault()
-                  }
-                }
-              }
-              else {
+        try {
+
+
+
+          var user = AppState.user
+          var id
+          console.log('click  ')
+          var click_target = ""
+          /*
+          if (e.target.classList.contains('thumbnail')) {
+            id = e.target.id
+          } else if (e.target.classList.contains('device-status') ||
+            e.target.classList.contains('device-photo-small') ||
+            e.target.classList.contains('device-name')) {
+            id = e.target.parentNode.parentNode.id
+          } else if (e.target.parentNode.classList.contains('device-photo-small')) {
+            id = e.target.parentNode.parentNode.parentNode.id
+          } else if (e.target.classList.contains('devices-icon-rent-info')) {
+            id = e.target.parentNode.parentNode.id
+          }else */
+          if (e.target.classList.contains("devRentStatus")) {
+            id = e.target.parentNode.parentNode.parentNode.id
+            click_target = "rent"
+          }
+          else if (e.target.classList.contains('headerbtn')) {
+            id = e.target.parentNode.parentNode.id
+            click_target = "stop"
+          } else if (e.target.classList.contains('fa-times')) {
+            id = e.target.parentNode.parentNode.parentNode.id
+            click_target = "stop"
+          } else if (e.target.classList.contains('src')) {
+            id = e.target.parentNode.parentNode.parentNode.id
+            click_target = "use"
+          } else if (e.target.classList.contains('devStopBtn')) {
+            id = e.target.parentNode.parentNode.id
+            click_target = "stop"
+          }
+
+          if (id) {
+            var device = mapping[id]
+            if (click_target == "stop") {
+              if (confirm('设备处于使用状态，你确定需要停止租用吗？')) {
+                kickDevice(device)
+                DeviceRentService.free_rent(device, socket)
                 e.preventDefault()
               }
-            }
-            else {
+            } else if (click_target == "use") {
+              $location.path('/control/' + device.serial);
+            } else {
               if (device.using) {
                 if (device.owner &&
                   device.owner.email &&
@@ -342,93 +327,117 @@ module.exports = function DeviceListIconsDirective(
                   user &&
                   user.name == device.owner.name &&
                   user.email == device.owner.email) {
-
-                  if (confirm('设备处于使用状态，你确定需要停止租用吗？')) {
-                    kickDevice(device)
-                    DeviceRentService.free_rent(device, socket)
-                    e.preventDefault()
+                  if (e.target.classList.contains('btn-xs')) {
+                    if (confirm('你确定需要停止租用吗？')) {
+                      kickDevice(device)
+                      DeviceRentService.free_rent(device, socket)
+                      e.preventDefault()
+                    }
                   }
                 }
                 else {
                   e.preventDefault()
                 }
               }
-              else if (device.state === 'available') {
-                if (device.device_rent_conf &&
-                  device.device_rent_conf.rent) {
-                  if (device.device_rent_conf.owner &&
-                    device.device_rent_conf.owner.email &&
-                    device.device_rent_conf.owner.name &&
-                    user) {
-                    if (user.name == device.device_rent_conf.owner.name &&
-                      user.email == device.device_rent_conf.owner.email) {
-                    }
-                    else {
+              else {
+                if (device.using) {
+                  if (device.owner &&
+                    device.owner.email &&
+                    device.owner.name &&
+                    user &&
+                    user.name == device.owner.name &&
+                    user.email == device.owner.email) {
+
+                    if (confirm('设备处于使用状态，你确定需要停止租用吗？')) {
+                      kickDevice(device)
+                      DeviceRentService.free_rent(device, socket)
                       e.preventDefault()
-                      alert("设备已经被" + device.device_rent_conf.owner.name + " " + device.device_rent_conf.owner.email + " 租用")
                     }
                   }
                   else {
                     e.preventDefault()
                   }
-                } else {
-                  e.preventDefault()
-                  if (device.state == "maintain") {
-                    alert("warnning:设备处于报修状态中，不能租用!")
-                  } else {
-                    return Promise.all([device].map(function (device) {
-                      var dev_cp = JSON.stringify(device)
-                      return DeviceRentService.open(device).then(function (result) {
-                        if (result.result == false && result.message == "cancel") {
-                          device = JSON.parse(dev_cp)
-                        }
-                        return result
-                      })
-                    })).then(function (result) {
-                      //  console.log("result:" + JSON.stringify(result))
-                      if (result[0].result == true) {
-                        //    console.log('redirect: ' + result[0].device.serial)
-                        $location.path('/control/' + result[0].device.serial);
-                      } else if (result[0] && result[0].message && result[0].message == "cancel") {
-                        //取消了租用按钮
-                      } else {
-                        device.using = true
-                        tracker.emit('change', device)
+                }
+                else if (device.state === 'available') {
+                  if (device.device_rent_conf &&
+                    device.device_rent_conf.rent) {
+                    if (device.device_rent_conf.owner &&
+                      device.device_rent_conf.owner.email &&
+                      device.device_rent_conf.owner.name &&
+                      user) {
+                      if (user.name == device.device_rent_conf.owner.name &&
+                        user.email == device.device_rent_conf.owner.email) {
                       }
-                    })
-                      .catch(function (err) {
-                        console.log('err: ', err)
+                      else {
+                        e.preventDefault()
+                        alert("设备已经被" + device.device_rent_conf.owner.name + " " + device.device_rent_conf.owner.email + " 租用")
+                      }
+                    }
+                    else {
+                      e.preventDefault()
+                    }
+                  } else {
+                    e.preventDefault()
+                    if (device.state == "maintain") {
+                      alert("warnning:设备处于报修状态中，不能租用!")
+                    } else {
+                      return Promise.all([device].map(function (device) {
+                        var dev_cp = JSON.stringify(device)
+                        return DeviceRentService.open(device).then(function (result) {
+                          if (result.result == false && result.message == "cancel") {
+                            device = JSON.parse(dev_cp)
+                          }
+                          return result
+                        })
+                      })).then(function (result) {
+                        //  console.log("result:" + JSON.stringify(result))
+                        if (result[0].result == true) {
+                          //    console.log('redirect: ' + result[0].device.serial)
+                          $location.path('/control/' + result[0].device.serial);
+                        } else if (result[0] && result[0].message && result[0].message == "cancel") {
+                          //取消了租用按钮
+                        } else {
+                          device.using = true
+                          tracker.emit('change', device)
+                        }
                       })
+                        .catch(function (err) {
+                          console.log('err: ', err)
+                        })
+                    }
+
                   }
-
+                } else if (device.state == 'busy') {
+                  alert("warnning: 设备繁忙不能租用!")
+                } else {
+                  alert("warnning: 离线设备不能租用!")
                 }
-              } else if (device.state == 'busy') {
-                alert("warnning: 设备繁忙不能租用!")
-              } else {
-                alert("warnning: 离线设备不能租用!")
+                //  else {
+                //    e.preventDefault()
+                //  }
+
+                /*
+                else
+                {
+                  if (e.altKey && device.state === 'available') {
+                    inviteDevice(device)
+                  }
+                  if (e.shiftKey && device.state === 'available') {
+                    StandaloneService.open(device)
+                  }
+                }
+                */
+
               }
-              //  else {
-              //    e.preventDefault()
-              //  }
-
-              /*
-              else
-              {
-                if (e.altKey && device.state === 'available') {
-                  inviteDevice(device)
-                }
-                if (e.shiftKey && device.state === 'available') {
-                  StandaloneService.open(device)
-                }
-              }
-              */
-
             }
+
+          }
+          else {
+            //  e.preventDefault()
           }
 
-        }
-        else {
-          //  e.preventDefault()
+        } catch (err) {
+          console.log("error:" + err)
         }
       })
 
