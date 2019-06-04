@@ -1,0 +1,23 @@
+{
+  "appenders": [
+    {
+      "type": "console",
+      "category": "console"
+    },
+    {
+      "type": "dateFile",
+      "filename": "../../logs/common",
+      "pattern": "_yyyyMMdd.log",
+      "alwaysIncludePattern": true,
+      "category": [
+        "console",
+        "logInfo"
+      ]
+    }
+  ],
+  "replaceConsole": "true",
+  "levels": {
+    "logInfo": "info",
+    "console": "debug"
+  }
+}
