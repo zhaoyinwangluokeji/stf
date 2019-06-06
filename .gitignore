@@ -8,6 +8,7 @@
 /*.tgz
 /.env
 /node_modules/
+/logs/
 /res/bower_components/
 /res/build/
 /res/test_out/

@@ -770,17 +770,22 @@ module.exports = function DeviceListIconsDirective(
 
       // Triggers when the tracker sees a device for the first time.
       function addListener(device) {
+        var isAdmin = tracker.getIfAdmin()
         if (device.deviceType == '现场测试') {
           return
         }
         console.log('addListener ')
         var item = createItem(device)
+        if (!isAdmin && !device.present){
+          item.classList.add('device-is-offline')
+        }
         filterItem(item, device)
         insertItem(item, device)
       }
 
       // Triggers when the tracker notices that a device changed.
       function changeListener(device) {
+        var isAdmin = tracker.getIfAdmin()
         if (device.deviceType == '现场测试') {
           return
         }
@@ -788,12 +793,17 @@ module.exports = function DeviceListIconsDirective(
         var id = calculateId(device)
         //  console.log('device-list-changeListener :' + id)
         var item = list.children[id]
-
         if (item) {
+          // 如果设备离线，则删除
+          if (!isAdmin && !device.present){
+            item.classList.add('device-is-offline')
+          } else if (!isAdmin && device.present){
+            // 如果设备上线，则增加显示
+            item.classList.remove('device-is-offline')
+          }
           //    console.log('device-list-changeListener 2')
           // First, update columns
           updateItem(item, device)
-
           // Maybe the item is not sorted correctly anymore?
           var diff = compareItem(item, device)
           if (diff !== 0) {
