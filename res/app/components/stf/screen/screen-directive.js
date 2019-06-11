@@ -43,25 +43,48 @@ module.exports = function DeviceScreenDirective(
       , device.display.height
       )
 
+      scope.sleep = function (time) {
+        console.log('sleeping...')
+        return new Promise((resolve) => setTimeout(resolve, time));
+      }
+
+      var ws = null
+
       /**
        * SCREEN HANDLING
        *
        * This section should deal with updating the screen ONLY.
        */
-      ;(function() {
+      var oboe = require('oboe')
+
+      scope.screenHandle = function() {
         function stop() {
           try {
+            console.log('closing ws.....')
             ws.onerror = ws.onclose = ws.onmessage = ws.onopen = null
             ws.close()
             ws = null
           }
           catch (err) { /* noop */ }
         }
-
-        var ws = new WebSocket(device.display.url)
+        console.log('connecting websocket...' + device.display.url)
+        ws = new WebSocket(device.display.url)
         ws.binaryType = 'blob'
 
         ws.onerror = function errorListener() {
+          console.log('ws error....')
+          stop()
+          var oldSerial = device.serial
+          scope.sleep(1000).then(function(){
+            oboe('/api/v1/user/devices')
+              .node('devices[*]', function (newDev) {
+                if(newDev.serial == oldSerial){
+                  console.log("===updating display url: " + newDev.display.url)
+                  device = newDev
+                  scope.screenHandle()
+                }
+              })
+          })
           // @todo Handle
         }
 
@@ -153,11 +176,21 @@ module.exports = function DeviceScreenDirective(
         }
 
         function shouldUpdateScreen() {
+
+          // // console.log("scope.$parent.showScreen: " + scope.$parent.showScreen)
+          // console.log("device.using: " + device.using)
+          // // console.log("PageVisibilityService.hidden: " + PageVisibilityService.hidden)
+          // console.log("ws.readyState: " + ws.readyState)
+
+          if (!ws){
+            return false
+          }
+
           return (
             // NO if the user has disabled the screen.
             scope.$parent.showScreen &&
-            // NO if we're not even using the device anymore.
-            device.using &&
+            // // NO if we're not even using the device anymore.
+            // device.using &&
             // NO if the page is not visible (e.g. background tab).
             !PageVisibilityService.hidden &&
             // NO if we don't have a connection yet.
@@ -168,7 +201,7 @@ module.exports = function DeviceScreenDirective(
 
         function checkEnabled() {
           var newEnabled = shouldUpdateScreen()
-
+          // console.log('newEnable: ' + newEnabled)
           if (newEnabled === cachedEnabled) {
             updateBounds()
           }
@@ -185,20 +218,20 @@ module.exports = function DeviceScreenDirective(
         }
 
         function onScreenInterestGained() {
-          if (ws.readyState === WebSocket.OPEN) {
+          if (ws && ws.readyState === WebSocket.OPEN) {
             ws.send('size ' + adjustedBoundSize.w + 'x' + adjustedBoundSize.h)
             ws.send('on')
           }
         }
 
         function onScreenInterestAreaChanged() {
-          if (ws.readyState === WebSocket.OPEN) {
+          if (ws && ws.readyState === WebSocket.OPEN) {
             ws.send('size ' + adjustedBoundSize.w + 'x' + adjustedBoundSize.h)
           }
         }
 
         function onScreenInterestLost() {
-          if (ws.readyState === WebSocket.OPEN) {
+          if (ws && ws.readyState === WebSocket.OPEN) {
             ws.send('off')
           }
         }
@@ -392,7 +425,11 @@ module.exports = function DeviceScreenDirective(
           stop()
           $window.removeEventListener('resize', resizeListener, false)
         })
-      })()
+      }
+
+
+      scope.screenHandle()
+
 
       /**
        * KEYBOARD HANDLING
