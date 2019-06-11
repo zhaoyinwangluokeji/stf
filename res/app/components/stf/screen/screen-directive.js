@@ -201,7 +201,7 @@ module.exports = function DeviceScreenDirective(
 
         function checkEnabled() {
           var newEnabled = shouldUpdateScreen()
-          console.log('newEnable: ' + newEnabled)
+          // console.log('newEnable: ' + newEnabled)
           if (newEnabled === cachedEnabled) {
             updateBounds()
           }
@@ -428,9 +428,7 @@ module.exports = function DeviceScreenDirective(
       }
 
 
-      scope.sleep(1000).then(
-            scope.screenHandle()
-        )
+      scope.screenHandle()
 
 
       /**
