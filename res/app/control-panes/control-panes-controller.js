@@ -73,57 +73,75 @@ module.exports =
 
     // TODO: Move this out to Ctrl.resolve
     function getDevice(serial) {
-      DeviceService.get(serial, $scope)
-        .then(function (device) {
-          if (device.device_rent_conf &&
-            device.device_rent_conf.rent) {
-            if (device.device_rent_conf.owner &&
-              AppState.user.email == device.device_rent_conf.owner.email &&
-              AppState.user.name == device.device_rent_conf.owner.name) {
-              $scope.device = device
-              $scope.control = ControlService.create(device, device.channel)
-              return device
-            } else {
-
-              alert('设备已经被其他人申请使用，请租用其他设备')
-            //  $location.path('/')
-              Promise.reject(false)
+      return new Promise((resolve, reject) => {
+        return DeviceService.get(serial, $scope)
+          .then(function (device) {
+            if (device.device_rent_conf &&
+              device.device_rent_conf.rent) {
+              if (device.device_rent_conf.owner &&
+                AppState.user.email == device.device_rent_conf.owner.email &&
+                AppState.user.name == device.device_rent_conf.owner.name) {
+                $scope.device = device
+                $scope.control = ControlService.create(device, device.channel)
+                return device
+              } else {
+                var alarm = '设备已经被其他人申请使用，请租用其他设备'
+                alert(alarm)
+                reject(alarm);
+                return (new Promise((reso, rej) => { rej('1231') }));
+              }
+            }
+            else {
+              var alarm = '设备没有租用，请进入租用界面进行租用'
+              alert(alarm)
+              reject(alarm);
+              return (new Promise((reso, rej) => { rej('3333') }));
+            }
+          })
+          .then(function (device) {
+            console.log("GroupService.invite:" + JSON.stringify(device))
+            try {
+              return GroupService.invite(device).then(function (result) {
+                console.log("GroupService.invite result: " + JSON.stringify(result))
+              })
+            }
+            catch (err) {
+              console.log("GroupService.invite error:" + err)
             }
 
-          }
-          else {
-
-            alert('设备没有租用，请进入租用界面进行租用')
-          //  $location.path('/')
-            Promise.reject(false)
-          }
-        })
-        .then(function (device) {
-          return GroupService.invite(device)
-        })
-        .then(function (device) {
-
-          // TODO: Change title, flickers too much on Chrome
-          // $rootScope.pageTitle = device.name
-
-          SettingsService.set('lastUsedDevice', serial)
-
-        })
-        .catch(function () {
-          $timeout(function () {
-            $location.path('/')
           })
+          .then(function (device) {
+            // TODO: Change title, flickers too much on Chrome
+            // $rootScope.pageTitle = device.name
+            console.log("SettingsService.set")
+            SettingsService.set('lastUsedDevice', serial)
+          })
+          .catch(function (err1) {
+            console.log("error1:" + err1)
+            console.log("redirect to / path!")
+            $timeout(function () {
+              $location.path('/')
+            })
+          })
+      }).catch(function (err) {
+        console.log("error:" + err)
+        console.log("redirect2 to / path!")
+        $timeout(function () {
+          $location.path('/')
         })
+      })
     }
 
-    getDevice($routeParams.serial)
 
     $scope.$watch('device.state', function (newValue, oldValue) {
       if (newValue !== oldValue) {
         if (oldValue === 'using') {
+          console.log("device.state using:" + newValue)
           FatalMessageService.open($scope.device, false)
         }
       }
     }, true)
+    console.log("get device:" + $routeParams.serial)
+    return  getDevice($routeParams.serial)
 
   }
