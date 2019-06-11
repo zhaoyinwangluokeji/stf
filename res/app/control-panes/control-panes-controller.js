@@ -70,9 +70,11 @@ module.exports =
 
     $scope.device = null
     $scope.control = null
+    var getCnt = 10;
 
     // TODO: Move this out to Ctrl.resolve
     function getDevice(serial) {
+      console.log("getDevice:" + getCnt)
       return new Promise((resolve, reject) => {
         return DeviceService.get(serial, $scope)
           .then(function (device) {
@@ -81,9 +83,19 @@ module.exports =
               if (device.device_rent_conf.owner &&
                 AppState.user.email == device.device_rent_conf.owner.email &&
                 AppState.user.name == device.device_rent_conf.owner.name) {
-                $scope.device = device
-                $scope.control = ControlService.create(device, device.channel)
-                return device
+                if (!device.using || device.using == false) {
+                  if (getCnt-- > 0) {
+                    setTimeout(function () {
+                      return getDevice(serial)
+                    }, 1000)
+                  }
+                  return (new Promise((reso, rej) => { rej('return') }));
+                } else {
+                  $scope.device = device
+                  $scope.control = ControlService.create(device, device.channel)
+                  return device
+                }
+
               } else {
                 var alarm = '设备已经被其他人申请使用，请租用其他设备'
                 alert(alarm)
@@ -97,6 +109,7 @@ module.exports =
               reject(alarm);
               return (new Promise((reso, rej) => { rej('3333') }));
             }
+
           })
           .then(function (device) {
             console.log("GroupService.invite:" + JSON.stringify(device))
@@ -109,6 +122,7 @@ module.exports =
               console.log("GroupService.invite error:" + err)
             }
 
+
           })
           .then(function (device) {
             // TODO: Change title, flickers too much on Chrome
@@ -118,17 +132,22 @@ module.exports =
           })
           .catch(function (err1) {
             console.log("error1:" + err1)
-            console.log("redirect to / path!")
-            $timeout(function () {
-              $location.path('/')
-            })
+            if (err1 != 'return') {
+              console.log("redirect to / path!")
+              $timeout(function () {
+                $location.path('/')
+              })
+            }
+
           })
       }).catch(function (err) {
         console.log("error:" + err)
-        console.log("redirect2 to / path!")
-        $timeout(function () {
-          $location.path('/')
-        })
+        if (err != 'return') {
+          console.log("redirect2 to / path!")
+          $timeout(function () {
+            $location.path('/')
+          })
+        }
       })
     }
 
@@ -142,6 +161,6 @@ module.exports =
       }
     }, true)
     console.log("get device:" + $routeParams.serial)
-    return  getDevice($routeParams.serial)
+    return getDevice($routeParams.serial)
 
   }
